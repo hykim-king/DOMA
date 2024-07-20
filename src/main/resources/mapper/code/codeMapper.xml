@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.mapper.CodeMapper">
+    
+    <resultMap type="Code" id="codeResultMap">
+        <result column="mst_code" property="mstCode"/>
+        <result column="det_code" property="detCode"/>
+        <result column="det_code_nm" property="detNm"/>
+        <result column="seq" property="seq"/>
+    </resultMap>
+    
+    <select id="doRetrieve" parameterType="Code" resultMap="codeResultMap">
+		SELECT 
+		       mst_code,
+               det_code,
+               det_code_nm,
+               seq    
+		 FROM CODE
+		WHERE mst_code = UPPER(#{mstCode})
+		 AND USE_YN = 1
+		ORDER BY seq        
+    </select>
+    
+     <sql id="CodeColumn">
+       mst_code    as mstCode,
+       det_code    as detCode,
+       det_code_nm as detCodeNm,
+       seq                       
+    </sql>
+    
+    <select id="doRetrieveIn" parameterType="java.util.ArrayList" resultType="Code">
+		 SELECT 
+		      <include refid="CodeColumn"/>
+		 FROM CODE
+		WHERE USE_YN = 1
+		<foreach item="item" collection="list" 
+		  open="AND mst_code IN (" separator="," close=")">
+		  #{item}
+		</foreach>
+		ORDER BY mst_code, seq       
+    </select>
+</mapper>

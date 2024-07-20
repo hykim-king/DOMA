@@ -7,7 +7,11 @@
         <setting name="logImpl" value="LOG4J2"/>
     </settings>
     
-    <typeAliases>
-        
+	<typeAliases>
+        <typeAlias alias="Search" type="com.pcwk.ehr.cmn.Search"/>
+        <typeAlias alias="Code" type="com.pcwk.ehr.code.domain.Code"/>
+        <typeAlias alias="User" type="com.pcwk.ehr.user.domain.User"/>
+        <typeAlias alias="MyMapper" type="com.pcwk.ehr.mymapper.domain.MyMapper"/>
     </typeAliases>
+    
 </configuration>
