@@ -1,95 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pcwk.ehr.mapper.UserMapper">
-    
-    <sql id="doRetrieveWhere">
-        <where>
-            <choose>
-             <when test="searchDiv != null and searchDiv == '10'">
-                 user_id LIKE #{searchWord} || '%'
-             </when>
-             
-             <when test="searchDiv != null and searchDiv == '20'">
-                 name LIKE #{searchWord} || '%'
-             </when>
-             
-             <when test="searchDiv != null and searchDiv == '30'">
-                 email LIKE #{searchWord} || '%'
-             </when>
-             
-             <when test="searchDiv != null and searchDiv == '40'">
-                 birthday LIKE #{searchWord} || '%'
-             </when>
-            </choose>
-        </where> 
-    </sql>
-    
-    <select id="doRetrieve" parameterType="com.pcwk.ehr.cmn.Search" resultType="User">
-         SELECT A.*,B.*                                                                   
-          FROM (                                                                         
-            SELECT tt1.rnum as no,                                                       
-                   tt1.user_id as userId,                                                          
-                   tt1.name,                                                             
-                   tt1.password,                                                         
-                   tt1.birthday,                                                         
-                   DECODE(tt1.u_level,1,'BASIC',2,'SILVER',3,'GOLD') "level",                                                          
-                   tt1.login,                                                            
-                   tt1.recommend,                                                        
-                   tt1.email,                                                            
-                   DECODE(TO_CHAR(tt1.reg_dt,'YYYYMMDD'), TO_CHAR(SYSDATE,'YYYYMMDD'),   
-                          TO_CHAR(tt1.reg_dt,'HH24:MI'), TO_CHAR(tt1.reg_dt,'YYYY/MM/DD')
-                    ) as regDt                                                          
-              FROM (                                                                     
-                SELECT ROWNUM as rnum, T1.*                                              
-                 FROM (                                                                  
-                    SELECT *                                                             
-                     FROM member     
-                     --검색 자바변수 : searchDiv, searchWord                                                    
-                     --WHERE : user_id(10),name(20),email(30),birthday(40)  
-                     <include refid="doRetrieveWhere"/>                                                          
-                    ORDER BY reg_dt DESC                                                 
-                 )T1                                                                     
-                 WHERE rownum <![CDATA[ <= (#{pageSize} * (#{pageNo} -1) + #{pageSize}) ]]>                                                      
-             )TT1                                                                        
-             WHERE TT1.rnum   <![CDATA[ >= (#{pageSize} * (#{pageNo} -1) + 1)    ]]>                                                         
-        )A                                                                               
-        CROSS JOIN                                                                       
-        (                                                                                
-         SELECT COUNT(*) totalCnt                                                        
-           FROM member                                                                   
-           --WHERE 
-         <include refid="doRetrieveWhere"/>                                                                    
-        )B                                                                               
-    </select>
-
-    <update id="doUpdate" parameterType="User">
-        UPDATE member           
-        SET                     
-            name      = #{name},      
-            password  = #{password},      
-            birthday  = #{birthday},      
-            u_level   = DECODE( #{level},'BASIC' ,1
-                                        ,'SILVER',2
-                                        ,'GOLD'  ,3),      
-            login     = #{login},      
-            recommend = #{recommend},      
-            email     = #{email},      
-            reg_dt    = SYSDATE 
-        WHERE                   
-            user_id = #{userId}        
-    </update>
+<mapper namespace="com.acorn.doma.mapper.UserMapper">
 
     <select id="doSelectOne" parameterType="String" resultType="User">
         SELECT                                            
             user_id AS userId,                                      
             name,                                         
             password,                                     
-            birthday,                                     
-            DECODE(u_level,1,'BASIC',2,'SILVER',3,'GOLD') "level",                                      
-            login,                                        
-            recommend,                                    
-            email,                                        
-            TO_CHAR(reg_dt,'YYYY-MM-DD HH24:MI:SS') regDt
+            birthday,
+            phone,
+            location,
+            email
         FROM                                              
             member                                        
         WHERE user_id = #{userId}                                 
@@ -106,23 +27,17 @@
                name,           
                password,       
                birthday,       
-               u_level,        
-               login,          
-               recommend,      
-               email,          
-               reg_dt          
+               phone,         
+               location,      
+               email   
             ) VALUES (          
                 #{userId},              
                 #{name},              
                 #{password},              
-                #{birthday},              
-                DECODE( #{level},'BASIC' ,1
-                                ,'SILVER',2
-                                ,'GOLD'  ,3),              
-                #{login},              
-                #{recommend},              
-                #{email},              
-                SYSDATE         
+                #{birthday},
+                #{phone}, 
+                #{location},                  
+                #{email}     
             )                   
     </insert>
         

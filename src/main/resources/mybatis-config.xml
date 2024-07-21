@@ -8,10 +8,10 @@
     </settings>
     
 	<typeAliases>
-        <typeAlias alias="Search" type="com.pcwk.ehr.cmn.Search"/>
-        <typeAlias alias="Code" type="com.pcwk.ehr.code.domain.Code"/>
-        <typeAlias alias="User" type="com.pcwk.ehr.user.domain.User"/>
-        <typeAlias alias="MyMapper" type="com.pcwk.ehr.mymapper.domain.MyMapper"/>
+        <typeAlias alias="Search" type="com.acorn.doma.cmn.Search"/>
+        <typeAlias alias="Code" type="com.acorn.doma.code.domain.Code"/>
+        <typeAlias alias="User" type="com.acorn.doma.user.domain.User"/>
+        <typeAlias alias="MyMapper" type="com.acorn.doma.mymapper.domain.MyMapper"/>
     </typeAliases>
     
 </configuration>

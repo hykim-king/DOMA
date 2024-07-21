@@ -1,0 +1,32 @@
+@charset "UTF-8";
+	.container{
+        display: flex;
+        height : 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+    .section{
+        border: 3px solid #ccc;
+        border-radius: 15px;
+        display : inline-flex;
+        padding: 20px 30px 20px 30px;
+        margin : 20px;
+    }   
+    li{
+        list-style-type: none;
+        padding : 5px;
+    }
+    .input_text{
+        width : 70%;
+        padding : 8px;
+        margin : 5px;
+    }
+    .input_birth{
+        margin-left: 5px;
+        width : 71%;
+        padding : 7px; 
+    }
+    h1{
+        color : goldenrod;
+        font-size : 50px;   
+    }

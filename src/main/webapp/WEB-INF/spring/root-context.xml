@@ -11,7 +11,7 @@
         
     <!-- mapper interface 설정  scanner 매퍼 읽을 위치 정하기-->   
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-       <property name="basePackage" value="com.pcwk.ehr.mapper"></property>
+       <property name="basePackage" value="com.acorn.doma.mapper"></property>
     </bean>
         
     <!-- annotation 설정 
@@ -80,7 +80,7 @@
         <!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
         <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
         <property name="username" value="scott"></property>
-        <property name="password" value="pcwk"></property>
+        <property name="password" value="0000"></property>
         
         <!--  Optional settings -->
         <property name="maximumPoolSize" value="10"></property>
