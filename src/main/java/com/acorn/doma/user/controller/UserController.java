@@ -37,12 +37,13 @@ public class UserController implements PLog {
 	}
 	
 	@RequestMapping(value = "/doRegister.do"
-			   , method = RequestMethod.POST
+			   , method = RequestMethod.GET
+			   , produces = "text/plain;charset=UTF-8"
 			   ) //produces : 화면으로 전송 encoding 
 	public String doRegister(Model model, HttpServletRequest req) throws SQLException{
 		// /WEB-INF/views+ viewName + ".jsp
 		// /WEB-INF/views/user/user_list.jsp
-		String viewName = "join/jsp/register";
+		String viewName = "join/register";
 		
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ doRegister()              │");

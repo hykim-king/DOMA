@@ -5,11 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%
+    String contextPath = request.getContextPath();
+%>
+<link rel="stylesheet" href="<%= contextPath %>/resources/css/register.css">
 </head>
-<link rel="stylesheet" type="text/css" href="/join/css/register.css">
 <body>
 	<div class="container">
-            <form>
+            <form action="doSave" method="post">
                 <ul>
                     <h1>Register</h1>
                     <li class="register_id">
