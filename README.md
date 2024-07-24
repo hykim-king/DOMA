@@ -21,9 +21,9 @@
 - **Database** : Oracle DB(11xe)
 - **ORM** : Mybatis
 
-### ⚙️ 자료
-
--  [WBS](https://docs.google.com/spreadsheets/d/1ygw7R05fOniBzU3TDZoJKI-ECfYrxgn_rOPfDotEg7A/edit?gid=1115838130#gid=1115838130)
+### ⚙️ 자료 
+-  [Flowchar](https://github.com/hykim-king/DOMA/blob/main/Flowchart.png)
+-  [WBS](https://docs.google.com/spreadsheets/d/1Cx7qkxON_QMqogA0uHq0qQril6RJo8MBp-f_pldQc50/edit?usp=sharing)
 -  [요구사항정의서](https://docs.google.com/spreadsheets/d/1aGMeFKOgAOLuhniAtfQUniX5u7MJNdnl/edit?gid=1427165370#gid=1427165370)
 -  [화면정의서](https://docs.google.com/spreadsheets/d/1auP1GR0EAGFrWE36mVaE0yUEWEycyrzZpsFjArp7BOc/edit?gid=1917835692#gid=1917835692)
   
