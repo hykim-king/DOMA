@@ -11,7 +11,7 @@
         
     <!-- mapper interface 설정  scanner 매퍼 읽을 위치 정하기-->   
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-       <property name="basePackage" value="com.pcwk.ehr.mapper"></property>
+       <property name="basePackage" value="com.acorn.doma.mapper"></property>
     </bean>
         
     <!-- annotation 설정 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>데이터 수집 및 전송</title>
+</head>
+<body>
+    <script>
+        // 데이터를 주기적으로 가져오는 함수
+        async function fetchData() {
+            try {
+                // Open API에서 데이터 가져오기
+                const response = await fetch('http://openapi.seoul.go.kr:8088/5146697052736b6f3438696a4d6574/xml/AccInfo/1/5');
+                if (response.ok) {
+                    const data = await response.text(); // XML 형태의 응답을 텍스트로 받기
+                    console.log('Fetched data:', data);
+
+                    // XML 데이터를 JSON으로 변환 (변환 함수는 구현 필요)
+                    const jsonData = xmlToJson(data);
+
+                    // 백엔드 서버로 데이터 전송
+                    await sendDataToBackend(jsonData);
+                } else {
+                    console.error('Error fetching data:', response.status, response.statusText);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        // XML 데이터를 JSON으로 변환하는 함수 (예시 구현, 실제로는 XML 구조에 맞게 변형 필요)
+        function xmlToJson(xml) {
+    // Create a new DOMParser instance
+    const parser = new DOMParser();
+    // Parse the XML string into an XML Document
+    const xmlDoc = parser.parseFromString(xml, "application/json");
+    
+    // Convert XML Document to JSON
+    const json = {};
+    json.accId = xmlDoc.getElementsByTagName("acc_id")[0].textContent;
+    json.occrDate = xmlDoc.getElementsByTagName("occr_date")[0].textContent;
+    json.occrTime = xmlDoc.getElementsByTagName("occr_time")[0].textContent;
+    json.expClrDate = xmlDoc.getElementsByTagName("exp_clr_date")[0].textContent;
+    json.expClrTime = xmlDoc.getElementsByTagName("exp_clr_time")[0].textContent;
+    json.accType = xmlDoc.getElementsByTagName("acc_type")[0].textContent;
+    json.accDtype = xmlDoc.getElementsByTagName("acc_dtype")[0].textContent;
+    json.linkId = xmlDoc.getElementsByTagName("link_id")[0].textContent;
+    json.grs80tmX = parseFloat(xmlDoc.getElementsByTagName("grs80tm_x")[0].textContent);
+    json.grs80tmY = parseFloat(xmlDoc.getElementsByTagName("grs80tm_y")[0].textContent);
+    json.accInfo = xmlDoc.getElementsByTagName("acc_info")[0].textContent;
+
+    return json;
+}
+
+        // 데이터를 백엔드 서버로 전송하는 함수
+        async function sendDataToBackend(data) {
+            try {
+                const response = await fetch('http://localhost:8080/api/data', { // 백엔드 서버 URL
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    console.log('Data successfully sent to backend');
+                } else {
+                    console.error('Error sending data to backend:', response.status, response.statusText);
+                }
+            } catch (error) {
+                console.error('Error sending data:', error);
+            }
+        }
+
+        // 주기적으로 데이터를 가져오고 백엔드로 전송
+        setInterval(fetchData, 60000); // 60초마다 호출
+        
+        // 페이지 로드 시 첫 데이터 가져오기
+        fetchData();
+    </script>
+</body>
+</html>
