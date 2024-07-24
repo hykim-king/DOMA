@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.acorn.doma.mapper.UserMapper">
+
+    <select id="doSelectOne" parameterType="String" resultType="User">
+        SELECT                                            
+            user_id AS userId,                                      
+            name,                                         
+            password,                                     
+            birthday,
+            phone,
+            location,
+            email
+        FROM                                              
+            member                                        
+        WHERE user_id = #{userId}                                 
+    </select>
+    
+    <delete id="doDelete" parameterType="User">
+        DELETE FROM member
+         WHERE user_id = #{userId}
+    </delete>
+    
+    <insert id="doSave" parameterType="User">
+        INSERT INTO member (
+               user_id,        
+               name,           
+               password,       
+               birthday,       
+               phone,         
+               location,      
+               email   
+            ) VALUES (          
+                #{userId},              
+                #{name},              
+                #{password},              
+                #{birthday},
+                #{phone}, 
+                #{location},                  
+                #{email}     
+            )                   
+    </insert>
+        
+</mapper>

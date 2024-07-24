@@ -37,6 +37,7 @@
         org.springframework.web.filter.CharacterEncodingFilter
     </filter-class>
     
+<<<<<<< HEAD
     <init-param>
         <param-name>encoding</param-name>
         <param-value>UTF-8</param-value>
@@ -47,4 +48,12 @@
 	    <filter-name>encodingFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
+=======
+        <!-- <filter-mapping>
+            <filter-name>encodingFilter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping> -->
+    
+    </filter>
+>>>>>>> c3da52c8f683eb90e789100531e2540a2133e72e
 </web-app>
