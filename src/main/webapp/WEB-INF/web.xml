@@ -47,7 +47,7 @@
 	<filter-mapping>
 	    <filter-name>encodingFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
-<<<<<<< HEAD
+
 	</filter-mapping>
 
         <!-- <filter-mapping>
@@ -57,9 +57,3 @@
     
     </filter>
 </web-app>
-=======
-	</filter-mapping>   
-    </filter>
-
-</web-app>
->>>>>>> 4ecddf3f088627963ddb420a89c0ca323abab1a8
