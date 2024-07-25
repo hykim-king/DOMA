@@ -49,9 +49,5 @@ public class DTO {
 	public String toString() {
 		return "DTO [no=" + no + ", totalCnt=" + totalCnt + ", pageSize=" + pageSize + ", pageNo=" + pageNo + "]";
 	}
+}
 
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 4ecddf3f088627963ddb420a89c0ca323abab1a8
