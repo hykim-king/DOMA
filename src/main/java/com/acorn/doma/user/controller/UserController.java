@@ -40,20 +40,15 @@ public class UserController implements PLog {
 			   , method = RequestMethod.GET
 			   , produces = "text/plain;charset=UTF-8"
 			   ) //produces : 화면으로 전송 encoding 
-	public String doRegister(Model model, HttpServletRequest req) throws SQLException{
+	public String doRegister() throws SQLException{
 		// /WEB-INF/views+ viewName + ".jsp
 		// /WEB-INF/views/user/user_list.jsp
-		String viewName = "join/register";
+		String viewName = "join/community_page";
 		
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ doRegister()              │");
 		log.debug("└───────────────────────────┘");
-		//searchDiv = ""
-		//searchWord = ""
-		//pagsSize=10
-		//pageNo=1
 		
-		//mode
 		return viewName;
 	}
 	

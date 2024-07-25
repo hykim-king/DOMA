@@ -49,4 +49,10 @@ public class UserServiceImpl implements UserService, PLog{
 		return null;
 	}
 
+	@Override
+	public String doRegister() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

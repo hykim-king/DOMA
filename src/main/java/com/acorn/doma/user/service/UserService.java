@@ -5,5 +5,5 @@ import com.acorn.doma.user.domain.User;
 
 public interface UserService extends WorkDiv<User> {
 
-	
+	public String doRegister() throws Exception;
 }
