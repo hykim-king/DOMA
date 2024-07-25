@@ -54,4 +54,8 @@
             <filter-name>encodingFilter</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping> -->
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 3f7813f19b9dbc8fda0b3b54120b76568ee48713
 </web-app>
