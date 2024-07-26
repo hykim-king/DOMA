@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.acorn.doma.code.domain.Code;
+import com.acorn.doma.domain.Code;
 
 public class StringUtil  implements PLog {
 	/**

@@ -1,4 +1,4 @@
-package com.acorn.doma.acc.domain;
+package com.acorn.doma.domain;
 
 import oracle.sql.DATE;
 

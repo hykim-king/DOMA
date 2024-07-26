@@ -1,4 +1,4 @@
-package com.acorn.doma.death.domain;
+package com.acorn.doma.domain;
 
 public class Death {
 	private String year;

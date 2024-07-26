@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.acorn.doma.cmn.WorkDiv;
-import com.acorn.doma.code.domain.Code;
+import com.acorn.doma.domain.Code;
 
 @Mapper
 public interface CodeMapper extends WorkDiv<Code> {

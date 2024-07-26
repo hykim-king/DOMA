@@ -19,7 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acorn.doma.cmn.PLog;
-import com.acorn.doma.code.domain.Code;
+import com.acorn.doma.domain.Code;
 import com.acorn.doma.mapper.CodeMapper;
 
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정

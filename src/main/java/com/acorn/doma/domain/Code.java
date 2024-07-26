@@ -1,4 +1,4 @@
-package com.acorn.doma.code.domain;
+package com.acorn.doma.domain;
 import com.acorn.doma.cmn.DTO;
 public class Code extends DTO{
     private String mstCode;  //마스터코드

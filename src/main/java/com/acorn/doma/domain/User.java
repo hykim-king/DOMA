@@ -1,4 +1,4 @@
-package com.acorn.doma.user.domain;
+package com.acorn.doma.domain;
 
 import com.acorn.doma.cmn.DTO;
 

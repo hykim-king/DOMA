@@ -18,7 +18,7 @@ import com.acorn.doma.cmn.Message;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.StringUtil;
-import com.acorn.doma.user.domain.User;
+import com.acorn.doma.domain.User;
 import com.acorn.doma.user.service.UserService;
 import com.google.gson.Gson;
 

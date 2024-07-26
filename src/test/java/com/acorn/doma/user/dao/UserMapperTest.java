@@ -20,8 +20,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
+import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.UserMapper;
-import com.acorn.doma.user.domain.User;
 
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.WorkDiv;
-import com.acorn.doma.user.domain.User;
+import com.acorn.doma.domain.User;
 
 @Mapper
 public interface UserMapper extends WorkDiv<User> {

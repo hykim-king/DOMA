@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.UserMapper;
-import com.acorn.doma.user.domain.User;
 
 @Service
 public class UserServiceImpl implements UserService, PLog{

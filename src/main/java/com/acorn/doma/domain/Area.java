@@ -1,4 +1,4 @@
-package com.acorn.doma.area.domain;
+package com.acorn.doma.domain;
 
 public class Area {
 	private String year;

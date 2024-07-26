@@ -1,4 +1,4 @@
-package com.acorn.doma.freezing.domain;
+package com.acorn.doma.domain;
 
 public class Freezing {
 	private int seq;
