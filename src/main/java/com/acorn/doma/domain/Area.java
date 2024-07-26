@@ -1,6 +1,7 @@
 package com.acorn.doma.domain;
 
 public class Area {
+	private int seq;
 	private String year;
 	private String accident;
 	private String casualties;
@@ -16,9 +17,11 @@ public class Area {
 	private String accPoint;
 	public Area() {}
 	
-	public Area(String year, String accident, String casualties, int dead, int seriously, int ordinary, int report,
-			double longitude, double latitude, String polygon, String gname, String dname, String accPoint) {
+	public Area(int seq, String year, String accident, String casualties, int dead, int seriously, int ordinary,
+			int report, double longitude, double latitude, String polygon, String gname, String dname,
+			String accPoint) {
 		super();
+		this.seq = seq;
 		this.year = year;
 		this.accident = accident;
 		this.casualties = casualties;
@@ -34,6 +37,12 @@ public class Area {
 		this.accPoint = accPoint;
 	}
 
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
 	public String getYear() {
 		return year;
 	}
@@ -114,10 +123,10 @@ public class Area {
 	}
 	@Override
 	public String toString() {
-		return "Area [year=" + year + ", accident=" + accident + ", casualties=" + casualties + ", dead=" + dead
-				+ ", seriously=" + seriously + ", ordinary=" + ordinary + ", report=" + report + ", longitude="
-				+ longitude + ", latitude=" + latitude + ", polygon=" + polygon + ", gname=" + gname + ", dname="
-				+ dname + ", accPoint=" + accPoint + "]";
+		return "Area [seq=" + seq + ", year=" + year + ", accident=" + accident + ", casualties=" + casualties
+				+ ", dead=" + dead + ", seriously=" + seriously + ", ordinary=" + ordinary + ", report=" + report
+				+ ", longitude=" + longitude + ", latitude=" + latitude + ", polygon=" + polygon + ", gname=" + gname
+				+ ", dname=" + dname + ", accPoint=" + accPoint + "]";
 	}
 	
 }

@@ -1,10 +1,11 @@
 package com.acorn.doma.domain;
 
 public class Death {
-	private String year;
-	private String month;
-	private String day;
-	private String hour;
+	private int seq;
+	private int year;
+	private int month;
+	private int day;
+	private int hour;
 	private String dayNight;
 	private String dayWeek;
 	private String casualties;
@@ -24,12 +25,12 @@ public class Death {
 	double longitude;
 	double latitude;
 	public Death() {}
-	
-	public Death(String year, String month, String day, String hour, String dayNight, String dayWeek, String casualties,
+	public Death(int seq, int year, int month, int day, int hour, String dayNight, String dayWeek, String casualties,
 			int dead, int seriously, int ordinary, int report, String gname, String accMajor, String accMedium,
 			String accType, String vioLaw, String roadMajor, String roadType, String mTypeO, String mTypeT,
 			double longitude, double latitude) {
 		super();
+		this.seq = seq;
 		this.year = year;
 		this.month = month;
 		this.day = day;
@@ -53,26 +54,34 @@ public class Death {
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
-
-	public String getYear() {
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public int getYear() {
 		return year;
 	}
-	public String getMonth() {
+	public void setYear(int year) {
+		this.year = year;
+	}
+	public int getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(int month) {
 		this.month = month;
 	}
-	public String getDay() {
+	public int getDay() {
 		return day;
 	}
-	public void setDay(String day) {
+	public void setDay(int day) {
 		this.day = day;
 	}
-	public String getHour() {
+	public int getHour() {
 		return hour;
 	}
-	public void setHour(String hour) {
+	public void setHour(int hour) {
 		this.hour = hour;
 	}
 	public String getDayNight() {
@@ -183,17 +192,14 @@ public class Death {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	public void setYear(String year) {
-		this.year = year;
-	}
 	@Override
 	public String toString() {
-		return "Death [year=" + year + ", month=" + month + ", day=" + day + ", hour=" + hour + ", dayNight=" + dayNight
-				+ ", dayWeek=" + dayWeek + ", casualties=" + casualties + ", dead=" + dead + ", seriously=" + seriously
-				+ ", ordinary=" + ordinary + ", report=" + report + ", gname=" + gname + ", accMajor=" + accMajor
-				+ ", accMedium=" + accMedium + ", accType=" + accType + ", vioLaw=" + vioLaw + ", roadMajor="
-				+ roadMajor + ", roadType=" + roadType + ", mTypeO=" + mTypeO + ", mTypeT=" + mTypeT + ", longitude="
-				+ longitude + ", latitude=" + latitude + "]";
+		return "Death [seq=" + seq + ", year=" + year + ", month=" + month + ", day=" + day + ", hour=" + hour
+				+ ", dayNight=" + dayNight + ", dayWeek=" + dayWeek + ", casualties=" + casualties + ", dead=" + dead
+				+ ", seriously=" + seriously + ", ordinary=" + ordinary + ", report=" + report + ", gname=" + gname
+				+ ", accMajor=" + accMajor + ", accMedium=" + accMedium + ", accType=" + accType + ", vioLaw=" + vioLaw
+				+ ", roadMajor=" + roadMajor + ", roadType=" + roadType + ", mTypeO=" + mTypeO + ", mTypeT=" + mTypeT
+				+ ", longitude=" + longitude + ", latitude=" + latitude + "]";
 	}
 	
 }
