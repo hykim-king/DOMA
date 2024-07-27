@@ -77,7 +77,7 @@ public class UserController implements PLog {
 			message = inVO.getUserId() + "는 이미 존재하는 아이디입니다.";
 		}
 		
-		jsonString = new Gson().toJson(new Message(flag, message));
+		jsonString = new Gson().toJson(new Message(flag, message));	
 		log.debug("2.jsonString:" + jsonString);
 		
 		return jsonString;
