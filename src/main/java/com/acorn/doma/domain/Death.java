@@ -1,7 +1,6 @@
 package com.acorn.doma.domain;
 
 public class Death {
-	private int seq;
 	private int year;
 	private int month;
 	private int day;
@@ -25,12 +24,11 @@ public class Death {
 	double longitude;
 	double latitude;
 	public Death() {}
-	public Death(int seq, int year, int month, int day, int hour, String dayNight, String dayWeek, String casualties,
+	public Death( int year, int month, int day, int hour, String dayNight, String dayWeek, String casualties,
 			int dead, int seriously, int ordinary, int report, String gname, String accMajor, String accMedium,
 			String accType, String vioLaw, String roadMajor, String roadType, String mTypeO, String mTypeT,
 			double longitude, double latitude) {
 		super();
-		this.seq = seq;
 		this.year = year;
 		this.month = month;
 		this.day = day;
@@ -54,12 +52,7 @@ public class Death {
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
-	public int getSeq() {
-		return seq;
-	}
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
+	
 	public int getYear() {
 		return year;
 	}
@@ -194,12 +187,13 @@ public class Death {
 	}
 	@Override
 	public String toString() {
-		return "Death [seq=" + seq + ", year=" + year + ", month=" + month + ", day=" + day + ", hour=" + hour
-				+ ", dayNight=" + dayNight + ", dayWeek=" + dayWeek + ", casualties=" + casualties + ", dead=" + dead
-				+ ", seriously=" + seriously + ", ordinary=" + ordinary + ", report=" + report + ", gname=" + gname
-				+ ", accMajor=" + accMajor + ", accMedium=" + accMedium + ", accType=" + accType + ", vioLaw=" + vioLaw
-				+ ", roadMajor=" + roadMajor + ", roadType=" + roadType + ", mTypeO=" + mTypeO + ", mTypeT=" + mTypeT
-				+ ", longitude=" + longitude + ", latitude=" + latitude + "]";
+		return "Death [year=" + year + ", month=" + month + ", day=" + day + ", hour=" + hour + ", dayNight=" + dayNight
+				+ ", dayWeek=" + dayWeek + ", casualties=" + casualties + ", dead=" + dead + ", seriously=" + seriously
+				+ ", ordinary=" + ordinary + ", report=" + report + ", gname=" + gname + ", accMajor=" + accMajor
+				+ ", accMedium=" + accMedium + ", accType=" + accType + ", vioLaw=" + vioLaw + ", roadMajor="
+				+ roadMajor + ", roadType=" + roadType + ", mTypeO=" + mTypeO + ", mTypeT=" + mTypeT + ", longitude="
+				+ longitude + ", latitude=" + latitude + "]";
 	}
+	
 	
 }
