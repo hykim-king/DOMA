@@ -5,5 +5,5 @@
 <select id="countAll" resultType="int">
 SELECT count(*) FROM d_death
 </select>
-    
+
 </mapper>
