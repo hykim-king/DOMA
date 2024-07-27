@@ -69,10 +69,10 @@
        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
     </aop:config>
     
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <!-- <property name="dataSource" ref="dataSource"></property> -->
-        <constructor-arg index="0" ref="dataSource"></constructor-arg>
+   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
     </bean>
+    
     
     <!-- HikariDataSource Bean -->
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
