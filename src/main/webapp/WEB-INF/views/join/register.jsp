@@ -12,71 +12,82 @@
 <script src="${CP }/resources/js/user/register.js"></script>
 </head>
 <body>
-	<div class="container-fluid">
-		<h1 style="color:#ffc107; font-weight:bold;">회원가입</h1>
-        <form action="#" method="post" class="form-horizontal">
-	        <label for="userId" class="col-sm-2 col-form-label">아이디</label>
-	        <div class="row mb-2">	
-		        <div class="col-sm-3">
-		          <input type="text" class="form-control" name="userId" id="userId"  
-		              maxlength="20" required="required">
-		        </div>    
-		        <div class="col-sm-2">
-		           <input type="button" value="중복확인" class="btn btn-warning" id="idDuplicateCheck">
-			    </div>
-		    </div>
-		    <div class="row mb-2">	
-		    	<label for="Name" class="col-sm-2 col-form-label">닉네임</label>
-		        <div class="col-sm-3">
-		          <input type="text" class="form-control" name="Name" id="Name"  
-		              maxlength="20" required="required">
-		        </div>
-		    </div>
-		    <div class="row mb-2">
-		    	<label for="password" class="col-sm-2 col-form-label">비밀번호</label>	
-		        <div class="col-sm-3">
-		          <input type="password" class="form-control" name="password" id="password"  
-		              maxlength="20" required="required">
-		        </div>
-		    </div>
-		    <div class="row mb-2">
-		    	<label for="passwordCheck" class="col-sm-2 col-form-label">비밀번호 확인</label>	
-		        <div class="col-sm-3">
-		          <input type="password" class="form-control" name="passwordCheck" id="passwordCheck"  
-		              maxlength="20" required="required">
-		        </div>
-		    </div>
-		    <div class="row mb-2">
-		    	<label for="email" class="col-sm-2 col-form-label">이메일 확인</label>	
-		        <div class="col-sm-3">
-		          <input type="email" class="form-control" name="email" id="email"  
-		              maxlength="20" required="required">
-		        </div>
-		    </div>
-            <div class="row mb-2">
-		    	<label for="date" class="col-sm-2 col-form-label">생년월일 확인</label>	
-		        <div class="col-sm-3">
-		          <input type="email" class="form-control" name="birth" id="birth"  
-		              maxlength="20" required="required">
-		        </div>
-		    </div>
-		    <div class="row mb-2">
-	    		<label for="sample3_postcode" class="form-label">주소</label><br>
-                <input type="text" class="form-control" id="sample3_postcode" placeholder="우편번호">
-				<input type="button" class="btn btn-warning" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" class="form-control" id="sample3_address" placeholder="주소"><br>
-				<input type="text" class="form-control" id="sample3_detailAddress" placeholder="상세주소">
-				<input type="text" class="form-control" id="sample3_extraAddress" placeholder="참고항목">
-				<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-					<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+		<div class="col-6">
+			<h1 style="color:#ffc107; font-weight:bold;">회원가입</h1>
+			<form action="#" method="post" class="form-horizontal">
+			
+				<div class="form-group row mb-2">
+					<label for="userId" class="col-sm-2 col-form-label">아이디</label>
+					<div class="col-sm-10">
+						<div class="row">
+							<div class="col-sm-5">
+								<input type="text" class="form-control" name="userId" id="userId" maxlength="20" required="required">
+							</div>
+							<div class="col-sm-4">
+								<input type="button" value="중복확인" class="btn btn-warning" id="idDuplicateCheck">
+							</div>
+						</div>
+					</div>
 				</div>
-		    </div>
-            <div class="row mb-2">
-		    	 <input type="button" class="btn btn-warning" id="doSave" value="회원가입">
-		    </div>
-        </form>
-    </div>
-</body>
+				<div class="form-group row mb-2">
+					<label for="Name" class="col-sm-2 col-form-label">닉네임</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="Name" id="Name" maxlength="20" required="required">
+					</div>
+				</div>
+				<div class="form-group row mb-2">
+					<label for="password" class="col-sm-2 col-form-label">비밀번호</label>
+					<div class="col-sm-4">
+						<input type="password" class="form-control" name="password" id="password" maxlength="20" required="required">
+					</div>
+				</div>
+				<div class="form-group row mb-2">
+					<label for="passwordCheck" class="col-sm-2 col-form-label">비밀번호 확인</label>
+					<div class="col-sm-4">
+						<input type="password" class="form-control" name="passwordCheck" id="passwordCheck" maxlength="20" required="required">
+					</div>
+					<div class="col-sm-4">
+							<input type="button" value="비밀번호 확인" class="btn btn-warning" id="passwordDuplicateCheck">
+					</div>
+				</div>
+				<div class="form-group row mb-2">
+					<label for="email" class="col-sm-2 col-form-label">이메일</label>
+					<div class="col-sm-4">
+						<input type="email" class="form-control" name="email" id="email" maxlength="50" required="required">
+					</div>
+				</div>
+				<div class="form-group row mb-2">
+					<label for="birth" class="col-sm-2 col-form-label">생년월일</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="birth" id="birth" maxlength="10" required="required">
+					</div>
+				</div>
+				<div class="form-group row mb-2">
+					<label for="sample3_postcode" class="col-sm-2 col-form-label">주소</label>
+					<div class="col-sm-10">
+						<div class="row">
+							<div class="col-sm-5">
+								<input type="text" class="form-control mb-2" id="sample3_address" placeholder="주소">
+								<input type="text" class="form-control" id="sample3_detailAddress" placeholder="상세주소">
+							</div>
+							<div class="col-sm-4">
+								<input type="button" class="btn btn-warning" onclick="sample3_execDaumPostcode()" value="우편번호 찾기">
+							</div>
+						</div>
+						<div id="wrap" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+							<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+						</div>
+					</div>
+				</div>
+				<div class="form-group row mb-2">
+					<div class="col-sm-10 offset-sm-2">
+						<input type="button" class="btn btn-warning btn-lg btn-block" id="doSave" value="회원가입">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     // 우편번호 찾기 찾기 화면을 넣을 element
@@ -153,4 +164,5 @@
         element_wrap.style.display = 'block';
     }
 </script>
+</body>
 </html>
