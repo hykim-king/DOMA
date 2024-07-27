@@ -9,9 +9,9 @@
     
 	<typeAliases>
         <typeAlias alias="Search" type="com.acorn.doma.cmn.Search"/>
-        <typeAlias alias="Code" type="com.acorn.doma.code.domain.Code"/>
-        <typeAlias alias="User" type="com.acorn.doma.user.domain.User"/>
-        <typeAlias alias="MyMapper" type="com.acorn.doma.mymapper.domain.MyMapper"/>
+        <typeAlias alias="Code" type="com.acorn.doma.domain.Code"/>
+        <typeAlias alias="User" type="com.acorn.doma.domain.User"/>
+        
     </typeAliases>
     
 </configuration>
