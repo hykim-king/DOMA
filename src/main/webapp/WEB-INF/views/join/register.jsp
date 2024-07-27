@@ -1,66 +1,83 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="CP" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%
-    String contextPath = request.getContextPath();
-%>
-<link rel="stylesheet" href="<%= contextPath %>/resources/css/user/register.css">
-
+<%-- bootstrap css --%>
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
+<script src="${CP }/resources/js/user/register.js"></script>
 </head>
 <body>
-	<div class="container">
-        <form action="#" method="post">
-            <ul>
-                <h1>Register</h1>
-                <li class="register_id">
-                    <label>아이디</label><br>
-                    <input type="text" class="input_text" id="registerId" placeholder="아이디를 입력하세요">
-                    <input type="submit" class="input_text" id="IdCheckBtn" value="중복확인">
-                </li>
-                <li class="register_name">
-                    <label>닉네임</label><br>
-                    <input type="text" class="input_text" id="registerName" placeholder="사용하실 닉네임을 입력하세요.">
-                </li>
-                <li class="register_password">
-                    <label>비밀번호</label><br>
-                    <input type="password" class="input_text" id="registerPassword" placeholder="비밀번호를 입력하세요">
-                </li>
-                <li class="register_password_check">
-                    <label>비밀번호 확인</label><br>
-                    <input type="password" class="input_text" id="registerPasswordCheck" placeholder="비밀번호를 입력하세요">
-                </li>
-                <li class="register_email">
-                    <label>생년월일</label><br>
-                    <input type="email" class="input_text" id="registerEmail" value="이메일">
-                </li>
-                <li class="register_birth">
-                    <label>생년월일</label><br>
-                    <input type="date" class="input_birth" id="registerBirth" value="생년월일">
-                </li>
-                <li class="register_address">
-                	<label>주소</label><br>
-                    <input type="text" class="input_text" id="sample3_postcode" placeholder="우편번호">
-					<input type="button" class="input_text" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
-					<input type="text" class="input_text" id="sample3_address" placeholder="주소"><br>
-					<input type="text" class="input_text" id="sample3_detailAddress" placeholder="상세주소">
-					<input type="text" class="input_text" id="sample3_extraAddress" placeholder="참고항목">
-                </li>
+	<div class="container-fluid">
+		<h1 style="color:#ffc107; font-weight:bold;">회원가입</h1>
+        <form action="#" method="post" class="form-horizontal">
+	        <label for="userId" class="col-sm-2 col-form-label">아이디</label>
+	        <div class="row mb-2">	
+		        <div class="col-sm-3">
+		          <input type="text" class="form-control" name="userId" id="userId"  
+		              maxlength="20" required="required">
+		        </div>    
+		        <div class="col-sm-2">
+		           <input type="button" value="중복확인" class="btn btn-warning" id="idDuplicateCheck">
+			    </div>
+		    </div>
+		    <div class="row mb-2">	
+		    	<label for="Name" class="col-sm-2 col-form-label">닉네임</label>
+		        <div class="col-sm-3">
+		          <input type="text" class="form-control" name="Name" id="Name"  
+		              maxlength="20" required="required">
+		        </div>
+		    </div>
+		    <div class="row mb-2">
+		    	<label for="password" class="col-sm-2 col-form-label">비밀번호</label>	
+		        <div class="col-sm-3">
+		          <input type="password" class="form-control" name="password" id="password"  
+		              maxlength="20" required="required">
+		        </div>
+		    </div>
+		    <div class="row mb-2">
+		    	<label for="passwordCheck" class="col-sm-2 col-form-label">비밀번호 확인</label>	
+		        <div class="col-sm-3">
+		          <input type="password" class="form-control" name="passwordCheck" id="passwordCheck"  
+		              maxlength="20" required="required">
+		        </div>
+		    </div>
+		    <div class="row mb-2">
+		    	<label for="email" class="col-sm-2 col-form-label">이메일 확인</label>	
+		        <div class="col-sm-3">
+		          <input type="email" class="form-control" name="email" id="email"  
+		              maxlength="20" required="required">
+		        </div>
+		    </div>
+            <div class="row mb-2">
+		    	<label for="date" class="col-sm-2 col-form-label">생년월일 확인</label>	
+		        <div class="col-sm-3">
+		          <input type="email" class="form-control" name="birth" id="birth"  
+		              maxlength="20" required="required">
+		        </div>
+		    </div>
+		    <div class="row mb-2">
+	    		<label for="sample3_postcode" class="form-label">주소</label><br>
+                <input type="text" class="form-control" id="sample3_postcode" placeholder="우편번호">
+				<input type="button" class="btn btn-warning" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
+				<input type="text" class="form-control" id="sample3_address" placeholder="주소"><br>
+				<input type="text" class="form-control" id="sample3_detailAddress" placeholder="상세주소">
+				<input type="text" class="form-control" id="sample3_extraAddress" placeholder="참고항목">
 				<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
 					<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 				</div>
-                <li class="register_submit">
-                    <input type="submit" class="input_text" id="doSave" value="회원가입">
-                </li>
-            </ul>
+		    </div>
+            <div class="row mb-2">
+		    	 <input type="button" class="btn btn-warning" id="doSave" value="회원가입">
+		    </div>
         </form>
     </div>
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="<%= contextPath%>/resources/js/user/register.js"></script>
 <script>
     // 우편번호 찾기 찾기 화면을 넣을 element
     var element_wrap = document.getElementById('wrap');

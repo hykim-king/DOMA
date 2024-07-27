@@ -43,7 +43,7 @@ public class UserController implements PLog {
 	public String doRegister() throws SQLException{
 		// /WEB-INF/views+ viewName + ".jsp
 		// /WEB-INF/views/user/user_list.jsp
-		String viewName = "join/community_page";
+		String viewName = "join/register";
 		
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ doRegister()              │");
