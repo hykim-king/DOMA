@@ -14,13 +14,13 @@ public class MyPageController implements PLog {
 		log.debug("└──────────────────────────────────────────┘");	
 	}
 
-	@GetMapping("/mypage/myPage_list.do")//@RequestMapping의 method = RequestMethod.GET의 축약형
+	@GetMapping("/mypage/MyPage.do")//@RequestMapping의 method = RequestMethod.GET의 축약형
 	public String asyncIndex() {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ asyncIndex()                             │");
 		log.debug("└──────────────────────────────────────────┘");			
 			
-		String viewName = "mypage/myPage_list";
+		String viewName = "mypage/MyPage";
 		
 		log.debug("viewName:"+viewName); 
 
