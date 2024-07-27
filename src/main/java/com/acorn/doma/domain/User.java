@@ -4,75 +4,77 @@ import com.acorn.doma.cmn.DTO;
 
 public class User extends DTO {
 
-	private String userId;  //사용자id
-	private String name;     //이름
-	private String password; //비밀번호
-	private String birthday; //생년월일
-	private String phone;    //전화번호
-	private String location; //주소
-	private String email;    //이메일
+	private String userId        ;
+	private String userName      ;
+	private String userPw        ;
+	private String userEmail     ;
+	private String birth          ;
+	private int grade          	; //0 : 관리자 1 : 사용자
+	private String address        ;
+	private String detailAddress ;
+	private String regDt         ;
 	
-	public User() {
-		super();
-	}
-	public User(String userId, String name, String password, String birthday, String phone, String location,
-			String email) {
-		super();
-		this.userId = userId;
-		this.name = name;
-		this.password = password;
-		this.birthday = birthday;
-		this.phone = phone;
-		this.location = location;
-		this.email = email;
-	}
 	public String getUserId() {
 		return userId;
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public String getPassword() {
-		return password;
+	public String getUserPw() {
+		return userPw;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
 	}
-	public String getBirthday() {
-		return birthday;
+	public String getUserEmail() {
+		return userEmail;
 	}
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
-	public String getPhone() {
-		return phone;
+	public String getBirth() {
+		return birth;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
-	public String getLocation() {
-		return location;
+	public int getGrade() {
+		return grade;
 	}
-	public void setLocation(String location) {
-		this.location = location;
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
-	public String getEmail() {
-		return email;
+	public String getAddress() {
+		return address;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
+	public String getRegDt() {
+		return regDt;
+	}
+	public void setRegDt(String regDt) {
+		this.regDt = regDt;
 	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", name=" + name + ", password=" + password + ", birthday=" + birthday
-				+ ", phone=" + phone + ", location=" + location + ", email=" + email + ", toString()="
-				+ super.toString() + "]";
+		return "User [userId=" + userId + ", userName=" + userName + ", userPw=" + userPw + ", userEmail=" + userEmail
+				+ ", birth=" + birth + ", grade=" + grade + ", address=" + address + ", detailAddress=" + detailAddress
+				+ ", regDt=" + regDt + ", toString()=" + super.toString() + "]";
 	}
+	
+	
 	
 }

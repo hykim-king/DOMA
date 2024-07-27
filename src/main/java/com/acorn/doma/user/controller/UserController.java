@@ -40,17 +40,89 @@ public class UserController implements PLog {
 			   , method = RequestMethod.GET
 			   , produces = "text/plain;charset=UTF-8"
 			   ) //produces : 화면으로 전송 encoding 
-	public String doRegister() throws SQLException{
+	public String doRegister(Model model, User inVO) throws SQLException{
 		// /WEB-INF/views+ viewName + ".jsp
-		// /WEB-INF/views/user/user_list.jsp
-		String viewName = "join/register";
-		
+		// /WEB-INF/views/user/user_list.jsp		
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ doRegister()              │");
 		log.debug("└───────────────────────────┘");
+		String viewName = "join/register";
 		
 		return viewName;
 	}
+	
+	@RequestMapping(value = "/idCheck.do"
+			   , method = RequestMethod.GET
+			   , produces = "text/plain;charset=UTF-8"
+			   ) //produces : 화면으로 전송 encoding 
+	@ResponseBody
+	public String idCheck(User inVO) throws SQLException{
+		// /WEB-INF/views+ viewName + ".jsp
+		// /WEB-INF/views/user/user_list.jsp		
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ idCheck()                 │");
+		log.debug("└───────────────────────────┘");
+		String jsonString = "";
+		
+		log.debug("1.param:" + inVO);
+		User outVO = userService.doSelectOne(inVO);
+		
+		log.debug("2. outVO : " + outVO);
+		String message = "";
+		int flag = 0;
+		if(null == outVO) {
+			message = inVO.getUserId() + "를 사용할 수 있습니다.";
+			flag = 1;
+		}else {
+			message = inVO.getUserId() + "는 이미 존재하는 아이디입니다.";
+		}
+		
+		jsonString = new Gson().toJson(new Message(flag, message));
+		log.debug("2.jsonString:" + jsonString);
+		
+		return jsonString;
+	}
+	
+
+	@RequestMapping(value = "/doSave.do"
+			   , method = RequestMethod.POST
+			   , produces = "text/plain;charset=UTF-8"
+			   ) //produces : 화면으로 전송 encoding 
+	@ResponseBody
+	public String doSave(User user) throws SQLException {
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ doSave()                  │");
+		log.debug("└───────────────────────────┘");
+		
+		String jsonString = "";
+		
+		//1.
+		log.debug("1.param user:" + user);
+		
+		int flag = userService.doSave(user);
+		
+		//2. 
+		log.debug("2.flag:" + flag);
+		
+		String message = "";
+		
+		if(1 == flag) {
+			message = user.getUserId() + "님이 등록 되었습니다.";
+		}else {
+			message = user.getUserId() + "님 등록 실패 했습니다.";
+		}
+		
+		Message messageObj = new Message(flag, message);
+		
+		Gson gson = new Gson();
+		jsonString = gson.toJson(messageObj);
+		
+		//3.
+		log.debug("3.jsonString:" + jsonString);
+		
+		return jsonString;
+	}
+
 	
 	@RequestMapping(value = "/doUpdate.do"
 				   , method = RequestMethod.POST
@@ -149,52 +221,5 @@ public class UserController implements PLog {
 		
 		return jsonString;
 	}
-	
-	/**
-	 * 단건 등록
-	 * @param user
-	 * @return
-	 * @throws SQLException
-	 * http://localhost:8080/ehr/user/doSave.do
-	 */
-	@RequestMapping(value = "/doSave.do"
-				   , method = RequestMethod.POST
-				   , produces = "text/plain;charset=UTF-8"
-				   ) //produces : 화면으로 전송 encoding 
-	@ResponseBody
-	public String doSave(User user) throws SQLException {
-		log.debug("┌───────────────────────────┐");
-		log.debug("│ doSave()                  │");
-		log.debug("└───────────────────────────┘");
-		
-		String jsonString = "";
-		
-		//1.
-		log.debug("1.param user:" + user);
-		
-		int flag = userService.doSave(user);
-		
-		//2. 
-		log.debug("2.flag:" + flag);
-		
-		String message = "";
-		
-		if(1 == flag) {
-			message = user.getUserId() + "님이 등록 되었습니다.";
-		}else {
-			message = user.getUserId() + "님 등록 실패 했습니다.";
-		}
-		
-		Message messageObj = new Message(flag, message);
-		
-		Gson gson = new Gson();
-		jsonString = gson.toJson(messageObj);
-		
-		//3.
-		log.debug("3.jsonString:" + jsonString);
-		
-		return jsonString;
-	}
-	
 	
 }

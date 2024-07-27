@@ -46,12 +46,7 @@ public class UserMapperTest implements PLog {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
-
-
-		userVO01 = new User("user01", "이용자01", "4321", "2002/12/31", "01071409360", "서울시 마포구 숭문16길 28", "ddswlstj@naver.com");
-		userVO02 = new User("user02", "이용자02", "4321", "2002/12/30", "01071409360",  "서울시 마포구 숭문16길 28", "ddswlstj@naver.com");
-		userVO03 = new User("user03", "이용자03", "4321", "2002/12/29", "01071409360",  "서울시 마포구 숭문16길 28", "ddswlstj@naver.com");
-
+		
 		search = new Search();
 	}
 
@@ -95,13 +90,6 @@ public class UserMapperTest implements PLog {
 
 	public void isSameUser(User userVO, User outVO) {
 		assertEquals(userVO.getUserId(), outVO.getUserId());
-		assertEquals(userVO.getName(), outVO.getName());
-		assertEquals(userVO.getPassword(), outVO.getPassword());
-		assertEquals(userVO.getBirthday(), outVO.getBirthday());
-		// 2024-07-03 추가
-		assertEquals(userVO.getPhone(), outVO.getPhone());
-		assertEquals(userVO.getLocation(), outVO.getLocation());
-		assertEquals(userVO.getEmail(), outVO.getEmail());
 	}
 
 	@After

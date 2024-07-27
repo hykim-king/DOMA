@@ -4,44 +4,50 @@
 	
    <select id="getCount" parameterType="User" resultType="int">
         SELECT COUNT(*) cnt 
-         FROM member        
+         FROM D_USER        
     </select>
+    
     <select id="doSelectOne" parameterType="String" resultType="User">
         SELECT                                            
-            user_id AS userId,                                      
-            name,                                         
-            password,                                     
-            birthday,
-            phone,
-            location,
-            email
+            user_id as userId,
+            user_name as userName,
+            user_pw as userPw,
+            user_email as userEmail,
+            birth,
+            grade,
+            address,
+            detail_address as detailAddress,
+            reg_dt as regDt
         FROM                                              
-            member                                        
+            D_USER                                        
         WHERE user_id = #{userId}                                 
     </select>
     
     <delete id="doDelete" parameterType="User">
-        DELETE FROM member
+        DELETE FROM D_USER
          WHERE user_id = #{userId}
     </delete>
     
     <insert id="doSave" parameterType="User">
-        INSERT INTO member (
-               user_id,        
-               name,           
-               password,       
-               birthday,       
-               phone,         
-               location,      
-               email   
+        INSERT INTO D_USER (
+               user_id,
+               user_name,
+               user_pw,
+               user_email,
+               address,
+               reg_dt,
+               grade,
+               detail_address,
+               birth,
             ) VALUES (          
                 #{userId},              
-                #{name},              
-                #{password},              
-                #{birthday},
-                #{phone}, 
-                #{location},                  
-                #{email}     
+                #{userName},              
+                #{userPw},              
+                #{userEmail},
+                #{grade}, 
+                #{address},                  
+                #{detailAddress}, 
+                #{regDt}    
             )                   
     </insert>
         
