@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Footer Example</title>
+    <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
     <footer>
         <img class="footer-logo" src="<%=request.getContextPath()%>/resources/img/footerlogo.png" alt="Footer Logo">
         <div class="footer-copyright">
-            <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+            <p>&copy; 2024 DOMA. All rights reserved.</p>
         </div>
         <a id="top-button" href="#">
             <img src="<%=request.getContextPath()%>/resources/img/top.png" alt="Top Button">
