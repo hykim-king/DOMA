@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.domain.User;
+import com.acorn.doma.mapper.DeathMapper;
 import com.acorn.doma.mapper.UserMapper;
 
 
@@ -35,7 +36,8 @@ public class DeathMapperTest implements PLog {
 	
 	@Autowired
 	UserMapper userMapper;
-	
+	@Autowired
+	DeathMapper deathMapper;
 
 	
 	
@@ -50,6 +52,8 @@ public class DeathMapperTest implements PLog {
 
 		
 	}
+	@Ignore
+	
 	@Test
 	public void doRetrieve() throws SQLException{
 		
@@ -66,14 +70,16 @@ public class DeathMapperTest implements PLog {
 		List<User> list = userMapper.doRetrieve(search);
 		assertEquals(10, list.size());
 	}
-
 	@After
 	public void tearDown() throws Exception {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-
+	@Test
+	public void countAll() throws Exception{
+		int count = deathMapper.countAll();
+	}
 	@Ignore
 	@Test
 	public void beans() {

@@ -15,10 +15,10 @@
         <typeAlias alias="Area" type="com.acorn.doma.domain.Area"/>
         <typeAlias alias="Comment" type="com.acorn.doma.domain.Comment"/>
         <typeAlias alias="Freezing" type="com.acorn.doma.domain.Freezing"/>
-        <typeAlias alias="Grade" type="com.acorn.doma.domain.Grade"/>
         <typeAlias alias="Point" type="com.acorn.doma.domain.Point"/>
         <typeAlias alias="Type" type="com.acorn.doma.domain.Type"/>
         <typeAlias alias="Weather" type="com.acorn.doma.domain.Weather"/>
+        <typeAlias alias="Death" type="com.acorn.doma.domain.Death"/>
     </typeAliases>
     
 </configuration>
