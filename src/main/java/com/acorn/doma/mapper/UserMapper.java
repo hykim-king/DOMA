@@ -13,5 +13,7 @@ import com.acorn.doma.domain.User;
 @Mapper
 public interface UserMapper extends WorkDiv<User> {
 
+	int getCount() throws SQLException;
+
 	
 }
