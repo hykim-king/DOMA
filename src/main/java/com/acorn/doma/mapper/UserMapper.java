@@ -2,6 +2,7 @@ package com.acorn.doma.mapper;
 
 import java.sql.SQLException;
 
+
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -14,6 +15,6 @@ import com.acorn.doma.domain.User;
 public interface UserMapper extends WorkDiv<User> {
 
 	int getCount() throws SQLException;
-
 	
+	String getUserId(String userId) throws SQLException;
 }

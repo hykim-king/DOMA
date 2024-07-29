@@ -95,7 +95,6 @@
 		
 		if(passwordCheckCount != 1){
 			alert("비밀번호가 일치하지 않습니다.");
-			passwordCheckBtn.focus();
 			return;
 		}
 		
@@ -132,7 +131,7 @@
                     }
                 }catch(e){
                     console.error("data가 null 혹은, undefined 입니다");
-                    alert("data가 null 혹은, undefined 입니다.");
+                    alert("이미 존재하는 아이디입니다.");
                 }
             }else{
                 console.log("else");
@@ -144,7 +143,7 @@
 	function idCheck() {
 		console.log("idCheck()");
 		
-		let type="GET";
+		let type="get";
         let url ="/doma/user/idCheck.do";
         let async = "true";
         let dataType = "html";
@@ -152,10 +151,10 @@
         if(confirm("아이디를 사용하시겠습니까?") === false)return;
 
         let params = {
-            "userId" : userId
+            "userId" : userIdInput.value 
         }
 		
-		console.log("userId : " + userId);
+		console.log("userIdInput : " + userIdInput.value);
 		 
         PClass.pAjax(url,params,dataType,type,async,function(data){
             if(data){
@@ -169,9 +168,11 @@
                         idCheckCount= 1;
                     }else{
                         alert(message.messageContents);
+                        
                     }
                 }catch(e){
                     console.error("JSON 파싱 오류:", e);
+                    alert("이미 존재하는 아이디입니다.");
                 }
             }else{
                 console.log("else");

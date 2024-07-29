@@ -1,9 +1,6 @@
 package com.acorn.doma.user.controller;
 
 import java.sql.SQLException;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,13 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.Message;
 import com.acorn.doma.cmn.PLog;
-import com.acorn.doma.cmn.Search;
-import com.acorn.doma.cmn.StringUtil;
 import com.acorn.doma.domain.User;
 import com.acorn.doma.user.service.UserService;
 import com.google.gson.Gson;
@@ -56,7 +51,7 @@ public class UserController implements PLog {
 			   , produces = "text/plain;charset=UTF-8"
 			   ) //produces : 화면으로 전송 encoding 
 	@ResponseBody
-	public String idCheck(User inVO) throws SQLException{
+	public String idCheck(@RequestParam("userId") String inVO) throws Exception{
 		// /WEB-INF/views+ viewName + ".jsp
 		// /WEB-INF/views/user/user_list.jsp		
 		log.debug("┌───────────────────────────┐");
@@ -65,16 +60,16 @@ public class UserController implements PLog {
 		String jsonString = "";
 		
 		log.debug("1.param:" + inVO);
-		User outVO = userService.doSelectOne(inVO);
+		String outVO = userService.getUserId(inVO);
 		
 		log.debug("2. outVO : " + outVO);
 		String message = "";
 		int flag = 0;
 		if(null == outVO) {
-			message = inVO.getUserId() + "를 사용할 수 있습니다.";
+			message = "\"" +  inVO + "\"" + "를 사용할 수 있습니다.";
 			flag = 1;
 		}else {
-			message = inVO.getUserId() + "는 이미 존재하는 아이디입니다.";
+			message = "\"" +  inVO + "\"" + "는 이미 존재하는 아이디입니다.";
 		}
 		
 		jsonString = new Gson().toJson(new Message(flag, message));	

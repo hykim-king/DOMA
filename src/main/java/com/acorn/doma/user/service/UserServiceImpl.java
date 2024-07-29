@@ -55,4 +55,16 @@ public class UserServiceImpl implements UserService, PLog{
 		return null;
 	}
 
+	@Override
+	public String getUserId(String userId) throws Exception {
+		
+		log.debug("1. param : " + userId);	
+		String outVO = this.userMapper.getUserId(userId);
+		log.debug("2. outVO : " + outVO);
+		
+		return outVO;
+		
+	}
+
+	
 }
