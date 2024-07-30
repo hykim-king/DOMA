@@ -56,8 +56,15 @@ public class AreaDataApi {
 	        return items;
 	    }
 		public static void main(String[] args) throws IOException {
+			//API로부터 데이터 가져오기
 			String jsonData = fetchDataFromApi();
+			
+			//JSON 데이터 파싱하여 필요한 정보 추출
 	        JsonArray items = parseJsonData(jsonData);
+	        
+	        
 	        System.out.println(items);
 	    }
+		
+		
 }
