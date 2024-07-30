@@ -2,6 +2,7 @@ package com.acorn.doma.domain;
 
 import com.acorn.doma.cmn.DTO;
 
+
 public class User extends DTO {
 
 	private String userId        ;
