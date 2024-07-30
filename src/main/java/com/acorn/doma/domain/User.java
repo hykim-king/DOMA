@@ -14,6 +14,24 @@ public class User extends DTO {
 	private String detailAddress ;
 	private String regDt         ;
 	
+	public User() {
+		super();
+	}
+
+	public User(String userId, String userName, String userPw, String userEmail, String birth, int grade,
+			String address, String detailAddress, String regDt) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPw = userPw;
+		this.userEmail = userEmail;
+		this.birth = birth;
+		this.grade = grade;
+		this.address = address;
+		this.detailAddress = detailAddress;
+		this.regDt = regDt;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}
