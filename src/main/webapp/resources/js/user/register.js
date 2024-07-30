@@ -89,12 +89,14 @@
 		}
 		
 		if(idCheckCount != 1){
+			console.log("idCheckCount : " + idCheckCount);
 			alert("아이디 중복을 확인하세요.");
 			return;
 		}
 		
 		if(passwordCheckCount != 1){
-			alert("비밀번호가 일치하지 않습니다.");
+			console.log("passwordCheckCount : " + passwordCheckCount);
+			alert("비밀번호가 일치하는지 확인하세요.");
 			return;
 		}
 		
@@ -108,12 +110,12 @@
 
         let params = {
             "userId" : userIdInput.value,
-            "name" : nameInput.value,
-            "password" : passwordInput.value,
-            "email" : emailInput.value,
+            "userName" : nameInput.value,
+            "userPw" : passwordInput.value,
+            "userEmail" : emailInput.value,
             "birth" : birthInput.value,
-            "address" : addressInput.value,
-            "address_2" : detailAddressInput.value
+            "address" : addrInput.value,
+            "detailAddress" : detailAddrInput.value
         }
 
         PClass.pAjax(url,params,dataType,type,async,function(data){
@@ -166,9 +168,11 @@
                     	console.log(message.messageId);
                         alert(message.messageContents);
                         idCheckCount= 1;
+                        console.log("idCheckCount : " + idCheckCount); 
                     }else{
                         alert(message.messageContents);
-                        
+                        console.log("idCheckCount : " + idCheckCount);
+                             
                     }
                 }catch(e){
                     console.error("JSON 파싱 오류:", e);
@@ -183,6 +187,14 @@
 	
 	function passwordCheck() {
 		console.log("passwordCheck()");
+		
+		if(passwordInput.value === passwordCheckInput.value){
+			passwordCheckCount = 1;
+			alert("비밀번호가 일치합니다.");
+		}else{
+			alert("비밀번호가 일치하지 않습니다.");
+		}
+		
 	}
 	  
 });

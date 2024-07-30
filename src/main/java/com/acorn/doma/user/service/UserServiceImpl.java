@@ -1,6 +1,7 @@
 package com.acorn.doma.user.service;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,12 @@ public class UserServiceImpl implements UserService, PLog{
 
 	@Override
 	public int doSave(User inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		int flag = 0;
+		
+		flag = userMapper.doSave(inVO);
+		log.debug("flag : " + flag);		
+		
+		return flag;
 	}
 
 	@Override

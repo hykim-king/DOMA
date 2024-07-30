@@ -41,20 +41,21 @@
                user_name,
                user_pw,
                user_email,
-               address,
-               reg_dt,
-               grade,
-               detail_address,
                birth,
+               grade,
+               address,
+               detail_address,
+               reg_dt,
             ) VALUES (          
                 #{userId},              
                 #{userName},              
                 #{userPw},              
                 #{userEmail},
-                #{grade}, 
+                #{birth},
+                1, 
                 #{address},                  
                 #{detailAddress}, 
-                #{regDt}    
+                SYSDATE    
             )                   
     </insert>
         
