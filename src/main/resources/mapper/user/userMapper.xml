@@ -37,15 +37,15 @@
     
     <insert id="doSave" parameterType="User">
         INSERT INTO D_USER (
-               user_id,
-               user_name,
-               user_pw,
-               user_email,
+               user_id as userId,
+               user_name as userName,
+               user_pw as userPw,
+               user_email as userEmail,
                birth,
                grade,
                address,
-               detail_address,
-               reg_dt,
+               detail_address as detailAddress,
+               reg_dt as regDt,
             ) VALUES (          
                 #{userId},              
                 #{userName},              
