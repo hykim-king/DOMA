@@ -3,6 +3,7 @@ package com.acorn.doma.data;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -15,6 +16,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 
 public class FreezingDataApi {
 
@@ -48,12 +50,18 @@ public class FreezingDataApi {
     }
 
     private static JsonArray parseJsonData(String jsonData) {
-        JsonElement jsonElement = JsonParser.parseString(jsonData);
+        JsonReader reader = new JsonReader(new StringReader(jsonData));
+        reader.setLenient(true); // Lenient 모드 활성화
+        JsonElement jsonElement = JsonParser.parseReader(reader); // JSON 문자열을 JsonElement로 파싱합니다.
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        JsonArray items = jsonObject.has("items") && jsonObject.getAsJsonObject("items").has("item")
-                ? jsonObject.getAsJsonObject("items").getAsJsonArray("item")
-                : new JsonArray();
-        return items;
+
+        if (jsonObject.has("resultCode") && "00".equals(jsonObject.get("resultCode").getAsString())) {
+            JsonObject itemsObject = jsonObject.getAsJsonObject("items");
+            return itemsObject.has("item") ? itemsObject.getAsJsonArray("item") : new JsonArray();
+        } else {
+            System.err.println("Error: " + jsonObject.get("resultMsg").getAsString());
+            return new JsonArray(); // 빈 JsonArray 반환
+        }
     }
 
     public static void main(String[] args) throws IOException {
