@@ -17,16 +17,6 @@ public class BootStrapController implements PLog {
       log.debug("└──────────────────────────────────────────┘");   
    }  
    
-   @GetMapping("main.do")
-   public String main() {
-      String viewName = "template/main";
-      
-      log.debug("┌──────────────────────────────────────────┐");
-      log.debug("│ viewName:"+viewName);                                 
-      log.debug("└──────────────────────────────────────────┘");
-      
-      return viewName;
-   }
    
    @GetMapping("footer.do")
    public String footer() {
