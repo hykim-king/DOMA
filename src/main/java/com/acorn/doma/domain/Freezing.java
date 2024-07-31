@@ -1,7 +1,7 @@
 package com.acorn.doma.domain;
 
 public class Freezing {
-	private int seq;
+	private int fid;
 	private int year;
 	private int accident;
 	private int dead;
@@ -15,10 +15,10 @@ public class Freezing {
 	private String dname;
 	private String accPoint;
 	public Freezing() {}
-	public Freezing(int seq, int year, int accident, int dead, int seriously, int ordinary, int report,
+	public Freezing(int fid, int year, int accident, int dead, int seriously, int ordinary, int report,
 			double longitude, double latitude, String polygon, String gname, String dname, String accPoint) {
 		super();
-		this.seq = seq;
+		this.fid = fid;
 		this.year = year;
 		this.accident = accident;
 		this.dead = dead;
@@ -32,11 +32,11 @@ public class Freezing {
 		this.dname = dname;
 		this.accPoint = accPoint;
 	}
-	public int getSeq() {
-		return seq;
+	public int getFid() {
+		return fid;
 	}
-	public void setSeq(int seq) {
-		this.seq = seq;
+	public void setFid(int fid) {
+		this.fid = fid;
 	}
 	public int getYear() {
 		return year;
@@ -112,7 +112,7 @@ public class Freezing {
 	}
 	@Override
 	public String toString() {
-		return "Freezing [seq=" + seq + ", year=" + year + ", accident=" + accident + ", dead=" + dead + ", seriously="
+		return "Freezing [fid=" + fid + ", year=" + year + ", accident=" + accident + ", dead=" + dead + ", seriously="
 				+ seriously + ", ordinary=" + ordinary + ", report=" + report + ", longitude=" + longitude
 				+ ", latitude=" + latitude + ", polygon=" + polygon + ", gname=" + gname + ", dname=" + dname
 				+ ", accPoint=" + accPoint + "]";
