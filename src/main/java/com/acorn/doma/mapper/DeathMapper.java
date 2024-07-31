@@ -9,6 +9,11 @@ import com.acorn.doma.cmn.WorkDiv;
 import com.acorn.doma.domain.Death;
 @Mapper
 public interface DeathMapper extends WorkDiv<Death> {
+	
 	int countAll() throws SQLException;
 	List<Death> selectTop5AccTypeByGname();
+	
+	List<Death> deathDayNight();
+	
+	
 }

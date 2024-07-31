@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.DeathMapper">
-    
-<select id="countAll" resultType="int">
-SELECT count(*) FROM d_death
-</select>
+     
+    <resultMap id="DeathDayNightResult" type="Death">
+        <result column="day_week" property="dayWeek"/>
+        <result column="day_night" property="dayNight"/> 
+    </resultMap>
 
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM d_death
+    </select>
+
+    <select id="deathDayNight" resultMap="DeathDayNightResult">
+        SELECT
+            day_week,
+            day_night,
+            SUM(dead)  
+        FROM
+            d_death
+        GROUP BY
+            day_week,
+            day_night
+        ORDER BY
+            SUM(dead) DESC
+    </select>
 </mapper>

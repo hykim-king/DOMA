@@ -2,6 +2,7 @@ package com.acorn.doma.death.dao;
 
 import static org.junit.Assert.*;
 
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
+import com.acorn.doma.domain.Death;
 import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.DeathMapper;
 import com.acorn.doma.mapper.UserMapper;
@@ -38,8 +40,7 @@ public class DeathMapperTest implements PLog {
 	UserMapper userMapper;
 	@Autowired
 	DeathMapper deathMapper;
-
-	
+ 
 	
 	Search search;
 	
@@ -76,10 +77,23 @@ public class DeathMapperTest implements PLog {
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
+	
+	 
+	@Test
+    public void deathDayNight() throws Exception {
+        
+        List<Death> results = deathMapper.deathDayNight();
+
+       
+    }
+	
+	
+	@Ignore
 	@Test
 	public void countAll() throws Exception{
 		int count = deathMapper.countAll();
 	}
+	
 	@Ignore
 	@Test
 	public void beans() {
