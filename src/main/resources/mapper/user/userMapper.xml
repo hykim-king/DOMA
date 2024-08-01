@@ -7,6 +7,21 @@
          FROM D_USER        
     </select>
     
+    <select id="login" parameterType="User" resultType="User">
+        SELECT                                            
+            user_id as userId,
+            user_name as userName,
+            user_email as userEmail,
+            grade,
+            address,
+            detail_address as detailAddress,
+            reg_dt as regDt
+        FROM                                              
+            D_USER
+        WHERE user_id = #{userId}
+		   AND user_pw = #{userPw}            
+    </select>
+    
     <select id="getUserId" parameterType="String" resultType="String">
         SELECT                                            
             user_id as userId

@@ -62,13 +62,30 @@ public class UserServiceImpl implements UserService, PLog{
 
 	@Override
 	public String getUserId(String userId) throws Exception {
+		log.debug("┌───────────────────────────────┐");
+		log.debug("│ UserServiceImpl() : getUserId │");
+		log.debug("└───────────────────────────────┘");
 		
-		log.debug("1. param : " + userId);	
+		log.debug("┌ 1. param : " + userId);	
 		String outVO = this.userMapper.getUserId(userId);
-		log.debug("2. outVO : " + outVO);
+		log.debug("└ 2. outVO : " + outVO);
 		
 		return outVO;
 		
+	}
+
+	@Override
+	public User login(User user) throws Exception {
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ UserServiceImpl() : login │");
+		log.debug("└───────────────────────────┘");
+		
+		log.debug("┌ 1. param : " + user);
+		
+		User outVO = userMapper.login(user);
+		log.debug("└ 2. outVO : " + outVO);
+		
+		return outVO;
 	}
 
 	

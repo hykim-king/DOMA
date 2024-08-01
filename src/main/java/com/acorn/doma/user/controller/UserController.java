@@ -2,6 +2,8 @@ package com.acorn.doma.user.controller;
 
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -31,11 +33,12 @@ public class UserController implements PLog {
 		log.debug("└───────────────────────────┘");
 	}
 	
+	
 	@RequestMapping(value = "/doRegister.do"
 			   , method = RequestMethod.GET
 			   , produces = "text/plain;charset=UTF-8"
 			   ) //produces : 화면으로 전송 encoding 
-	public String doRegister(Model model, User inVO) throws SQLException{
+	public String doRegister(Model model) throws SQLException{
 		// /WEB-INF/views+ viewName + ".jsp
 		// /WEB-INF/views/user/user_list.jsp		
 		log.debug("┌───────────────────────────┐");
@@ -187,34 +190,52 @@ public class UserController implements PLog {
 		return jsonString;
 	}
 	
-	@RequestMapping(value = "/doSelectOne.do"
-					, method = RequestMethod.GET
-					, produces = "text/plain;charset=UTF-8"
-					) //produces : 화면으로 전송 encoding
+	@RequestMapping(value = "/Login.do"
+					, method = RequestMethod.POST
+					, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String doSelectOne(User inVO) throws SQLException {
+	public String Login(Model model,User user, HttpSession httpSession) throws Exception {
 		log.debug("┌───────────────────────────┐");
-		log.debug("│ doSelectOne()             │");
+		log.debug("│ Login()            	   │");
 		log.debug("└───────────────────────────┘");
 		
+		String viewName = "/WEB-INF/views/join/login_confirm_page.jsp";
 		String jsonString = "";
 		
-		log.debug("1.param:" + inVO);
-		User outVO = userService.doSelectOne(inVO);
+		log.debug("┌ 1.user:" + user);
+		log.debug("│ 2.userId:" + user.getUserId());
+		log.debug("│ 3.userPw:" + user.getUserPw());
+		
+		User outVO = userService.login(user);
+		log.debug("│ 4.outVO:" + outVO);
 		
 		String message = "";
 		int flag = 0;
 		if(null != outVO) {
-			message = inVO.getUserId() + "님이 조회 되었습니다.";
+			message = "\"" + outVO.getUserName() + "\"" + "님이 로그인 하셨습니다.";
+			httpSession.setAttribute("user", outVO);
 			flag = 1;
 		}else {
-			message = inVO.getUserId() + "조회 실패 되었습니다.";
+			message = "아이디 혹은 비밀번호가 일치하지 않습니다.";
 		}
 		
 		jsonString = new Gson().toJson(new Message(flag, message));
-		log.debug("2.jsonString:" + jsonString);
+		log.debug("└ 4.jsonString:" + jsonString);
 		
 		return jsonString;
 	}
 	
+	@RequestMapping(value = "/moveToPage.do"
+					, method = RequestMethod.POST
+					, produces = "text/plain;charset=UTF-8")
+		@ResponseBody
+		public String moveToPage(HttpSession httpSession) throws Exception {
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ moveToPage()            	   │");
+		log.debug("└───────────────────────────┘");
+		
+		String viewName = "join/login_confirm_page";
+		
+		return viewName;
+		}
 }

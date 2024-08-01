@@ -14,7 +14,6 @@
 <script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
 <body>
-	user : ${user }
 	<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
 		<div class="col-6">
 			<h1 style="color:#ffc107; font-weight:bold;">회원가입</h1>

@@ -9,26 +9,11 @@
 <title>Insert title here</title>
 <%-- bootstrap css --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
+<script src="${CP }/resources/js/user/community_page.js"></script>
+<script src="${CP }/resources/js/common.js"></script>
+<script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
-<body>
-    <div class="container-fluid">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end m-2">
-            <form class="join_frm">
-                <div class="form-floating mb-3">
-				  <input type="text" class="form-control-sm" id="floatingInput" placeholder="id">
-				  <label for="floatingInput"></label>
-				</div>
-                <div class="form-floating ">
-				  <input type="password" class="form-control-sm" id="floatingPassword" placeholder="password">
-				  <label for="floatingPassword"></label>
-				</div>
-				<div class="d-grid gap-2 d-md-flex justify-content-md-end m-2">
-	               	<input type="submit" class="btn btn-outline-secondary" value="로그인">
-	               	<input type="button" class="btn btn-outline-secondary" value="회원가입">
-           		</div>
-            </form>
-        </div>
-            
+	<jsp:include page="/WEB-INF/views/join/login_page.jsp"></jsp:include>
         <div >
 	        <nav class="navbar col-md" style="background-color: #ffc107">
 				<table class="navbar-nav">
