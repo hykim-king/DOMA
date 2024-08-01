@@ -22,8 +22,8 @@ public class DeathDataApi {
     private static String fetchDataFromApi(String year, String guGunCode) throws IOException {
         // API URL 설정
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552061/AccidentDeath/getRestTrafficAccidentDeath");
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=u2Ynztum9D6SLnGMa307uaZWiGslePrz8ir8Z4R99wk7Ab3Zl6itMwNf1P6xRwUpr3gC%2BgjruGIz7qpIMirUng%3D%3D");
-        urlBuilder.append("&" + URLEncoder.encode("searchYearCd", "UTF-8") + "=" + URLEncoder.encode(year, "UTF-8"));
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=u2Ynztum9D6SLnGMa307uaZWiGslePrz8ir8Z4R99wk7Ab3Zl6itMwNf1P6xRwUpr3gC%2BgjruGIz7qpIMirUng%3D%3D");
+        urlBuilder.append("&" + URLEncoder.encode("searchYear", "UTF-8") + "=" + URLEncoder.encode(year, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("siDo", "UTF-8") + "=" + URLEncoder.encode("1100", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("guGun", "UTF-8") + "=" + URLEncoder.encode(guGunCode, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
@@ -52,7 +52,6 @@ public class DeathDataApi {
         rd.close();
         conn.disconnect();
         String jsonData = sb.toString();
-        System.out.println("Fetched JSON Data: " + jsonData); // JSON 데이터 로그 출력
         return jsonData;
     }
 
