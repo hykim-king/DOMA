@@ -19,9 +19,9 @@ public class BoardController implements PLog {
 	
 	//http://localhost:8080/doma//board/board.do
 	@GetMapping("/board.do")
-	public String communityPage(Model model) throws Exception {
+	public String boardList(Model model) throws Exception {
 		log.debug("┌───────────────────────────┐");
-		log.debug("│ communityPage()           │");
+		log.debug("│ boardList()               │");
 		log.debug("└───────────────────────────┘");
 		String viewName = "/board/board_list";
 		
