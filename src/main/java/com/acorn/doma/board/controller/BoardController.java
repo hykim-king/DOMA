@@ -17,6 +17,7 @@ public class BoardController implements PLog {
 		log.debug("└───────────────────────────┘");
 	}
 	
+	//http://localhost:8080/doma//board/board.do
 	@GetMapping("/board.do")
 	public String communityPage(Model model) throws Exception {
 		log.debug("┌───────────────────────────┐");
