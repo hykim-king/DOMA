@@ -4,20 +4,20 @@ public class Board {
 	private int seq;
 	private String div;
 	private String title;
-	private String userId;
+	private String regId;
 	private String modId;
 	private String content;
 	private String imgLink;
 	private String regDt;
 	private String modDt;
 	public Board() {}
-	public Board(int seq, String div, String title, String userId, String modId, String content, String imgLink,
+	public Board(int seq, String div, String title, String regId, String modId, String content, String imgLink,
 			String regDt, String modDt) {
 		super();
 		this.seq = seq;
 		this.div = div;
 		this.title = title;
-		this.userId = userId;
+		this.regId = regId;
 		this.modId = modId;
 		this.content = content;
 		this.imgLink = imgLink;
@@ -42,11 +42,11 @@ public class Board {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getUserId() {
-		return userId;
+	public String getregId() {
+		return regId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setregId(String regId) {
+		this.regId = regId;
 	}
 	public String getModId() {
 		return modId;
@@ -80,7 +80,7 @@ public class Board {
 	}
 	@Override
 	public String toString() {
-		return "Board [seq=" + seq + ", div=" + div + ", title=" + title + ", userId=" + userId + ", modId=" + modId
+		return "Board [seq=" + seq + ", div=" + div + ", title=" + title + ", regId=" + regId + ", modId=" + modId
 				+ ", content=" + content + ", imgLink=" + imgLink + ", regDt=" + regDt + ", modDt=" + modDt + "]";
 	}
 	

@@ -6,6 +6,7 @@
     comseq,
     seq,
     user_id,
+    mod_id,
     comments,
     reg_dt,
     mod_dt
@@ -13,9 +14,10 @@
         doma_comment_seq.NEXTVAL,
         #{seq},
         #{userId},
+        #{userId},
         #{comments},
         SYSDATE,
-        #{reg_dt}
+        SYSDATE
     )
     
 </insert>

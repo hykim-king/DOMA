@@ -4,9 +4,9 @@
     <insert id="doSave" parameterType="Board">
      INSERT INTO D_BOARD(
         seq,
-        divi,
+        div,
         title,
-        user_id,
+        reg_id,
         mod_id,
         content,
         img_link,
@@ -16,8 +16,8 @@
       doma_board_seq.NEXTVAL,
       #{div},
       #{title},
-      #{userId},
-      #{userId},
+      #{regId},
+      #{regId},
       #{content},
       #{imgLink},
       SYSDATE,

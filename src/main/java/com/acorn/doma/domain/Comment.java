@@ -4,19 +4,21 @@ public class Comment {
 	private int comSeq;
 	private int seq;
 	private String userId;
-	private String comment;
+	private String modId;
+	private String comments;
 	private String regDt;
 	private String modDt;
 	public Comment() {}
-	public Comment(int comSeq, int seq, String userId, String comment, String regDt, String modDt) {
+	public Comment(int comSeq, int seq, String userId, String modId, String comments, String regDt, String modDt) {
 		super();
 		this.comSeq = comSeq;
 		this.seq = seq;
 		this.userId = userId;
-		this.comment = comment;
+		this.modId = modId;
+		this.comments = comments;
 		this.regDt = regDt;
 		this.modDt = modDt;
-	}	
+	}
 	public int getComSeq() {
 		return comSeq;
 	}
@@ -35,11 +37,17 @@ public class Comment {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getComment() {
-		return comment;
+	public String getModId() {
+		return modId;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setModId(String modId) {
+		this.modId = modId;
+	}
+	public String getcomments() {
+		return comments;
+	}
+	public void setcomments(String comments) {
+		this.comments = comments;
 	}
 	public String getRegDt() {
 		return regDt;
@@ -55,8 +63,9 @@ public class Comment {
 	}
 	@Override
 	public String toString() {
-		return "Comment [comSeq=" + comSeq + ", seq=" + seq + ", userId=" + userId + ", comment=" + comment + ", regDt="
-				+ regDt + ", modDt=" + modDt + "]";
+		return "comments [comSeq=" + comSeq + ", seq=" + seq + ", userId=" + userId + ", modId=" + modId + ", comments="
+				+ comments + ", regDt=" + regDt + ", modDt=" + modDt + "]";
 	}
+	
 	
 }
