@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.acorn.doma.mapper.BoardMapper">
+    <insert id="doSave" parameterType="Board">
+     INSERT INTO D_BOARD(
+        seq,
+        divi,
+        title,
+        user_id,
+        mod_id,
+        content,
+        img_link,
+        reg_dt,
+        mod_dt          
+     )VALUES(
+      doma_board_seq.NEXTVAL,
+      #{div},
+      #{title},
+      #{userId},
+      #{userId},
+      #{content},
+      #{imgLink},
+      SYSDATE,
+      SYSDATE
+     )
+    </insert>
+</mapper>

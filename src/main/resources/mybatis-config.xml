@@ -11,14 +11,14 @@
         <typeAlias alias="Search" type="com.acorn.doma.cmn.Search"/>
         <typeAlias alias="Code" type="com.acorn.doma.domain.Code"/>
         <typeAlias alias="User" type="com.acorn.doma.domain.User"/>
-        <typeAlias alias="Accident" type="com.acorn.doma.domain.Accident"/>
-        <typeAlias alias="Area" type="com.acorn.doma.domain.Area"/>
+        <typeAlias alias="Accident" type="com.acorn.doma.domain.Accident"/>        
         <typeAlias alias="Comment" type="com.acorn.doma.domain.Comment"/>
         <typeAlias alias="Freezing" type="com.acorn.doma.domain.Freezing"/>
         <typeAlias alias="Point" type="com.acorn.doma.domain.Point"/>
         <typeAlias alias="Type" type="com.acorn.doma.domain.Type"/>
         <typeAlias alias="Weather" type="com.acorn.doma.domain.Weather"/>
         <typeAlias alias="Death" type="com.acorn.doma.domain.Death"/>
+        <typeAlias alias="Board" type="com.acorn.doma.domain.Board"/>
     </typeAliases>
     
 </configuration>

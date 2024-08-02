@@ -2,33 +2,31 @@ package com.acorn.doma.domain;
 
 public class Point {
 	private int pid;
-	private String gcode;
-	private int year;
 	private String accPoint;
-	private String polygon;
+	private int year;
 	private int accdient;
 	private int dead;
 	private int seriously;
 	private int ordinary;
 	private int report;
 	private String pointType;
+	private String gname;
 	private double longitude;
 	private double latitude;
 	public Point() {}
-	public Point(int pid, String gcode, int year, String accPoint, String polygon, int accdient, int dead,
-			int seriously, int ordinary, int report, String pointType, double longitude, double latitude) {
+	public Point(int pid, String accPoint, int year, int accdient, int dead, int seriously, int ordinary, int report,
+			String pointType, String gname, double longitude, double latitude) {
 		super();
 		this.pid = pid;
-		this.gcode = gcode;
-		this.year = year;
 		this.accPoint = accPoint;
-		this.polygon = polygon;
+		this.year = year;
 		this.accdient = accdient;
 		this.dead = dead;
 		this.seriously = seriously;
 		this.ordinary = ordinary;
 		this.report = report;
 		this.pointType = pointType;
+		this.gname = gname;
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
@@ -38,29 +36,17 @@ public class Point {
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
-	public String getGcode() {
-		return gcode;
-	}
-	public void setGcode(String gcode) {
-		this.gcode = gcode;
-	}
-	public int getYear() {
-		return year;
-	}
-	public void setYear(int year) {
-		this.year = year;
-	}
 	public String getAccPoint() {
 		return accPoint;
 	}
 	public void setAccPoint(String accPoint) {
 		this.accPoint = accPoint;
 	}
-	public String getPolygon() {
-		return polygon;
+	public int getYear() {
+		return year;
 	}
-	public void setPolygon(String polygon) {
-		this.polygon = polygon;
+	public void setYear(int year) {
+		this.year = year;
 	}
 	public int getAccdient() {
 		return accdient;
@@ -98,6 +84,12 @@ public class Point {
 	public void setPointType(String pointType) {
 		this.pointType = pointType;
 	}
+	public String getGname() {
+		return gname;
+	}
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
 	public double getLongitude() {
 		return longitude;
 	}
@@ -112,11 +104,9 @@ public class Point {
 	}
 	@Override
 	public String toString() {
-		return "Point [pid=" + pid + ", gcode=" + gcode + ", year=" + year + ", accPoint=" + accPoint + ", polygon="
-				+ polygon + ", accdient=" + accdient + ", dead=" + dead + ", seriously=" + seriously + ", ordinary="
-				+ ordinary + ", report=" + report + ", pointType=" + pointType + ", longitude=" + longitude
-				+ ", latitude=" + latitude + "]";
+		return "Point [pid=" + pid + ", accPoint=" + accPoint + ", year=" + year + ", accdient=" + accdient + ", dead="
+				+ dead + ", seriously=" + seriously + ", ordinary=" + ordinary + ", report=" + report + ", pointType="
+				+ pointType + ", gname=" + gname + ", longitude=" + longitude + ", latitude=" + latitude + "]";
 	}
-	
 	
 }

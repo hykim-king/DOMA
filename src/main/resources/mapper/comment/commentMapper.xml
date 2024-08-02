@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.acorn.doma.mapper.CommentMapper">
+<insert id="doSave">
+    INSERT INTO D_COMMENT(
+    comseq,
+    seq,
+    user_id,
+    comments,
+    reg_dt,
+    mod_dt
+    )VALUES(
+        doma_comment_seq.NEXTVAL,
+        #{seq},
+        #{userId},
+        #{comments},
+        SYSDATE,
+        #{reg_dt}
+    )
+    
+</insert>
+</mapper>
