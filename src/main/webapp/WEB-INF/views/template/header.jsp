@@ -9,8 +9,6 @@
     <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="${CP}/resources/css/styles.css">
     <script src="${CP }/resources/js/user/header.js"></script>
-    <script src="${CP }/resources/js/common.js"></script>
-<script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
 
 <body>
@@ -22,9 +20,9 @@
             <div class="back color-3">
                 <div class="row columns">
                     <ul class="menu-align">
-                        <li><a href="#">Home</a></li>
-                        <li><a id="register">Join</a></li>
-                        <li><a id="login">Login</a></li>
+                        <li><a id="main_page">Home</a></li>
+                        <li><a id="register_page">Join</a></li>
+                        <li><a id="login_page">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -79,6 +77,5 @@
             </div>
         </nav>
     </div>
-<script src="${CP}/resources/js/bootstrap.bundle.js"></script> 
 </body>
 </html>

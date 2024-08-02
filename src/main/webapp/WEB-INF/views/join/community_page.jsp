@@ -12,7 +12,12 @@
 <script src="${CP }/resources/js/common.js"></script>
 <script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+		<div  style="margin : 20px 0px 20px 30px">
+			<input type="button" value="게시글 등록" class="g-col-6 btn btn-secondary">
+			<input type="button" value="게시글 수정" class="g-col-6 btn btn-secondary">
+			<input type="button" value="게시글 삭제" class="g-col-6 btn btn-secondary">
+		</div>
 		<div class="d-flex m-2">
             <table class="table table-striped table-hover table-bordered m-3">
                 <tr>
@@ -37,7 +42,7 @@
 	        <div >
 	            <form class="d-grid gap-2 d-md-flex justify-content-md-end">
 	                <input type="search" class="g-col-6">
-	                <input type="submit" value="검색" class="g-col-6 btn btn-secondary">
+	                <input type="button" value="검색" class="g-col-6 btn btn-secondary">
 	            </form>
 		        <div class="grid gap-0 column-gap-6">
 		            <table> 
@@ -54,7 +59,7 @@
 	        </div>
 		</div>
     </div>
-<%@ include file="/WEB-INF/views/template/footer.jsp" %> 
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
     <%--bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap.bundle.js"></script> 
 </body>

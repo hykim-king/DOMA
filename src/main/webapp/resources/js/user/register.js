@@ -2,7 +2,7 @@
  document.addEventListener("DOMContentLoaded", function(){
 	console.log("────────DOMContentLoaded────────");
 	
-	const userIdInput = document.querySelector("#userId");
+	const idInput = document.querySelector("#id");
 	const nameInput = document.querySelector("#name");
 	const passwordInput = document.querySelector("#password");
 	const passwordCheckInput = document.querySelector("#passwordCheck");
@@ -49,7 +49,7 @@
         
 		if(isEmpty(userIdInput.value) == true){
 			alert("사용하실 아이디를 입력하세요.");
-			userIdInput.focus();
+			idInput.focus();
 			return;
 		}
 		if(isEmpty(nameInput.value) == true){
@@ -109,7 +109,7 @@
         if(confirm("등록 하시겠습니까?") === false)return;
 
         let params = {
-            "userId" : userIdInput.value,
+            "userId" : idInput.value,
             "userName" : nameInput.value,
             "userPw" : passwordInput.value,
             "userEmail" : emailInput.value,
@@ -153,10 +153,10 @@
         if(confirm("아이디를 사용하시겠습니까?") === false)return;
 
         let params = {
-            "userId" : userIdInput.value 
+            "userId" : idInput.value 
         }
 		
-		console.log("userIdInput : " + userIdInput.value);
+		console.log("userIdInput : " + idInput.value);
 		 
         PClass.pAjax(url,params,dataType,type,async,function(data){
             if(data){

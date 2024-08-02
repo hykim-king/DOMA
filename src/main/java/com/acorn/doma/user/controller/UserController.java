@@ -34,17 +34,32 @@ public class UserController implements PLog {
 	}
 	
 	
-	@RequestMapping(value = "/doRegister.do"
+	@RequestMapping(value = "/RegisterPage.do"
 			   , method = RequestMethod.GET
 			   , produces = "text/plain;charset=UTF-8"
 			   ) //produces : 화면으로 전송 encoding 
-	public String doRegister(Model model) throws SQLException{
+	public String RegisterPage(Model model) throws SQLException{
 		// /WEB-INF/views+ viewName + ".jsp
 		// /WEB-INF/views/user/user_list.jsp		
 		log.debug("┌───────────────────────────┐");
-		log.debug("│ doRegister()              │");
+		log.debug("│ RegisterPage()            │");
 		log.debug("└───────────────────────────┘");
 		String viewName = "join/register";
+		
+		return viewName;
+	}
+	
+	@RequestMapping(value = "/loginPage.do"
+			   , method = RequestMethod.GET
+			   , produces = "text/plain;charset=UTF-8"
+			   ) //produces : 화면으로 전송 encoding 
+	public String loginPage(Model model) throws SQLException{
+		// /WEB-INF/views+ viewName + ".jsp
+		// /WEB-INF/views/user/user_list.jsp		
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ loginPage()               │");
+		log.debug("└───────────────────────────┘");
+		String viewName = "join/login";
 		
 		return viewName;
 	}
@@ -194,12 +209,11 @@ public class UserController implements PLog {
 					, method = RequestMethod.POST
 					, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String Login(Model model,User user, HttpSession httpSession) throws Exception {
+	public String Login(User user, HttpSession httpSession) throws Exception {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ Login()            	   │");
 		log.debug("└───────────────────────────┘");
 		
-		String viewName = "/WEB-INF/views/join/login_confirm_page.jsp";
 		String jsonString = "";
 		
 		log.debug("┌ 1.user:" + user);

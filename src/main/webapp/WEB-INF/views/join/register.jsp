@@ -18,14 +18,14 @@
 	<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
 		<div class="col-6">
 			<h1 style="color:#ffc107; font-weight:bold;">회원가입</h1>
-			<form action="#" method="post" class="form-horizontal">
+			<form action="#" method="post" class="form-horizontal" style="margin : auto">
 			
 				<div class="form-group row mb-2">
-					<label for="userId" class="col-sm-2 col-form-label">아이디</label>
+					<label for="id" class="col-sm-2 col-form-label">아이디</label>
 					<div class="col-sm-10">
 						<div class="row">
 							<div class="col-sm-5">
-								<input type="text" class="form-control" name="userId" id="userId" maxlength="20" required="required">
+								<input type="text" class="form-control" name="id" id="id" maxlength="20" required="required">
 							</div>
 							<div class="col-sm-4">
 								<input type="button" value="중복확인" class="btn btn-warning" id="idDuplicateCheck">
