@@ -17,8 +17,8 @@
                 <div class="row columns">
                     <ul class="menu-align">
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">Join</a></li>
-                        <li><a href="#">Login</a></li>
+                        <li><a id="register">Join</a></li>
+                        <li><a id="login">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -29,16 +29,13 @@
         <nav class="main-nav">
             <ul>
                 <li class="dropdown">
-                    <a href="#">Main Menu 1</a>
+                    <a aria-current="page" href="${CP}/user/doRetrieve.do">상황별 안전 정보</a>
                 </li>
                 <li class="dropdown">
-                    <a href="#">Main Menu 2</a>
+                    <a aria-current="page" href="${CP}/board/doDelete.do">데이터 시각화</a>
                 </li>
                 <li class="dropdown">
-                    <a href="#">Main Menu 3</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Main Menu 4</a>
+                    <a aria-current="page" href="${CP }/template/list.do">공지사항</a>
                 </li>
             </ul>
             <!-- 전체 서브메뉴 박스 -->

@@ -13,24 +13,7 @@
 <script src="${CP }/resources/js/common.js"></script>
 <script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
-	<jsp:include page="/WEB-INF/views/join/login_page.jsp"></jsp:include>
-        <div >
-	        <nav class="navbar col-md" style="background-color: #ffc107">
-				<table class="navbar-nav">
-					<tr>					
-						<td class="nav-item">
-							<a class="nav-link active m-3" aria-current="page" href="${CP}/user/doRetrieve.do">상황별 안전 정보</a>
-						</td>
-						<td class="nav-item">
-							<a class="nav-link active m-3" aria-current="page" href="${CP}/board/doDelete.do">데이터 시각화</a>
-						</td>
-						<td class="nav-item">
-							<a class="nav-link active m-3" aria-current="page" href="${CP }/template/list.do">공지사항</a>
-						</td>
-					</tr>
-				</table>
-			</nav>
-        </div>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 		<div class="d-flex m-2">
             <table class="table table-striped table-hover table-bordered m-3">
                 <tr>
@@ -72,6 +55,7 @@
 	        </div>
 		</div>
     </div>
+<%@ include file="/WEB-INF/views/template/footer.jsp" %> 
     <%--bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap.bundle.js"></script> 
 </body>

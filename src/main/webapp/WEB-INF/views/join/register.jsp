@@ -14,6 +14,7 @@
 <script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 	<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
 		<div class="col-6">
 			<h1 style="color:#ffc107; font-weight:bold;">회원가입</h1>
@@ -92,6 +93,7 @@
 			</form>
 		</div>
 	</div>
+<%@ include file="/WEB-INF/views/template/footer.jsp" %> 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
