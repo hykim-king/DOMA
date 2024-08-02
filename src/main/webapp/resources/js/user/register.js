@@ -47,7 +47,7 @@
 	function doSave() {
         console.log("doSave()");
         
-		if(isEmpty(userIdInput.value) == true){
+		if(isEmpty(idInput.value) == true){
 			alert("사용하실 아이디를 입력하세요.");
 			idInput.focus();
 			return;
@@ -156,7 +156,7 @@
             "userId" : idInput.value 
         }
 		
-		console.log("userIdInput : " + idInput.value);
+		console.log("idInput : " + idInput.value);
 		 
         PClass.pAjax(url,params,dataType,type,async,function(data){
             if(data){
