@@ -88,5 +88,20 @@ public class UserServiceImpl implements UserService, PLog{
 		return outVO;
 	}
 
+	@Override
+	public User mpSelctOne(User user) throws Exception {
+		
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ mpSelctOne() : login      │");
+		log.debug("└───────────────────────────┘");
+		
+		log.debug("┌ 1. param : " + user);
+		
+		User outVO = userMapper.mpSelectOne(user);
+		log.debug("└ 2. outVO : " + outVO);
+		
+		return outVO;
+	}
+
 	
 }

@@ -12,4 +12,6 @@ public interface UserService extends WorkDiv<User> {
 	public String getUserId(String userId) throws Exception;
 	
 	public User login(User user) throws Exception;
+	
+	public User mpSelctOne(User user) throws Exception;
 }

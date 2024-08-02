@@ -30,6 +30,8 @@
         WHERE user_id = #{userId}                                                
     </select>
     
+ 
+    
     <select id="doSelectOne" parameterType="User" resultType="User">
         SELECT                                            
             user_id as userId,
