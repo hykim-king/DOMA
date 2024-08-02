@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 <%-- bootstrap css --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
-<script src="${CP }/resources/js/user/community_page.js"></script>
 <script src="${CP }/resources/js/common.js"></script>
 <script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
