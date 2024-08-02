@@ -127,7 +127,7 @@
                     	console.log(message.messageContent);
                     	console.log(message.messageId);
                         alert(message.messageContents);
-                        //commumity_page 이동하는 구문
+                        window.location.href="/doma/community/community.do";
                     }else{
                         alert(message.messageContents);
                     }
@@ -144,6 +144,19 @@
 	
 	function idCheck() {
 		console.log("idCheck()");
+		
+		if (idInput.value !== "" && idInput.value.length >= 4 && idInput.value.length <= 16) {
+		    if (/\s/.test(idInput.value)) {
+		        alert("아이디에는 공백을 사용할 수 없습니다.");
+		        idInput.focus();
+		        return;
+		    }
+		} else {
+		    alert("아이디는 4~16자 이내, 특수문자와 한글은 사용불가합니다.");
+		    idInput.focus();
+		    return;
+		}
+		onlyNumberAndEnglish(idInput.value);
 		
 		let type="get";
         let url ="/doma/user/idCheck.do";
@@ -187,8 +200,17 @@
 	
 	function passwordCheck() {
 		console.log("passwordCheck()");
+		let flag =passwordVaildation(passwordInput.value);
+		console.log("flag : " +flag);
 		
+		spaceCheck(passwordInput.value);
+
+		if(flag === false){
+			alert("특수문자나 대소문자를 포함한 8~20자 이내의 비밀번호를 사용하세요."); 
+			return
+		}
 		if(passwordInput.value === passwordCheckInput.value){
+			
 			passwordCheckCount = 1;
 			alert("비밀번호가 일치합니다.");
 		}else{
@@ -196,6 +218,21 @@
 		}
 		
 	}
-	  
+	
+	function onlyNumberAndEnglish(input) {
+  		return /^[A-Za-z0-9][A-Za-z0-9]*$/.test(input);
+	}  
+	
+	function passwordVaildation (input) {
+	  return /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(input);
+	}
+	
+	function spaceCheck(input) {
+	    if (/\s/.test(input) == false) {
+	        alert("비밀번호에는 공백을 사용할 수 없습니다.");
+	        passwordInput.focus();
+	        return;
+	    }
+    }
 });
         
