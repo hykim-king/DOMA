@@ -13,6 +13,7 @@
 <script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+user : ${user }
 		<div  style="margin : 20px 0px 20px 30px">
 			<input type="button" value="게시글 등록" class="g-col-6 btn btn-secondary">
 			<input type="button" value="게시글 수정" class="g-col-6 btn btn-secondary">

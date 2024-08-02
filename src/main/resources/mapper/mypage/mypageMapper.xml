@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.acorn.doma.mapper.UserMapper">
+ 
+	    
+    <select id="mpSelectOne" parameterType="User" resultType="User">
+        SELECT                                            
+            user_id as userId,
+            user_name as userName,
+            user_pw as userPw,
+            user_email as userEmail,
+            birth,
+            grade,
+            address,
+            detail_address as detailAddress,
+            reg_dt as regDt
+        FROM                                              
+            D_USER 
+        WHERE user_id = #{userId}                                                    
+    </select>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+

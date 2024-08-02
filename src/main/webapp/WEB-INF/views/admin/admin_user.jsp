@@ -1,65 +1,128 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
-<%@ include file="/WEB-INF/views/template/footer.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin_page.css">
-
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - DOMA</title>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
+    <script src="<%=request.getContextPath()%>/resources/js/script.js"></script>
 </head>
 <body>
+    <%@ include file="/WEB-INF/views/template/header.jsp" %>
 
-    <h2>관리자 페이지</h2>
-<div class="container" id="container">
-  <div class="form-container sign-up-container">
-    <form action="#">
-      <h1>Create Account</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-      <span>or use your email for registration</span>
-      <input type="text" placeholder="Name" />
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <button>Sign Up</button>
-    </form>
-  </div>
-  <div class="form-container sign-in-container">
-    <form action="#">
-      <h1>Sign in</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-      <span>or use your account</span>
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <a href="#">Forgot your password?</a>
-      <button>Sign In</button>
-    </form>
-  </div>
-  <div class="overlay-container">
-    <div class="overlay">
-      <div class="overlay-panel overlay-left">
-        <h1>Welcome Back!</h1>
-        <p>To keep connected with us please login with your personal info</p>
-        <button class="ghost" id="signIn">Sign In</button>
-      </div>
-      <div class="overlay-panel overlay-right">
-        <h1>Hello, Friend!</h1>
-        <p>Enter your personal details and start journey with us</p>
-        <button class="ghost" id="signUp">Sign Up</button>
-      </div>
-    </div>
-  </div>
-</div>
+    <main class="main-content">
+        <h1>회원관리</h1>
+        <div class="admin-actions">
+            <a href="<%=request.getContextPath()%>/admin/adminnotice.do" class="admin-action-button">공지사항</a>
+        </div>
 
+        <!-- 회원 관리 섹션 -->
+        <div class="member-management">
+            <div class="box member-list">
+                <h2>회원목록</h2>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="회원 정보 검색">
+                    <button class="search-button">검색</button>
+                </div>
+                <table class="member-table">
+                    <thead>
+                        <tr>
+                            <th>회원 ID</th>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>가입일</th>
+                            <th>등급</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 빈 행 5개 추가 -->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 페이징 섹션 -->
+                <div class="pagination">
+                    <button class="page-button" data-page="prev">이전</button>
+                    <button class="page-button" data-page="1">1</button>
+                    <button class="page-button" data-page="2">2</button>
+                    <button class="page-button" data-page="3">3</button>
+                    <button class="page-button" data-page="next">다음</button>
+                </div>
+            </div>
+            <div class="box member-info">
+                <h2>상세정보</h2>
+                <form class="member-form">
+                    <div class="form-group">
+                        <label for="memberId"></label>
+                        <input type="text" id="memberId" name="memberId" placeholder="회원 ID" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="name"></label>
+                        <input type="text" id="name" name="name" placeholder="이름">
+                    </div>
+                    <div class="form-group">
+                        <label for="email"></label>
+                        <input type="email" id="email" name="email" placeholder="e-mail">
+                    </div>
+                    <div class="form-group">
+                        <label for="address"></label>
+                        <input type="text" id="address" name="address" placeholder="주소">
+                    </div>
+                    <div class="form-group">
+                        <label for="detailAddress"></label>
+                        <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate"></label>
+                        <input type="text" id="birthdate" name="birthdate" placeholder="생년월일">
+                    </div>
+                    <div class="form-group">
+                        <label for="joinDate"></label>
+                        <input type="text" id="joinDate" name="joinDate" placeholder="가입일">
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="member-action-button" data-action="update">수정</button>
+                        <button type="submit" class="member-action-button" data-action="delete">삭제</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%@ include file="/WEB-INF/views/template/footer.jsp" %>
 </body>
 </html>
