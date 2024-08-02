@@ -10,7 +10,9 @@ public class Board {
 	private String imgLink;
 	private String regDt;
 	private String modDt;
-	public Board() {}
+	
+	public Board() { }
+	
 	public Board(int seq, String div, String title, String regId, String modId, String content, String imgLink,
 			String regDt, String modDt) {
 		super();
@@ -24,6 +26,7 @@ public class Board {
 		this.regDt = regDt;
 		this.modDt = modDt;
 	}
+	
 	public int getSeq() {
 		return seq;
 	}
