@@ -2,14 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <c:set var="CP" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="${CP}/resources/css/styles.css">
-</head>
-<body>
     <!-- Footer -->
     <footer>
         <img class="footer-logo" src="${CP}/resources/img/footerlogo.png" alt="Footer Logo">
