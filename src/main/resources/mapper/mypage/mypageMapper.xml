@@ -19,7 +19,21 @@
         WHERE user_id = #{userId}                                                    
     </select>
     
- 
+ 	<update id="mpGrageUp" parameterType="User">
+         UPDATE D_USER             
+         SET                        
+          
+             user_name   	= #{userName},     
+             user_pw   		= #{userPw},     
+             user_email     = #{userEmail},  
+             birth          = #{birth},     
+             grade          = #{grade},     
+             address        = #{address},  
+             detail_address      = #{detailAddress} , 
+             reg_dt  = SYSDATE
+         WHERE                     
+                user_id = #{userId}     
+    </update>
 
 
 

@@ -87,7 +87,61 @@ public class MyPageMapperTest implements PLog {
 		
 	}
 	
-	//@Ignore
+	@Test
+	public void mpGrageUp() throws Exception{
+		
+		//회원등급 올리는거  
+		 
+		
+		int flag = userMapper.doSave(userVO01);
+		assertEquals(1, flag); 	 
+		//3
+		User outVO = userMapper.mpSelectOne(userVO01);
+		log.debug("outVO : " + outVO);
+		assertNotNull(outVO);//return User Null check
+		isSameUser(userVO01, outVO);
+		
+		//4
+		String updateStr = "_U";
+		//이름,비번,생일,등급,로그인, 추천, 이메일
+		 
+		outVO.setUserName(outVO.getUserName()+updateStr);
+		outVO.setUserPw(outVO.getUserPw());
+		outVO.setUserEmail(outVO.getUserEmail());
+		
+		outVO.setBirth(outVO.getBirth());
+		outVO.setGrade(outVO.getGrade()+1);
+		outVO.setAddress(outVO.getAddress());
+		outVO.setDetailAddress(outVO.getDetailAddress());  
+		
+		flag = userService.doUpdate(outVO);
+		flag = userMapper.doUpdate(outVO);
+		log.debug("flag:"+flag);
+		log.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		log.debug(outVO);
+		log.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		assertEquals(1, flag);
+		 
+		User upOutVO = userMapper.mpSelectOne(outVO); 
+		log.debug(upOutVO); 
+		assertNotNull(upOutVO);
+		
+		//6
+		isSameUser(upOutVO, outVO);
+		
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Ignore
 	@Test
 	public void doUpdate() throws Exception{
 		//2. 데이터 1건 입력
@@ -153,7 +207,7 @@ public class MyPageMapperTest implements PLog {
 	
 	
 	
-	@Ignore
+	 
 	@Test
 	public void beans() {
 		log.debug("┌──────────────────────────────┐");

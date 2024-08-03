@@ -66,6 +66,3 @@
 	    </script>
     </div>
 	<%@ include file="/WEB-INF/views/template/footer.jsp" %> 
-<script src="${CP}/resources/js/bootstrap.bundle.js"></script>    
-</body>
-</html>

@@ -14,4 +14,6 @@ public interface UserService extends WorkDiv<User> {
 	public User login(User user) throws Exception;
 	
 	public User mpSelectOne(User user) throws Exception;
+	
+	public int mpGrageUp(User user) throws Exception; 
 }

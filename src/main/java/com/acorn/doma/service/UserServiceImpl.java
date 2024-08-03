@@ -37,6 +37,8 @@ public class UserServiceImpl implements UserService, PLog{
 		return flag;
 	}
 
+ 
+	
 	@Override
 	public int doDelete(User inVO) throws SQLException {
 		// TODO Auto-generated method stub
@@ -106,6 +108,16 @@ public class UserServiceImpl implements UserService, PLog{
 		log.debug("└ 2. outVO : " + outVO);
 		
 		return outVO;
+	}
+
+	@Override
+	public int mpGrageUp(User user) throws Exception {
+		int flag = 0;
+		
+		flag = userMapper.doSave(user);
+		log.debug("flag : " + flag);		
+		
+		return flag;
 	}
 
 	

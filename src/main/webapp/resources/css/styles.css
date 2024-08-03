@@ -16,6 +16,7 @@ header {
 header .logo {
     flex: 1;
     text-align: center;
+    margin-left: 164px;
 }
 
 header .logo img {
@@ -195,7 +196,6 @@ footer {
 .footer-logo {
     height: 50px; /* 로고 이미지 높이 조정 */
     width: auto; /* 이미지 비율 유지 */
-    margin-left: -131px; /* 왼쪽 여백 추가 */
 }
 
  /* 저작권 정보 스타일 */
@@ -203,7 +203,6 @@ footer {
       text-align: center; /* 중앙 정렬 */
       margin-top: 10px; /* 로고와 저작권 정보 사이의 간격 */
       font-weight: bold; /* 볼드체 설정 */
-      margin-left: -131px;
   }
 
  /* 탑 버튼 스타일 */

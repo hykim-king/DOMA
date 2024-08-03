@@ -30,39 +30,14 @@ public class MyPageController implements PLog {
 		log.debug("└──────────────────────────────────────────┘");	
 	}
 
-	 
-	
-	@RequestMapping(value = "/mpSelectOne.do", 
-			method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-	@ResponseBody
-	public String doSelectOne(User inVO) throws Exception {
+	@GetMapping("myPage.do")
+	public String main() {
+		String viewName = "mypage/MyPage";
 		log.debug("┌──────────────────────────────────────────┐");
-		log.debug("│ doSelectOne()                            │");
+		log.debug("│ mypage()                                 │");
 		log.debug("└──────────────────────────────────────────┘");
-		String jsonString = "";
-
-		log.debug("1. param: " + inVO);
-		User outVO = userService.mpSelectOne(inVO);
-
-		String message = "";
-		int flag = 0;
-		if (null != outVO) {
-			message = inVO.getUserId() + "님이 조회 되었습니다.";
-			flag = 1;
-		} else {
-			message = inVO.getUserId() + " 조회 실패!";
-		}
-
-		//message
-		jsonString = new Gson().toJson(new Message(flag, message));
-		
-		//user
-		String jsonUser =  new Gson().toJson(outVO);
-		String allMessage = "{\"user\":"+jsonUser+",\"message\":"+jsonString+"}";
-		
-		log.debug("3.allMessage:" + allMessage);
-
-		return allMessage;
+		///WEB-INF/views/+viewName+.jsp
+		return viewName;
 	}
 	
 }
