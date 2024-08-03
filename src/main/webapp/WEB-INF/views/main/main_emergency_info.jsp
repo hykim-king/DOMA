@@ -15,7 +15,7 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-	<div style="display : inline-block">
+	<div style="display : flex">
 		<div class="map-fn-l-box" style="float : left">
 	        <a href="" class="fn-alert" title="돌발">
 	            <span class="blind">돌발</span>
@@ -29,19 +29,20 @@
 	    </div>
 	    <div id="subMap" style="height : 815px;">
 			<section id="mapContainer">
-				<div class="aside" style="height : 100%; width: 350px; margin-left : 61px;">
+				<div class="aside" style="height : 100%; width: 350px;">
 					<h2>돌발정보</h2>
 					<ul class="info_ul">
 						<li>
-							<div class="position">
-								<a>위치</a>
-							</div>
+							
 							<table class="info_table">
 								<colgroup>
 									<col>
 									<col>
 								</colgroup>
 								<tbody>
+									<tr>
+										<td colspan="2">위치</td>
+									</tr>
 									<tr>
 										<th class="info_th">기간</th>
 										<td>오늘부터 내일까지</td>
@@ -70,13 +71,11 @@
 						</li>
 					</ul>
 				</div>
-				<div>
-	    			<div style="flex: 1; display: flex; justify-content: center; align-items: center;">
-	        			<div id="map"></div>
-	    			</div>
-				</div>
 			</section>
-		</div>
+   			</div>
+   			<div>
+       			<div id="map" style="width:1110px; height:1000px"></div>
+			</div>
 	</div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
