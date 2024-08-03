@@ -3,7 +3,7 @@
 <mapper namespace="com.acorn.doma.mapper.UserMapper">
  
 	    
-    <select id="mpSelectOne" parameterType="User" resultType="User">
+    <select id="mpSelectOne" parameterType="User"  resultType="User">
         SELECT                                            
             user_id as userId,
             user_name as userName,
@@ -19,35 +19,9 @@
         WHERE user_id = #{userId}                                                    
     </select>
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 
 </mapper>
-

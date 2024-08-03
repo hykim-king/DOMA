@@ -56,7 +56,7 @@ public interface UserMapper extends WorkDiv<User> {
 	 */
 	int deleteAll() throws SQLException;
 	
-	
+	int mpUpdate(User user) throws SQLException;
 	
 	String getUserId(String userId) throws SQLException;
 	

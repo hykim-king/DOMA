@@ -42,7 +42,7 @@ public class MyPageController implements PLog {
 		String jsonString = "";
 
 		log.debug("1. param: " + inVO);
-		User outVO = userService.mpSelctOne(inVO);
+		User outVO = userService.mpSelectOne(inVO);
 
 		String message = "";
 		int flag = 0;

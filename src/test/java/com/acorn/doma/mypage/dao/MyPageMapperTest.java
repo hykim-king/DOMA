@@ -2,11 +2,15 @@ package com.acorn.doma.mypage.dao;
 
  
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertNotNull;
+
+import java.sql.SQLException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -55,8 +59,9 @@ public class MyPageMapperTest implements PLog {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
-		//userMapper.deleteAll(); 
-		userVO01= new User("user2", "user2", "2222", "user2@naver.com", "2002-02-02", 1, "서울 서대문구", "101호", "24/08/02"); 
+		
+		userVO01= new User("user2", "user2", "2222", "user2@naver.com", "2002-02-02", 1, "서울 서대문구", "101호", "x"); 
+		userMapper.doDelete(userVO01); 
 		
 		
 		search = new Search();
@@ -69,7 +74,7 @@ public class MyPageMapperTest implements PLog {
 		log.debug("└──────────────────────────────┘");
 	}
 	
-	
+	@Ignore
 	@Test
 	public void mpSelectOne() throws Exception{  
 		
@@ -77,11 +82,78 @@ public class MyPageMapperTest implements PLog {
 		log.debug("flag:"+flag);
 		assertEquals(1, flag); 
 		
-		User outVO = userService.mpSelctOne(userVO01);
+		User outVO = userService.mpSelectOne(userVO01);
 		log.debug("outVO : " + outVO);
 		
 	}
-
+	
+	//@Ignore
+	@Test
+	public void doUpdate() throws Exception{
+		//2. 데이터 1건 입력
+		//3. 단건 조회
+		//4. 조회 데이터로 데이터 수정및 Update
+		//5. 수정데이터 조회
+		//6. 비교 
+		//2 등록
+		 
+		
+		int flag = userMapper.doSave(userVO01);
+		assertEquals(1, flag); 	 
+		//3
+		User outVO = userMapper.mpSelectOne(userVO01);
+		log.debug("outVO : " + outVO);
+		assertNotNull(outVO);//return User Null check
+		isSameUser(userVO01, outVO);
+		
+		//4
+		String updateStr = "_U";
+		//이름,비번,생일,등급,로그인, 추천, 이메일
+		 
+		outVO.setUserName(outVO.getUserName()+updateStr);
+		outVO.setUserPw(outVO.getUserPw());
+		outVO.setUserEmail(outVO.getUserEmail());
+		
+		outVO.setBirth(outVO.getBirth());
+		  
+		outVO.setAddress(outVO.getAddress());
+		outVO.setDetailAddress(outVO.getDetailAddress());  
+		
+		flag = userService.doUpdate(outVO);
+		flag = userMapper.doUpdate(outVO);
+		log.debug("flag:"+flag);
+		log.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		log.debug(outVO);
+		log.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		assertEquals(1, flag);
+		 
+		User upOutVO = userMapper.mpSelectOne(outVO); 
+		log.debug(upOutVO); 
+		assertNotNull(upOutVO);
+		
+		//6
+		isSameUser(upOutVO, outVO);
+		
+	}	
+	
+	public void isSameUser(User userVO, User outVO) {
+		assertEquals(userVO.getUserId(), outVO.getUserId());
+		assertEquals(userVO.getUserName(), outVO.getUserName());
+		assertEquals(userVO.getUserPw(),outVO.getUserPw());
+		assertEquals(userVO.getUserEmail(),outVO.getUserEmail());
+		
+		assertEquals(userVO.getBirth(),outVO.getBirth());
+		assertEquals(userVO.getGrade(),outVO.getGrade());
+		assertEquals(userVO.getAddress(),outVO.getAddress());
+		assertEquals(userVO.getDetailAddress(),outVO.getDetailAddress());
+		 
+		
+	}
+	
+	
+	
+	
+	@Ignore
 	@Test
 	public void beans() {
 		log.debug("┌──────────────────────────────┐");
