@@ -153,7 +153,7 @@ public class MyPageMapperTest implements PLog {
 	
 	
 	
-	@Ignore
+	 
 	@Test
 	public void beans() {
 		log.debug("┌──────────────────────────────┐");

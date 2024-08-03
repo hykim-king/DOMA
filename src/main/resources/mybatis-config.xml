@@ -12,7 +12,7 @@
         <typeAlias alias="Code" type="com.acorn.doma.domain.Code"/>
         <typeAlias alias="User" type="com.acorn.doma.domain.User"/>
         <typeAlias alias="Accident" type="com.acorn.doma.domain.Accident"/>        
-        <typeAlias alias="Comment" type="com.acorn.doma.domain.Comment"/>
+        <typeAlias alias="Comment" type="com.acorn.doma.domain.Comments"/>
         <typeAlias alias="Freezing" type="com.acorn.doma.domain.Freezing"/>
         <typeAlias alias="Point" type="com.acorn.doma.domain.Point"/>
         <typeAlias alias="Type" type="com.acorn.doma.domain.Type"/>
