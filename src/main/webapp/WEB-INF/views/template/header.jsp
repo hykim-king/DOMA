@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<c:set var="CP" value="${pageContext.request.contextPath}" />
+    <c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="${CP}/resources/css/styles.css">
     <script src="${CP }/resources/js/user/header.js"></script>

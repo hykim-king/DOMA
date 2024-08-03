@@ -1,6 +1,9 @@
 package com.acorn.doma.domain;
 
-public class Board {
+import com.acorn.doma.cmn.DTO;
+
+public class Board extends DTO {
+	
 	private int seq;
 	private String div;
 	private String title;
@@ -10,11 +13,12 @@ public class Board {
 	private String imgLink;
 	private String regDt;
 	private String modDt;
+	private int views;
 	
 	public Board() { }
-	
+
 	public Board(int seq, String div, String title, String regId, String modId, String content, String imgLink,
-			String regDt, String modDt) {
+			String regDt, String modDt, int views) {
 		super();
 		this.seq = seq;
 		this.div = div;
@@ -25,66 +29,94 @@ public class Board {
 		this.imgLink = imgLink;
 		this.regDt = regDt;
 		this.modDt = modDt;
+		this.views = views;
 	}
-	
+
 	public int getSeq() {
 		return seq;
 	}
+
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
+
 	public String getDiv() {
 		return div;
 	}
+
 	public void setDiv(String div) {
 		this.div = div;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getregId() {
+
+	public String getRegId() {
 		return regId;
 	}
-	public void setregId(String regId) {
+
+	public void setRegId(String regId) {
 		this.regId = regId;
 	}
+
 	public String getModId() {
 		return modId;
 	}
+
 	public void setModId(String modId) {
 		this.modId = modId;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
 	public String getImgLink() {
 		return imgLink;
 	}
+
 	public void setImgLink(String imgLink) {
 		this.imgLink = imgLink;
 	}
+
 	public String getRegDt() {
 		return regDt;
 	}
+
 	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
+
 	public String getModDt() {
 		return modDt;
 	}
+
 	public void setModDt(String modDt) {
 		this.modDt = modDt;
 	}
+
+	public int getViews() {
+		return views;
+	}
+
+	public void setViews(int views) {
+		this.views = views;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [seq=" + seq + ", div=" + div + ", title=" + title + ", regId=" + regId + ", modId=" + modId
-				+ ", content=" + content + ", imgLink=" + imgLink + ", regDt=" + regDt + ", modDt=" + modDt + "]";
+				+ ", content=" + content + ", imgLink=" + imgLink + ", regDt=" + regDt + ", modDt=" + modDt + ", views="
+				+ views + ", toString()=" + super.toString() + "]";
 	}
-	
+
 }

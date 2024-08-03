@@ -46,6 +46,23 @@
         FROM                                              
             D_USER                                                  
     </select>
+    	 
+    
+        <update id="doUpdate" parameterType="User">
+         UPDATE D_USER             
+         SET                        
+          
+             user_name   	= #{userName},     
+             user_pw   		= #{userPw},     
+             user_email     = #{userEmail},  
+             birth          = #{birth},     
+             grade          = #{grade},     
+             address        = #{address},  
+             detail_address      = #{detailAddress} , 
+             reg_dt  = SYSDATE
+         WHERE                     
+                user_id = #{userId}     
+    </update>
     
     <delete id="doDelete" parameterType="User">
         DELETE FROM D_USER
@@ -75,5 +92,9 @@
                 SYSDATE
             )                   
     </insert>
+    
+      <delete id="deleteAll" >
+       DELETE FROM D_USER
+    </delete>
         
 </mapper>

@@ -19,7 +19,7 @@ public class MainController implements PLog {
 	//http://localhost:8080/doma/main/main.do
 	@GetMapping("/main.do")
 	public String main() {
-		String viewName = "main/main";
+		String viewName = "main/main_emergency_info";
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ main()                       │");
 		log.debug("└──────────────────────────────┘");

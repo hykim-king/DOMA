@@ -12,7 +12,7 @@ import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.UserMapper;
 
-@Service
+@Service("userServiceImpl")
 public class UserServiceImpl implements UserService, PLog{
 
 	@Autowired
@@ -28,8 +28,13 @@ public class UserServiceImpl implements UserService, PLog{
 
 	@Override
 	public int doUpdate(User inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int flag = 0;
+		
+		flag = userMapper.doUpdate(inVO);
+		log.debug("flag : " + flag);		
+		
+		return flag;
 	}
 
 	@Override
@@ -89,7 +94,7 @@ public class UserServiceImpl implements UserService, PLog{
 	}
 
 	@Override
-	public User mpSelctOne(User user) throws Exception {
+	public User mpSelectOne(User user) throws Exception {
 		
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ mpSelctOne() : login      │");

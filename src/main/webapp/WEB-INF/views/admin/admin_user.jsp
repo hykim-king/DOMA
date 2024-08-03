@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard - DOMA</title>
+    <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
     <script src="<%=request.getContextPath()%>/resources/js/script.js"></script>

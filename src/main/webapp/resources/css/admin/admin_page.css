@@ -61,7 +61,7 @@ h2 {
 }
 
 .admin-action-button {
-	text-decoration: none;
+    text-decoration: none;
     background-color: #fce807;
     color: #000000;
     border: none;
@@ -179,12 +179,17 @@ h2 {
     margin-bottom: 5px;
 }
 
-.form-group input {
+.form-group input, .form-group textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
+}
+
+/* 내용 입력 폼 스타일 */
+.form-group textarea {
+    height: 150px; /* 텍스트 영역 높이 조정 */
 }
 
 .save-button {
@@ -220,6 +225,9 @@ h2 {
     color: white;
 }
 
+.form-buttons{
+    text-align: right;
+}
 /* 버튼이 같은 라인에 배치되도록 폼 스타일 조정 */
 .member-form {
     display: flex;
