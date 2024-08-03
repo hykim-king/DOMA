@@ -8,7 +8,9 @@ public class Comment {
 	private String comments;
 	private String regDt;
 	private String modDt;
-	public Comment() {}
+	
+	public Comment() { }
+	
 	public Comment(int comSeq, int seq, String userId, String modId, String comments, String regDt, String modDt) {
 		super();
 		this.comSeq = comSeq;
