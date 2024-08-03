@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.AccMapper">
-    <insert id="dataInsert" >
-        INSERT INTO D_ACCINFO 
-        (acc_id, 
+	<insert id="dataInsert" parameterType="Accident">
+        INSERT INTO D_ACCINFO
+        (acc_id,
         acc_type,
         acc_dtype,
-        occr_date, 
-        occr_time, 
-        end_date, 
-        end_time, 
-        info, 
-        longitude, 
+        occr_date,
+        occr_time,
+        end_date,
+        end_time,
+        info,
+        longitude,
         latitude)
         VALUES (
-        ?,
-        ?,
-        ?, 
-        ?, 
-        ?, 
-        ?, 
-        ?, 
-        ?, 
-        ?, 
-        ?);
+        #{accId},
+        #{accType},
+        #{accDtype},
+        #{occrDate},
+        #{occrTime},
+        #{endDate},
+        #{endTime},
+        #{info},
+        #{longitude},
+        #{latitude}
+        );
     </insert>
 </mapper>

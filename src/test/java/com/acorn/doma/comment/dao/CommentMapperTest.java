@@ -15,9 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acorn.doma.cmn.PLog;
-import com.acorn.doma.domain.Comment;
+import com.acorn.doma.domain.Comments;
 import com.acorn.doma.mapper.BoardMapper;
-import com.acorn.doma.mapper.CommentMapper;
+import com.acorn.doma.mapper.CommentsMapper;
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
 
@@ -26,13 +26,13 @@ public class CommentMapperTest implements PLog{
 	@Autowired
 	ApplicationContext context;
 	@Autowired
-	CommentMapper commentMapper;
+	CommentsMapper commentMapper;
 	
-	Comment comment01;
+	Comments comment01;
 	@Before
 	public void setUp() throws Exception {
 		log.debug("======setUp=========");
-		comment01 = new Comment(1, 1, "등록자", "수정자", "내용", "사용안함", "사용안함");
+		comment01 = new Comments(1, 1, "등록자", "수정자", "내용", "사용안함", "사용안함");
 	}
 	
 	@After

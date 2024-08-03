@@ -1,6 +1,6 @@
 package com.acorn.doma.domain;
 
-public class Comment {
+public class Comments {
 	private int comSeq;
 	private int seq;
 	private String userId;
@@ -8,8 +8,8 @@ public class Comment {
 	private String comments;
 	private String regDt;
 	private String modDt;
-	public Comment() {}
-	public Comment(int comSeq, int seq, String userId, String modId, String comments, String regDt, String modDt) {
+	public Comments() {}
+	public Comments(int comSeq, int seq, String userId, String modId, String comments, String regDt, String modDt) {
 		super();
 		this.comSeq = comSeq;
 		this.seq = seq;
