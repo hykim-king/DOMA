@@ -2,8 +2,10 @@ package com.acorn.doma.domain;
 
 public class Freezing {
 	private int fid;
-	private int year;
+	private String sidoCode;
+	private String year;
 	private int accident;
+	private int casualties;
 	private int dead;
 	private int seriously;
 	private int ordinary;
@@ -11,16 +13,16 @@ public class Freezing {
 	private double longitude;
 	private double latitude;
 	private String polygon;
-	private String gname;
-	private String dname;
 	private String accPoint;
 	public Freezing() {}
-	public Freezing(int fid, int year, int accident, int dead, int seriously, int ordinary, int report,
-			double longitude, double latitude, String polygon, String gname, String dname, String accPoint) {
+	public Freezing(int fid, String sidoCode, String year, int accident, int casualties, int dead, int seriously,
+			int ordinary, int report, double longitude, double latitude, String polygon, String accPoint) {
 		super();
 		this.fid = fid;
+		this.sidoCode = sidoCode;
 		this.year = year;
 		this.accident = accident;
+		this.casualties = casualties;
 		this.dead = dead;
 		this.seriously = seriously;
 		this.ordinary = ordinary;
@@ -28,8 +30,6 @@ public class Freezing {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.polygon = polygon;
-		this.gname = gname;
-		this.dname = dname;
 		this.accPoint = accPoint;
 	}
 	public int getFid() {
@@ -38,10 +38,16 @@ public class Freezing {
 	public void setFid(int fid) {
 		this.fid = fid;
 	}
-	public int getYear() {
+	public String getSidoCode() {
+		return sidoCode;
+	}
+	public void setSidoCode(String sidoCode) {
+		this.sidoCode = sidoCode;
+	}
+	public String getYear() {
 		return year;
 	}
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 	public int getAccident() {
@@ -49,6 +55,12 @@ public class Freezing {
 	}
 	public void setAccident(int accident) {
 		this.accident = accident;
+	}
+	public int getCasualties() {
+		return casualties;
+	}
+	public void setCasualties(int casualties) {
+		this.casualties = casualties;
 	}
 	public int getDead() {
 		return dead;
@@ -92,18 +104,6 @@ public class Freezing {
 	public void setPolygon(String polygon) {
 		this.polygon = polygon;
 	}
-	public String getGname() {
-		return gname;
-	}
-	public void setGname(String gname) {
-		this.gname = gname;
-	}
-	public String getDname() {
-		return dname;
-	}
-	public void setDname(String dname) {
-		this.dname = dname;
-	}
 	public String getAccPoint() {
 		return accPoint;
 	}
@@ -112,10 +112,10 @@ public class Freezing {
 	}
 	@Override
 	public String toString() {
-		return "Freezing [fid=" + fid + ", year=" + year + ", accident=" + accident + ", dead=" + dead + ", seriously="
-				+ seriously + ", ordinary=" + ordinary + ", report=" + report + ", longitude=" + longitude
-				+ ", latitude=" + latitude + ", polygon=" + polygon + ", gname=" + gname + ", dname=" + dname
-				+ ", accPoint=" + accPoint + "]";
+		return "Freezing [fid=" + fid + ", sidoCode=" + sidoCode + ", year=" + year + ", accident=" + accident
+				+ ", casualties=" + casualties + ", dead=" + dead + ", seriously=" + seriously + ", ordinary="
+				+ ordinary + ", report=" + report + ", longitude=" + longitude + ", latitude=" + latitude + ", polygon="
+				+ polygon + ", accPoint=" + accPoint + "]";
 	}
 	
 }

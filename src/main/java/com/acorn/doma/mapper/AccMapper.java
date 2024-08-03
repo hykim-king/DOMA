@@ -7,4 +7,6 @@ import com.acorn.doma.domain.Accident;
 
 public interface AccMapper extends WorkDiv<Accident>{
 	int dataInsert(Accident inVO) throws SQLException;
+	int doDeleteAll() throws SQLException;
+	int countAll() throws SQLException;
 }

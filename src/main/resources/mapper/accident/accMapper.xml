@@ -24,6 +24,12 @@
         #{info},
         #{longitude},
         #{latitude}
-        );
+        )
     </insert>
+    <delete id="doDeleteAll">
+    DELETE FROM D_ACCINFO
+    </delete>
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM D_ACCINFO
+    </select>
 </mapper>

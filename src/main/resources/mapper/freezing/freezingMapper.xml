@@ -1,3 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.acorn.doma.mapper.FreezingMapper"></mapper>
+<mapper namespace="com.acorn.doma.mapper.FreezingMapper">
+    <insert id="dataInsert" parameterType="Freezing">
+    INSERT INTO D_FREEZING (
+    freezing_id, 
+    sido_code, 
+    year, 
+    accident, 
+    casualties, 
+    dead, 
+    seriously, 
+    ordinary, 
+    report, 
+    longitude, 
+    latitude, 
+    polygon, 
+    acc_point) 
+    VALUES (
+    #{fid}, 
+    #{sidoCode}, 
+    #{year}, 
+    #{accident}, 
+    #{casualties}, 
+    #{dead}, 
+    #{seriously}, 
+    #{ordinary}, 
+    #{report}, 
+    #{longitude}, 
+    #{latitude}, 
+    #{polygon}, 
+    #{accPoint}
+    )
+    </insert>
+    <delete id="doDeleteAll">
+    DELETE FROM D_FREEZING
+    </delete>
+</mapper>

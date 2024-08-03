@@ -12,25 +12,35 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
+import com.acorn.doma.mapper.AccMapper;
 @Service
-public class AccInfoServiceImpl {
-	public AccInfoServiceImpl() {}
-	
-	public static String fetchDataFromApi() throws IOException {
+public class AccInfoServiceImpl implements AccInfoService, PLog{
+	private final String serviceKey;
+	private final AccMapper accMapper;
+	 @Autowired
+	    public AccInfoServiceImpl(AccMapper accMapper, @Qualifier("accInfoServiceKey") String serviceKey) {
+	        this.accMapper = accMapper;
+	        this.serviceKey = serviceKey;
+	}
+	@Override
+	public String fetchDataFromApi() throws IOException {
 		String xmlData = "";
 		StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
-		urlBuilder.append("/" +  URLEncoder.encode("5146697052736b6f3438696a4d6574","UTF-8") ); /*인증키 (sample사용시에는 호출시 제한됩니다.)*/
+		urlBuilder.append("/" +  URLEncoder.encode(serviceKey,"UTF-8") ); /*인증키 (sample사용시에는 호출시 제한됩니다.)*/
 		urlBuilder.append("/" +  URLEncoder.encode("xml","UTF-8") ); /*요청파일타입 (xml,xmlf,xls,json) */
 		urlBuilder.append("/" + URLEncoder.encode("AccInfo","UTF-8")); /*서비스명 (대소문자 구분 필수입니다.)*/
 		urlBuilder.append("/" + URLEncoder.encode("1","UTF-8")); /*요청시작위치 (sample인증키 사용시 5이내 숫자)*/
-		urlBuilder.append("/" + URLEncoder.encode("50","UTF-8")); /*요청종료위치(sample인증키 사용시 5이상 숫자 선택 안 됨)*/
+		urlBuilder.append("/" + URLEncoder.encode("500","UTF-8")); /*요청종료위치(sample인증키 사용시 5이상 숫자 선택 안 됨)*/
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
@@ -51,10 +61,11 @@ public class AccInfoServiceImpl {
 		}
 		rd.close();
 		conn.disconnect();
-		xmlData = sb.toString();
-		return xmlData;
+		
+		return sb.toString();
 	}
-	private static List<Accident> parseXmlData(String xmlData) {
+	@Override
+	public List<Accident> parseXmlData(String xmlData) {
         List<Accident> accInfoList = new ArrayList<>();
 
         try {
@@ -102,5 +113,22 @@ public class AccInfoServiceImpl {
         }
 
         return accInfoList;
+    }
+	
+	public void insertAccidentData() {
+        try {
+            String xmlData = fetchDataFromApi();
+            List<Accident> accInfoList = parseXmlData(xmlData);
+            accMapper.doDeleteAll();
+            for (Accident accident : accInfoList) {
+                accMapper.dataInsert(accident);
+            }
+        } catch (IOException e) {
+            // handle exceptions related to fetching data
+            e.printStackTrace();
+        } catch (Exception e) {
+            // handle other exceptions
+            e.printStackTrace();
+        }
     }
 }
