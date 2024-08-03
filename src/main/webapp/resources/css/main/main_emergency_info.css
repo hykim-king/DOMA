@@ -1,0 +1,43 @@
+body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    #map {
+        width: 800px;
+        height: 700px;
+        margin: 0 auto;
+    }
+    .map-fn-l-box {
+	    min-height: 815px;
+	    position: relative;
+	    
+	}
+	.map-fn-l-box {
+	    z-index: 500;
+	    position: absolute;
+	    background-color: #f6f6f6;
+	    width: 61px;
+	    height: 579px;
+	    border-right: 1px solid #ddd;
+	}
+    .map-fn-l-box .fn-alert {
+	    display: inline-block;
+	    width: 60px;
+	    height: 60px;
+	}
+	.map-fn-l-box .fn-road{
+	    display: inline-block;
+	    width: 60px;
+	    height: 60px;
+	}
+	.map-fn-l-box .fn-freezing {
+	    display: inline-block;
+	    width: 60px;
+	    height: 60px;
+	}
+
+    #mapContainer {
+    	position: inherit;
+    }
