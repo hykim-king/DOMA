@@ -1,70 +1,3 @@
-<%--
-/**
-    Class Name: main.jsp
-    Description:
-    Author: acorn
-    Modification information
-    
-    수정일     수정자      수정내용
-    -----   -----  -------------------------------------------
-    2024. 7. 31        최초작성 
-    
-    DOMA 개발팀
-    since 2020.11.23
-    Copyright (C) by KandJang All right reserved.
-*/
- --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<c:set var="CP" value="${pageContext.request.contextPath}" />
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<%-- bootstrap css --%>
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
-
-<%-- jquery --%>
-<script src="${CP}/resources/js/jquery_3_7_1.js"></script>
-
-<%-- common js --%>
-<script src="${CP}/resources/js/common.js"></script> 
-
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-    }
-    #map {
-        width: 800px;
-        height: 700px;
-        margin: 0 auto;
-    }
-</style>
-
-<title>main</title>
-</head>
-<body>
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
-
-    <div class="map-fn-i-box">
-        <a href="" class="fn-alert" title="돌발">
-            <span class="blind">돌발</span>
-        </a>    
-        <a href="" class="fn-road" title="도로">
-            <span class="blind">도로</span> 
-        </a>     
-        <a href="" class="fn-freezing" title="결빙">
-            <span class="blind">결빙</span>    
-        </a>  
-    </div>
-    
     <div>
 	    <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
 	        <div id="map" style="width:700px;height:400px;"></div>
@@ -132,9 +65,7 @@
 	        };
 	    </script>
     </div>
-  
-<%@ include file="/WEB-INF/views/template/footer.jsp" %> 
-<!-- Bootstrap JS -->
+	<%@ include file="/WEB-INF/views/template/footer.jsp" %> 
 <script src="${CP}/resources/js/bootstrap.bundle.js"></script>    
 </body>
 </html>
