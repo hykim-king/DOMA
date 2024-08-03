@@ -102,33 +102,8 @@
      
 </style>
 <title>내 정보</title>
- <script>
-document.addEventListener("DOMContentLoaded", function(){
-    console.log("DOMContentLoaded");   
-    
-    
-  	//수정버튼:doUpdate
-	const doUpdateBtn = document.querySelector("#doUpdate");
-	 
-    
-    //seq
-    const userIdInput = document.querySelector("#userId");
-     
-    const userNameInput = document.querySelector("#userName");
-     
-    const userPwInput = document.querySelector("#userPw");
-     
-    const userEmailInput = document.querySelector("#userEmail");
-    
-    const birthInput = document.querySelector("#birth");
-    const addressInput = document.querySelector("#address");
-    
-    const detailAddressInput = document.querySelector("#detailAddress");
-     
-
- )}
-
-</script> 
+ <script src="${CP}/resources/js/mypage/mypageinfo.js"></script>
+  
 </head>
 <body>
     <div class="container">
