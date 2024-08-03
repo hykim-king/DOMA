@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.BoardMapper">
+    
+    <update id="readCntUpdate" parameterType="Board">
+        UPDATE d_board
+        SET  views = NVL(views,0)+ 1
+        WHERE seq = #{seq}
+        AND reg_id <![CDATA[<> #{regId} ]]>  
+    </update>
+    
+    <update id="doUpdateUser" parameterType="Board">
+        UPDATE d_board
+         SET div      = #{div},
+             title    = #{title},
+             contents = #{contents},
+             mod_id   = #{modId},
+             mod_dt   = SYSDATE
+          WHERE seq = #{seq}
+            AND user_id = #{userId}
+    </update>
+    
+    <update id="doUpdate" parameterType="Board">
+        UPDATE d_board
+         SET div      = #{div},
+             title    = #{title},
+             contents = #{contents},
+             mod_id   = #{modId},
+             mod_dt   = SYSDATE
+          WHERE seq = #{seq}
+    </update>
+    
+    <select id="doSelectOne" parameterType="Board" resultType="Board">
+        SELECT
+		    seq,
+		    div,
+		    title,
+		    reg_id as regId,
+		    mod_id as modId,
+		    content,
+		    img_link as imgLink,
+		    TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+		    TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt,
+		    views
+		FROM
+		    d_board
+		WHERE seq = #{seq}    
+    </select>
+    
+    <delete id="deleteAll">
+        DELETE FROM d_board
+    </delete>
+    
+    <select id="getSequence" resultType="int">
+        SELECT MAX(SEQ) seq
+          FROM d_board
+    </select>
+    
     <insert id="doSave" parameterType="Board">
      INSERT INTO D_BOARD(
         seq,
@@ -11,7 +66,8 @@
         content,
         img_link,
         reg_dt,
-        mod_dt          
+        mod_dt,
+        views          
      )VALUES(
       doma_board_seq.NEXTVAL,
       #{div},
@@ -21,7 +77,8 @@
       #{content},
       #{imgLink},
       SYSDATE,
-      SYSDATE
+      SYSDATE,
+      0
      )
     </insert>
 </mapper>
