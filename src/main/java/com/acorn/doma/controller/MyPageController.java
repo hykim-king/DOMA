@@ -32,7 +32,7 @@ public class MyPageController implements PLog {
 
 	@GetMapping("myPage.do")
 	public String main() {
-		String viewName = "mypage/MyPage";
+		String viewName = "/mypage/MyPage";
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ mypage()                                 │");
 		log.debug("└──────────────────────────────────────────┘");

@@ -1,22 +1,14 @@
-body, html {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-    }
+
     #map {
-        width: 800px;
+    	width : 70%;
         height: 700px;
-        margin: 0 auto;
     }
-    .map-fn-l-box {
-	    min-height: 815px;
-	    position: relative;
-	    
-	}
+    .mapContainer{
+    	width : 1300px;
+    }
 	.map-fn-l-box {
 	    z-index: 500;
-	    position: absolute;
+	    display: inline-block;
 	    background-color: #f6f6f6;
 	    width: 61px;
 	    height: 579px;
@@ -37,7 +29,18 @@ body, html {
 	    width: 60px;
 	    height: 60px;
 	}
-
     #mapContainer {
-    	position: inherit;
+    	position: inline-block;
+    }
+    .aside{
+    	position: inline-block;
+    	height: 579px;
+    }
+    .info_ul{
+    	list-style : none;
+    	border : 1px solid black;
+    	padding : 0px;
+    }
+    .info_table{
+    	boreder : 1px solid black;
     }

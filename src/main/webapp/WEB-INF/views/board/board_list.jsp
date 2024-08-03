@@ -1,6 +1,6 @@
 <%--
 /**
-	Class Name: 
+	Class Name: board_list.jsp
 	Description:
 	Author: acorn
 	Modification information
@@ -14,6 +14,8 @@
     Copyright (C) by KandJang All right reserved.
 */
  --%>
+<%@page import="com.acorn.doma.cmn.StringUtil"%>
+<%@page import="com.acorn.doma.cmn.Search"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,40 +24,69 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
 <%-- bootstrap css --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
-<script src="${CP }/resources/js/common.js"></script>
-<script src="${CP }/resources/js/jquery_3_7_1.js"></script>
+
+<%-- jquery --%>
+<script src="${CP}/resources/js/jquery_3_7_1.js"></script>
+
+<%-- common js --%>
+<script src="${CP}/resources/js/common.js"></script>
+
+<%-- google Nanum+Gothic --%>
+<link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+
+<%-- FontAwesome for icons --%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<title>Insert title here</title>
 </head>
+<body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-user : ${user }
+        
         <div  style="margin : 20px 0px 20px 30px">
             <input type="button" value="게시글 등록" class="g-col-6 btn btn-secondary">
             <input type="button" value="게시글 수정" class="g-col-6 btn btn-secondary">
             <input type="button" value="게시글 삭제" class="g-col-6 btn btn-secondary">
         </div>
         <div class="d-flex m-2">
-            <table class="table table-striped table-hover table-bordered m-3">
-                <tr>
-                    <td class="text-center col-sm-1">작성자</td>
-                    <td class="text-center col-sm-3">현재 삼성동 도로 상태..</td>
-                    <td class="text-center col-sm-3">위치</td>
-                    <td class="text-center col-sm-2">작성날짜</td>
-                </tr>
-                <tr>
-                    <td class="text-center col-sm-1">작성자</td>
-                    <td class="text-center col-sm-3">현재 삼성동 도로 상태..</td>
-                    <td class="text-center col-sm-2">위치</td>
-                    <td class="text-center col-sm-2">작성날짜</td>
-                </tr>
-                <tr>
-                    <td class="text-center col-sm-1">작성자</td>
-                    <td class="text-center col-sm-3">현재 삼성동 도로 상태..</td>
-                    <td class="text-center col-sm-2">위치</td>
-                    <td class="text-center col-sm-2">작성날짜</td>
-                </tr>
-            </table>
+            <!-- table -->
+		    <table class="table table-striped table-hover table-bordered m-3" id="boardTable">
+		      <thead >
+		        <tr class="table-success">
+		          <th class="text-center col-sm-1">no</th>
+		          <th class="text-center col-sm-6">제목</th>
+		          <th class="text-center col-sm-2">등록자</th>
+		          <th class="text-center col-sm-2">등록일</th>
+		          <th class="text-center col-sm-1">조회수</th>
+		          <th class="text-center col-sm-1 d-none">SEQ</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		          <c:choose>
+		            <c:when test="${list.size() > 0 }">
+		              <c:forEach var="vo" items="${list }">
+		                  <tr>
+		                    <td class="text-center" ><c:out value="${vo.no }"></c:out></td>
+		                    <td class="text-left" >
+		                      <a href="/doma/board/doSelectOne.do?seq=${vo.seq }&div=${vo.getDiv() }"><c:out value="${vo.title }"></c:out></a>
+		                    </td>
+		                    <td class="text-center" ><c:out value="${vo.modId }"></c:out></td>
+		                    <td class="text-center" ><c:out value="${vo.modDt }"></c:out></td>
+		                    <td class="text-end" ><c:out value="${vo.views }"></c:out></td>
+		                    <td class="text-center d-none" ><c:out value="${vo.seq }"></c:out></td>
+		                  </tr>
+		              </c:forEach>
+		            </c:when>
+		            <c:otherwise>
+		                <tr><td class="text-center" colspan="99" >No data found!</td></tr>
+		            </c:otherwise>
+		          </c:choose>
+		      </tbody>
+		    </table>
+		    <!--// table end ------------------------------------------------------------->
+            
+            
             <div >
                 <form class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <input type="search" class="g-col-6">

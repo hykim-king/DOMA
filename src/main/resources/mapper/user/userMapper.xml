@@ -10,8 +10,10 @@
     <select id="login" parameterType="User" resultType="User">
         SELECT                                            
             user_id as userId,
+            user_pw as userPw,
             user_name as userName,
             user_email as userEmail,
+            birth,
             grade,
             address,
             detail_address as detailAddress,

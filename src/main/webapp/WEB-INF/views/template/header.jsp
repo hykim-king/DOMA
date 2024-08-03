@@ -14,7 +14,9 @@
 <body>
     <header>
         <div class="logo">
-            <img src="${CP}/resources/img/logoo.png" alt="Logo">
+            <a class="navbar-brand" href="/doma/main/main.do">
+                <img src="${CP}/resources/img/logoo.png" alt="Logo">
+            </a>
         </div>
         <nav>
             <div class="back color-3">
