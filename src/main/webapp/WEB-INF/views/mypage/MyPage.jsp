@@ -46,7 +46,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap-ege.min.css"> 
- 
+ <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
     .container {
@@ -102,7 +102,7 @@
      
 </style>
 <title>내 정보</title>
-<script>
+ <script>
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");   
     
@@ -120,13 +120,15 @@ document.addEventListener("DOMContentLoaded", function(){
      
     const userEmailInput = document.querySelector("#userEmail");
     
+    const birthInput = document.querySelector("#birth");
     const addressInput = document.querySelector("#address");
     
     const detailAddressInput = document.querySelector("#detailAddress");
      
 
-)};
-</script>
+ )}
+
+</script> 
 </head>
 <body>
     <div class="container">
@@ -137,13 +139,13 @@ document.addEventListener("DOMContentLoaded", function(){
                     <form action="" method="">
                         <div>
                             <label for="userInfo" class="form-label mt-4"></label>
-                            <input type="text" class="form-control" 	value="<c:out value='${user.userId }'/>" id="userId" aria-describedby="userId"  disabled="disabled">
-                             <input type="text" class="form-control"	value="<c:out value='${user.userName }'/>" id="userName" aria-describedby="userName"  >   
-                            <input type="password" class="form-control" value="<c:out value='${user.userPw }'/>"  id="userPw" aria-describedby="password" > 
-                            <input type="email" class="form-control" 	value="<c:out value='${user.userEmail }'/>" id="userEmail" aria-describedby="email"  > 
-                            <input type="text" class="form-control" 	value="<c:out value='${user.birth }'/>" id="birth" aria-describedby="bitrhday"  >  
-                            <input type="text" class="form-control" 	value="<c:out value='${user.address }'/>" id="address" aria-describedby="address" disabled="disabled">
-                            <input type="text" class="form-control" 	value="<c:out value='${user.detailAddress }'/>" id="detailAddress" aria-describedby="address"  disabled="disabled">  
+                            <input type="text" class="form-control" 	value="<c:out value='${user.userId }'/>" 		id="userId"    		name="userId"     disabled="disabled">
+                             <input type="text" class="form-control"	value="<c:out value='${user.userName }'/>"  	id="userName"  		name="userName" >   
+                            <input type="password" class="form-control" value="<c:out value='${user.userPw }'/>"  		id="userPw"    		name="userPw"  > 
+                            <input type="email" class="form-control" 	value="<c:out value='${user.userEmail }'/>" 	id="userEmail" 		name="userEmail" > 
+                            <input type="text" class="form-control" 	value="<c:out value='${user.birth }'/>" 		id="birth"	   		name="birth" >  
+                            <input type="text" class="form-control" 	value="<c:out value='${user.address }'/>"	    id="address"   		name="address"       disabled="disabled">
+                            <input type="text" class="form-control" 	value="<c:out value='${user.detailAddress }'/>" id="detailAddress"  name="detailAddress"    disabled="disabled">  
                         </div>  
                         <br> 
                         <div class="form-btn">
