@@ -9,12 +9,100 @@
         AND reg_id <![CDATA[<> #{regId} ]]>  
     </update>
     
+    <insert id="multipleSave">
+        INSERT INTO d_board
+        SELECT ROWNUM,
+               DECODE(MOD(ROWNUM,2),1,'10','20'),
+               '제목'||LPAD(ROWNUM,7,0),
+               'ADMIN',
+               'ADMIN',
+               '내용'||LPAD(ROWNUM,7,0),
+               '이미지'||LPAD(ROWNUM,7,0),
+               SYSDATE-ROWNUM/24,
+               SYSDATE-ROWNUM/24,
+               MOD(ROWNUM,10)
+        FROM dual
+        CONNECT BY LEVEL  <![CDATA[<= 202]]>
+    </insert>
+    
+    <sql id="divDoRetrieve">
+        <choose>
+           <when test="div != null and div != '' ">
+               AND div = #{div}
+           </when>
+       </choose>
+    </sql>
+    
+    <sql id="whereDoRetrieve">
+       <choose>
+           <when test="searchDiv != null and searchDiv == '10' ">
+               AND title LIKE #{searchWord} || '%'
+           </when>
+           <when test="searchDiv != null and searchDiv == '20' ">
+               AND content LIKE #{searchWord} || '%'
+           </when>
+           <when test="searchDiv != null and searchDiv == '30'">
+               AND (title LIKE #{searchWord} || '%'
+               OR
+               content LIKE #{searchWord} || '%')
+           </when>
+       </choose>
+    </sql>
+    
+    <select id="doRetrieve" parameterType="Search" resultType="Board">
+    -- TODO : 커뮤니티(1), 공지사항(2)
+    SELECT A.*, B.*
+      FROM (
+        SELECT tt1.rnum as no,
+               tt1.div,
+               tt1.title,
+               tt1.mod_id as modId,
+               DECODE( TO_CHAR(tt1.mod_dt,'YYYYMMDD'),TO_CHAR(SYSDATE,'YYYYMMDD'),
+                       TO_CHAR(tt1.mod_dt,'HH24:MI'),TO_CHAR(tt1.mod_dt,'YYYY/MM/DD')
+               ) as modDt,
+               tt1.views,
+               TT1.seq
+          FROM (
+        SELECT ROWNUM as rnum, T1.*
+          FROM (
+            SELECT * 
+              FROM d_board
+              --WHERE : title(10), content(20), title+content(30)
+              WHERE 1=1
+              <include refid="divDoRetrieve"></include>
+              <include refid="whereDoRetrieve"></include>
+              ORDER BY mod_dt DESC
+        )T1
+            WHERE rownum  <![CDATA[ <= ( #{pageSize} * (#{pageNo} -1) + #{pageSize} )]]>
+        )TT1
+        WHERE tt1.rnum <![CDATA[ >= ( #{pageSize} * (#{pageNo} -1) + 1 )]]>
+        )A
+        CROSS JOIN (
+            SELECT COUNT (*) totalCnt
+            FROM d_board
+            WHERE 1=1
+            <include refid="divDoRetrieve"></include>
+            <include refid="whereDoRetrieve"></include>
+        )B
+    </select>
+    
+    <delete id="doDeleteUser" parameterType="Board">
+        DELETE FROM d_board
+        WHERE seq = #{seq}
+          AND user_id = #{userId}
+    </delete>
+    
+    <delete id="doDelete" parameterType="Board">
+        DELETE FROM d_board
+         WHERE seq = #{seq}
+    </delete>
+    
     <update id="doUpdateUser" parameterType="Board">
         UPDATE d_board
          SET div      = #{div},
              title    = #{title},
-             contents = #{contents},
              mod_id   = #{modId},
+             content = #{content},
              mod_dt   = SYSDATE
           WHERE seq = #{seq}
             AND user_id = #{userId}
@@ -24,8 +112,8 @@
         UPDATE d_board
          SET div      = #{div},
              title    = #{title},
-             contents = #{contents},
              mod_id   = #{modId},
+             content = #{content},
              mod_dt   = SYSDATE
           WHERE seq = #{seq}
     </update>

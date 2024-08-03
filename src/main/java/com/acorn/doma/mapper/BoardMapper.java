@@ -34,6 +34,11 @@ public interface BoardMapper extends WorkDiv<Board>{
 	 */
 	int readCntUpdate(Board inVO) throws SQLException;
 	
-	
+	/**
+	 * 다건 데이터 등록
+	 * @return
+	 * @throws SQLException
+	 */
+	int multipleSave() throws SQLException;
 	
 }

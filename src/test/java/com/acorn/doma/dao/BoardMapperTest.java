@@ -3,6 +3,9 @@ package com.acorn.doma.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -44,9 +47,9 @@ public class BoardMapperTest implements PLog{
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		
-		board01 = new Board(1,"10","제목01","admin","admin","내용01","1111","사용안함","사용안함",0);
-		board02 = new Board(2,"10","제목02","admin","admin","내용02","1111","사용안함","사용안함",0);
-		board03 = new Board(3,"10","제목03","admin","admin","내용03","1111","사용안함","사용안함",0);
+		board01 = new Board(1,"10","제목_01","admin","admin","내용_01","1111","사용안함","사용안함",0);
+		board02 = new Board(2,"10","제목_02","admin","admin","내용_02","1111","사용안함","사용안함",0);
+		board03 = new Board(3,"10","제목_03","admin","admin","내용_03","1111","사용안함","사용안함",0);
 		
 		boardMapper.deleteAll();
 		
@@ -127,9 +130,13 @@ public class BoardMapperTest implements PLog{
 		assertNotNull(outVO03);
 		
 		isSameBoard(board01, outVO03);
+		
+		// 단건 삭제
+		flag = boardMapper.doDelete(outVO01);
+		assertEquals(1, flag);
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void doUpdate() throws Exception {
 		
@@ -154,9 +161,36 @@ public class BoardMapperTest implements PLog{
 		outVO01.setContent(outVO01.getContent() + updateStr);
 		outVO01.setViews(1);
 		
+		flag = boardMapper.doUpdate(outVO01);
+		log.debug("flag : " + flag);
+		assertEquals(1, flag);
 		
+		Board outVO01Update = boardMapper.doSelectOne(outVO01);
+		log.debug("outVO01Update : " + outVO01Update);
+		assertNotNull(outVO01Update);
+		
+		isSameBoard(outVO01Update, outVO01);
 	}
 	
+	//@Ignore
+	@Test
+	public void doRetrieve() throws SQLException {
+
+		boardMapper.multipleSave();
+
+		search.setDiv("10");
+		search.setPageNo(1);
+		search.setPageSize(10);
+		
+		search.setSearchDiv("30");
+		//제목000001
+		//내용000001
+		search.setSearchWord("내용000001");
+		
+		List<Board> list = boardMapper.doRetrieve(search);
+		assertEquals(5, list.size());
+
+	}
 	
 	@Ignore
 	@Test
