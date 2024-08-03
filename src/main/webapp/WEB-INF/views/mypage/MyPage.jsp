@@ -16,25 +16,38 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="CP" value="${pageContext.request.contextPath}" />
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<c:set var="CP"  value="${pageContext.request.contextPath}"  />
+     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <%-- favicon  --%>
 <link rel="shortcut icon" href="${CP}/resources/img/favicon.ico" type="image/x-icon">
 
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap-ege.min.css">
+<%-- bootstrap css --%>
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
+
+<%-- jquery --%>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
-<script src="${CP}/resources/js/common.js"></script>
-<script>
 
-</script>
+<%-- common js --%>
+<script src="${CP}/resources/js/common.js"></script> 
 
-<title>리뷰쓰기</title>
+<%-- google Nanum+Gothic --%>
+<link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+
+<%-- bootstrap icon --%>
+<link rel="stylesheet" href="${CP}/resources/icon/font/bootstrap-icons.min.css">
+
+<%-- FontAwesome for icons --%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap-ege.min.css"> 
+ 
+
 <style>
     .container {
         display: flex;
@@ -88,6 +101,32 @@
     }
      
 </style>
+<title>내 정보</title>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    console.log("DOMContentLoaded");   
+    
+    
+  	//수정버튼:doUpdate
+	const doUpdateBtn = document.querySelector("#doUpdate");
+	 
+    
+    //seq
+    const userIdInput = document.querySelector("#userId");
+     
+    const userNameInput = document.querySelector("#userName");
+     
+    const userPwInput = document.querySelector("#userPw");
+     
+    const userEmailInput = document.querySelector("#userEmail");
+    
+    const addressInput = document.querySelector("#address");
+    
+    const detailAddressInput = document.querySelector("#detailAddress");
+     
+
+)};
+</script>
 </head>
 <body>
     <div class="container">
@@ -98,11 +137,13 @@
                     <form action="" method="">
                         <div>
                             <label for="userInfo" class="form-label mt-4"></label>
-                            <input type="text" class="form-control" id="userId" aria-describedby="userId" placeholder="userId" disabled="disabled">  
-                            <input type="password" class="form-control" id="password" aria-describedby="password" placeholder="password"> 
-                            <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="email"  > 
-                            <input type="text" class="form-control" id="bitrhday" aria-describedby="bitrhday" placeholder="bitrhday"  >  
-                            <input type="text" class="form-control" id="address" aria-describedby="address" placeholder="address" disabled="disabled"> 
+                            <input type="text" class="form-control" 	value="<c:out value='${user.userId }'/>" id="userId" aria-describedby="userId"  disabled="disabled">
+                             <input type="text" class="form-control"	value="<c:out value='${user.userName }'/>" id="userName" aria-describedby="userName"  >   
+                            <input type="password" class="form-control" value="<c:out value='${user.userPw }'/>"  id="userPw" aria-describedby="password" > 
+                            <input type="email" class="form-control" 	value="<c:out value='${user.userEmail }'/>" id="userEmail" aria-describedby="email"  > 
+                            <input type="text" class="form-control" 	value="<c:out value='${user.birth }'/>" id="birth" aria-describedby="bitrhday"  >  
+                            <input type="text" class="form-control" 	value="<c:out value='${user.address }'/>" id="address" aria-describedby="address" disabled="disabled">
+                            <input type="text" class="form-control" 	value="<c:out value='${user.detailAddress }'/>" id="detailAddress" aria-describedby="address"  disabled="disabled">  
                         </div>  
                         <br> 
                         <div class="form-btn">
@@ -217,4 +258,6 @@
 </div>
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %>
+
+<script src="/ehr/resources/js/bootstrap.bundle.js"></script>  
 </html>

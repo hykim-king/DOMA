@@ -53,8 +53,12 @@ public interface UserMapper extends WorkDiv<User> {
 	 * 테스트용 전체 데이터 삭제
 	 * @return
 	 * @throws SQLException
+	 * 
+	 * 
 	 */
-	int deleteAll() throws SQLException;
+	int mpGradeUp(User inVO) throws SQLException;
+	
+	int deleteAmpGrageUpll() throws SQLException;
 	
 	int mpUpdate(User user) throws SQLException;
 	

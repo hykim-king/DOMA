@@ -64,6 +64,10 @@
                 user_id = #{userId}     
     </update>
     
+     
+    
+    
+    
     <delete id="doDelete" parameterType="User">
         DELETE FROM D_USER
          WHERE user_id = #{userId}
