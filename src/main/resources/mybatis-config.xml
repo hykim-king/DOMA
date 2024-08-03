@@ -12,11 +12,7 @@
         <typeAlias alias="Code" type="com.acorn.doma.domain.Code"/>
         <typeAlias alias="User" type="com.acorn.doma.domain.User"/>
         <typeAlias alias="Accident" type="com.acorn.doma.domain.Accident"/>        
-<<<<<<< HEAD
         <typeAlias alias="Comments" type="com.acorn.doma.domain.Comments"/>
-=======
-        <typeAlias alias="Comment" type="com.acorn.doma.domain.Comments"/>
->>>>>>> f71397e219fe35ab013035f147a0fcc52f68db03
         <typeAlias alias="Freezing" type="com.acorn.doma.domain.Freezing"/>
         <typeAlias alias="Point" type="com.acorn.doma.domain.Point"/>
         <typeAlias alias="Type" type="com.acorn.doma.domain.Type"/>
