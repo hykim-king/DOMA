@@ -8,15 +8,8 @@ public class Comments {
 	private String comments;
 	private String regDt;
 	private String modDt;
-<<<<<<< HEAD:src/main/java/com/acorn/doma/domain/Comments.java
 	public Comments() {}
 	public Comments(int comSeq, int seq, String userId, String modId, String comments, String regDt, String modDt) {
-=======
-	
-	public Comment() { }
-	
-	public Comment(int comSeq, int seq, String userId, String modId, String comments, String regDt, String modDt) {
->>>>>>> 3c5a0e5abe555c107d5a6343fa401062bd7de3fc:src/main/java/com/acorn/doma/domain/Comment.java
 		super();
 		this.comSeq = comSeq;
 		this.seq = seq;
