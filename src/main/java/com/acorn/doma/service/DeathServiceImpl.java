@@ -31,9 +31,8 @@ public class DeathServiceImpl implements DeathService, PLog{
              "1105", "1114", "1110", "1109", "1119", 
              "1104", "1106", "1118", "1120", "1113", 
              "1103", "1108", "1101", "1102", "1121"
-   
     };
-	public DeathServiceImpl(DeathMapper deathMapper,@Qualifier("freezingdeathServiceKey") String serviceKey) {
+	public DeathServiceImpl(DeathMapper deathMapper,@Qualifier("pointdeathServiceKey") String serviceKey) {
 		this.serviceKey = serviceKey;
 		this.deathMapper = deathMapper;
 		}

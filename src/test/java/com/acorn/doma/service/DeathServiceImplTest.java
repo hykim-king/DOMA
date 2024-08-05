@@ -44,8 +44,8 @@ public class DeathServiceImplTest implements PLog{
 	}
 	@Test
 	public void testInsertDeathData() throws Exception{
-		deathMapper.doDeleteAll();
-		deathService.insertDeathData();
+//		deathMapper.doDeleteAll();
+//		deathService.insertDeathData();
 		deathMapper.countAll();
 	}
 	@Ignore

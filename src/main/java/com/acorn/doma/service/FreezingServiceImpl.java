@@ -32,7 +32,7 @@ public class FreezingServiceImpl implements FreezingService,PLog{
         "350", "380", "410", "440", "470", "500", "530", "545", "560", "590",
         "620", "650", "680", "710", "740"
     };
-	public FreezingServiceImpl(FreezingMapper freezingMapper, @Qualifier("freezingdeathServiceKey") String serviceKey) {
+	public FreezingServiceImpl(FreezingMapper freezingMapper, @Qualifier("freezingServiceKey") String serviceKey) {
 		this.serviceKey = serviceKey;
 		this.freezingMapper = freezingMapper;	
 	}

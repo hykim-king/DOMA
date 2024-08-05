@@ -32,7 +32,7 @@ public class PointServiceImpl implements PointService, PLog{
         "350", "380", "410", "440", "470", "500", "530", "545", "560", "590",
         "620", "650", "680", "710", "740"
     };
-	public PointServiceImpl(PointMapper pointMapper,@Qualifier("pointServiceKey") String serviceKey){ 
+	public PointServiceImpl(PointMapper pointMapper,@Qualifier("pointdeathServiceKey") String serviceKey){ 
 		this.serviceKey = serviceKey;
 		this.pointMapper = pointMapper;
 	}

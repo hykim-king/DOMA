@@ -21,10 +21,10 @@
     <bean id="accInfoServiceKey" class="java.lang.String">
         <constructor-arg value="5146697052736b6f3438696a4d6574"/>
     </bean>
-    <bean id="pointServiceKey" class="java.lang.String">
+    <bean id="pointdeathServiceKey" class="java.lang.String">
         <constructor-arg value="u2Ynztum9D6SLnGMa307uaZWiGslePrz8ir8Z4R99wk7Ab3Zl6itMwNf1P6xRwUpr3gC%2BgjruGIz7qpIMirUng%3D%3D"/>
     </bean>
-    <bean id="freezingdeathServiceKey" class="java.lang.String">
+    <bean id="freezingServiceKey" class="java.lang.String">
         <constructor-arg value="%2Be0w%2FsKfgHqqLeOOGupdVrnGmCfE81u0jINpS51GPDFeppol8RaYe1id0%2BbpEO%2BSq%2BYzOmi%2F%2By77yKtIgPSlqQ%3D%3D"/>
     </bean>
     
