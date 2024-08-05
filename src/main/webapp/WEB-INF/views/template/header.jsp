@@ -44,7 +44,7 @@
                     <a aria-current="page" href="${CP }/template/list.do">공지사항(공사중)</a>
                 </li>
                 <li class="dropdown">
-                    <a aria-current="page" href="${CP }/community/community.do">커뮤니티</a>
+                    <a aria-current="page" href="${CP }/board/doRetrieve.do">커뮤니티</a>
                 </li>
             </ul>
             <!-- 전체 서브메뉴 박스 -->
