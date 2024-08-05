@@ -24,4 +24,41 @@
         ORDER BY
             SUM(dead) DESC
     </select>
+    <delete id="doDeleteAll">
+    DELETE FROM d_death
+    </delete>
+    <insert id="dataInsert" parameterType="Death">
+    INSERT INTO D_death (
+    gcode,
+    acc_major, 
+    acc_medium, 
+    year, 
+    occr_date, 
+    day_night, 
+    day_week, 
+    dead, 
+    casualties, 
+    seriously, 
+    ordinary, 
+    report, 
+    longitude, 
+    latitude) 
+    VALUES (
+    #{gcode}, 
+    #{accMajor}, 
+    #{accMedium}, 
+    #{year}, 
+    #{occrDate}, 
+    #{dayNight}, 
+    #{dayWeek}, 
+    #{dead}, 
+    #{casualties}, 
+    #{seriously}, 
+    #{ordinary}, 
+    #{report}, 
+    #{longitude}, 
+    #{latitude}
+    )
+    </insert>
+    
 </mapper>

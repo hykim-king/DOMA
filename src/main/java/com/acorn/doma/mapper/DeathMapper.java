@@ -14,6 +14,7 @@ public interface DeathMapper extends WorkDiv<Death> {
 	List<Death> selectTop5AccTypeByGname();
 	
 	List<Death> deathDayNight();
-	
+	int dataInsert(Death inVO) throws SQLException;
+	int doDeleteAll() throws SQLException;
 	
 }

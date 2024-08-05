@@ -32,7 +32,7 @@ public class FreezingMapperTest implements PLog{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
-		freezing = new Freezing(1, "1111010300", "2024", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
+		freezing = new Freezing("1", "1111010300", "2024", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
 	}
 
 	@After
@@ -41,7 +41,7 @@ public class FreezingMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-	@Ignore
+	
 	@Test
 	public void dataInsert() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -49,16 +49,10 @@ public class FreezingMapperTest implements PLog{
 		log.debug("└──────────────────────────────┘");
 		int flag = freezingMapper.dataInsert(freezing);
 		assertEquals(1, flag);
+		flag = freezingMapper.doDeleteAll();
+		flag = freezingMapper.countAll();
 	}
-	
-	@Test
-	public void doDeletaAll() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ dataInsert()                 │");
-		log.debug("└──────────────────────────────┘");
-		int flag = freezingMapper.doDeleteAll();
-		log.debug("flag: "+flag);
-	}
+	@Ignore
 	@Test
 	public void beans() {
 		log.debug("┌──────────────────────────────┐");

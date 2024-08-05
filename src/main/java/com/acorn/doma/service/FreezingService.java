@@ -9,4 +9,6 @@ public interface FreezingService {
 	String fetchDataFromApi(String year, String guGunCode) throws IOException;
 	JsonArray parseJsonData(String jsonData);
 	String getJsonElementAsString(JsonObject jsonObject, String key);
+	 void insertFreezingData() throws IOException;
+	 void saveDataToDatabase(JsonArray items);
 }

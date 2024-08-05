@@ -11,5 +11,5 @@ import com.acorn.doma.domain.Freezing;
 public interface FreezingMapper extends WorkDiv<Freezing> {
 	int dataInsert(Freezing inVO) throws SQLException;
 	int doDeleteAll() throws SQLException;
-
+	int countAll() throws SQLException;
 }

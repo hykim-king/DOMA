@@ -1,39 +1,40 @@
 package com.acorn.doma.domain;
 
 public class Point {
-	private int pid;
+	private String pid;
 	private String accPoint;
-	private int year;
 	private int accdient;
 	private int dead;
 	private int seriously;
 	private int ordinary;
 	private int report;
 	private String pointType;
-	private String gname;
 	private double longitude;
 	private double latitude;
+	private String year;
+	private String gname;
 	public Point() {}
-	public Point(int pid, String accPoint, int year, int accdient, int dead, int seriously, int ordinary, int report,
-			String pointType, String gname, double longitude, double latitude) {
+	public Point(String pid, String accPoint, int accdient, int dead, int seriously, int ordinary, int report,
+			String pointType, double longitude, double latitude, String year, String gname) {
 		super();
 		this.pid = pid;
 		this.accPoint = accPoint;
-		this.year = year;
 		this.accdient = accdient;
 		this.dead = dead;
 		this.seriously = seriously;
 		this.ordinary = ordinary;
 		this.report = report;
 		this.pointType = pointType;
-		this.gname = gname;
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.year = year;
+		this.gname = gname;
 	}
-	public int getPid() {
+
+	public String getPid() {
 		return pid;
 	}
-	public void setPid(int pid) {
+	public void setPid(String pid) {
 		this.pid = pid;
 	}
 	public String getAccPoint() {
@@ -42,10 +43,10 @@ public class Point {
 	public void setAccPoint(String accPoint) {
 		this.accPoint = accPoint;
 	}
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 	public int getAccdient() {

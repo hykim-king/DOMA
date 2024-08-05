@@ -7,12 +7,14 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.Freezing;
 import com.acorn.doma.mapper.AccMapper;
 import com.acorn.doma.mapper.FreezingMapper;
 import com.google.gson.JsonArray;
@@ -22,12 +24,22 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 @Service
 public class FreezingServiceImpl implements FreezingService,PLog{
-	public FreezingServiceImpl() {	
+	private final String serviceKey;
+	private final FreezingMapper freezingMapper; 
+	private static final String[] YEARS = {"2017", "2018", "2019", "2020", "2021", "2022"};
+    private static final String[] DISTRICTS = {
+        "110", "140", "170", "200", "215", "230", "260", "290", "305", "320",
+        "350", "380", "410", "440", "470", "500", "530", "545", "560", "590",
+        "620", "650", "680", "710", "740"
+    };
+	public FreezingServiceImpl(FreezingMapper freezingMapper, @Qualifier("freezingdeathServiceKey") String serviceKey) {
+		this.serviceKey = serviceKey;
+		this.freezingMapper = freezingMapper;	
 	}
 	@Override
 	public String fetchDataFromApi(String year, String guGunCode) throws IOException {
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552061/frequentzoneFreezing/getRestFrequentzoneFreezing");
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=serviceKey");
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "="+serviceKey);
         urlBuilder.append("&" + URLEncoder.encode("searchYearCd", "UTF-8") + "=" + URLEncoder.encode(year, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("siDo", "UTF-8") + "=" + URLEncoder.encode("11", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("guGun", "UTF-8") + "=" + URLEncoder.encode(guGunCode, "UTF-8"));
@@ -51,6 +63,8 @@ public class FreezingServiceImpl implements FreezingService,PLog{
         }
         rd.close();
         conn.disconnect();
+        String response = sb.toString();
+        System.out.println("API Response: " + response); // Log the response
         return sb.toString();
 	}
 
@@ -74,5 +88,44 @@ public class FreezingServiceImpl implements FreezingService,PLog{
 	public String getJsonElementAsString(JsonObject jsonObject, String key) {
 		return jsonObject.has(key) && !jsonObject.get(key).isJsonNull() ? jsonObject.get(key).getAsString() : null;
 	}
+	@Override
+    public void insertFreezingData() throws IOException {
+        for (String year : YEARS) {
+            for (String guGunCode : DISTRICTS) {
+                log.debug("Fetching data for year: " + year + ", district code: " + guGunCode);
+                String jsonData = fetchDataFromApi(year, guGunCode);
+                JsonArray items = parseJsonData(jsonData);
+                saveDataToDatabase(items);
+            }
+        }
+    }
+	@Override
+	public void saveDataToDatabase(JsonArray items) {
+		try {
+            for (JsonElement item : items) {
+                JsonObject data = item.getAsJsonObject();
 
+                Freezing freezing = new Freezing();
+                freezing.setFid(getJsonElementAsString(data, "afos_fid"));
+                freezing.setSidoCode(getJsonElementAsString(data, "bjd_cd"));
+                freezing.setYear(getJsonElementAsString(data, "afos_id") != null && getJsonElementAsString(data, "afos_id").length() >= 4 
+                                    ? getJsonElementAsString(data, "afos_id").substring(0, 4) 
+                                    : null);
+                freezing.setAccident(Integer.parseInt(getJsonElementAsString(data, "occrrnc_cnt")));
+                freezing.setCasualties(Integer.parseInt(getJsonElementAsString(data, "caslt_cnt")));
+                freezing.setDead(Integer.parseInt(getJsonElementAsString(data, "dth_dnv_cnt")));
+                freezing.setSeriously(Integer.parseInt(getJsonElementAsString(data, "se_dnv_cnt")));
+                freezing.setOrdinary(Integer.parseInt(getJsonElementAsString(data, "sl_dnv_cnt")));
+                freezing.setReport(Integer.parseInt(getJsonElementAsString(data, "wnd_dnv_cnt")));
+                freezing.setLongitude(Double.parseDouble(getJsonElementAsString(data, "lo_crd")));
+                freezing.setLatitude(Double.parseDouble(getJsonElementAsString(data, "la_crd")));
+                freezing.setPolygon(getJsonElementAsString(data, "geom_json"));
+                freezing.setAccPoint(getJsonElementAsString(data, "spot_nm"));
+
+                freezingMapper.dataInsert(freezing);
+            }
+        } catch (SQLException e) {
+            log.error("Error saving data to database: " + e.getMessage(), e);
+        }
+    }
 }

@@ -1,7 +1,7 @@
 package com.acorn.doma.domain;
 
 public class Freezing {
-	private int fid;
+	private String fid;
 	private String sidoCode;
 	private String year;
 	private int accident;
@@ -15,7 +15,7 @@ public class Freezing {
 	private String polygon;
 	private String accPoint;
 	public Freezing() {}
-	public Freezing(int fid, String sidoCode, String year, int accident, int casualties, int dead, int seriously,
+	public Freezing(String fid, String sidoCode, String year, int accident, int casualties, int dead, int seriously,
 			int ordinary, int report, double longitude, double latitude, String polygon, String accPoint) {
 		super();
 		this.fid = fid;
@@ -32,10 +32,10 @@ public class Freezing {
 		this.polygon = polygon;
 		this.accPoint = accPoint;
 	}
-	public int getFid() {
+	public String getFid() {
 		return fid;
 	}
-	public void setFid(int fid) {
+	public void setFid(String fid) {
 		this.fid = fid;
 	}
 	public String getSidoCode() {

@@ -35,4 +35,7 @@
     <delete id="doDeleteAll">
     DELETE FROM D_FREEZING
     </delete>
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM D_FREEZING
+    </select>
 </mapper>
