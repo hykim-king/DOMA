@@ -27,30 +27,50 @@
         #{latitude}
         )
     </insert>
-    
-     <select id="doRetrieve" parameterType="Search" resultType="Accident">
-	    SELECT * FROM (
-	    SELECT 
-	    	ROWNUM AS RNUM
-	        A.ACC_ID,
-	        A.ACC_TYPE,
-	        T.ACC_NAME,
-	        A.ACC_DTYPE,
-	        D.ACC_DNAME,
-	        TO_CHAR(TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS OCCR_DATE,
-	        TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS OCCR_TIME,
-	        TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS END_DATE,
-	        TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS END_TIME,
-	        A.INFO,
-	        A.LONGITUDE,
-	        A.LATITUDE
+    <select id="doSelectOne" parameterType="Accident" resultType="Accident">
+       SELECT 
+    dat.acc_name AS acc_name,
+    dad.acc_dname AS acc_dname,
+    dai.occr_date, 
+    dai.occr_time, 
+    dai.end_date, 
+    dai.end_time, 
+    dai.info, 
+    dai.longitude, 
+    dai.latitude
+	FROM 
+	    D_ACCINFO dai
+	JOIN 
+	    D_ACC_TYPE dat 
+	    ON dai.acc_type = dat.acc_type
+	JOIN 
+	    D_ACC_DTYPE dad 
+	    ON dai.acc_dtype = dad.acc_dtype
+	     WHERE ACC_ID = #{accId}
+    </select>
+    <select id="fullTableScan" resultType="Accident">
+        SELECT * FROM (
+    SELECT 
+        ROWNUM AS RNUM,
+        A.ACC_ID,
+        A.ACC_TYPE,
+        T.ACC_NAME,
+        A.ACC_DTYPE,
+        D.ACC_DNAME,
+        TO_CHAR(TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS OCCR_DATE,
+        TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS OCCR_TIME,
+        TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS END_DATE,
+        TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS END_TIME,
+        A.INFO,
+        A.LONGITUDE,
+        A.LATITUDE
 	    FROM 
 	        D_ACCINFO A
 	    JOIN 
 	        D_ACC_TYPE T ON A.ACC_TYPE = T.ACC_TYPE
 	    JOIN 
-	        D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE   
-	 	)
+	        D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
+	)
     </select>
     
     <delete id="doDeleteAll">

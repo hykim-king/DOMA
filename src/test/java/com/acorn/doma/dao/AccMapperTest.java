@@ -2,6 +2,8 @@ package com.acorn.doma.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -29,12 +31,15 @@ public class AccMapperTest implements PLog{
 	AccMapper accMapper;
 	
 	Accident acc;
+	
+	Accident accidentSelect01;
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		acc = new Accident("1111", "A01", "12B01", "11", "11", "A01", "12B01", "info", 11, 11);
+		accidentSelect01 = new Accident();
 	}
 
 	@After
@@ -61,7 +66,18 @@ public class AccMapperTest implements PLog{
 		int flag = accMapper.doDeleteAll();
 		assertEquals(0, flag);
 	}
-	
+	@Test
+	public void sqlAll() throws Exception{
+		int flag = accMapper.countAll();
+		log.debug("count(*): "+flag);
+		
+		accidentSelect01.setAccId("983182");
+		
+		accMapper.doSelectOne(accidentSelect01);
+		List<Accident> list = accMapper.fullTableScan();
+		
+	}
+	@Ignore
 	@Test
 	public void countAll() throws Exception{
 		log.debug("┌──────────────────────────────┐");
