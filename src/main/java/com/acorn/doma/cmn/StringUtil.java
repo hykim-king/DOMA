@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.acorn.doma.domain.Code;
 
 public class StringUtil  implements PLog {
+	
 	/**
 	 *  날짜 Format
 	 * @param format ex)yyyyMMddhhmmss
@@ -110,7 +111,7 @@ public class StringUtil  implements PLog {
 		   
 	   }
 	   //>
-	   if(maxPageNo>inx) {
+	   if(maxPageNo>=inx) {
 		   log.debug("nowBlocNo:"+nowBlocNo);
 		   log.debug("bottomCount:"+bottomCount);	
 		   log.debug(">:"+ ((nowBlocNo * bottomCount)+1));	
@@ -122,7 +123,7 @@ public class StringUtil  implements PLog {
 		   html.append("</li> \n");		   
 	   }
 	   //>>
-	   if(maxPageNo>inx) { 
+	   if(maxPageNo>=inx) { 
 		   html.append("<li class=\"page-item\"> \n");
 		   html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',"+(maxPageNo)+ "); \" > \n");
 		   html.append("<span aria-hidden=\"true\">&raquo;</span> \n");

@@ -12,7 +12,7 @@
     <insert id="multipleSave">
         INSERT INTO d_board
         SELECT ROWNUM,
-               DECODE(MOD(ROWNUM,2),1,'10','20'),
+               DECODE(MOD(ROWNUM,2),1,'1','2'),
                '제목'||LPAD(ROWNUM,7,0),
                'ADMIN',
                'ADMIN',
@@ -20,7 +20,8 @@
                '이미지'||LPAD(ROWNUM,7,0),
                SYSDATE-ROWNUM/24,
                SYSDATE-ROWNUM/24,
-               MOD(ROWNUM,10)
+               MOD(ROWNUM,10),
+               '구'||LPAD(ROWNUM,2,0)
         FROM dual
         CONNECT BY LEVEL  <![CDATA[<= 202]]>
     </insert>
@@ -55,6 +56,7 @@
       FROM (
         SELECT tt1.rnum as no,
                tt1.div,
+               tt1.gname,
                tt1.title,
                tt1.mod_id as modId,
                DECODE( TO_CHAR(tt1.mod_dt,'YYYYMMDD'),TO_CHAR(SYSDATE,'YYYYMMDD'),
@@ -99,22 +101,24 @@
     
     <update id="doUpdateUser" parameterType="Board">
         UPDATE d_board
-         SET div      = #{div},
-             title    = #{title},
-             mod_id   = #{modId},
+         SET div     = #{div},
+             gname   = #{gname},
+             title   = #{title},
+             mod_id  = #{modId},
              content = #{content},
-             mod_dt   = SYSDATE
+             mod_dt  = SYSDATE
           WHERE seq = #{seq}
             AND user_id = #{userId}
     </update>
     
     <update id="doUpdate" parameterType="Board">
         UPDATE d_board
-         SET div      = #{div},
-             title    = #{title},
-             mod_id   = #{modId},
+         SET div     = #{div},
+             gname   = #{gname},
+             title   = #{title},
+             mod_id  = #{modId},
              content = #{content},
-             mod_dt   = SYSDATE
+             mod_dt  = SYSDATE
           WHERE seq = #{seq}
     </update>
     
@@ -122,6 +126,7 @@
         SELECT
 		    seq,
 		    div,
+		    gname,
 		    title,
 		    reg_id as regId,
 		    mod_id as modId,
@@ -148,6 +153,7 @@
      INSERT INTO D_BOARD(
         seq,
         div,
+        gname,
         title,
         reg_id,
         mod_id,
@@ -155,10 +161,11 @@
         img_link,
         reg_dt,
         mod_dt,
-        views          
+        views       
      )VALUES(
       doma_board_seq.NEXTVAL,
       #{div},
+      #{gname},
       #{title},
       #{regId},
       #{regId},

@@ -2,6 +2,8 @@ package com.acorn.doma.cmn;
 
 public class DTO {
 
+	public static final int BOTTOM_COUNT = 10; //바닥글
+	
 	private int no;// 글번호
 	private int totalCnt;// 총 글수
 

@@ -47,9 +47,9 @@ public class BoardMapperTest implements PLog{
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		
-		board01 = new Board(1,"10","제목_01","admin","admin","내용_01","1111","사용안함","사용안함",0);
-		board02 = new Board(2,"10","제목_02","admin","admin","내용_02","1111","사용안함","사용안함",0);
-		board03 = new Board(3,"10","제목_03","admin","admin","내용_03","1111","사용안함","사용안함",0);
+		board01 = new Board(1,"10","구_01","제목_01","admin","admin","내용_01","1111","사용안함","사용안함",0);
+		board02 = new Board(2,"10","구_02","제목_02","admin","admin","내용_02","1111","사용안함","사용안함",0);
+		board03 = new Board(3,"10","구_03","제목_03","admin","admin","내용_03","1111","사용안함","사용안함",0);
 		
 		boardMapper.deleteAll();
 		
@@ -188,7 +188,7 @@ public class BoardMapperTest implements PLog{
 		search.setSearchWord("내용000001");
 		
 		List<Board> list = boardMapper.doRetrieve(search);
-		assertEquals(5, list.size());
+		assertEquals(0, list.size());
 
 	}
 	

@@ -15,7 +15,7 @@
                det_code,
                det_code_nm,
                seq    
-		 FROM CODE
+		 FROM D_CODE
 		WHERE mst_code = UPPER(#{mstCode})
 		 AND USE_YN = 1
 		ORDER BY seq        
@@ -31,7 +31,7 @@
     <select id="doRetrieveIn" parameterType="java.util.ArrayList" resultType="Code">
 		 SELECT 
 		      <include refid="CodeColumn"/>
-		 FROM CODE
+		 FROM D_CODE
 		WHERE USE_YN = 1
 		<foreach item="item" collection="list" 
 		  open="AND mst_code IN (" separator="," close=")">

@@ -6,6 +6,7 @@ public class Board extends DTO {
 	
 	private int seq;
 	private String div;
+	private String gname;
 	private String title;
 	private String regId;
 	private String modId;
@@ -17,11 +18,12 @@ public class Board extends DTO {
 	
 	public Board() { }
 
-	public Board(int seq, String div, String title, String regId, String modId, String content, String imgLink,
-			String regDt, String modDt, int views) {
+	public Board(int seq, String div, String gname, String title, String regId, String modId, String content,
+			String imgLink, String regDt, String modDt, int views) {
 		super();
 		this.seq = seq;
 		this.div = div;
+		this.gname = gname;
 		this.title = title;
 		this.regId = regId;
 		this.modId = modId;
@@ -46,6 +48,14 @@ public class Board extends DTO {
 
 	public void setDiv(String div) {
 		this.div = div;
+	}
+
+	public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
 	}
 
 	public String getTitle() {
@@ -114,9 +124,9 @@ public class Board extends DTO {
 
 	@Override
 	public String toString() {
-		return "Board [seq=" + seq + ", div=" + div + ", title=" + title + ", regId=" + regId + ", modId=" + modId
-				+ ", content=" + content + ", imgLink=" + imgLink + ", regDt=" + regDt + ", modDt=" + modDt + ", views="
-				+ views + ", toString()=" + super.toString() + "]";
+		return "Board [seq=" + seq + ", div=" + div + ", gname=" + gname + ", title=" + title + ", regId=" + regId
+				+ ", modId=" + modId + ", content=" + content + ", imgLink=" + imgLink + ", regDt=" + regDt + ", modDt="
+				+ modDt + ", views=" + views + ", toString()=" + super.toString() + "]";
 	}
-
+	
 }
