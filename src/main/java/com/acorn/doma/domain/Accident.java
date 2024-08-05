@@ -3,17 +3,19 @@ package com.acorn.doma.domain;
 import oracle.sql.DATE;
 
 public class Accident {
-	String accId;
-	String occrDate;
-	String occrTime;
-	String endDate;
-	String endTime;
-	String accType;
-	String accDtype;
-	String info;
-	double longitude;
-	double latitude;
+	private String accId;
+	private String occrDate;
+	private String occrTime;
+	private String endDate;
+	private String endTime;
+	private String accType;
+	private String accDtype;
+	private String info;
+	private double longitude;
+	private double latitude;
+	
 	public Accident() {}
+	
 	public Accident(String accId, String occrDate, String occrTime, String endDate, String endTime, String accType,
 			String accDtype, String info, double longitude, double latitude) {
 		super();
@@ -28,6 +30,7 @@ public class Accident {
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
+	
 	public String getAccId() {
 		return accId;
 	}
@@ -88,6 +91,7 @@ public class Accident {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
+	
 	@Override
 	public String toString() {
 		return "Accident [accId=" + accId + ", occrDate=" + occrDate + ", occrTime=" + occrTime + ", endDate=" + endDate

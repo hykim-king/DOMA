@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.AccMapper">
+
 	<insert id="dataInsert" parameterType="Accident">
         INSERT INTO D_ACCINFO
         (acc_id,
@@ -26,10 +27,38 @@
         #{latitude}
         )
     </insert>
+    
+     <select id="doRetrieve" parameterType="Search" resultType="Accident">
+	    SELECT * FROM (
+	    SELECT 
+	    	ROWNUM AS RNUM
+	        A.ACC_ID,
+	        A.ACC_TYPE,
+	        T.ACC_NAME,
+	        A.ACC_DTYPE,
+	        D.ACC_DNAME,
+	        TO_CHAR(TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS OCCR_DATE,
+	        TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS OCCR_TIME,
+	        TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS END_DATE,
+	        TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS END_TIME,
+	        A.INFO,
+	        A.LONGITUDE,
+	        A.LATITUDE
+	    FROM 
+	        D_ACCINFO A
+	    JOIN 
+	        D_ACC_TYPE T ON A.ACC_TYPE = T.ACC_TYPE
+	    JOIN 
+	        D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE   
+	 	)
+    </select>
+    
     <delete id="doDeleteAll">
     DELETE FROM D_ACCINFO
     </delete>
+    
     <select id="countAll" resultType="int">
         SELECT COUNT(*) FROM D_ACCINFO
     </select>
+    
 </mapper>
