@@ -38,9 +38,27 @@ public class MainController implements PLog {
 		String viewName = "main/main_emergency_info";
 
 		List<Accident> accList = accInfoService.fullTableScan();
+		
 		model.addAttribute("accList", accList);
 		
 		return viewName;
 	}
 	
+	//http://localhost:8080/doma/main/main.do
+		@RequestMapping(value="/main.do"
+						,method=RequestMethod.GET
+						,produces = "text/plain;charset=UTF-8")
+		public String freezingMain(Model model) throws SQLException {
+			log.debug("┌──────────────────────────────┐");
+			log.debug("│ freezingMain()               │");
+			log.debug("└──────────────────────────────┘");
+			
+			String viewName = "main/main_emergency_info";
+
+			List<Accident> accList = accInfoService.fullTableScan();
+			
+			model.addAttribute("accList", accList);
+			
+			return viewName;
+		}
 }

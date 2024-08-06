@@ -23,6 +23,6 @@
 
     <!-- Include your JavaScript file -->
     <script src="${CP}/resources/js/script.js"></script>
-    <script src="${CP}/resources/js/bootstrap.bundle.js"></script>    
+    <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>    
 </body>
 </html>
