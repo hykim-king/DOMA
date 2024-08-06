@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 console.log("message.messageContents:"+message.messageContents);
                 if(isEmpty(message) === false && 1 === message.messagId){   
                    alert(message.messageContents);
-                   doRetrieve();
+                   window.location.href('/doma/mypage/myPage.do');
                 }else{
                    alert(message.messageContents);
                 }          

@@ -2,6 +2,8 @@ package com.acorn.doma.controller;
 
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -48,7 +50,7 @@ public class MyPageController implements PLog {
 			method = RequestMethod.POST, 
 			produces = "text/plain;charset=UTF-8") // produces	 																									// encoding
 	@ResponseBody
-	public String doUpdate(User inVO) throws SQLException {
+	public String doUpdate(User inVO, HttpSession httpSession) throws SQLException {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ doUpdate()                │");
 		log.debug("└───────────────────────────┘");
@@ -65,7 +67,9 @@ public class MyPageController implements PLog {
 		String message = "";
 		if (1 == flag) {
 			message = inVO.getUserId() + "님이 수정 되었습니다.";
-			//flag = 1;
+			httpSession.setAttribute("user", inVO);
+			
+			flag = 1;
 		} else {
 			message = inVO.getUserId() + "수정 실패 했습니다.";
 		}

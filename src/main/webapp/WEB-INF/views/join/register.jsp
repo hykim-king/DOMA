@@ -14,6 +14,7 @@
 <script src="${CP }/resources/js/jquery_3_7_1.js"></script>
 </head>
 <body>
+${user }
 <%@ include file="/WEB-INF/views/template/header.jsp" %>
 	<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
 		<div class="col-6">
