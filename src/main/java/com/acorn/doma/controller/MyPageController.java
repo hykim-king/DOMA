@@ -85,4 +85,43 @@ public class MyPageController implements PLog {
 		return jsonString;
 	}
 	
+	@RequestMapping(value = "/mpGradeUp.do", 
+			method = RequestMethod.POST, 
+			produces = "text/plain;charset=UTF-8") // produces	 																									// encoding
+	@ResponseBody
+	public String mpGradeUp(User inVO, HttpSession httpSession) throws SQLException {
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ mpGradeUp()                │");
+		log.debug("└───────────────────────────┘");
+
+		String jsonString = "";
+
+		// 1.
+		log.debug("1.param:" + inVO);
+
+		int flag = userMapper.mpGradeUp(inVO);
+
+		// 2.
+		log.debug("2.flag:" + flag);
+		String message = "";
+		if (1 == flag) {
+			message = inVO.getUserId() + "님이 탈퇴 되었습니다.";
+			httpSession.setAttribute("user", inVO);
+			
+			flag = 1;
+		} else {
+			message = inVO.getUserId() + "탈퇴 실패 했습니다.";
+		}
+
+		Message messageObj = new Message(flag, message);
+
+		Gson gson = new Gson();
+		jsonString = gson.toJson(messageObj);
+
+		// 3.
+		log.debug("3.jsonString:" + jsonString);
+
+		return jsonString;
+	}
+	
 }

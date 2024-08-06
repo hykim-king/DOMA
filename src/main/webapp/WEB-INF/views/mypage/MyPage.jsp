@@ -116,6 +116,7 @@
     <div class="left-container">
     <div class="form-container">
                 <h2>내 정보</h2>
+                 
                 <div class="form-content">
                     <form action="" method="">
                         <div>
@@ -130,9 +131,12 @@
                         </div>  
                         <br> 
                         <div class="form-btn">
+                        <input type="button" id="deleteInfo" class="btn btn-outline-danger " value="회원탈퇴" > &nbsp; &nbsp; 
                         <input type="reset" id="resetBtn" class="btn btn-outline-secondary " value="초기화" >&nbsp; &nbsp; 
                         <input type="button" id="updateInfo" class="btn btn-outline-success " value="수정" > 
                         </div>
+                        
+                         
                     </form>
     </div>
     </div>
@@ -176,6 +180,7 @@
 					<td>제목_3</td>
 					<td>서울 마포구</td>
 					<td>27</td>
+					
 					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
 						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
 					</tr>

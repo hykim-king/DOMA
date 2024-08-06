@@ -12,19 +12,31 @@ document.addEventListener("DOMContentLoaded", function(){
     const userPwInput = document.querySelector("#userPw");
      
     const userEmailInput = document.querySelector("#userEmail");
-    
+    const gradeInput = document.querySelector("#grade");
     const birthInput = document.querySelector("#birth");
     const addressInput = document.querySelector("#address");
     
     const detailAddressInput = document.querySelector("#detailAddress");
     
     const doUpdateBtn = document.querySelector("#updateInfo");
-    
+    const doDeleteBtn = document.querySelector("#deleteInfo");
+
+
+
+
     doUpdateBtn.addEventListener("click",function(event){
 		console.log("doUpdateBtn click");
 		
 		updateInfo();
 	});
+
+    doDeleteBtn.addEventListener("click",function(event){
+		console.log("doDeleteBtn click");
+		
+		deleteInfo();
+	});
+
+
 	
 	function updateInfo(){
     console.log("doUpdate()");
@@ -92,9 +104,10 @@ document.addEventListener("DOMContentLoaded", function(){
                 console.log("message.messageContents:"+message.messageContents);
                 if(isEmpty(message) === false && 1 === message.messagId){   
                    alert(message.messageContents);
-                   window.location.href('/doma/mypage/myPage.do');
+                   window.location.href = '/doma/mypage/myPage.do';
                 }else{
                    alert(message.messageContents);
+                   window.location.href = '/doma/mypage/myPage.do';
                 }          
             }catch(e){
                console.error("data가 null혹은, undefined 입니다.",e);
@@ -104,7 +117,59 @@ document.addEventListener("DOMContentLoaded", function(){
         
         });
         
-    } 
+    }
+
+    function deleteInfo(){
+      console.log("mpGradeUp()");
+          //필수 입력 처리
+   
+  
+          //비동기 통신
+          let type= "POST";  
+          let url = "/doma/mypage/mpGradeUp.do";
+          let async = "true";
+          let dataType = "html";
+          let gradeValue = "";  
+                                  
+          let params = { 
+              "userId"   :userIdInput.value,
+              "userName"     :userNameInput.value,
+              "userPw" :userPwInput.value,
+              "userEmail" :userEmailInput.value,
+              "birth"    :birthInput.value, 
+              "address"    :addressInput.value ,
+              "detailAddress":detailAddressInput.value
+              
+          };        
+          
+          if(confirm("탈퇴 하시겠습니까?")===false)return;        
+        
+          PClass.pAjax(url,params,dataType,type,async,function(data){
+            if(data){
+              try{ 
+                  //JSON문자열을 JSON Object로 변환
+                  const message =JSON.parse(data)     
+                  console.log("message.messagId:"+message.messagId);
+                  console.log("message.messageContents:"+message.messageContents);
+                  if(isEmpty(message) === false && 1 === message.messagId){   
+                     alert(message.messageContents);
+                     window.location.href = '/doma/user/loginPage.do';
+                  }else{
+                     alert(message.messageContents);
+                     window.location.href = '/doma/user/loginPage.do';
+                     
+                  }          
+              }catch(e){
+                 console.error("data가 null혹은, undefined 입니다.",e);
+                 alert("data가 null혹은, undefined 입니다.");     
+              }         
+            }        
+          
+          });
+          
+      }
+
+     
 
 
 
