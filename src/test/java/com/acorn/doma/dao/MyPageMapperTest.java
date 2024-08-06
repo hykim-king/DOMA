@@ -88,7 +88,7 @@ public class MyPageMapperTest implements PLog {
 	}
 	
 	@Test
-	public void mpGrageUp() throws Exception{
+	public void mpGradeUp() throws Exception{
 		
 		//회원등급 올리는거  
 		 

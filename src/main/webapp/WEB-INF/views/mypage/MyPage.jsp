@@ -40,7 +40,7 @@
 <link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
 
 <%-- bootstrap icon --%>
-<link rel="stylesheet" href="${CP}/resources/icon/font/bootstrap-icons.min.css">
+<%-- <link rel="stylesheet" href="${CP}/resources/icon/font/bootstrap-icons.min.css">--%>
 
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -78,6 +78,7 @@
         display: flex;
         justify-content: flex-end;
     }
+    .form-content
     form {
         display: flex;
         flex-direction: column;
@@ -98,6 +99,11 @@
         margin-top: 40px;
         text-align: center;
         flex: 1;
+    }
+     .form-container input[type="text"],
+     .form-container input[type="password"],
+     .form-container input[type="email"] {
+     width: 300px;  
     }
      
 </style>
@@ -125,7 +131,7 @@
                         <br> 
                         <div class="form-btn">
                         <input type="reset" id="resetBtn" class="btn btn-outline-secondary " value="초기화" >&nbsp; &nbsp; 
-                        <input type="submit" id="updateBtn" class="btn btn-outline-secondary " value="수정" > 
+                        <input type="button" id="updateInfo" class="btn btn-outline-success " value="수정" > 
                         </div>
                     </form>
     </div>
@@ -211,7 +217,7 @@
 					<td>제목_2</td>
 					<td>서울 서대문구</td>
 					<td>오늘의토끼</td>
-					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
+					<th><button type="button" class="btn btn-outline-secondary" id=""  >수정</button>
 						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
 					</tr>
 					<tr>
@@ -235,6 +241,5 @@
 </div>
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %>
-
-<script src="/ehr/resources/js/bootstrap.bundle.js"></script>  
+ 
 </html>

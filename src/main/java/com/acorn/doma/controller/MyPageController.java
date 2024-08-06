@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.User;
+import com.acorn.doma.mapper.UserMapper;
 import com.acorn.doma.service.UserService;
 import com.google.gson.Gson;
 import com.acorn.doma.cmn.Message; 
@@ -23,6 +24,9 @@ public class MyPageController implements PLog {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	UserService userService;
+	
+	@Autowired
+	UserMapper userMapper;
 	
 	public MyPageController() { 
 		log.debug("┌──────────────────────────────────────────┐");
@@ -38,6 +42,43 @@ public class MyPageController implements PLog {
 		log.debug("└──────────────────────────────────────────┘");
 		///WEB-INF/views/+viewName+.jsp
 		return viewName;
+	}
+	
+	@RequestMapping(value = "/doUpdate.do", 
+			method = RequestMethod.POST, 
+			produces = "text/plain;charset=UTF-8") // produces	 																									// encoding
+	@ResponseBody
+	public String doUpdate(User inVO) throws SQLException {
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ doUpdate()                │");
+		log.debug("└───────────────────────────┘");
+
+		String jsonString = "";
+
+		// 1.
+		log.debug("1.param:" + inVO);
+
+		int flag = userMapper.doUpdate(inVO);
+
+		// 2.
+		log.debug("2.flag:" + flag);
+		String message = "";
+		if (1 == flag) {
+			message = inVO.getUserId() + "님이 수정 되었습니다.";
+			//flag = 1;
+		} else {
+			message = inVO.getUserId() + "수정 실패 했습니다.";
+		}
+
+		Message messageObj = new Message(flag, message);
+
+		Gson gson = new Gson();
+		jsonString = gson.toJson(messageObj);
+
+		// 3.
+		log.debug("3.jsonString:" + jsonString);
+
+		return jsonString;
 	}
 	
 }
