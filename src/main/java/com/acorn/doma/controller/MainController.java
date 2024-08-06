@@ -27,10 +27,10 @@ public class MainController implements PLog {
 	}
 	
 	//http://localhost:8080/doma/main/main.do
-	@RequestMapping(value="/main.do"
+	@RequestMapping(value="/emergency.do"
 					,method=RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
-	public String main(Model model) throws SQLException {
+	public String emergency(Model model) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ main()                       │");
 		log.debug("└──────────────────────────────┘");
@@ -44,21 +44,20 @@ public class MainController implements PLog {
 		return viewName;
 	}
 	
-	//http://localhost:8080/doma/main/main.do
-		@RequestMapping(value="/main.do"
-						,method=RequestMethod.GET
-						,produces = "text/plain;charset=UTF-8")
-		public String freezingMain(Model model) throws SQLException {
-			log.debug("┌──────────────────────────────┐");
-			log.debug("│ freezingMain()               │");
-			log.debug("└──────────────────────────────┘");
-			
-			String viewName = "main/main_emergency_info";
+	@RequestMapping(value="/freezing.do"
+					,method=RequestMethod.GET
+					,produces = "text/plain;charset=UTF-8")
+	public String freezing(Model model) throws SQLException {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ freezingMain()               │");
+		log.debug("└──────────────────────────────┘");
+		
+		String viewName = "main/main_freezing_info";
 
-			List<Accident> accList = accInfoService.fullTableScan();
-			
-			model.addAttribute("accList", accList);
-			
-			return viewName;
-		}
+		List<Accident> accList = accInfoService.fullTableScan();
+		
+		model.addAttribute("accList", accList);
+		
+		return viewName;
+	}	
 }

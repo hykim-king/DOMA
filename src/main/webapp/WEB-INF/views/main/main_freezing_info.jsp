@@ -27,7 +27,7 @@
 	    <div id="subMap" style="height : 815px;">
 			<section id="mapContainer">
 				<div class="aside" style="height:1000px; width: 350px; overflow : scroll">
-					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">돌발정보</h2>
+					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">결빙정보</h2>
 					<c:forEach var="acc" items="${accList }">
 					<ul class="info_ul">
 						<li>
