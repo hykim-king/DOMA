@@ -66,11 +66,13 @@ public class BoardMapperTest implements PLog{
 	public void isSameBoard(Board boardIn, Board boardOut) {
 		assertEquals(boardIn.getSeq(), boardOut.getSeq());
 		assertEquals(boardIn.getDiv(), boardOut.getDiv());
+		assertEquals(boardIn.getGname(), boardOut.getGname());
 		assertEquals(boardIn.getTitle(), boardOut.getTitle());
 		assertEquals(boardIn.getRegId(), boardOut.getRegId());
 		assertEquals(boardIn.getModId(), boardOut.getModId());
 		assertEquals(boardIn.getContent(), boardOut.getContent());
 		assertEquals(boardIn.getImgLink(), boardOut.getImgLink());
+		assertEquals(boardIn.getViews(), boardOut.getViews());
 	}
 	
 	@Ignore

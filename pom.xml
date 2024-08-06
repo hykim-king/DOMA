@@ -32,9 +32,17 @@
         <jstl-version>1.2</jstl-version>
         <jsp-api-version>2.1</jsp-api-version>
         <servlet-api-version>2.5</servlet-api-version>
+        <commonmark-version>0.18.2</commonmark-version>
 
     </properties>
     <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.commonmark/commonmark -->
+	<dependency>
+	    <groupId>org.commonmark</groupId>
+	    <artifactId>commonmark</artifactId>
+	    <version>${commonmark-version}</version>
+	</dependency>
+    
     <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
     <dependency>
         <groupId>org.apache.httpcomponents</groupId>

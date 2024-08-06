@@ -12,7 +12,7 @@
     <insert id="multipleSave">
         INSERT INTO d_board
         SELECT ROWNUM,
-               DECODE(MOD(ROWNUM,2),1,'1','2'),
+               DECODE(MOD(ROWNUM,2),1,'10','20'),
                '제목'||LPAD(ROWNUM,7,0),
                'ADMIN',
                'ADMIN',

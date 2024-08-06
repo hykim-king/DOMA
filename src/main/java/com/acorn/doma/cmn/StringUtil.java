@@ -9,7 +9,6 @@ import java.util.UUID;
 import com.acorn.doma.domain.Code;
 
 public class StringUtil  implements PLog {
-	
 	/**
 	 *  날짜 Format
 	 * @param format ex)yyyyMMddhhmmss
@@ -44,10 +43,11 @@ public class StringUtil  implements PLog {
 	   
 	   //maxNum =21
 	   //currentPageNo = 1
-	   //rowPerPage    = 10
+	   //rowPerPage    = 10 
 	   //bottomCount   = 10
-	   
-	   int maxPageNo   = (maxNum -1)/rowPerPage + 1;//3
+	   int add = (maxNum % rowPerPage == 0)?0:1;
+	   int maxPageNo = (maxNum  / rowPerPage) + add;// 3
+	   ; 
 	   int startPageNo = ((currentPageNo -1)/bottomCount) * bottomCount +1   ;//1,11,21...
 	   int endPageNo   = ((currentPageNo -1)/bottomCount+1) * bottomCount    ;//10,20,20...
 	   
@@ -111,6 +111,10 @@ public class StringUtil  implements PLog {
 		   
 	   }
 	   //>
+	   
+	   log.debug("maxPageNo:"+maxPageNo);
+	   log.debug("inx:"+inx);     
+	   
 	   if(maxPageNo>=inx) {
 		   log.debug("nowBlocNo:"+nowBlocNo);
 		   log.debug("bottomCount:"+bottomCount);	
