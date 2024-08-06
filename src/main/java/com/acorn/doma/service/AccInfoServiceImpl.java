@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,15 +24,24 @@ import org.w3c.dom.NodeList;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
 import com.acorn.doma.mapper.AccMapper;
+
 @Service
 public class AccInfoServiceImpl implements AccInfoService, PLog{
+	
 	private final String serviceKey;
-	private final AccMapper accMapper;
-	 @Autowired
+	
+	@Autowired
+	AccMapper accMapper;
+	
+	public void AccInfoServiceImple() {
+		
+	}
+	@Autowired
 	    public AccInfoServiceImpl(AccMapper accMapper, @Qualifier("accInfoServiceKey") String serviceKey) {
 	        this.accMapper = accMapper;
 	        this.serviceKey = serviceKey;
 	}
+	 
 	@Override
 	public String fetchDataFromApi() throws IOException {
 		String xmlData = "";
@@ -64,6 +74,7 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
 		
 		return sb.toString();
 	}
+	
 	@Override
 	public List<Accident> parseXmlData(String xmlData) {
         List<Accident> accInfoList = new ArrayList<>();
@@ -84,13 +95,13 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
                     Element eElement = (Element) node;
 
                     String accId = eElement.getElementsByTagName("acc_id").item(0).getTextContent();
+                    String accType= eElement.getElementsByTagName("acc_type").item(0).getTextContent();
+                    String accDtype=eElement.getElementsByTagName("acc_dtype").item(0).getTextContent();
+                    String info = eElement.getElementsByTagName("acc_info").item(0).getTextContent();                   
                     String occrDate = eElement.getElementsByTagName("occr_date").item(0).getTextContent();
                     String occrTime = eElement.getElementsByTagName("occr_time").item(0).getTextContent();
                     String endDate=eElement.getElementsByTagName("exp_clr_date").item(0).getTextContent();
                     String endTime=eElement.getElementsByTagName("exp_clr_time").item(0).getTextContent();
-                    String accType= eElement.getElementsByTagName("acc_type").item(0).getTextContent();
-                    String accDtype=eElement.getElementsByTagName("acc_dtype").item(0).getTextContent();
-                    String info = eElement.getElementsByTagName("acc_info").item(0).getTextContent();                   
                     double longitude = 0.0;
                     double latitude = 0.0;
 
@@ -105,7 +116,7 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
                         // - Set longitude and latitude to default values
                     }
 
-                    accInfoList.add(new Accident(accId, occrDate, occrTime, endDate, endTime, accType, accDtype, info, longitude, latitude));
+                    accInfoList.add(new Accident(accId, accType, accDtype, info, occrDate, occrTime, endDate, endTime, longitude, latitude));
                 }
             }
         } catch (Exception e) {
@@ -131,4 +142,17 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
             e.printStackTrace();
         }
     }
+
+	@Override
+	public List<Accident> fullTableScan() throws SQLException {
+		
+		List<Accident> list = accMapper.fullTableScan();
+		log.debug("┌ list ┐");
+		for(Accident acc : list) {
+			log.debug("│ "+ acc);
+		}
+		log.debug("└ ");
+		
+		return list;
+	}
 }

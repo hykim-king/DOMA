@@ -49,28 +49,28 @@
 	     WHERE ACC_ID = #{accId}
     </select>
     <select id="fullTableScan" resultType="Accident">
-        SELECT * FROM (
-    SELECT 
-        ROWNUM AS RNUM,
-        A.ACC_ID,
-        A.ACC_TYPE,
-        T.ACC_NAME,
-        A.ACC_DTYPE,
-        D.ACC_DNAME,
-        TO_CHAR(TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS OCCR_DATE,
-        TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS OCCR_TIME,
-        TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS END_DATE,
-        TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS END_TIME,
-        A.INFO,
-        A.LONGITUDE,
-        A.LATITUDE
-	    FROM 
-	        D_ACCINFO A
-	    JOIN 
-	        D_ACC_TYPE T ON A.ACC_TYPE = T.ACC_TYPE
-	    JOIN 
-	        D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
-	)
+       SELECT * FROM (
+	    SELECT 
+	        ROWNUM AS RNUM,
+	        A.ACC_ID as accId,
+	        A.ACC_TYPE as accType,
+	        T.ACC_NAME as accName,
+	        A.ACC_DTYPE as accDtype,
+	        D.ACC_DNAME as accDName,
+	        TO_CHAR(TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS occrDate,
+            TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
+            TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
+            TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
+	        A.INFO as info,
+	        A.LONGITUDE as longitude,
+	        A.LATITUDE as latitude
+		    FROM 
+		        D_ACCINFO A
+		    JOIN 
+		        D_ACC_TYPE T ON A.ACC_TYPE = T.ACC_TYPE
+		    JOIN 
+		        D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
+		)
     </select>
     
     <delete id="doDeleteAll">

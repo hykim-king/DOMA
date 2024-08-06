@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,8 +25,10 @@ import com.acorn.doma.mapper.AccMapper;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //알파벳 순서로 테스트 메서드 실행
 public class AccInfoServiceImplTest implements PLog{
+	
 	@Autowired
 	ApplicationContext context;
+	
 	@Autowired
 	AccInfoService accInfoService;
 	
@@ -48,12 +51,31 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
+	
+	@Test
+	public void fullTableScan() throws Exception{
+		log.debug("┌─────────────────────────────────────────────────────────");
+		log.debug("│ fullTableScan()");
+		log.debug("└─────────────────────────────────────────────────────────");
+		int flag = accMapper.countAll();
+		log.debug("flag : " + flag);
+		
+		List<Accident> list = accInfoService.fullTableScan();
+		log.debug("┌ list ┐");
+		for(Accident acc : list) {
+			log.debug("│ "+ acc);
+		}
+		log.debug("└ ");
+		
+		assertEquals(flag, list.size());
+	}
+	
+	@Ignore
 	@Test
 	public void testInsertAccidentData() throws Exception{
 		accInfoService.insertAccidentData();
 		accMapper.countAll();
 	}
-	@Ignore
 	@Test
 	public void test() {
 		log.debug("┌──────────────────────────────────────┐");

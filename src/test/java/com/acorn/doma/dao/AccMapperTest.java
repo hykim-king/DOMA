@@ -31,14 +31,16 @@ public class AccMapperTest implements PLog{
 	AccMapper accMapper;
 	
 	Accident acc;
-	
+	Accident acc01;
 	Accident accidentSelect01;
+	
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
-		acc = new Accident("1111", "A01", "12B01", "11", "11", "A01", "12B01", "info", 11, 11);
+		acc = new Accident("1111", "A01", "12B01", "강남 한복판에서 현석이형이..", "2024-08-06", "11:30:00", "2024-08-06", "11:30:00", 11, 11);
+		acc01 = new Accident("1111", "A01", "교통사고", "12B01","제보", "강남 한복판에서 현석이형이..", "2024-08-06", "11:30:00", "2024-08-06", "11:30:00", 11, 11);
 		accidentSelect01 = new Accident();
 	}
 
@@ -48,6 +50,23 @@ public class AccMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
+	
+	@Ignore
+	@Test
+	public void fullTableScan() throws Exception{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ fullTableScan()              │");
+		log.debug("└──────────────────────────────┘");
+		
+		List<Accident> accList = accMapper.fullTableScan();
+		
+		log.debug("┌ list ");
+		for(Accident acc : accList) {
+			log.debug("│ "+ acc);
+		}
+		log.debug("└ ");
+	}
+	
 	@Ignore
 	@Test
 	public void dataInsert() throws Exception{
@@ -66,6 +85,7 @@ public class AccMapperTest implements PLog{
 		int flag = accMapper.doDeleteAll();
 		assertEquals(0, flag);
 	}
+	@Ignore
 	@Test
 	public void sqlAll() throws Exception{
 		int flag = accMapper.countAll();
@@ -86,6 +106,7 @@ public class AccMapperTest implements PLog{
 		int flag = accMapper.countAll();
 		log.debug("count(*): "+flag);
 	}
+	
 	@Ignore
 	@Test
 	public void beans() {

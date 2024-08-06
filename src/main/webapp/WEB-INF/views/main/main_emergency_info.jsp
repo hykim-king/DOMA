@@ -29,11 +29,11 @@
 	    </div>
 	    <div id="subMap" style="height : 815px;">
 			<section id="mapContainer">
-				<div class="aside" style="height : 100%; width: 350px;">
-					<h2>돌발정보</h2>
+				<div class="aside" style="height:1000px; width: 350px; overflow : scroll">
+					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">돌발정보</h2>
+					<c:forEach var="acc" items="${accList }">
 					<ul class="info_ul">
 						<li>
-							
 							<table class="info_table">
 								<colgroup>
 									<col>
@@ -41,41 +41,28 @@
 								</colgroup>
 								<tbody>
 									<tr>
-										<td colspan="2">위치</td>
+										<td colspan="2" style="font-weight : bold; text-align : center; border: 1px solid black; background-color: #868e96 ">${acc.accName } : ${acc.accDName}</td>
 									</tr>
 									<tr>
-										<th class="info_th">기간</th>
-										<td>오늘부터 내일까지</td>
+										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black;">기간</th>
+										<td>${acc.occrDate } ${acc.occrTime } ~ <br>${acc.endDate } ${acc.endTime } </td>
 									</tr>
 									<tr>
-										<th class="info_th">돌발유형</th>
-										<td>차량고장</td>
+										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black;" >돌발유형</th>
+										<td>${acc.accDName}</td>
 									</tr>
 									<tr>
-										<th class="info_th">도로</th>
-										<td>용산대로</td>
-									</tr>
-									<tr>
-										<th class="info_th">통제여부</th>
-										<td>부분 통제</td>
-									</tr>
-									<tr>
-										<th class="info_th">통제여부</th>
-										<td>부분 통제</td>
-									</tr>
-									<tr>
-										<td colspan="2">용산대로에서 차량고장으로 인한 차막힘</td>
+										<td colspan="2" style="background-color: #868e96; border: 1px solid black;">${acc.info }</td>
 									</tr>
 								</tbody>
 							</table>
 						</li>
 					</ul>
+					</c:forEach>
 				</div>
 			</section>
    			</div>
-   			<div>
-       			<div id="map" style="width:1110px; height:1000px"></div>
-			</div>
+       		<div id="map" style="width:100%;height:1000px"></div>
 	</div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
@@ -140,6 +127,7 @@
 	           map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 	        };
 	    </script>
+	    <script src="${CP}/resources/main/js/main_emergency_info.js"></script>
 </body>
 </html>
 	    
