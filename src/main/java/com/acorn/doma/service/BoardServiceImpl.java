@@ -67,4 +67,27 @@ public class BoardServiceImpl implements BoardService, PLog {
 		return outVO;
 	}
 
+	@Override
+	public Board mpbSelectOne(Board board) throws Exception {
+		 
+		log.debug("1. param :"+board);
+		Board outVO = boardMapper.mpbSelectOne(board);
+		log.debug("2. outVO :"+outVO);
+		
+		int flag = 0;
+		//조회 count증가
+		if(null != outVO) {
+			flag = boardMapper.readCntUpdate(board);
+			log.debug("3. 조회 count증가 :"+flag);
+			
+			if(1==flag) {
+				outVO.setViews(outVO.getViews()+1);
+			}
+		}
+		
+		
+		return outVO;
+	}
+		 
+
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.acorn.doma.mapper.BoardMapper">
+ 
+	    
+    <select id="mpbSelectOne" parameterType="Board"  resultType="Board">
+     SELECT
+    		b.seq,
+    		b.div,
+    		b.title,
+    		b.reg_id,
+    		b.mod_id,
+    		b.content,
+    		b.img_link,
+    		b.reg_dt,
+    		b.mod_dt,
+    		b.views,
+    		b.gname
+		FROM
+    		d_board b
+		INNER JOIN
+    		d_user u ON b.reg_id = u.user_id
+		WHERE
+    		u.user_id = #{userId}                                                   
+    </select>
+    
+ 	 
+
+
+
+
+</mapper>

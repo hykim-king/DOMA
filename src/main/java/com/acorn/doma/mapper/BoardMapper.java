@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.WorkDiv;
 import com.acorn.doma.domain.Board;
+import com.acorn.doma.domain.User;
 
 @Mapper
 public interface BoardMapper extends WorkDiv<Board>{
@@ -40,5 +41,9 @@ public interface BoardMapper extends WorkDiv<Board>{
 	 * @throws SQLException
 	 */
 	int multipleSave() throws SQLException;
+	
+	Board mpbSelectOne(Board inVO) throws SQLException, NullPointerException;
+	
+	
 	
 }

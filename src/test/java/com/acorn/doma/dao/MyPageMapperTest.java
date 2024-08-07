@@ -24,8 +24,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
+import com.acorn.doma.domain.Board;
 import com.acorn.doma.domain.User;
+import com.acorn.doma.mapper.BoardMapper;
 import com.acorn.doma.mapper.UserMapper;
+import com.acorn.doma.service.BoardService;
 import com.acorn.doma.service.UserService; 
 @WebAppConfiguration
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정
@@ -44,13 +47,26 @@ public class MyPageMapperTest implements PLog {
 	@Autowired
 	ApplicationContext context;
 
+	//─────────────────────매퍼
 	@Autowired
-	UserMapper userMapper;
-
+	UserMapper userMapper; 
+	
+	@Autowired
+	BoardMapper boardMapper;
+	
+	//─────────────────────서비스
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	BoardService boardService;
+	
+	
+	
+	 
 	User userVO01; 
+	Board boardV001;
+	
 
 	Search search;
 	
@@ -130,16 +146,7 @@ public class MyPageMapperTest implements PLog {
 		isSameUser(upOutVO, outVO);
 		
 	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	 
 	
 	@Ignore
 	@Test
