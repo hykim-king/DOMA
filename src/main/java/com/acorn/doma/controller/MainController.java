@@ -1,17 +1,23 @@
 package com.acorn.doma.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
 import com.acorn.doma.service.AccInfoService;
+import com.acorn.doma.service.FreezingService;
 
 @Controller
 @RequestMapping("main")
@@ -19,6 +25,9 @@ public class MainController implements PLog {
 
 	@Autowired
 	AccInfoService accInfoService;
+	
+	@Autowired
+	FreezingService freezingService;
 	
 	public MainController() {
 		log.debug("┌──────────────────────────────┐");
@@ -47,17 +56,25 @@ public class MainController implements PLog {
 	@RequestMapping(value="/freezing.do"
 					,method=RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
-	public String freezing(Model model) throws SQLException {
+	public @ResponseBody String freezing(Model model, @RequestParam(value = "years", required = false) List<Integer> years) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ freezingMain()               │");
 		log.debug("└──────────────────────────────┘");
 		
 		String viewName = "main/main_freezing_info";
-
-		List<Accident> accList = accInfoService.fullTableScan();
+		if (years == null || years.isEmpty()) {
+		    years = Arrays.asList(2018, 2019, 2020, 2021, 2022, 2023);
+		}
 		
-		model.addAttribute("accList", accList);
-		
+	 // Freezing 데이터 조회
+	    List<Map<String, Object>> freezingData;
+	    try {
+	        freezingData = freezingService.selectFreezingData(years);
+	    } catch (IOException e) {
+	        log.error("Error retrieving freezing data", e);
+	        throw new SQLException("Unable to retrieve freezing data", e);
+	    }
+	    model.addAttribute("freezingData", freezingData);
 		return viewName;
 	}	
 }
