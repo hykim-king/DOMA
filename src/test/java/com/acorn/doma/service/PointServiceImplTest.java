@@ -1,6 +1,9 @@
 package com.acorn.doma.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.Point;
 import com.acorn.doma.mapper.PointMapper;
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
@@ -28,6 +32,7 @@ public class PointServiceImplTest implements PLog{
 	
 	@Autowired
 	PointMapper pointMapper;
+	
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────────────┐");
@@ -43,9 +48,24 @@ public class PointServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
+	
+	@Test
+	public void fullTableScan() throws Exception{
+		
+		List<Point> listPoint = pointService.fullTableScan();
+		
+		log.debug("┌ list ┐");
+		for(Point point : listPoint) {
+			log.debug("│ point : " + point);
+		}
+		log.debug("└");
+		
+		assertEquals(6, listPoint.size());
+	}
+	
 	@Test
 	public void testInsertPointData() throws Exception{
-		pointMapper.doDeleteAll();
+//		pointMapper.doDeleteAll();
 		pointService.insertPointData();
 		pointMapper.countAll();
 	}

@@ -20,8 +20,8 @@
 	    <div id="subMap" style="height : 815px;">
 			<section id="mapContainer">
 				<div class="aside" style="height:1000px; width: 350px; overflow : scroll">
-					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">결빙정보</h2>
-					<c:forEach var="acc" items="${accList }">
+					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">사고다발</h2>
+					<c:forEach var="occur" items="${pointData }">
 					<ul class="info_ul">
 						<li>
 							<table class="info_table">
@@ -31,18 +31,27 @@
 								</colgroup>
 								<tbody>
 									<tr>
-										<td colspan="2" style="font-weight : bold; text-align : center; border: 1px solid black; background-color: #868e96 ">${acc.accName } : ${acc.accDName}</td>
+										<h2 style="font-wight : bold; text-align : center; border: 3px solid black">${occur.year}</h2>
 									</tr>
 									<tr>
-										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black;">기간</th>
-										<td>${acc.occrDate } ${acc.occrTime } ~ <br>${acc.endDate } ${acc.endTime } </td>
+										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;" >사고</th>
+										<td style="border: 1px solid black; text-align : center; width : 230px;">${occur.accdient}건</td>
 									</tr>
 									<tr>
-										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black;" >돌발유형</th>
-										<td>${acc.accDName}</td>
+										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;">사망</th>
+										<td style="border: 1px solid black; text-align : center; width : 230px;">${occur.dead}건</td>
 									</tr>
 									<tr>
-										<td colspan="2" style="background-color: #868e96; border: 1px solid black;">${acc.info }</td>
+										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;">중상</th>
+										<td style="border: 1px solid black; text-align : center; width : 230px;">${occur.seriously}건</td>
+									</tr>
+									<tr>
+										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;">경상</th>
+										<td style="border: 1px solid black; text-align : center; width : 230px;">${occur.ordinary}건</td>
+									</tr>
+									<tr>
+										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black;">사건접수</th>
+										<td style="border: 1px solid black; text-align : center; width : 230px;">${occur.report}건</td>
 									</tr>
 								</tbody>
 							</table>

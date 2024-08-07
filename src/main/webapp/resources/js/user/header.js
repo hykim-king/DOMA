@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	const mainPagenBtn = document.querySelector("#main_page");
 	console.log("mainPagenBtn is ready!");
 	
+	const mainPagenBtn = document.querySelector("#my_page");
+	console.log("mainPagenBtn is ready!");
 	
 	//이벤트 리스너
 	registerPageBtn.addEventListener("click", function(event){
@@ -49,7 +51,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	function mainPage() {
 		console.log("mainPage()");
 		alert("메인 페이지로 이동합니다");
-		window.location.href= "/doma/main/main.do";
+		
+		window.location.href= "/doma/main/emergency.do";
 	}
 	
 });

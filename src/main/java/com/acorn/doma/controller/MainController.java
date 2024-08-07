@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
+import com.acorn.doma.domain.Point;
 import com.acorn.doma.service.AccInfoService;
 import com.acorn.doma.service.FreezingService;
+import com.acorn.doma.service.PointService;
 
 @Controller
 @RequestMapping("main")
@@ -28,6 +30,9 @@ public class MainController implements PLog {
 	
 	@Autowired
 	FreezingService freezingService;
+	
+	@Autowired
+	PointService pointService;
 	
 	public MainController() {
 		log.debug("┌──────────────────────────────┐");
@@ -79,6 +84,28 @@ public class MainController implements PLog {
 	        throw new SQLException("Unable to retrieve freezing data", e);
 	    }
 	    model.addAttribute("freezingData", freezingData);
+		return viewName;
+	}
+	
+	@RequestMapping(value="/point.do"
+			,method=RequestMethod.GET
+			,produces = "text/plain;charset=UTF-8")
+	public String point(Model model) throws Exception {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ point()               		  │");
+		log.debug("└──────────────────────────────┘");
+		
+		String viewName = "main/main_occur_info";
+		
+		List<Point> listPoint = pointService.fullTableScan();
+		log.debug("┌ list ┐");
+		for(Point point : listPoint) {
+			log.debug("│ point : " + point);
+		}
+		log.debug("└");
+		
+		model.addAttribute("pointData", listPoint);
+		
 		return viewName;
 	}	
 }

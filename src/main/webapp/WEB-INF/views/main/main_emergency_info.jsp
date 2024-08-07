@@ -16,14 +16,7 @@
 <body>
 	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<div style="display : flex">
-		<div class="map-fn-l-box" style="float : left">
-	        <a href="/doma/main/emergency.do" class="fn-alert" title="돌발">
-	            <span class="blind">돌발</span>
-	        </a>
-	        <a href="/doma/main/freezing.do" class="fn-freezing" title="결빙">
-	            <span class="blind">결빙</span>    
-	        </a>  
-	    </div>
+		<jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
 	    <div id="subMap" style="height : 815px;">
 			<section id="mapContainer">
 				<div class="aside" style="height:1000px; width: 350px; overflow : scroll">

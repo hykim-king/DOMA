@@ -8,24 +8,28 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.locationtech.proj4j.ProjCoordinate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Point;
 import com.acorn.doma.mapper.PointMapper;
-import com.acorn.doma.proj4j.CoordinateConverter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 @Service
 public class PointServiceImpl implements PointService, PLog{
+	
 	private final String serviceKey;
-	private final PointMapper pointMapper;
+	
+	@Autowired
+	PointMapper pointMapper;
+	
 	private static final String[] YEARS = {"2017", "2018", "2019", "2020", "2021", "2022"};
     private static final String[] DISTRICTS = {
         "110", "140", "170", "200", "215", "230", "260", "290", "305", "320",
@@ -129,18 +133,11 @@ public class PointServiceImpl implements PointService, PLog{
 				point.setOrdinary(Integer.parseInt(getJsonElementAsString(data, "tot_sl_dnv_cnt")));
 				point.setReport(Integer.parseInt(getJsonElementAsString(data, "tot_wnd_dnv_cnt")));
 				point.setPointType(getJsonElementAsString(data, "cause_anals_ty_nm"));
-				double grs80Longitude = Double.parseDouble(getJsonElementAsString(data, "cntpnt_utmk_x_crd"));
-	            double grs80Latitude = Double.parseDouble(getJsonElementAsString(data, "cntpnt_utmk_y_crd"));
-	            ProjCoordinate convertedCoord = CoordinateConverter.convert79(grs80Longitude, grs80Latitude);
-
-	            // Set converted coordinates
-	            point.setLongitude(convertedCoord.x);
-	            point.setLatitude(convertedCoord.y);
-
-	            point.setYear(year);
-	            point.setGname(gname);
-
-	            pointMapper.dataInsert(point);
+				point.setLongitude(Double.parseDouble(getJsonElementAsString(data, "cntpnt_utmk_x_crd")));
+				point.setLatitude(Double.parseDouble(getJsonElementAsString(data, "cntpnt_utmk_y_crd")));
+				point.setYear(year);
+				point.setGname(gname);
+				pointMapper.dataInsert(point);
 			}
 		}catch(SQLException e) {
 			log.error("Error saving data to database: " + e.getMessage(), e);
@@ -160,6 +157,19 @@ public class PointServiceImpl implements PointService, PLog{
 	    result.put("gname", gname);
 
 	    return result;
+	}
+	
+	public List<Point> fullTableScan() throws Exception{
+		
+		List<Point> listPoint = pointMapper.fullTableScan();
+		
+		log.debug("┌ list ┐");
+		for(Point point : listPoint) {
+			log.debug("│ point : " + point);
+		}
+		log.debug("└");
+		
+		return listPoint;
 	}
 
 }

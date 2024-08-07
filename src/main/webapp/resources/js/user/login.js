@@ -60,7 +60,7 @@
                     	console.log(message.messageId);
                         alert(message.messageContents);
                         //window.location.href="/doma/community/community.do";
-                        window.location.href="/doma/mypage/myPage.do"
+   						window.location.href="/doma/mypage/myPage.do";
                     }else{
                         alert(message.messageContents);
                     }
@@ -73,5 +73,6 @@
                 alert("data가 null 혹은, undefined 입니다.");
             }
         });
-   }     
+   }
+   
 });
