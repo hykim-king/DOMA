@@ -24,4 +24,5 @@ public interface CommentsMapper extends WorkDiv<Comments> {
 	 */
 	int deleteAll() throws SQLException;
 	
+	
 }

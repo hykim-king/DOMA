@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
+import com.acorn.doma.domain.Admin;
 import com.acorn.doma.domain.Board;
 import com.acorn.doma.domain.Code;
 import com.acorn.doma.domain.Comments;
@@ -28,6 +29,7 @@ import com.acorn.doma.mapper.CommentsMapper;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //알파벳 순서로 테스트 메서드 실행
 public class CommentMapperTest implements PLog {
+	
 	@Autowired
 	ApplicationContext context;
 	
@@ -45,11 +47,13 @@ public class CommentMapperTest implements PLog {
 	public void setUp() throws Exception {
 		log.debug("======setUp=========");
 		
-		comment01 = new Comments(1, 1, "등록자01", "등록자01", "내용", "사용안함", "사용안함");
-		comment02 = new Comments(2, 1, "등록자02", "등록자02", "내용", "사용안함", "사용안함");
-		comment03 = new Comments(3, 1, "등록자03", "등록자03", "내용", "사용안함", "사용안함");
+		comment01 = new Comments(1, 1, "등록자01", "수정자01", "내용", "사용안함", "사용안함");
+		comment02 = new Comments(2, 1, "등록자02", "수정자02", "내용", "사용안함", "사용안함");
+		comment03 = new Comments(3, 1, "등록자03", "수정자03", "내용", "사용안함", "사용안함");
 		
 		commentMapper.deleteAll();
+		
+		search = new Search();
 		
 	}
 	
@@ -60,21 +64,18 @@ public class CommentMapperTest implements PLog {
 	
 	//@Ignore
 	@Test
-	public void doRetrieve() throws Exception {
+    public void doRetrieve() throws Exception {
+		// 저장
+        commentMapper.doSave(comment01);
+        commentMapper.doSave(comment02);
+        commentMapper.doSave(comment03);
 		
+        search.setSeq(1);
+        search.setSearchWord("내용");
 
-		search.setPageNo(1);
-		search.setPageSize(10);
-		
-		search.setSearchDiv("30");
-		//제목000001
-		//내용000001
-		search.setSearchWord("내용000001");
-		
-		List<Comments> list = commentMapper.doRetrieve(search);
-		assertEquals(0, list.size());
-
-	}
+        List<Comments> list = commentMapper.doRetrieve(search);
+        assertNotNull(list);
+    }
 	
 	@Ignore
 	@Test

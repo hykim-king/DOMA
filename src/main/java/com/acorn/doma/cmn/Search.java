@@ -11,6 +11,7 @@ public class Search extends DTO {
 	private String searchDiv;// 검색구분
 	private String searchWord;// 검색어
 	private String div; //공지사항, 자유게시판
+	private int seq;
 
 	public Search() {
 
@@ -31,21 +32,26 @@ public class Search extends DTO {
 	public void setSearchWord(String searchWord) {
 		this.searchWord = searchWord;
 	}
-	
+
 	public String getDiv() {
 		return div;
 	}
-
 
 	public void setDiv(String div) {
 		this.div = div;
 	}
 
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
 
 	@Override
 	public String toString() {
-		return "Search [searchDiv=" + searchDiv + ", searchWord=" + searchWord + ", div=" + div + ", toString()="
-				+ super.toString() + "]";
+		return "Search [searchDiv=" + searchDiv + ", searchWord=" + searchWord + ", div=" + div + ", seq=" + seq
+				+ ", toString()=" + super.toString() + "]";
 	}
-
 }
