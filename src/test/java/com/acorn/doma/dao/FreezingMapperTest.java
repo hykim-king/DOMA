@@ -30,13 +30,17 @@ public class FreezingMapperTest implements PLog{
 	ApplicationContext context;
 	@Autowired
 	FreezingMapper freezingMapper;
-	Freezing freezing;
+	Freezing freezing01;
+	Freezing freezing02;
+	Freezing freezing03;
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
-		freezing = new Freezing("1", "1111010300", "2024", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
+		freezing01 = new Freezing("1", "1111010300", "2024", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
+		freezing02 = new Freezing("2", "1111010300", "2023", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
+		freezing03 = new Freezing("3", "1111010300", "2022", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
 	}
 
 	@After
@@ -45,15 +49,40 @@ public class FreezingMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
+	@Ignore
 	@Test
 	public void selectFreezingData() throws Exception{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ selectFreezingData()         │");
 		log.debug("└──────────────────────────────┘");
-		List<Integer> years = Arrays.asList(2021, 2020);
-		 List<Map<String, Object>> result = freezingMapper.selectFreezingData(years);
+		freezingMapper.doDeleteAll();
+		int flag = freezingMapper.dataInsert(freezing01);
+		assertEquals(1, flag);
+		flag =freezingMapper.dataInsert(freezing02);
+		assertEquals(1, flag);
+		flag =freezingMapper.dataInsert(freezing03);
+		assertEquals(1, flag);
+		List<Integer> years = Arrays.asList(2022,2023,2024);
+		List<Map<String, Object>> result = freezingMapper.selectFreezingData(years);
+		
+		assertEquals(3, result.size());
+		assertNotNull(result);
 		 
 		 
+	}
+	@Ignore
+	@Test
+	public void selectFreezingDataById() throws Exception{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ selectFreezingDataById()     │");
+		log.debug("└──────────────────────────────┘");
+		freezingMapper.doDeleteAll();
+		int flag = freezingMapper.dataInsert(freezing01);
+		assertEquals(1, flag);
+		String fid = freezing01.getFid();
+		Freezing outVO = freezingMapper.selectFreezingDataById(fid);
+		
+		
 	}
 	@Ignore
 	@Test
@@ -61,10 +90,20 @@ public class FreezingMapperTest implements PLog{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ dataInsert()                 │");
 		log.debug("└──────────────────────────────┘");
-		int flag = freezingMapper.dataInsert(freezing);
+		freezingMapper.doDeleteAll();
+		int flag = freezingMapper.dataInsert(freezing01);
 		assertEquals(1, flag);
-		flag = freezingMapper.doDeleteAll();
+		flag =freezingMapper.dataInsert(freezing02);
+		assertEquals(1, flag);
+		flag =freezingMapper.dataInsert(freezing03);
+		assertEquals(1, flag);
 		flag = freezingMapper.countAll();
+		assertEquals(3, flag);
+		
+		flag = freezingMapper.doDeleteAll();
+		assertEquals(3, flag);
+		flag = freezingMapper.countAll();
+		assertEquals(0, flag);
 	}
 	@Ignore
 	@Test

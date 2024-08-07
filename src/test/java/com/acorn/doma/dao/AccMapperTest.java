@@ -40,7 +40,7 @@ public class AccMapperTest implements PLog{
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		acc = new Accident("1111", "A01", "12B01", "강남 한복판에서 현석이형이..", "2024-08-06", "11:30:00", "2024-08-06", "11:30:00", 11, 11);
-		acc01 = new Accident("1111", "A01", "교통사고", "12B01","제보", "강남 한복판에서 현석이형이..", "2024-08-06", "11:30:00", "2024-08-06", "11:30:00", 11, 11);
+		acc01 = new Accident("1112", "A01", "12B01", "강남 한복판에서 현석이형이..", "2024-08-06", "11:30:00", "2024-08-06", "11:30:00", 11, 11);
 		accidentSelect01 = new Accident();
 	}
 
@@ -50,7 +50,6 @@ public class AccMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-	
 	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
@@ -66,45 +65,24 @@ public class AccMapperTest implements PLog{
 		}
 		log.debug("└ ");
 	}
-	
-	@Ignore
-	@Test
-	public void dataInsert() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ dataInsert()                 │");
-		log.debug("└──────────────────────────────┘");
-		int flag = accMapper.dataInsert(acc);
-		assertEquals(1, flag);
-	}
-	@Ignore
-	@Test
-	public void doDeletaAll() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ dataInsert()                 │");
-		log.debug("└──────────────────────────────┘");
-		int flag = accMapper.doDeleteAll();
-		assertEquals(0, flag);
-	}
 	@Ignore
 	@Test
 	public void sqlAll() throws Exception{
-		int flag = accMapper.countAll();
-		log.debug("count(*): "+flag);
+		int count = accMapper.countAll();
+		log.debug("count(*): "+count);
+		int dlt = accMapper.doDeleteAll();
+		assertEquals(count, dlt);
 		
-		accidentSelect01.setAccId("983182");
+		int flag = accMapper.dataInsert(acc);
+		assertEquals(1, flag);
+		flag = accMapper.dataInsert(acc01);
+		assertEquals(1, flag);
+		count = accMapper.countAll();
+		assertEquals(count, 2);	
+		Accident outVO=	accMapper.doSelectOne(acc01);
 		
-		accMapper.doSelectOne(accidentSelect01);
-		List<Accident> list = accMapper.fullTableScan();
+
 		
-	}
-	@Ignore
-	@Test
-	public void countAll() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ countAll()                   │");
-		log.debug("└──────────────────────────────┘");
-		int flag = accMapper.countAll();
-		log.debug("count(*): "+flag);
 	}
 	
 	@Ignore

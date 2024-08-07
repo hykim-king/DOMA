@@ -45,7 +45,7 @@ public class PointServiceImplTest implements PLog{
 	}
 	@Test
 	public void testInsertPointData() throws Exception{
-//		pointMapper.doDeleteAll();
+		pointMapper.doDeleteAll();
 		pointService.insertPointData();
 		pointMapper.countAll();
 	}

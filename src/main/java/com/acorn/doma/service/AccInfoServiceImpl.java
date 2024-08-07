@@ -13,6 +13,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
 import com.acorn.doma.domain.Board;
 import com.acorn.doma.mapper.AccMapper;
+import com.acorn.doma.proj4j.CoordinateConverter;
 
 @Service
 public class AccInfoServiceImpl implements AccInfoService, PLog{
@@ -104,12 +106,18 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
                     String occrTime = eElement.getElementsByTagName("occr_time").item(0).getTextContent();
                     String endDate=eElement.getElementsByTagName("exp_clr_date").item(0).getTextContent();
                     String endTime=eElement.getElementsByTagName("exp_clr_time").item(0).getTextContent();
-                    double longitude = 0.0;
-                    double latitude = 0.0;
+                    double grs80Longitude = 0.0;
+                    double grs80Latitude = 0.0;
 
                     try {
-                        longitude = Double.parseDouble(eElement.getElementsByTagName("grs80tm_x").item(0).getTextContent());
-                        latitude = Double.parseDouble(eElement.getElementsByTagName("grs80tm_y").item(0).getTextContent());
+                        grs80Longitude = Double.parseDouble(eElement.getElementsByTagName("grs80tm_x").item(0).getTextContent());
+                        grs80Latitude = Double.parseDouble(eElement.getElementsByTagName("grs80tm_y").item(0).getTextContent());
+
+//                         GRS80 좌표를 EPSG:4326으로 변환
+                        ProjCoordinate convertedCoord = CoordinateConverter.convert81(grs80Longitude, grs80Latitude);
+                        double longitude = convertedCoord.x;
+                        double latitude = convertedCoord.y;
+                        accInfoList.add(new Accident(accId, accType, accDtype, info, occrDate, occrTime, endDate, endTime, longitude, latitude));
                     } catch (NumberFormatException nfe) {
                         nfe.printStackTrace();
                         // Handle the case where conversion fails, for example:
@@ -118,7 +126,7 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
                         // - Set longitude and latitude to default values
                     }
 
-                    accInfoList.add(new Accident(accId, accType, accDtype, info, occrDate, occrTime, endDate, endTime, longitude, latitude));
+                    
                 }
             }
         } catch (Exception e) {

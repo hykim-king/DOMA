@@ -57,6 +57,25 @@
         </where>
         GROUP BY YEAR
     </select>
-    <select id=""></select>
+    <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
+        SELECT
+            s.GNAME,
+            s.DNAME,
+            f.YEAR,
+            f.ACCIDENT,
+            f.CASUALTIES,
+            f.DEAD,
+            f.SERIOUSLY,
+            f.ORDINARY,
+            f.LONGITUDE,
+            f.LATITUDE,
+            f.ACC_POINT
+        FROM
+            d_freezing f
+        JOIN
+            d_sido s ON f.sido_code = s.sido_code
+        WHERE
+            f.FREEZING_ID = #{fid}
+    </select>
     
 </mapper>

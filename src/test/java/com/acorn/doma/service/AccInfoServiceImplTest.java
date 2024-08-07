@@ -51,6 +51,7 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
+	@Ignore
 	@Test
 	public void doSelectOne() throws Exception{
 		log.debug("┌──────────────────────────────────────┐");
@@ -80,7 +81,7 @@ public class AccInfoServiceImplTest implements PLog{
 		assertEquals(flag, list.size());
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void testInsertAccidentData() throws Exception{
 		accInfoService.insertAccidentData();

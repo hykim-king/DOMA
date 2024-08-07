@@ -10,14 +10,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.acorn.doma.cmn.PLog;
-import com.acorn.doma.domain.Freezing;
 import com.acorn.doma.domain.Point;
-import com.acorn.doma.mapper.FreezingMapper;
 import com.acorn.doma.mapper.PointMapper;
+import com.acorn.doma.proj4j.CoordinateConverter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -129,11 +129,18 @@ public class PointServiceImpl implements PointService, PLog{
 				point.setOrdinary(Integer.parseInt(getJsonElementAsString(data, "tot_sl_dnv_cnt")));
 				point.setReport(Integer.parseInt(getJsonElementAsString(data, "tot_wnd_dnv_cnt")));
 				point.setPointType(getJsonElementAsString(data, "cause_anals_ty_nm"));
-				point.setLongitude(Double.parseDouble(getJsonElementAsString(data, "cntpnt_utmk_x_crd")));
-				point.setLatitude(Double.parseDouble(getJsonElementAsString(data, "cntpnt_utmk_y_crd")));
-				point.setYear(year);
-				point.setGname(gname);
-				pointMapper.dataInsert(point);
+				double grs80Longitude = Double.parseDouble(getJsonElementAsString(data, "cntpnt_utmk_x_crd"));
+	            double grs80Latitude = Double.parseDouble(getJsonElementAsString(data, "cntpnt_utmk_y_crd"));
+	            ProjCoordinate convertedCoord = CoordinateConverter.convert79(grs80Longitude, grs80Latitude);
+
+	            // Set converted coordinates
+	            point.setLongitude(convertedCoord.x);
+	            point.setLatitude(convertedCoord.y);
+
+	            point.setYear(year);
+	            point.setGname(gname);
+
+	            pointMapper.dataInsert(point);
 			}
 		}catch(SQLException e) {
 			log.error("Error saving data to database: " + e.getMessage(), e);
