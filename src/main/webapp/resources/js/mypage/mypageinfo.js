@@ -3,6 +3,7 @@
  */
 
 document.addEventListener("DOMContentLoaded", function(){
+  console.log(userId);
     console.log("DOMContentLoaded");    
     //seq
     const userIdInput = document.querySelector("#userId");
@@ -27,11 +28,17 @@ document.addEventListener("DOMContentLoaded", function(){
     const detailAddressInput = document.querySelector("#detailAddress");
     
     const doUpdateBtn = document.querySelector("#updateInfo");
-    const doDeleteBtn = document.querySelector("#deleteInfo");
+    const doDeleteBtn = document.querySelector("#deleteInfo"); 
+
+    const boardBtn = document.querySelector("#MoveBoard");
+    console.log("boardBtn:", boardBtn);
 
 
-
-
+    boardBtn.addEventListener("click",function(event){
+      console.log("boardBtn click");
+      
+      MoveBoard();
+    });
 
 
     doUpdateBtn.addEventListener("click",function(event){
@@ -47,8 +54,15 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 
 
-   
+  function MoveBoard(userId){ 
+           //frm.pageNo.value = 1; 
+          //window.location.href = "/doma/doma/mpSelect.do?userId="+userId;
+          window.location.href = '/doma/mypage/mpSelect.do?userId='+userId;
 
+          
+
+
+  }
 
 
 

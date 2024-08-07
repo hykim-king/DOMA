@@ -14,9 +14,21 @@
     Copyright (C) by KandJang All right reserved.
 */
  --%>
+<%@page import="com.acorn.doma.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%
+String userId = null;
+if(session.getAttribute("user")!=null){
+    User outVO = (User) session.getAttribute("user");
+    userId = outVO.getUserId();
+}
+
+
+%>  
+ 
+
 <c:set var="CP"  value="${pageContext.request.contextPath}"  />
      
 <!DOCTYPE html>
@@ -48,17 +60,19 @@
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<style>
+ 	 <style>
     .container {
         display: flex;
         gap: 20px;
         padding: 20px;
     }
     .left-container {
+    	margin-left : 250px;
         flex-basis: 30%; /* Set left-container to 30% of the width */
         padding: 20px;
     }
     .right-container {
+    	
         flex-basis: 70%; /* Set right-container to 70% of the width */
         padding: 20px;
     }
@@ -142,102 +156,18 @@
     </div>
     </div>
    <div class="right-container">
-   <!-- 게시글 테이블  -->
-   <div class="table-container">
-   
-            	<h2>게시글</h2>
-            	 list=${list}
-            	<div class="table-content">
-            	<table  class="table table-hover">
-                <thead>
-                    <tr class="table-secondary">
-      				<!-- <th scope="row">Warning</th> -->
-     				<th>순번</th>
-      				<th>제목</th>
-      				<th>지역</th>
-     			    <th>추천수</th>
-     			    <th>***</th>
-    				</tr>
-    				</thead>
-    			<tbody>
-		          <c:choose>
-		            <c:when test="${list.size() > 0 }">
-		              <c:forEach var="vo" items="${list }">
-    				
-					<tr>
-					<td class="text-center" ><c:out value="${vo.seq }"></c:out></td>
-					<td class="text-center" ><c:out value="${vo.title }"></c:out></td>
-					<td class="text-center" ><c:out value="${vo.gname }"></c:out></td>
-					<td class="text-center" ><c:out value="${vo.views }"></c:out></td>
-					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
-						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
-					  
-					</tr>
-					 </c:forEach>
-		            </c:when>
-		            <c:otherwise>
-		                <tr><td class="text-center" colspan="99" >No data found!</td></tr>
-		            </c:otherwise>
-		          </c:choose>
-                
-                    <!-- 실제 데이터는 서버에서 가져와서 여기에 추가 -->
-                </tbody>
-            	</table>
+   <!-- 게시글 테이블  --> 
+   				<br>
+   				<br>
+            	<h2>게시글 <input type="button" id="MoveBoard" class="btn btn-outline-success " value="관리하기" > </h2> 
             	 
-            	
-    </div>
-    </div>
-    <!-- 답글테이블 -->
-    <div class="table-container">
-            	&nbsp; &nbsp; &nbsp; <h2>답글</h2>
-            	<div class="table-content">
-            	<table  class="table table-hover">
-                <thead>
-                    <tr class="table-secondary">
-      				<!-- <th scope="row">Warning</th> -->
-     				<th>순번</th>
-      				<th>제목</th>
-      				<th>지역</th>
-     			    <th>작성자</th>
-     			    <th>***</th>
-    				</tr>
-    				
-					<tr>
-					<td>1</td>
-					<td>제목_1</td>
-					<td>서울 서초동</td>
-					<td>저스트다람쥐</td>
-					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
-						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
-					  
-					</tr>
-					
-					<tr>
-					<td>2</td>
-					<td>제목_2</td>
-					<td>서울 서대문구</td>
-					<td>오늘의토끼</td>
-					<th><button type="button" class="btn btn-outline-secondary" id=""  >수정</button>
-						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
-					</tr>
-					<tr>
-					<td>3</td>
-					<td>제목_3</td>
-					<td>서울 마포구</td>
-					<td>마포갈매기</td>
-					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
-						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
-					</tr>
-                
-                    <!-- 실제 데이터는 서버에서 가져와서 여기에 추가 -->
-                </tbody>
-            	</table>
+            	<br>
+            	<br>
+             
+            	<h2>&nbsp;&nbsp;답글 &nbsp;<input type="button" id="commentBtn" class="btn btn-outline-success " value="관리하기" > </h2>
             	 
-            	
     </div>
-    </div>
-    
-    </div>
+      
 </div>
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %>

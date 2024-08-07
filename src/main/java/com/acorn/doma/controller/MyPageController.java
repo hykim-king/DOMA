@@ -54,20 +54,29 @@ public class MyPageController implements PLog {
 	}
 
 	@GetMapping("myPage.do")
-	public String main(User inVO,Model model) throws SQLException {
+	public String MyPage(Model model)throws Exception {
 		String viewName = "/mypage/MyPage";
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ mypage()                                 │");
 		log.debug("└──────────────────────────────────────────┘");
 		///WEB-INF/views/+viewName+.jsp
-		log.debug("1.param:" + inVO);
-	    
-	    List<Board> list = boardMapper.mpSelect("user1");
-	    log.debug(list);
-	    model.addAttribute("list", list);
-	   
 		return viewName;
 	}
+	
+	@RequestMapping(value = "/mpSelect.do"
+			   , method = RequestMethod.GET)
+	public String moveToBoard(User inVO, Model model) throws SQLException {
+		String viewName = "mypage/MyPageBoard";
+		
+		log.debug("1.param inVO:" + inVO);
+		model.addAttribute("board", inVO);
+		
+		return viewName;
+	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/doUpdate.do", 
 			method = RequestMethod.POST, 
@@ -147,18 +156,20 @@ public class MyPageController implements PLog {
 		return jsonString;
 	} 
 	
-	/*
-	 * @RequestMapping(value = "/mpSelect.do", method = RequestMethod.POST, produces
-	 * = "application/json;charset=UTF-8")
-	 * 
-	 * @ResponseBody public List<Board> mpSelect(Board inVO,Model model) throws
-	 * SQLException { log.debug("1.param:" + inVO);
-	 * 
-	 * List<Board> list = boardMapper.mpSelect(inVO); log.debug(list);
-	 * model.addAttribute("list", list); return list; }
-	 */
-		
-		
+	 @RequestMapping(value = "/mpSelect.do", 
+			 method = RequestMethod.POST, 
+			 produces = "application/json;charset=UTF-8")
+	  
+	 @ResponseBody 
+	 public List<Board> mpSelect(Board inVO,Model model) throws SQLException { 
+		 log.debug("1.param:" + inVO); 
+	    List<Board> list = boardMapper.mpSelect(inVO); log.debug(list);
+	    model.addAttribute("list", list); 
+	    return list; 
+	    
+	 }
+	 
+	 
 		
 }
 	

@@ -3,7 +3,7 @@
 <mapper namespace="com.acorn.doma.mapper.BoardMapper">
  
 	    
-    <select id="mpSelect" parameterType="String"  resultType="Board">
+    <select id="mpSelect" parameterType="Board"  resultType="Board">
       SELECT
     		seq, 
     		title,
@@ -18,7 +18,7 @@
 	FROM
    			d_board
 	where
-    		reg_id = #{userId}                                                  
+    		reg_id = #{regId}                                                  
     </select>
     
  	 

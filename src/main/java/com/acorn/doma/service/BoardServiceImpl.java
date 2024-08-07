@@ -73,9 +73,11 @@ public class BoardServiceImpl implements BoardService, PLog {
 
 	@Override
 	public List<Board> mpSelect(Board inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		log.debug("1. param :"+inVO);
+		return this.boardMapper.mpSelect(inVO); 
 	}
+
+	 
 
  
 	 

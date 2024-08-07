@@ -95,12 +95,15 @@ public class MyPageMapperTest implements PLog {
 	
 	
 	
-	/*
-	 * //게시판 셀렉
-	 * 
-	 * @Test public void mpSelect() throws Exception{ List<Board> list =
-	 * boardMapper.mpSelect(boardV001); log.debug("list : " + list); }
-	 */
+	
+	//게시판 셀렉
+	  
+	  @Test 
+	  public void mpSelect() throws Exception{ 
+		  List<Board> list = boardMapper.mpSelect(boardV001); 
+		  log.debug("list : " + list); 
+	}
+	
 	
 	
 	

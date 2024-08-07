@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.WorkDiv;
 import com.acorn.doma.domain.Accident;
@@ -50,7 +51,7 @@ public interface BoardMapper extends WorkDiv<Board>{
 	 * @return
 	 * @throws SQLException
 	 */
-	List<Board> mpSelect(String userId) throws SQLException; 
+	List<Board> mpSelect(Board inVO) throws SQLException; 
 	
 	
 	
