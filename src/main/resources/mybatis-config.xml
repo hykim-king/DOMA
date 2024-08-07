@@ -19,6 +19,7 @@
         <typeAlias alias="Weather" type="com.acorn.doma.domain.Weather"/>
         <typeAlias alias="Death" type="com.acorn.doma.domain.Death"/>
         <typeAlias alias="Board" type="com.acorn.doma.domain.Board"/>
+        <typeAlias alias="Admin" type="com.acorn.doma.domain.Admin"/>
     </typeAliases>
     
 </configuration>
