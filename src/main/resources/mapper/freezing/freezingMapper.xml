@@ -38,4 +38,23 @@
     <select id="countAll" resultType="int">
         SELECT COUNT(*) FROM D_FREEZING
     </select>
+    <select id="selectFreezingData" resultType="map" parameterType="Freezing">
+        SELECT
+            YEAR,
+            SUM(ACCIDENT) AS ACCIDENT,
+            SUM(CASUALTIES) AS CASUALTIES,
+            SUM(DEAD) AS DEAD,
+            SUM(SERIOUSLY) AS SERIOUSLY,
+            SUM(ORDINARY) AS ORDINARY
+        FROM d_freezing
+        <where>
+            <if test="years != null and !years.isEmpty()">
+                YEAR IN
+                <foreach item="year" collection="years" open="(" separator="," close=")">
+                    #{year}
+                </foreach>
+            </if>
+        </where>
+        GROUP BY YEAR
+    </select>
 </mapper>

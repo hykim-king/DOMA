@@ -35,13 +35,13 @@ public class AccInfoServiceImplTest implements PLog{
 	@Autowired
 	AccMapper accMapper;
 	
-	
+	Accident accident;
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────────────┐");
 		log.debug("│ setUp()                              │");
 		log.debug("└──────────────────────────────────────┘");
-		
+		accident = new Accident();
 	}
 
 	@After
@@ -51,7 +51,17 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
-	
+	@Test
+	public void doSelectOne() throws Exception{
+		log.debug("┌──────────────────────────────────────┐");
+		log.debug("│ doSelectOne()                        │");
+		log.debug("└──────────────────────────────────────┘");
+		accident.setAccId("983589"); //db에 실제 값을 받아야 됨.
+		Accident outVO =  accInfoService.doSelectOne(accident);
+		assertNotNull(outVO);
+		
+	}
+	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌─────────────────────────────────────────────────────────");

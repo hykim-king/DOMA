@@ -2,6 +2,10 @@ package com.acorn.doma.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -41,7 +45,17 @@ public class FreezingMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-	
+	@Test
+	public void selectFreezingData() throws Exception{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ selectFreezingData()         │");
+		log.debug("└──────────────────────────────┘");
+		List<Integer> years = Arrays.asList(2021, 2020);
+		 List<Map<String, Object>> result = freezingMapper.selectFreezingData(years);
+		 
+		 
+	}
+	@Ignore
 	@Test
 	public void dataInsert() throws Exception{
 		log.debug("┌──────────────────────────────┐");

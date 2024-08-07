@@ -37,4 +37,5 @@ VALUES (
 <select id="countAll" resultType="int">
     SELECT COUNT(*) FROM D_POINT
 </select>
+
 </mapper>

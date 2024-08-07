@@ -21,8 +21,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
+import com.acorn.doma.domain.Board;
 import com.acorn.doma.mapper.AccMapper;
 
 @Service
@@ -154,5 +156,32 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
 		log.debug("└ ");
 		
 		return list;
+	}
+	@Override
+	public List<Accident> doRetrieve(DTO search) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int doUpdate(Accident inVO) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int doDelete(Accident inVO) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int doSave(Accident inVO) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public Accident doSelectOne(Accident inVO) throws SQLException, NullPointerException {
+		log.debug("1. param :"+inVO);
+		Accident outVO = accMapper.doSelectOne(inVO);
+		log.debug("2. outVO :"+outVO);
+		return outVO;
 	}
 }

@@ -2,6 +2,10 @@ package com.acorn.doma.service;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -43,10 +47,19 @@ public class FreezingServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
+	@Ignore
 	@Test
 	public void testInsertFreezingData() throws Exception{
 		freezingService.insertFreezingData();
 		freezingMapper.countAll();
+	}
+	@Test
+	public void selectFreezingData() throws Exception{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ selectFreezingData()         │");
+		log.debug("└──────────────────────────────┘");
+		List<Integer> years = Arrays.asList(2021, 2020);
+		 List<Map<String, Object>> result = freezingService.selectFreezingData(years);
 	}
 	@Ignore
 	@Test
