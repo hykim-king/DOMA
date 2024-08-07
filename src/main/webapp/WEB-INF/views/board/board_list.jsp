@@ -14,8 +14,8 @@
     Copyright (C) by KandJang All right reserved.
 */
  --%>
-<%@page import="com.acorn.doma.cmn.StringUtil"%>
-<%@page import="com.acorn.doma.cmn.Search"%> 
+<%@ page import="com.acorn.doma.cmn.StringUtil"%>
+<%@ page import="com.acorn.doma.cmn.Search"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -25,8 +25,12 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<%-- favicon  --%>
+<link rel="shortcut icon" href="${CP}/resources/img/favicon.ico" type="image/x-icon">
+
 <%-- bootstrap css --%>
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
 
 <%-- jquery --%>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
@@ -39,7 +43,15 @@
 
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<title>Insert title here</title>
+
+<!-- simplemde -->
+<link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
+<script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
+
+<%-- FontAwesome for icons --%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<title>DOMA 커뮤니티</title>
 <script>
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
@@ -251,7 +263,55 @@ document.addEventListener("DOMContentLoaded", function(){
 		      </tbody>
 		    </table>
 		    <!--// table end ------------------------------------------------------------->
-            
+            <div >
+                <form class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <input type="search" class="g-col-6">
+                    <input type="button" value="검색" class="g-col-6 btn btn-secondary">
+                </form>
+                <div class="grid gap-0 column-gap-6">
+                    <table> 
+                        <tr>
+                            <td class="p-2 g-col-8"><input type="button" value="강남구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="강동구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="강북구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="강서구"  class="btn btn-warning btn-lg"></td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 g-col-8"><input type="button" value="관악구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="광진구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="구로구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="금천구"  class="btn btn-warning btn-lg"></td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 g-col-8"><input type="button" value="노원구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="도봉구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="동대문구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="동작구"  class="btn btn-warning btn-lg"></td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 g-col-8"><input type="button" value="마포구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="서대문구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="서초구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="성동구"  class="btn btn-warning btn-lg"></td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 g-col-8"><input type="button" value="성북구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="송파구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="양천구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="영등포구"  class="btn btn-warning btn-lg"></td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 g-col-8"><input type="button" value="용산구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="은평구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="종로구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="중구"  class="btn btn-warning btn-lg"></td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 g-col-8"><input type="button" value="중랑구"  class="btn btn-warning btn-lg"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -285,6 +345,6 @@ document.addEventListener("DOMContentLoaded", function(){
 </div>
 <!--// container end ---------------------------------------------------------->
     <%--bootstrap js --%>
-<script src="${CP}/resources/js/bootstrap.bundle.js"></script> 
+<script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script> 
 </body>
 </html>

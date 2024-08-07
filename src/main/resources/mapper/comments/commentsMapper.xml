@@ -1,24 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.CommentsMapper">
-<insert id="doSave">
-    INSERT INTO D_COMMENT(
-    comseq,
-    seq,
-    user_id,
-    mod_id,
-    comments,
-    reg_dt,
-    mod_dt
-    )VALUES(
-        doma_comment_seq.NEXTVAL,
-        #{seq},
-        #{userId},
-        #{userId},
-        #{comments},
-        SYSDATE,
-        SYSDATE
-    )
+
+    <select id="doRetrieve" resultType="Comments">
+        SELECT comseq,
+               seq,
+               user_id as userId,
+               mod_id as modId,
+               comments, 
+               TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+               TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt
+          FROM D_COMMENT 
+	     WHERE seq = #{seq}
+         ORDER BY reg_dt as regDt DESC 
+    </select>
+
+    <update id="doUpdate" parameterType="Comments">
+        UPDATE D_COMMENT
+		   SET mod_id = #{modId},
+		       comments = #{comments},
+		       mod_dt  = SYSDATE
+		 WHERE comseq = #{comSeq}
+		   AND seq = #{seq}
+		   AND user_id = #{userId}
+    </update>
+
+	<delete id="doDelete" parameterType="Comments">
+	   DELETE FROM D_COMMENT
+        WHERE comseq = #{comSeq}
+          AND user_id = #{userId}
+	</delete>
+	
+	<select id="doSelectOne" parameterType="Comments" resultType="Comments">
+        SELECT
+		       comseq,
+		       seq,
+		       user_id as userId, 
+		       mod_id as modId,
+		       comments,
+		       TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+		       TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt
+		  FROM
+		       D_COMMENT
+		 WHERE comseq = #{comSeq}   
+    </select>
     
-</insert>
+    <delete id="deleteAll">
+        DELETE FROM D_COMMENT
+    </delete>
+    
+    <select id="getSequence" resultType="int">
+        SELECT MAX(COMSEQ) comseq
+          FROM D_COMMENT
+    </select>
+	
+	<insert id="doSave">
+	    INSERT INTO D_COMMENT(
+	    comseq,
+	    seq,
+	    user_id,
+	    mod_id,
+	    comments,
+	    reg_dt,
+	    mod_dt
+	    )VALUES(
+	        doma_comment_seq.NEXTVAL,
+	        #{seq},
+	        #{userId},
+	        #{userId},
+	        #{comments},
+	        SYSDATE,
+	        SYSDATE
+	    )
+	    
+	</insert>
 </mapper>

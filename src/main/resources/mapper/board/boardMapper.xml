@@ -51,7 +51,7 @@
     </sql>
     
     <select id="doRetrieve" parameterType="Search" resultType="Board">
-    -- TODO : 커뮤니티(1), 공지사항(2)
+    -- TODO : 커뮤니티(10), 공지사항(20)
     SELECT A.*, B.*
       FROM (
         SELECT tt1.rnum as no,

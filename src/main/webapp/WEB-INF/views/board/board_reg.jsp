@@ -24,19 +24,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%-- favicon  --%>
 <link rel="shortcut icon" href="${CP}/resources/img/favicon.ico" type="image/x-icon">
+
 <%-- bootstrap css --%>
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
+
 <%-- jquery --%>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
+
 <%-- common js --%>
 <script src="${CP}/resources/js/common.js"></script>
+
 <%-- google Nanum+Gothic --%>
 <link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <!-- simplemde -->
-<link rel="stylesheet" href="${CP }/resources/css/simplemde.min.css">
-<script src="${CP }/resources/js/simplemde.min.js"></script>
+<link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
+<script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 
 <title>오늘 사람 프로그램</title>
 <script>
@@ -186,6 +192,6 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 
 <%-- bootstrap js --%>
-<script src="${CP}/resources/js/bootstrap.bundle.js"></script>
+<script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>
 </body>
 </html>
