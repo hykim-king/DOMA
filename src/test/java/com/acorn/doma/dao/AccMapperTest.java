@@ -99,8 +99,6 @@ public class AccMapperTest implements PLog{
 		assertEquals(count, 2);	
 		Accident outVO=	accMapper.doSelectOne(acc01);
 		
-
-		
 	}
 	
 	@Ignore

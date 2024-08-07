@@ -25,8 +25,6 @@ import com.acorn.doma.mapper.UserMapper;
 
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
-
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //알파벳 순서로 테스트 메서드 실행
 public class UserMapperTest implements PLog {
 
 	@Autowired
@@ -47,56 +45,112 @@ public class UserMapperTest implements PLog {
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		
+		userVO01 = new User("rkdgur2016", "임강혁", "1234", "rkdgur2016@gmail.com", "2001-01-16", 1, "서울시 마포구 숭문16길 28", "201호", "sysdate");
+		userVO02 = new User("user1", "user1","1111","user1@naver.com",  "2001-01-01", 1,	"서울 서대문구", "101호","sysdate");
+		userVO03 = new User("uki", "엄기은", "1111",	"uki2022751011@gmail.com",	"2001-01-01", 1, "인천 서구", "1111", "sysdate");
 		search = new Search();
+		
 	}
-
+	
+	
+	
 	
 	@Test
-	public void addAndGet() throws SQLException {
+	public void saveAndCount() throws SQLException {
 		log.debug("┌──────────────────────────────┐");
-		log.debug("│ addAndGet()                  │");
+		log.debug("│ saveAndCount()               │");
 		log.debug("└──────────────────────────────┘");
-
-		// 1. 등록
-		// 2. 한건조회
-		// 3. 비교
-
-		// 1건 등록
+		
+		userMapper.deleteAll();
+		
+		//1번째 유저 저장
 		int flag = userMapper.doSave(userVO01);
-		log.debug("flag :" + flag);
+		log.debug("flag : " + flag);
 		assertEquals(1, flag);
-
-		User outVO = userMapper.doSelectOne(userVO01);
-		assertNotNull(outVO);// return User Null check
-		isSameUser(userVO01, outVO);
-
-		// 2번째 User
+		
+		//2번째 유저 저장
 		flag = userMapper.doSave(userVO02);
+		log.debug("flag : " + flag);
 		assertEquals(1, flag);
-
-		User outVO02 = userMapper.doSelectOne(userVO02);
-		assertNotNull(outVO02);
-		isSameUser(userVO02, outVO02);
-
-		// 3번째 User
+		
+		//3번째 유저 저장
 		flag = userMapper.doSave(userVO03);
+		log.debug("flag : " + flag);
 		assertEquals(1, flag);
-
-		User outVO03 = userMapper.doSelectOne(userVO03);
-		assertNotNull(outVO03);
-		isSameUser(userVO03, outVO03);
-
+		
+		flag = userMapper.getCount();
+		log.debug("flag : " + flag);
+		assertEquals(3, flag);
+		
 	}
-
-	public void isSameUser(User userVO, User outVO) {
-		assertEquals(userVO.getUserId(), outVO.getUserId());
-	}
-
+	
+	
 	@After
 	public void tearDown() throws Exception {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
+	}
+	
+	@Test
+	public void login() throws SQLException {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ getUserIdAndLogin()          │");
+		log.debug("└──────────────────────────────┘");
+		
+		User outVO01 = userMapper.login(userVO01);
+		User outVO02 = userMapper.login(userVO02);
+		User outVO03 = userMapper.login(userVO03);
+		log.debug("outVO01 : " + outVO01);
+		log.debug("outVO02 : " + outVO02);
+		log.debug("outVO03 : " + outVO03);
+		
+		isSameUser(userVO01, outVO01);
+		isSameUser(userVO02, outVO02);
+		isSameUser(userVO03, outVO03);
+	}
+	
+	@Test
+	public void getUserIdAndUpdate() throws SQLException {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ getUserId()                  │");
+		log.debug("└──────────────────────────────┘");
+		
+		String outVO = userMapper.getUserId(userVO01.getUserId());
+		log.debug("outVO : " + outVO);
+		assertEquals(userVO01.getUserId(), outVO);
+		
+
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ update()                     │");
+		log.debug("└──────────────────────────────┘");
+		String updateStr = "_Ultra";
+		userVO03.setUserName(userVO03.getUserName() + updateStr);
+		
+		int flag = userMapper.doUpdate(userVO03);
+		if(flag == 1) {			
+			log.debug("flag : " + flag);
+			log.debug("doUpdate() 성공");
+		}else {
+			log.debug("flag : " + flag);
+			log.debug("doUpdate() 실패");
+		}
+		
+		User userVO = userMapper.login(userVO03);
+		
+		assertNotEquals(userVO03, userVO);;
+	}
+	
+
+	public void isSameUser(User userVO, User outVO) {
+		assertEquals(userVO.getUserId(), outVO.getUserId());
+		assertEquals(userVO.getUserName(), outVO.getUserName());
+		assertEquals(userVO.getUserPw(), outVO.getUserPw());
+		assertEquals(userVO.getUserEmail(), outVO.getUserEmail());
+		assertEquals(userVO.getBirth(), outVO.getBirth());
+		assertEquals(userVO.getGrade(), outVO.getGrade());
+		assertEquals(userVO.getAddress(), outVO.getAddress());
+		assertEquals(userVO.getDetailAddress(), outVO.getDetailAddress());
 	}
 
 	@Ignore

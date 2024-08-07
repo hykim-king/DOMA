@@ -32,25 +32,7 @@
         WHERE user_id = #{userId}                                                
     </select>
     
- 
-    
-    <select id="doSelectOne" parameterType="User" resultType="User">
-        SELECT                                            
-            user_id as userId,
-            user_name as userName,
-            user_pw as userPw,
-            user_email as userEmail,
-            birth,
-            grade,
-            address,
-            detail_address as detailAddress,
-            reg_dt as regDt
-        FROM                                              
-            D_USER                                                  
-    </select>
-    	 
-    
-        <update id="doUpdate" parameterType="User">
+    <update id="doUpdate" parameterType="User">
          UPDATE D_USER             
          SET                        
           
@@ -66,14 +48,6 @@
                 user_id = #{userId}     
     </update>
     
-     
-    
-    
-    
-    <delete id="doDelete" parameterType="User">
-        DELETE FROM D_USER
-         WHERE user_id = #{userId}
-    </delete>
     
     <insert id="doSave" parameterType="User">
         INSERT INTO D_USER (
@@ -98,9 +72,10 @@
                 SYSDATE
             )                   
     </insert>
-    
-      <delete id="deleteAll" >
-       DELETE FROM D_USER
-    </delete>
         
+    <delete id="deleteAll">
+    	DELETE FROM D_USER
+    </delete>
+    
+    
 </mapper>

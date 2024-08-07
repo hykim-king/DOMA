@@ -25,37 +25,12 @@ public interface UserMapper extends WorkDiv<User> {
 	 */
 	int idDuplicateCheck(User inVO) throws SQLException;
 	
-	
-	/**
-	 * 다건 입력
-	 * @return int
-	 * @throws SQLException
-	 */
 	int multipleSave() throws SQLException;
-
-
-	/**
-	 * 전체 회원 조회
-	 * @return List<User>
-	 */
+	
 	List<User> getAll();
 
-
-	/**
-	 * 테스트용 전체 회원 수
-	 * @return int
-	 * @throws SQLException
-	 */
 	int getCount() throws SQLException;
 
-
-	/**
-	 * 테스트용 전체 데이터 삭제
-	 * @return
-	 * @throws SQLException
-	 * 
-	 * 
-	 */
 	int mpGradeUp(User inVO) throws SQLException;
 	
 	int deleteAmpGrageUpll() throws SQLException;
@@ -68,6 +43,7 @@ public interface UserMapper extends WorkDiv<User> {
 	 
 	User mpSelectOne(User inVO) throws SQLException, NullPointerException;
 	
+	int deleteAll() throws SQLException;
 	
 	
 }
