@@ -72,7 +72,50 @@
 		        D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
 		)
     </select>
-    
+    <select id="dolbalRetrieve" resultType="Accident">
+    SELECT * FROM (
+        SELECT 
+            T.ACC_NAME as accName,
+            A.ACC_DTYPE as accDtype,
+            D.ACC_DNAME as accDName,
+            TO_CHAR(TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS occrDate,
+            TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
+            TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
+            TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
+            A.INFO as info,
+            A.LONGITUDE as longitude,
+            A.LATITUDE as latitude
+            FROM 
+                D_ACCINFO A
+            JOIN 
+                D_ACC_TYPE T ON A.ACC_TYPE = T.ACC_TYPE
+            JOIN 
+                D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
+            WHERE A.ACC_DTYPE NOT IN ('10B02','04B04')
+            )
+    </select>
+    <select id="etcRetrieve" resultType = "Accident">
+    SELECT * FROM (
+        SELECT 
+            T.ACC_NAME as accName,
+            A.ACC_DTYPE as accDtype,
+            D.ACC_DNAME as accDName,
+            TO_CHAR(TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS occrDate,
+            TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
+            TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
+            TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
+            A.INFO as info,
+            A.LONGITUDE as longitude,
+            A.LATITUDE as latitude
+            FROM 
+                D_ACCINFO A
+            JOIN 
+                D_ACC_TYPE T ON A.ACC_TYPE = T.ACC_TYPE
+            JOIN 
+                D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
+            WHERE A.ACC_DTYPE IN ('10B02','04B04')
+            )
+    </select>
     <delete id="doDeleteAll">
     DELETE FROM D_ACCINFO
     </delete>

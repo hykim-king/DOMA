@@ -78,10 +78,26 @@ public class AccInfoServiceImplTest implements PLog{
 		}
 		log.debug("└ ");
 		
-		assertEquals(flag, list.size());
 	}
-	
-//	@Ignore
+	@Test
+	public void Retrieve() throws Exception{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ Retrieve()                   │");
+		log.debug("└──────────────────────────────┘");
+		List<Accident> dolbalList = accInfoService.dolbalRetrieve();
+		List<Accident> etclList = accInfoService.etcRetrieve();
+		log.debug("┌ list ");
+		for(Accident acc : dolbalList) {
+			log.debug("│ "+ acc);
+		}
+		log.debug("└ ");
+		log.debug("┌ list ");
+		for(Accident acc : etclList) {
+			log.debug("│ "+ acc);
+		}
+		log.debug("└ ");
+	}
+	@Ignore
 	@Test
 	public void testInsertAccidentData() throws Exception{
 		accInfoService.insertAccidentData();

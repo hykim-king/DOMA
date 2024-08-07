@@ -19,4 +19,6 @@ public interface AccMapper extends WorkDiv<Accident>{
 	
 	List<Accident> fullTableScan() throws SQLException;
 	
+	List<Accident> dolbalRetrieve() throws SQLException;
+	List<Accident> etcRetrieve() throws SQLException;
 }

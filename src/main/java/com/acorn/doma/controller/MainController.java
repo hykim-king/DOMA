@@ -50,6 +50,10 @@ public class MainController implements PLog {
 		
 		model.addAttribute("accList", accList);
 		
+		List<Accident> dolbalList = accInfoService.dolbalRetrieve();
+		model.addAttribute("dolbalList", dolbalList);
+		List<Accident> etcList = accInfoService.etcRetrieve();
+		model.addAttribute("etcList", etcList);
 		return viewName;
 	}
 	

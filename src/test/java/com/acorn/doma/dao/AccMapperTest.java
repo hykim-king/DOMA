@@ -65,6 +65,24 @@ public class AccMapperTest implements PLog{
 		}
 		log.debug("└ ");
 	}
+	@Test
+	public void Retrieve() throws Exception{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ Retrieve()                   │");
+		log.debug("└──────────────────────────────┘");
+		List<Accident> dolbalList = accMapper.dolbalRetrieve();
+		List<Accident> etclList = accMapper.etcRetrieve();
+		log.debug("┌ list ");
+		for(Accident acc : dolbalList) {
+			log.debug("│ "+ acc);
+		}
+		log.debug("└ ");
+		log.debug("┌ list ");
+		for(Accident acc : etclList) {
+			log.debug("│ "+ acc);
+		}
+		log.debug("└ ");
+	}
 	@Ignore
 	@Test
 	public void sqlAll() throws Exception{
