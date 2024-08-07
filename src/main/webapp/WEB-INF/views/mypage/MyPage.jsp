@@ -28,7 +28,7 @@
 <link rel="shortcut icon" href="${CP}/resources/img/favicon.ico" type="image/x-icon">
 
 <%-- bootstrap css --%>
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
 
 <%-- jquery --%>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
@@ -45,7 +45,7 @@
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap-ege.min.css"> 
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
