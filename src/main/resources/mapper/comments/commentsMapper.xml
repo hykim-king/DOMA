@@ -2,19 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.CommentsMapper">
 
-    <insert id="multipleSave">    
-        INSERT INTO D_COMMENT
-        SELECT ROWNUM
-               DECODE(MOD(ROWNUM,3),1,1,2,2,3),
-               '등록자'||LPAD(ROWNUM,3,0),
-               '수정자'||LPAD(ROWNUM,3,0),
-               '내용'||LPAD(ROWNUM,3,0),
-               SYSDATE-ROWNUM/24,
-               SYSDATE-ROWNUM/24
-        FROM dual
-        CONNECT BY LEVEL <![CDATA[ <=31  ]]>      
-    </insert>
-
     <select id="doRetrieve" resultType="Comments">
         SELECT comseq,
                seq,
