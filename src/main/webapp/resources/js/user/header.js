@@ -12,10 +12,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 	const mainPagenBtn = document.querySelector("#main_page");
 	console.log("mainPagenBtn is ready!");
-	
-	const mainPagenBtn = document.querySelector("#my_page");
-	console.log("mainPagenBtn is ready!");
-	
+	  
 	//이벤트 리스너
 	registerPageBtn.addEventListener("click", function(event){
 		console.log("registerPageBtn clicked");

@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
 <link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
