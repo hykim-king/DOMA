@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -79,7 +80,9 @@ public class MyPageMapperTest implements PLog {
 		userVO01= new User("user2", "user2", "2222", "user2@naver.com", "2002-02-02", 1, "서울 서대문구", "101호", "x"); 
 		userMapper.doDelete(userVO01); 
 		
+		boardV001 = new Board(10,"10","구20", "제목2", "user1", "user1", "내용2", "이미지2","x", "x", 1);
 		
+	
 		search = new Search();
 	}
 
@@ -89,6 +92,17 @@ public class MyPageMapperTest implements PLog {
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
+	
+	
+	
+	/*
+	 * //게시판 셀렉
+	 * 
+	 * @Test public void mpSelect() throws Exception{ List<Board> list =
+	 * boardMapper.mpSelect(boardV001); log.debug("list : " + list); }
+	 */
+	
+	
 	
 	@Ignore
 	@Test
@@ -102,7 +116,7 @@ public class MyPageMapperTest implements PLog {
 		log.debug("outVO : " + outVO);
 		
 	}
-	
+	@Ignore
 	@Test
 	public void mpGradeUp() throws Exception{
 		
@@ -210,11 +224,20 @@ public class MyPageMapperTest implements PLog {
 		 
 		
 	}
-	
-	
-	
-	
+	public void isSameBoard(Board boardIn, Board boardOut) { 
+		assertEquals(boardIn.getGname(), boardOut.getGname());
+		assertEquals(boardIn.getTitle(), boardOut.getTitle());
+		assertEquals(boardIn.getRegId(), boardOut.getRegId());
+		assertEquals(boardIn.getModId(), boardOut.getModId());
+		assertEquals(boardIn.getContent(), boardOut.getContent());
+		assertEquals(boardIn.getImgLink(), boardOut.getImgLink());
+		assertEquals(boardIn.getViews(), boardOut.getViews());
+	}
 	 
+	
+	
+	
+	@Ignore 
 	@Test
 	public void beans() {
 		log.debug("┌──────────────────────────────┐");

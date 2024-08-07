@@ -16,10 +16,20 @@ document.addEventListener("DOMContentLoaded", function(){
     const birthInput = document.querySelector("#birth");
     const addressInput = document.querySelector("#address");
     
+    //
+    const seqInput = document.querySelector("#seq");
+    const titleInput = document.querySelector("#title");
+    const gnameInput = document.querySelector("#gname");
+    const viewsInput = document.querySelector("#views");
+
+
+
     const detailAddressInput = document.querySelector("#detailAddress");
     
     const doUpdateBtn = document.querySelector("#updateInfo");
     const doDeleteBtn = document.querySelector("#deleteInfo");
+
+
 
 
 
@@ -35,6 +45,11 @@ document.addEventListener("DOMContentLoaded", function(){
 		
 		deleteInfo();
 	});
+
+
+   
+
+
 
 
 	

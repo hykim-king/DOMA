@@ -1,20 +1,26 @@
 package com.acorn.doma.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.Board;
 import com.acorn.doma.domain.User;
+import com.acorn.doma.mapper.BoardMapper;
 import com.acorn.doma.mapper.UserMapper;
+import com.acorn.doma.service.BoardService;
 import com.acorn.doma.service.UserService;
 import com.google.gson.Gson;
 import com.acorn.doma.cmn.Message; 
@@ -30,6 +36,17 @@ public class MyPageController implements PLog {
 	@Autowired
 	UserMapper userMapper;
 	
+	
+	
+	@Qualifier("boardServiceImpl")
+	BoardService boardService;
+	
+	@Autowired
+	BoardMapper boardMapper; 
+	
+	
+	
+	
 	public MyPageController() { 
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ MyPageController()                       │");
@@ -37,12 +54,18 @@ public class MyPageController implements PLog {
 	}
 
 	@GetMapping("myPage.do")
-	public String main() {
+	public String main(User inVO,Model model) throws SQLException {
 		String viewName = "/mypage/MyPage";
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ mypage()                                 │");
 		log.debug("└──────────────────────────────────────────┘");
 		///WEB-INF/views/+viewName+.jsp
+		log.debug("1.param:" + inVO);
+	    
+	    List<Board> list = boardMapper.mpSelect("user1");
+	    log.debug(list);
+	    model.addAttribute("list", list);
+	   
 		return viewName;
 	}
 	
@@ -122,6 +145,24 @@ public class MyPageController implements PLog {
 		log.debug("3.jsonString:" + jsonString);
 
 		return jsonString;
-	}
+	} 
 	
+	/*
+	 * @RequestMapping(value = "/mpSelect.do", method = RequestMethod.POST, produces
+	 * = "application/json;charset=UTF-8")
+	 * 
+	 * @ResponseBody public List<Board> mpSelect(Board inVO,Model model) throws
+	 * SQLException { log.debug("1.param:" + inVO);
+	 * 
+	 * List<Board> list = boardMapper.mpSelect(inVO); log.debug(list);
+	 * model.addAttribute("list", list); return list; }
+	 */
+		
+		
+		
 }
+	
+	
+	
+	
+	 

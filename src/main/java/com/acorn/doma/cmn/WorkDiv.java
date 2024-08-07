@@ -3,6 +3,8 @@ package com.acorn.doma.cmn;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.acorn.doma.domain.Board;
+
 public interface WorkDiv<T> {
 
 	/**
@@ -46,4 +48,5 @@ public interface WorkDiv<T> {
 	 * @throws NullPointerException
 	 */
 	T doSelectOne(T inVO) throws SQLException, NullPointerException;
+ 
 }

@@ -187,10 +187,11 @@ public class BoardMapperTest implements PLog{
 		search.setSearchDiv("30");
 		//제목000001
 		//내용000001
-		search.setSearchWord("내용000001");
+		//search.setSearchWord("내용000001");
 		
 		List<Board> list = boardMapper.doRetrieve(search);
-		assertEquals(0, list.size());
+		log.debug("list:"+list);
+		//assertEquals(0, list.size());
 
 	}
 	

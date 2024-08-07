@@ -144,7 +144,9 @@
    <div class="right-container">
    <!-- 게시글 테이블  -->
    <div class="table-container">
+   
             	<h2>게시글</h2>
+            	 list=${list}
             	<div class="table-content">
             	<table  class="table table-hover">
                 <thead>
@@ -156,34 +158,27 @@
      			    <th>추천수</th>
      			    <th>***</th>
     				</tr>
+    				</thead>
+    			<tbody>
+		          <c:choose>
+		            <c:when test="${list.size() > 0 }">
+		              <c:forEach var="vo" items="${list }">
     				
 					<tr>
-					<td>1</td>
-					<td>제목_1</td>
-					<td>서울 서초동</td>
-					<td>27</td>
+					<td class="text-center" ><c:out value="${vo.seq }"></c:out></td>
+					<td class="text-center" ><c:out value="${vo.title }"></c:out></td>
+					<td class="text-center" ><c:out value="${vo.gname }"></c:out></td>
+					<td class="text-center" ><c:out value="${vo.views }"></c:out></td>
 					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
 						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
 					  
 					</tr>
-					
-					<tr>
-					<td>2</td>
-					<td>제목_2</td>
-					<td>서울 서대문구</td>
-					<td>27</td>
-					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
-						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
-					</tr>
-					<tr>
-					<td>3</td>
-					<td>제목_3</td>
-					<td>서울 마포구</td>
-					<td>27</td>
-					
-					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
-						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
-					</tr>
+					 </c:forEach>
+		            </c:when>
+		            <c:otherwise>
+		                <tr><td class="text-center" colspan="99" >No data found!</td></tr>
+		            </c:otherwise>
+		          </c:choose>
                 
                     <!-- 실제 데이터는 서버에서 가져와서 여기에 추가 -->
                 </tbody>

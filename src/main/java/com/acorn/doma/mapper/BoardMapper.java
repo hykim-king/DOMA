@@ -1,11 +1,13 @@
 package com.acorn.doma.mapper;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.WorkDiv;
+import com.acorn.doma.domain.Accident;
 import com.acorn.doma.domain.Board;
 import com.acorn.doma.domain.User;
 
@@ -42,7 +44,13 @@ public interface BoardMapper extends WorkDiv<Board>{
 	 */
 	int multipleSave() throws SQLException;
 	
-	Board mpbSelectOne(Board inVO) throws SQLException, NullPointerException;
+	
+	/**
+	 * 마이페이지 전체 데이터 조회
+	 * @return
+	 * @throws SQLException
+	 */
+	List<Board> mpSelect(String userId) throws SQLException; 
 	
 	
 	

@@ -3,25 +3,22 @@
 <mapper namespace="com.acorn.doma.mapper.BoardMapper">
  
 	    
-    <select id="mpbSelectOne" parameterType="Board"  resultType="Board">
-     SELECT
-    		b.seq,
-    		b.div,
-    		b.title,
-    		b.reg_id,
-    		b.mod_id,
-    		b.content,
-    		b.img_link,
-    		b.reg_dt,
-    		b.mod_dt,
-    		b.views,
-    		b.gname
-		FROM
-    		d_board b
-		INNER JOIN
-    		d_user u ON b.reg_id = u.user_id
-		WHERE
-    		u.user_id = #{userId}                                                   
+    <select id="mpSelect" parameterType="String"  resultType="Board">
+      SELECT
+    		seq, 
+    		title,
+    		reg_id as regId,
+    		mod_id as modId,
+    		content,
+    		img_link as imgLink,
+    		reg_dt as regDt,
+    		mod_dt as modDt,
+    		views,
+    		gname
+	FROM
+   			d_board
+	where
+    		reg_id = #{userId}                                                  
     </select>
     
  	 
