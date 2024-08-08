@@ -16,7 +16,7 @@
     <!-- 공지사항 등록 -->
     <insert id="insertNotice" parameterType="Admin">
         INSERT INTO d_board (seq, div, title, reg_id, content, img_link, reg_dt, mod_dt, views, gname)
-        VALUES (#{seq}, '20', #{title}, #{regId}, #{content}, #{imgLink}, SYSDATE, SYSDATE, 0, #{gname})
+        VALUES (doma_admin_seq.NEXTVAL, '20', #{title}, #{regId}, #{content}, #{imgLink}, SYSDATE, SYSDATE, 0, #{gname})
     </insert>
 
     <!-- 공지사항 수정 -->

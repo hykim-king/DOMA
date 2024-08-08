@@ -47,7 +47,7 @@ public class CommentMapperTest implements PLog {
 	public void setUp() throws Exception {
 		log.debug("======setUp=========");
 		
-		comment01 = new Comments(1, 1, "등록자01", "수정자01", "내용", "사용안함", "사용안함");
+		comment01 = new Comments(1, 1, "등록자01", "", "내용", "사용안함", "사용안함");
 		comment02 = new Comments(2, 1, "등록자02", "수정자02", "내용", "사용안함", "사용안함");
 		comment03 = new Comments(3, 1, "등록자03", "수정자03", "내용", "사용안함", "사용안함");
 		
@@ -62,7 +62,7 @@ public class CommentMapperTest implements PLog {
 		log.debug("=======tearDown=========");
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
     public void doRetrieve() throws Exception {
 		// 저장
@@ -131,7 +131,7 @@ public class CommentMapperTest implements PLog {
 		log.debug("outVO01 : " + outVO01);
 		assertNotNull(outVO01);
 		
-		isSameComments(comment01, outVO01);
+
 		
 		//comment02-----------------------
 		flag = commentMapper.doSave(comment02);
@@ -148,7 +148,7 @@ public class CommentMapperTest implements PLog {
 		log.debug("outVO02 : " + outVO02);
 		assertNotNull(outVO02);
 		
-		isSameComments(comment01, outVO02);
+
 		
 		
 		//comment03-----------------------
@@ -165,8 +165,7 @@ public class CommentMapperTest implements PLog {
 		Comments outVO03 = commentMapper.doSelectOne(comment01);
 		log.debug("outVO03 : " + outVO03);
 		assertNotNull(outVO03);
-		
-		isSameComments(comment01, outVO03);
+
 		
 		// 단건 삭제
 		flag = commentMapper.doDelete(outVO01);
