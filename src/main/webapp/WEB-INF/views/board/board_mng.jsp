@@ -212,17 +212,17 @@ document.addEventListener("DOMContentLoaded", function(){
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
-  <div class="page-header">
-      <h2>
+  <div class="page-header  mb-4">
+    <h2>
         <c:choose>
-            <c:when test="${ '10' == board.getDiv() }">공지사항-등록</c:when>
-            <c:when test="${ '20' == board.getDiv() }">자유게시판-등록</c:when>
-            <c:otherwise>
-                                 공지사항/자유게시판
-            </c:otherwise>
-        </c:choose>
-      </h2>
-  </div>
+           <c:when test="${ '10'== board.getDiv() }">커뮤니티</c:when>
+           <c:when test="${ '20'== board.getDiv() }">공지사항</c:when>
+           <c:otherwise>
+                                공지사항/자유게시판
+           </c:otherwise>
+       </c:choose>
+    </h2>
+  </div> 
   <!--// 제목 end ------------------------------------------------------------->
   
   <!-- 버튼 -->

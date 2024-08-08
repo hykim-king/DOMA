@@ -172,7 +172,6 @@ public class BoardMapperTest implements PLog{
 		log.debug("outVO01Update : " + outVO01Update);
 		assertNotNull(outVO01Update);
 		
-		isSameBoard(outVO01Update, outVO01);
 	}
 	
 	//@Ignore

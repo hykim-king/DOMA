@@ -40,7 +40,7 @@ public class MainController implements PLog {
 		log.debug("└──────────────────────────────┘");
 	}
 	
-	//http://localhost:8080/doma/main/main.do
+	//http://localhost:8080/doma/main/emergency.do
 	@RequestMapping(value="/emergency.do"
 					,method=RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
