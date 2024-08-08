@@ -11,6 +11,7 @@ public class Search extends DTO {
 	private String searchDiv;// 검색구분
 	private String searchWord;// 검색어
 	private String div; //공지사항, 자유게시판
+	private String searchGu; //구이름
 	private int seq;
 
 	public Search() {
@@ -41,6 +42,14 @@ public class Search extends DTO {
 		this.div = div;
 	}
 
+	public String getSearchGu() {
+		return searchGu;
+	}
+
+	public void setSearchGu(String searchGu) {
+		this.searchGu = searchGu;
+	}
+
 	public int getSeq() {
 		return seq;
 	}
@@ -51,7 +60,9 @@ public class Search extends DTO {
 
 	@Override
 	public String toString() {
-		return "Search [searchDiv=" + searchDiv + ", searchWord=" + searchWord + ", div=" + div + ", seq=" + seq
-				+ ", toString()=" + super.toString() + "]";
+		return "Search [searchDiv=" + searchDiv + ", searchWord=" + searchWord + ", div=" + div + ", searchGu="
+				+ searchGu + ", seq=" + seq + ", toString()=" + super.toString() + "]";
 	}
+
+	
 }

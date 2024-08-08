@@ -113,10 +113,13 @@ public class BoardControllerTest implements PLog {
 		= MockMvcRequestBuilders.post("/board/doUpdate.do")
 		.param("seq", selectOneVO.getSeq()+"")
 		.param("div", selectOneVO.getDiv())
-		.param("gname", selectOneVO.getGname())
 		.param("title", selectOneVO.getTitle()+"_U")
+		.param("userId", selectOneVO.getUserId())
 		.param("modId", selectOneVO.getModId())
 		.param("content", selectOneVO.getContent()+"_U")
+		.param("imgLink", selectOneVO.getImgLink())
+		.param("views", selectOneVO.getViews()+"")
+		.param("gname", selectOneVO.getGname())
 		;
 		
 		//호출 및 결과
@@ -145,7 +148,7 @@ public class BoardControllerTest implements PLog {
 		
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void doRetrieve() throws Exception {
 		log.debug("┌───────────────────────────┐");
@@ -213,6 +216,7 @@ public class BoardControllerTest implements PLog {
 		MockHttpServletRequestBuilder requestBuilder 
 				= MockMvcRequestBuilders.get("/board/doDelete.do")
 				.param("seq", board01.getSeq()+"")
+				.param("userId", board01.getUserId())
 				;
 		
 		//호출 및 결과
@@ -239,7 +243,7 @@ public class BoardControllerTest implements PLog {
 		
 	}
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void doSelectOne() throws Exception {
 		log.debug("┌───────────────────────────┐");
@@ -259,7 +263,6 @@ public class BoardControllerTest implements PLog {
 		MockHttpServletRequestBuilder requestBuilder 
 				= MockMvcRequestBuilders.get("/board/doSelectOne.do")
 				.param("seq", board01.getSeq()+"")
-				.param("gname", board01.getGname())
 				.param("userId", board01.getUserId())
 				;
 

@@ -165,7 +165,7 @@ public class BoardController implements PLog {
 		log.debug("1.param:" + inVO);
 		
 		//TODO : SESSION처리
-		inVO.setModId(StringUtil.nvl(inVO.getModId(), "james"));
+		inVO.setUserId(StringUtil.nvl(inVO.getUserId(), "admin"));
 		
 		int flag = boardService.doUpdate(inVO);
 		log.debug("2.flag:" + flag);
@@ -235,8 +235,7 @@ public class BoardController implements PLog {
 		String jsonString = "";
 		log.debug("1.param inVO :" + inVO);
 		
-		//TODO:SESSION처리
-		inVO.setUserId(StringUtil.nvl(inVO.getModId(), "ADMIN"));
+		inVO.setUserId(StringUtil.nvl(inVO.getUserId(), "admin"));
 		
 		Board outVO = boardService.doSelectOne(inVO);
 		
@@ -256,6 +255,7 @@ public class BoardController implements PLog {
 		
 		Message messageObj = new Message(flag, message);
 		
+		model.addAttribute("markdownContents", markdownContents);
 		model.addAttribute("board", outVO);
 		model.addAttribute("message", message);
 		

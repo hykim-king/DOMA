@@ -209,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
@@ -279,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function(){
     </div>
   </form>
   <!--// form end -->
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->
 <script>

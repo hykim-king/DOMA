@@ -55,6 +55,8 @@ document.addEventListener("DOMContentLoaded", function(){
     const userIdInput = document.querySelector("#userId");
     const contentsTextArea = document.querySelector("#content");
     const divInput = document.querySelector("#div");
+    const gnameInput = document.querySelector("#gname");
+    const imgLinkInput = document.querySelector("#imgLink");
     
 //이벤트 처리=================================================================================================    
     
@@ -84,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function(){
         console.log("doSave()");
         
         if(isEmpty(titleInput.value) == true){
-            alert('아이디를 입력 하세요.')
+            alert('제목을 입력 하세요.')
             titleInput.focus();
             return;
             
@@ -112,9 +114,11 @@ document.addEventListener("DOMContentLoaded", function(){
         let dataType = "html";
         
         let params = {
+       		"gname"   : gnameInput.value,
             "title"    : titleInput.value,
             "userId"    : userIdInput.value,
             "content" : simplemde.value(),
+            "imgLink" : imgLinkInput.value,
             "div"      : divInput.value
         };
 
@@ -125,7 +129,8 @@ document.addEventListener("DOMContentLoaded", function(){
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
                         alert(message.messageContents);
-                        window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+                        moveToList();
                     }else{
                         alert(message.messageContents);
                     }
@@ -141,6 +146,7 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
@@ -166,6 +172,12 @@ document.addEventListener("DOMContentLoaded", function(){
   <form action="#" class="form-horizontal"  name="regForm" id="regForm">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
     <div class="row mb-2">
+        <label for="gname" class="col-sm-2 col-form-label">구이름</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="gname" id="gname"  maxlength="75" required="required">
+        </div>
+    </div>
+    <div class="row mb-2">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" name="title" id="title"  maxlength="75" required="required">
@@ -178,6 +190,12 @@ document.addEventListener("DOMContentLoaded", function(){
         </div>
     </div>
     <div class="row mb-2">
+        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="imgLink" id="imgLink"  maxlength="75" required="required">
+        </div>
+    </div>
+    <div class="row mb-2">
         <label for="content" class="col-sm-2 col-form-label">내용</label>
         <div class="col-sm-10">
          <textarea style="height: 200px"  class="form-control" id="content" name="content"></textarea>
@@ -185,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function(){
     </div>
   </form>
   <!--// form end -->
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->
 <script>

@@ -97,6 +97,7 @@
     <delete id="doDelete" parameterType="Board">
         DELETE FROM d_board
          WHERE seq = #{seq}
+           AND user_id = #{userId}
     </delete>
     
     <update id="doUpdateUser" parameterType="Board">
@@ -120,6 +121,7 @@
              content = #{content},
              mod_dt  = SYSDATE
           WHERE seq = #{seq}
+            AND user_id = #{userId}
     </update>
     
     <select id="doSelectOne" parameterType="Board" resultType="Board">
@@ -168,7 +170,7 @@
       #{gname},
       #{title},
       #{userId},
-      #{modId},
+      #{userId},
       #{content},
       #{imgLink},
       SYSDATE,
