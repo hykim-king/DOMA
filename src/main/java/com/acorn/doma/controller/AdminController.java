@@ -12,7 +12,7 @@ public class AdminController implements PLog {
 
    public AdminController() {
       log.debug("┌──────────────────────────────────────────┐");
-      log.debug("│ AdminController()                      │");
+      log.debug("│ AdminController()                        │");
       log.debug("└──────────────────────────────────────────┘");   
    }
 

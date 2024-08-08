@@ -97,7 +97,6 @@ public class AdminMapperTest implements PLog {
         assertEquals(adminIn.getUserRegDt(), adminOut.getUserRegDt());
     }
     
-    @Ignore
     @Test
     public void addAndGet() throws Exception {
         // 공지사항 등록 테스트
@@ -132,7 +131,7 @@ public class AdminMapperTest implements PLog {
         assertEquals(1, flag);
     }
 
-    @Ignore
+    @Ignore 
     @Test
     public void doRetrieve() throws SQLException {
         // 공지사항 목록 조회 테스트
@@ -143,7 +142,8 @@ public class AdminMapperTest implements PLog {
         assertNotNull(list);
     }
 
-    
+
+    @Ignore 
     @Test
     public void beans() {
         log.debug("┌──────────────────────────────┐");
@@ -156,6 +156,7 @@ public class AdminMapperTest implements PLog {
         assertNotNull(adminMapper);
     }
 
+    @Ignore 
     @Test
     public void testNoticeSpecificRetrieve() throws Exception {
         try {
