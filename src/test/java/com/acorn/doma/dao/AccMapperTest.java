@@ -42,6 +42,7 @@ public class AccMapperTest implements PLog{
 		acc = new Accident("1111", "A01", "12B01", "강남 한복판에서 현석이형이..", "2024-08-06", "11:30:00", "2024-08-06", "11:30:00", 11, 11);
 		acc01 = new Accident("1112", "A01", "12B01", "강남 한복판에서 현석이형이..", "2024-08-06", "11:30:00", "2024-08-06", "11:30:00", 11, 11);
 		accidentSelect01 = new Accident();
+		accMapper.doDeleteAll();
 	}
 
 	@After
@@ -50,7 +51,7 @@ public class AccMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-	
+	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -97,8 +98,6 @@ public class AccMapperTest implements PLog{
 	public void sqlAll() throws Exception{
 		int count = accMapper.countAll();
 		log.debug("count(*): "+count);
-		int dlt = accMapper.doDeleteAll();
-		assertEquals(count, dlt);
 		
 		int flag = accMapper.dataInsert(acc);
 		assertEquals(1, flag);

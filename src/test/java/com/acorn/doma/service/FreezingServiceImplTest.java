@@ -47,9 +47,10 @@ public class FreezingServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void testInsertFreezingData() throws Exception{
+		freezingMapper.doDeleteAll();
 		freezingService.insertFreezingData();
 		freezingMapper.countAll();
 	}

@@ -28,9 +28,10 @@
         )
     </insert>
     <select id="doSelectOne" parameterType="Accident" resultType="Accident">
-       SELECT 
-    dat.acc_name AS acc_name,
-    dad.acc_dname AS acc_dname,
+       SELECT
+    dai.acc_id as accId,
+    dat.acc_name AS accName,
+    dad.acc_dname AS accDname,
     dai.occr_date, 
     dai.occr_time, 
     dai.end_date, 
