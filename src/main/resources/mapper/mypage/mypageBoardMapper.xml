@@ -21,7 +21,20 @@
     		u.user_id =   #{userId}                                                  
     </select>
     
- 	 
+    
+ 	 <update id="mpBoardUp" parameterType="User">
+         UPDATE d_board             
+         SET      
+         
+             title   	= #{userName},     
+             content   		= #{userPw},     
+             user_email     = #{userEmail},  
+             birth          = #{birth},     
+             reg_dt          = #{ragDt},     
+             mod_dt        = SYSDATE 
+         WHERE                     
+                user_id = #{userId}     
+    </update>
 
 
 
