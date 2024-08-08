@@ -63,17 +63,26 @@ public class MyPageController implements PLog {
 		return viewName;
 	}
 	
-	@RequestMapping(value = "/mpSelect.do"
-			   , method = RequestMethod.GET)
-	public String moveToBoard(User inVO, Model model) throws SQLException {
-		String viewName = "mypage/MyPageBoard";
-		
-		log.debug("1.param inVO:" + inVO);
-		model.addAttribute("board", inVO);
-		
-		return viewName;
+	 
+	@RequestMapping(value = "/mpSelect.do", method = RequestMethod.GET)
+	public String moveToBoard(HttpSession session, Model model,Board inVO) throws SQLException {
+	    String viewName = "mypage/MyPageBoard";
+	    
+	    User user = (User) session.getAttribute("user");
+	    if (user != null) {
+	        log.debug("User from session: " + user);
+	        model.addAttribute("board", user); // Use user instead of inVO
+	        
+	        List<Board> list = boardMapper.mpSelect(inVO); 
+	        log.debug(list);
+		    model.addAttribute("list", list); 
+		    
+	    } else {
+	        log.debug("No user in session"); 
+	    }
+	    
+	    return viewName;
 	}
-	
 	
 	
 	

@@ -53,6 +53,6 @@ public interface BoardMapper extends WorkDiv<Board>{
 	 */
 	List<Board> mpSelect(Board inVO) throws SQLException; 
 	
-	
+	List<Board> mpSelect(String userId); 
 	
 }
