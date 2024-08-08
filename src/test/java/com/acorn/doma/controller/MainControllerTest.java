@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.Accident;
 import com.acorn.doma.mapper.AccMapper;
 import com.acorn.doma.mapper.FreezingMapper;
 import com.acorn.doma.service.AccInfoService;
@@ -48,11 +49,16 @@ public class MainControllerTest implements PLog{
 	AccMapper accMapper;
 	@Autowired
 	FreezingMapper freezingMapper;
+	
+	Accident accident01;
+	
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
+		accMapper.doDeleteAll();
+		accident01 = new Accident("1112", "A01", "12B01", "강남 한복판에서 현석이형이..", "2024-08-06", "11:30:00", "2024-08-06", "11:30:00", 11, 11);
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
@@ -62,13 +68,20 @@ public class MainControllerTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
+//	@Ignore
 	@Test
-	public void idSelect() throws Exception{
+	public void accIdSelect() throws Exception{
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ idSelect()                │");
 		log.debug("└───────────────────────────┘");
-		MockHttpServletRequestBuilder requestBuilder 
-		= MockMvcRequestBuilders.get("/main/emergency.do");
+		int flag = accMapper.dataInsert(accident01);
+		assertEquals(1, flag);
+		
+		
+		/*
+		 * MockHttpServletRequestBuilder requestBuilder =
+		 * MockMvcRequestBuilders.get("/main/emergency.do") .param("accId", );
+		 */
 	}
 	@Ignore
 	@Test

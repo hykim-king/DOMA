@@ -44,7 +44,7 @@ public class MainController implements PLog {
 	@RequestMapping(value="/emergency.do"
 					,method=RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
-	public String emergency(Model model, Accident inVO) throws SQLException {
+	public String emergency(Model model,Accident inVO) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ main()                       │");
 		log.debug("└──────────────────────────────┘");
@@ -65,11 +65,22 @@ public class MainController implements PLog {
 		model.addAttribute("A11List", A11List);
 		return viewName;
 	}
-	
+	@RequestMapping(value = "/accIdSelect.do"
+	    	, method = RequestMethod.GET
+	        , produces = "text/plain;charset=UTF-8"
+	        ) //produces : 화면으로 전송 encoding)
+	@ResponseBody
+	public String accIdSelect(Model model, Accident inVO) throws SQLException{
+		String viewName = "main/main_emergency_info";
+		Accident outVO = accInfoService.doSelectOne(inVO);
+		model.addAttribute("accIdSelect",outVO);
+		return viewName;
+	}
 	@RequestMapping(value="/freezing.do"
 					,method=RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String freezing(Model model, @RequestParam(value = "years", required = false) List<Integer> years) throws SQLException {
+	@ResponseBody
+	public String freezing(Model model, @RequestParam(value = "years", required = false) List<Integer> years) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ freezingMain()               │");
 		log.debug("└──────────────────────────────┘");

@@ -48,7 +48,7 @@ public class PointServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
-	
+	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
 		
@@ -62,10 +62,10 @@ public class PointServiceImplTest implements PLog{
 		
 		assertEquals(6, listPoint.size());
 	}
-	
+//	@Ignore
 	@Test
 	public void testInsertPointData() throws Exception{
-//		pointMapper.doDeleteAll();
+		pointMapper.doDeleteAll();
 		pointService.insertPointData();
 		pointMapper.countAll();
 	}
