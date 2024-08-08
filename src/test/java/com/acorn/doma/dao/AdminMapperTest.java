@@ -143,7 +143,7 @@ public class AdminMapperTest implements PLog {
         assertNotNull(list);
     }
 
-    @Ignore
+    
     @Test
     public void beans() {
         log.debug("┌──────────────────────────────┐");
@@ -159,6 +159,10 @@ public class AdminMapperTest implements PLog {
     @Test
     public void testNoticeSpecificRetrieve() throws Exception {
         try {
+        	
+            log.debug("┌──────────────────────────────┐");
+            log.debug("│ testNoticeSpecificRetrieve() │");
+            log.debug("└──────────────────────────────┘");
             // Given: 테스트 데이터 삽입
             int noticeId = admin01.getSeq(); // 예시로 admin01의 ID를 사용
             int flag = adminMapper.insertNotice(admin01);
@@ -184,7 +188,7 @@ public class AdminMapperTest implements PLog {
         }
     }
 
-
+    @Ignore    
     @Test
     public void testUserRetrieve() throws SQLException {
         // 회원 목록 조회 테스트

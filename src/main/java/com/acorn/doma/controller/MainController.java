@@ -63,8 +63,6 @@ public class MainController implements PLog {
 		model.addAttribute("A04List", A04List);
 		List<Accident> A11List = accInfoService.A11Retrieve();
 		model.addAttribute("A11List", A11List);
-		Accident idSelect = accInfoService.doSelectOne(inVO);
-		model.addAttribute("idSelect", idSelect);
 		return viewName;
 	}
 	
