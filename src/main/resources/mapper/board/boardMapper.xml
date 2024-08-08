@@ -6,7 +6,7 @@
         UPDATE d_board
         SET  views = NVL(views,0)+ 1
         WHERE seq = #{seq}
-        AND reg_id <![CDATA[<> #{regId} ]]>  
+        AND user_id <![CDATA[<> #{userId} ]]>  
     </update>
     
     <insert id="multipleSave">
@@ -128,7 +128,7 @@
 		    div,
 		    gname,
 		    title,
-		    reg_id as regId,
+		    user_id as userId,
 		    mod_id as modId,
 		    content,
 		    img_link as imgLink,
@@ -155,7 +155,7 @@
         div,
         gname,
         title,
-        reg_id,
+        user_id,
         mod_id,
         content,
         img_link,
@@ -167,8 +167,8 @@
       #{div},
       #{gname},
       #{title},
-      #{regId},
-      #{regId},
+      #{userId},
+      #{modId},
       #{content},
       #{imgLink},
       SYSDATE,

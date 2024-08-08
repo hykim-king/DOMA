@@ -260,7 +260,7 @@ public class BoardControllerTest implements PLog {
 				= MockMvcRequestBuilders.get("/board/doSelectOne.do")
 				.param("seq", board01.getSeq()+"")
 				.param("gname", board01.getGname())
-				.param("regId", board01.getRegId())
+				.param("userId", board01.getUserId())
 				;
 
 		//호출 및 결과 
@@ -304,7 +304,7 @@ public class BoardControllerTest implements PLog {
 		assertEquals(boardIn.getDiv(), boardOut.getDiv());
 		assertEquals(boardIn.getGname(), boardOut.getGname());
 		assertEquals(boardIn.getTitle(), boardOut.getTitle());
-		assertEquals(boardIn.getRegId(), boardOut.getRegId());
+		assertEquals(boardIn.getUserId(), boardOut.getUserId());
 		assertEquals(boardIn.getModId(), boardOut.getModId());
 		assertEquals(boardIn.getContent(), boardOut.getContent());
 		assertEquals(boardIn.getImgLink(), boardOut.getImgLink());
@@ -324,7 +324,7 @@ public class BoardControllerTest implements PLog {
 		.param("div", board01.getDiv())
 		.param("gname", board01.getGname())
 		.param("title", board01.getTitle())
-		.param("regId", board01.getRegId())
+		.param("userId", board01.getUserId())
 		.param("content", board01.getContent())
 		.param("imgLink", board01.getImgLink())
 		;

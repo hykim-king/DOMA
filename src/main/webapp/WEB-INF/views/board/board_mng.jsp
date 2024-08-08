@@ -253,9 +253,9 @@ document.addEventListener("DOMContentLoaded", function(){
         </div>
     </div>
     <div class="row mb-2">
-        <label for="regId" class="col-sm-2 col-form-label">등록자</label>
+        <label for="userId" class="col-sm-2 col-form-label">등록자</label>
         <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.regId}'/>" class="form-control readonly-input" readonly="readonly" name="regId" id="regId"  maxlength="20" required="required">
+          <input type="text" value="<c:out value='${board.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">

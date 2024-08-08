@@ -4,21 +4,22 @@
  
 	    
     <select id="mpSelect" parameterType="Board"  resultType="Board">
-      SELECT
-    		seq, 
-    		title,
-    		reg_id as regId,
-    		mod_id as modId,
-    		content,
-    		img_link as imgLink,
-    		reg_dt as regDt,
-    		mod_dt as modDt,
-    		views,
-    		gname
-	FROM
-   			d_board
-	where
-    		reg_id = #{regId}                                                  
+      SELECT 
+    b.title,
+    b.user_id,
+    b.mod_id,
+    b.content,
+    b.img_link,
+    TO_CHAR(b.reg_dt, 'YYYY/MM/DD HH24:MI:SS') AS reg_dt_formatted,
+    TO_CHAR(b.mod_dt, 'YYYY/MM/DD HH24:MI:SS') AS mod_dt_formatted,
+    b.views,
+    b.gname
+FROM
+    d_board b
+INNER JOIN
+    d_user u ON b.user_id = u.user_id
+WHERE
+    u.user_id =   #{userId}                                                  
     </select>
     
  	 

@@ -54,6 +54,7 @@ public class BoardMapperTest implements PLog{
 		boardMapper.deleteAll();
 		
 		search = new Search();
+		
 	}
 
 	@After
@@ -68,7 +69,7 @@ public class BoardMapperTest implements PLog{
 		assertEquals(boardIn.getDiv(), boardOut.getDiv());
 		assertEquals(boardIn.getGname(), boardOut.getGname());
 		assertEquals(boardIn.getTitle(), boardOut.getTitle());
-		assertEquals(boardIn.getRegId(), boardOut.getRegId());
+		assertEquals(boardIn.getUserId(), boardOut.getUserId());
 		assertEquals(boardIn.getModId(), boardOut.getModId());
 		assertEquals(boardIn.getContent(), boardOut.getContent());
 		assertEquals(boardIn.getImgLink(), boardOut.getImgLink());
@@ -177,9 +178,10 @@ public class BoardMapperTest implements PLog{
 	//@Ignore
 	@Test
 	public void doRetrieve() throws SQLException {
-
+		
+		boardMapper.deleteAll();
 		boardMapper.multipleSave();
-
+		
 		search.setDiv("10");
 		search.setPageNo(1);
 		search.setPageSize(10);
@@ -187,7 +189,7 @@ public class BoardMapperTest implements PLog{
 		search.setSearchDiv("30");
 		//제목000001
 		//내용000001
-		//search.setSearchWord("내용000001");
+		search.setSearchWord("내용000001");
 		
 		List<Board> list = boardMapper.doRetrieve(search);
 		log.debug("list:"+list);

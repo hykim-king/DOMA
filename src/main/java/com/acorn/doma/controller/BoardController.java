@@ -236,7 +236,7 @@ public class BoardController implements PLog {
 		log.debug("1.param inVO :" + inVO);
 		
 		//TODO:SESSION처리
-		inVO.setRegId(StringUtil.nvl(inVO.getModId(), "ADMIN"));
+		inVO.setUserId(StringUtil.nvl(inVO.getModId(), "ADMIN"));
 		
 		Board outVO = boardService.doSelectOne(inVO);
 		

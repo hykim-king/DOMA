@@ -78,7 +78,7 @@ public class MyPageMapperTest implements PLog {
 		log.debug("└──────────────────────────────┘");
 		
 		userVO01= new User("user2", "user2", "2222", "user2@naver.com", "2002-02-02", 1, "서울 서대문구", "101호", "x"); 
-		userMapper.doDelete(userVO01); 
+		//userMapper.doDelete(userVO01); 
 		
 		boardV001 = new Board(10,"10","구20", "제목2", "user1", "user1", "내용2", "이미지2","x", "x", 1);
 		
@@ -230,7 +230,7 @@ public class MyPageMapperTest implements PLog {
 	public void isSameBoard(Board boardIn, Board boardOut) { 
 		assertEquals(boardIn.getGname(), boardOut.getGname());
 		assertEquals(boardIn.getTitle(), boardOut.getTitle());
-		assertEquals(boardIn.getRegId(), boardOut.getRegId());
+		assertEquals(boardIn.getUserId(), boardOut.getUserId());
 		assertEquals(boardIn.getModId(), boardOut.getModId());
 		assertEquals(boardIn.getContent(), boardOut.getContent());
 		assertEquals(boardIn.getImgLink(), boardOut.getImgLink());

@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const doSaveBtn = document.querySelector("#doSave");
     const moveToListBtn = document.querySelector("#moveToList");
     const titleInput = document.querySelector("#title");
-    const regIdInput = document.querySelector("#regId");
+    const userIdInput = document.querySelector("#userId");
     const contentsTextArea = document.querySelector("#content");
     const divInput = document.querySelector("#div");
     
@@ -90,9 +90,9 @@ document.addEventListener("DOMContentLoaded", function(){
             
         }
         
-        if(isEmpty(regIdInput.value) == true){
+        if(isEmpty(userIdInput.value) == true){
             alert('등록자 아이디를 입력 하세요.')
-            regIdInput.focus();
+            userIdInput.focus();
             return;
         }
         
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function(){
         
         let params = {
             "title"    : titleInput.value,
-            "regId"    : regIdInput.value,
+            "userId"    : userIdInput.value,
             "content" : simplemde.value(),
             "div"      : divInput.value
         };
@@ -172,9 +172,9 @@ document.addEventListener("DOMContentLoaded", function(){
         </div>
     </div>
     <div class="row mb-2">
-        <label for="regId" class="col-sm-2 col-form-label">등록자</label>
+        <label for="userId" class="col-sm-2 col-form-label">등록자</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" name="regId" id="regId"  maxlength="20" required="required">
+          <input type="text" class="form-control" name="userId" id="userId"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">
