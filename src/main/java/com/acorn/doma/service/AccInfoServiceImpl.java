@@ -192,24 +192,30 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
 		log.debug("2. outVO :"+outVO);
 		return outVO;
 	}
-	@Override
-	public List<Accident> dolbalRetrieve() throws SQLException {
-		List<Accident> list = accMapper.dolbalRetrieve();
-		log.debug("┌ list ┐");
-		for(Accident acc : list) {
-			log.debug("│ "+ acc);
-		}
-		log.debug("└ ");
-		return list;
-	}
+	
 	@Override
 	public List<Accident> etcRetrieve() throws SQLException {
 		List<Accident> list = accMapper.etcRetrieve();
-		log.debug("┌ list ┐");
-		for(Accident acc : list) {
-			log.debug("│ "+ acc);
-		}
-		log.debug("└ ");
+		return list;
+	}
+	@Override
+	public List<Accident> A01Retrieve() throws SQLException {
+		List<Accident> list = accMapper.A01Retrieve();
+		return list;
+	}
+	@Override
+	public List<Accident> A04Retrieve() throws SQLException {
+		List<Accident> list = accMapper.A04Retrieve();
+		return list;
+	}
+	@Override
+	public List<Accident> A02Retrieve() throws SQLException {
+		List<Accident> list = accMapper.A02Retrieve();
+		return list;
+	}
+	@Override
+	public List<Accident> A11Retrieve() throws SQLException {
+		List<Accident> list = accMapper.A11Retrieve();
 		return list;
 	}
 }

@@ -8,13 +8,15 @@
     <meta charset="UTF-8">
     <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="${CP}/resources/css/styles.css">
+    <link rel="icon" href="${CP}/resources/img/pcon.png" type="image/x-icon">
+    
     <script src="${CP }/resources/js/user/header.js"></script>
 </head>
 
 <body>
     <header>
         <div class="logo">
-            <a class="navbar-brand" href="/doma/main/main.do">
+            <a class="navbar-brand" href="/doma/main/emergency.do">
                 <img src="${CP}/resources/img/logoo.png" alt="Logo">
             </a>
         </div>

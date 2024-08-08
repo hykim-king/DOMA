@@ -1,6 +1,6 @@
 package com.acorn.doma.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -79,25 +78,31 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("└ ");
 		
 	}
+	@Ignore
 	@Test
 	public void Retrieve() throws Exception{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ Retrieve()                   │");
 		log.debug("└──────────────────────────────┘");
-		List<Accident> dolbalList = accInfoService.dolbalRetrieve();
-		List<Accident> etclList = accInfoService.etcRetrieve();
-		log.debug("┌ list ");
-		for(Accident acc : dolbalList) {
-			log.debug("│ "+ acc);
+		List<Accident> A01List = accInfoService.A01Retrieve();
+		List<Accident> A02List = accInfoService.A04Retrieve();
+		List<Accident> A04List = accInfoService.A04Retrieve();
+		List<Accident> A11List = accInfoService.A04Retrieve();
+
+		for(Accident acc : A01List) {
+			log.debug("A01List"+ acc);
 		}
-		log.debug("└ ");
-		log.debug("┌ list ");
-		for(Accident acc : etclList) {
-			log.debug("│ "+ acc);
+		for(Accident acc : A02List) {
+			log.debug("A02List"+ acc);
 		}
-		log.debug("└ ");
+		for(Accident acc : A04List) {
+			log.debug("A04List"+ acc);
+		}
+		for(Accident acc : A11List) {
+			log.debug("A11List"+ acc);
+		}
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void testInsertAccidentData() throws Exception{
 		accInfoService.insertAccidentData();

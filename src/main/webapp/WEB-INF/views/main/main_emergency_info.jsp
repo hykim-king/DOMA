@@ -1,6 +1,9 @@
 	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	    pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	<%@ include file="/WEB-INF/views/template/header.jsp" %>
+	
 	<c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -14,7 +17,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<div style="display : flex">
 		<jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
 	    <div id="subMap" style="height : 815px;">
@@ -77,35 +79,54 @@
 
             // 교통 혼잡도 표시
             map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC); 
-
             // 서버에서 전달된 사고 데이터
             var positions = [
-                <c:forEach var="dolbal" items="${dolbalList}" varStatus="dolbalStatus">
+                <c:forEach var="A01" items="${A01List}" varStatus="A01Status">
                     {
-                        title: "${dolbal.info}",
-                        latlng: new kakao.maps.LatLng("${dolbal.latitude}", "${dolbal.longitude}"),
-                        imageSrc: "${CP}/resources/img/map/A01.png"
-                    }<c:if test="${!dolbalStatus.last}">,</c:if>
-                </c:forEach>
+                        title: "${A01.info}",
+                        latlng: new kakao.maps.LatLng("${A01.latitude}", "${A01.longitude}"),
+                        imageSrc: "${CP}/resources/img/map/A01.png"//돌발정보
+                    }<c:if test="${!A01Status.last}">,</c:if>
+                </c:forEach>,
+                <c:forEach var="A02" items="${A02List}" varStatus="A02Status">
+                {
+                    title: "${A02.info}",
+                    latlng: new kakao.maps.LatLng("${A02.latitude}", "${A02.longitude}"),
+                    imageSrc: "${CP}/resources/img/map/A02.png"//돌발정보
+                }<c:if test="${!A02Status.last}">,</c:if>
+                </c:forEach>,
+                <c:forEach var="A04" items="${A04List}" varStatus="A04Status">
+                {
+                	title:  "${A04.info}",
+                    latlng: new kakao.maps.LatLng("${A04.latitude}", "${A04.longitude}"),
+                    imageSrc: "${CP}/resources/img/map/A04.png" //사고정보
+                }<c:if test="${!A04Status.last}">,</c:if>
+                </c:forEach>,
+                <c:forEach var="A11" items="${A11List}" varStatus="A11Status">
+                {
+                    title: "${A11.info}",
+                    latlng: new kakao.maps.LatLng("${A11.latitude}", "${A11.longitude}"),
+                    imageSrc: "${CP}/resources/img/map/A11.png"//돌발정보
+                }<c:if test="${!A11Status.last}">,</c:if>
+            </c:forEach>
             ];
             
             // 마커 이미지의 이미지 주소입니다
              var imageSize = new kakao.maps.Size(24, 35);
             for (var i = 0; i < positions.length; i ++) {
-  
-                // 마커 이미지의 이미지 크기 입니다
-                
-                
-                // 마커 이미지를 생성합니다    
-                var markerImage = new kakao.maps.MarkerImage(positions[i].imageSrc, imageSize); 
-                
-                // 마커를 생성합니다
-                var marker = new kakao.maps.Marker({
-                    map: map, // 마커를 표시할 지도
-                    position: positions[i].latlng, // 마커를 표시할 위치
-                    title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                    image : markerImage // 마커 이미지 
-                });
+            	var pos = positions[i];
+                if (pos && pos.latlng && pos.imageSrc) { // Check if all necessary fields are defined
+                    var markerImage = new kakao.maps.MarkerImage(pos.imageSrc, imageSize);
+
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: pos.latlng,
+                        title: pos.title,
+                        image: markerImage
+                    });
+                } else {
+                    console.warn('Position or imageSrc is undefined at index: ' + i);
+                }
             }
 
             // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다

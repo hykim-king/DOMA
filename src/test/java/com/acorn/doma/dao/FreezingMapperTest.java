@@ -70,7 +70,7 @@ public class FreezingMapperTest implements PLog{
 		 
 		 
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectFreezingDataById() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -81,7 +81,7 @@ public class FreezingMapperTest implements PLog{
 		assertEquals(1, flag);
 		String fid = freezing01.getFid();
 		Freezing outVO = freezingMapper.selectFreezingDataById(fid);
-		
+		assertNotNull(outVO);
 		
 	}
 	@Ignore

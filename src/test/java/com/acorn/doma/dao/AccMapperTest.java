@@ -58,30 +58,39 @@ public class AccMapperTest implements PLog{
 		log.debug("└──────────────────────────────┘");
 		
 		List<Accident> accList = accMapper.fullTableScan();
-		
+		assertNotNull(accList);
 		log.debug("┌ list ");
 		for(Accident acc : accList) {
 			log.debug("│ "+ acc);
 		}
 		log.debug("└ ");
 	}
+	//지도에 표시할 데이터들 문자열 처리 mapper
 	@Test
 	public void Retrieve() throws Exception{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ Retrieve()                   │");
 		log.debug("└──────────────────────────────┘");
-		List<Accident> dolbalList = accMapper.dolbalRetrieve();
-		List<Accident> etclList = accMapper.etcRetrieve();
-		log.debug("┌ list ");
-		for(Accident acc : dolbalList) {
-			log.debug("│ "+ acc);
+		List<Accident> A01List = accMapper.A01Retrieve();
+		List<Accident> A02List = accMapper.A02Retrieve();
+		List<Accident> A04List = accMapper.A04Retrieve();
+		List<Accident> A11List = accMapper.A11Retrieve();
+
+		
+		for(Accident acc : A01List) {
+			log.debug("A01List "+ acc);
 		}
-		log.debug("└ ");
-		log.debug("┌ list ");
-		for(Accident acc : etclList) {
-			log.debug("│ "+ acc);
+		for(Accident acc : A02List) {
+			log.debug("A02List"+ acc);
 		}
-		log.debug("└ ");
+		
+		for(Accident acc : A04List) {
+			log.debug("A04List"+ acc);
+		}
+		
+		for(Accident acc : A11List) {
+			log.debug("A11List"+ acc);
+		}
 	}
 	@Ignore
 	@Test
@@ -98,7 +107,7 @@ public class AccMapperTest implements PLog{
 		count = accMapper.countAll();
 		assertEquals(count, 2);	
 		Accident outVO=	accMapper.doSelectOne(acc01);
-		
+		assertNotNull(outVO);
 	}
 	
 	@Ignore

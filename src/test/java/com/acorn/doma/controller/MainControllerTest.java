@@ -62,7 +62,15 @@ public class MainControllerTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-	
+	@Test
+	public void idSelect() throws Exception{
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ idSelect()                │");
+		log.debug("└───────────────────────────┘");
+		MockHttpServletRequestBuilder requestBuilder 
+		= MockMvcRequestBuilders.get("/main/emergency.do");
+	}
+	@Ignore
 	@Test
 	public void freezing() throws Exception{
 		log.debug("┌───────────────────────────┐");

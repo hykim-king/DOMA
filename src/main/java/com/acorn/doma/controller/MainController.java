@@ -44,7 +44,7 @@ public class MainController implements PLog {
 	@RequestMapping(value="/emergency.do"
 					,method=RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
-	public String emergency(Model model) throws SQLException {
+	public String emergency(Model model, Accident inVO) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ main()                       │");
 		log.debug("└──────────────────────────────┘");
@@ -55,10 +55,16 @@ public class MainController implements PLog {
 		
 		model.addAttribute("accList", accList);
 		
-		List<Accident> dolbalList = accInfoService.dolbalRetrieve();
-		model.addAttribute("dolbalList", dolbalList);
-		List<Accident> etcList = accInfoService.etcRetrieve();
-		model.addAttribute("etcList", etcList);
+		List<Accident> A01List = accInfoService.A01Retrieve();
+		model.addAttribute("A01List", A01List);
+		List<Accident> A02List = accInfoService.A02Retrieve();
+		model.addAttribute("A02List", A02List);
+		List<Accident> A04List = accInfoService.A04Retrieve();
+		model.addAttribute("A04List", A04List);
+		List<Accident> A11List = accInfoService.A11Retrieve();
+		model.addAttribute("A11List", A11List);
+		Accident idSelect = accInfoService.doSelectOne(inVO);
+		model.addAttribute("idSelect", idSelect);
 		return viewName;
 	}
 	
