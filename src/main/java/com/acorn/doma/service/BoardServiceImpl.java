@@ -77,6 +77,26 @@ public class BoardServiceImpl implements BoardService, PLog {
 		// TODO Auto-generated method stub
 		return boardMapper.mpSelect(userId);
 		
+	}
+
+	@Override
+	public int mpBoardUp(Board inVO) throws Exception {
+		log.debug("1. param :"+inVO);
+		return boardMapper.doUpdate(inVO);
+	}
+
+	@Override
+	public Board mpBoardSelectOne(Board board) throws Exception {
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ mpBoardSelectOne() : login      │");
+		log.debug("└───────────────────────────┘");
+		
+		log.debug("┌ 1. param : " + board);
+		
+		Board outVO = boardMapper.mpBoardSelectOne(board);
+		log.debug("└ 2. outVO : " + outVO);
+		
+		return outVO;
 	} 
 	 
 
