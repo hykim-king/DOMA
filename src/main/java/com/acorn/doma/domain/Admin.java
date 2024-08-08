@@ -9,28 +9,27 @@ import com.acorn.doma.cmn.DTO;
 public class Admin extends DTO {
 
     // Board 관련 필드
-    private int boardSeq;
-    private String boardDiv;
-    private String boardTitle;
-    private String boardRegId;
-    private String boardModId;
-    private String boardContent;
-    private String boardImgLink;
-    private String boardRegDt;
-    private String boardModDt;
-    private int boardViews;
-    private String boardGname;
+    private int seq; // SEQ
+    private String div; // DIV
+    private String title; // TITLE
+    private String userId; // USER_ID
+    private String modId; // MOD_ID
+    private String content; // CONTENT
+    private String imgLink; // IMG_LINK
+    private String regDt; // REG_DT
+    private String modDt; // MOD_DT
+    private int views; // VIEWS
+    private String gname; // GNAME
 
     // User 관련 필드
-    private String userId;
-    private String userName;
-    private String userPw;
-    private String userEmail;
-    private String userBirth;
-    private int userGrade; // 0 : 관리자, 1 : 사용자
-    private String userAddress;
-    private String userDetailAddress;
-    private String userRegDt;
+    private String userName; // USER_NAME
+    private String userPw; // USER_PW
+    private String userEmail; // USER_EMAIL
+    private String userBirth; // BIRTH
+    private int userGrade; // GRADE
+    private String userAddress; // ADDRESS
+    private String userDetailAddress; // DETAIL_ADDRESS
+    private String userRegDt; // REG_DT
 
     // 기본 생성자
     public Admin() {
@@ -38,24 +37,23 @@ public class Admin extends DTO {
     }
 
     // 생성자
-    public Admin(int boardSeq, String boardDiv, String boardTitle, String boardRegId, String boardModId,
-                 String boardContent, String boardImgLink, String boardRegDt, String boardModDt,
-                 int boardViews, String boardGname, String userId, String userName, String userPw,
+    public Admin(int seq, String div, String title, String userId, String modId,
+                 String content, String imgLink, String regDt, String modDt,
+                 int views, String gname, String userName, String userPw,
                  String userEmail, String userBirth, int userGrade, String userAddress,
                  String userDetailAddress, String userRegDt) {
         super();
-        this.boardSeq = boardSeq;
-        this.boardDiv = boardDiv;
-        this.boardTitle = boardTitle;
-        this.boardRegId = boardRegId;
-        this.boardModId = boardModId;
-        this.boardContent = boardContent;
-        this.boardImgLink = boardImgLink;
-        this.boardRegDt = boardRegDt;
-        this.boardModDt = boardModDt;
-        this.boardViews = boardViews;
-        this.boardGname = boardGname;
+        this.seq = seq;
+        this.div = div;
+        this.title = title;
         this.userId = userId;
+        this.modId = modId;
+        this.content = content;
+        this.imgLink = imgLink;
+        this.regDt = regDt;
+        this.modDt = modDt;
+        this.views = views;
+        this.gname = gname;
         this.userName = userName;
         this.userPw = userPw;
         this.userEmail = userEmail;
@@ -67,92 +65,28 @@ public class Admin extends DTO {
     }
 
     // Getter and Setter Methods
-    public int getBoardSeq() {
-        return boardSeq;
+    public int getSeq() {
+        return seq;
     }
 
-    public void setBoardSeq(int boardSeq) {
-        this.boardSeq = boardSeq;
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 
-    public String getBoardDiv() {
-        return boardDiv;
+    public String getDiv() {
+        return div;
     }
 
-    public void setBoardDiv(String boardDiv) {
-        this.boardDiv = boardDiv;
+    public void setDiv(String div) {
+        this.div = div;
     }
 
-    public String getBoardTitle() {
-        return boardTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setBoardTitle(String boardTitle) {
-        this.boardTitle = boardTitle;
-    }
-
-    public String getBoardRegId() {
-        return boardRegId;
-    }
-
-    public void setBoardRegId(String boardRegId) {
-        this.boardRegId = boardRegId;
-    }
-
-    public String getBoardModId() {
-        return boardModId;
-    }
-
-    public void setBoardModId(String boardModId) {
-        this.boardModId = boardModId;
-    }
-
-    public String getBoardContent() {
-        return boardContent;
-    }
-
-    public void setBoardContent(String boardContent) {
-        this.boardContent = boardContent;
-    }
-
-    public String getBoardImgLink() {
-        return boardImgLink;
-    }
-
-    public void setBoardImgLink(String boardImgLink) {
-        this.boardImgLink = boardImgLink;
-    }
-
-    public String getBoardRegDt() {
-        return boardRegDt;
-    }
-
-    public void setBoardRegDt(String boardRegDt) {
-        this.boardRegDt = boardRegDt;
-    }
-
-    public String getBoardModDt() {
-        return boardModDt;
-    }
-
-    public void setBoardModDt(String boardModDt) {
-        this.boardModDt = boardModDt;
-    }
-
-    public int getBoardViews() {
-        return boardViews;
-    }
-
-    public void setBoardViews(int boardViews) {
-        this.boardViews = boardViews;
-    }
-
-    public String getBoardGname() {
-        return boardGname;
-    }
-
-    public void setBoardGname(String boardGname) {
-        this.boardGname = boardGname;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUserId() {
@@ -161,6 +95,62 @@ public class Admin extends DTO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getModId() {
+        return modId;
+    }
+
+    public void setModId(String modId) {
+        this.modId = modId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
+    }
+
+    public String getRegDt() {
+        return regDt;
+    }
+
+    public void setRegDt(String regDt) {
+        this.regDt = regDt;
+    }
+
+    public String getModDt() {
+        return modDt;
+    }
+
+    public void setModDt(String modDt) {
+        this.modDt = modDt;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public String getGname() {
+        return gname;
+    }
+
+    public void setGname(String gname) {
+        this.gname = gname;
     }
 
     public String getUserName() {
@@ -229,11 +219,11 @@ public class Admin extends DTO {
 
     @Override
     public String toString() {
-        return "Admin [boardSeq=" + boardSeq + ", boardDiv=" + boardDiv + ", boardTitle=" + boardTitle +
-               ", boardRegId=" + boardRegId + ", boardModId=" + boardModId + ", boardContent=" + boardContent +
-               ", boardImgLink=" + boardImgLink + ", boardRegDt=" + boardRegDt + ", boardModDt=" + boardModDt +
-               ", boardViews=" + boardViews + ", boardGname=" + boardGname + ", userId=" + userId + 
-               ", userName=" + userName + ", userPw=" + userPw + ", userEmail=" + userEmail + 
+        return "Admin [seq=" + seq + ", div=" + div + ", title=" + title +
+               ", userId=" + userId + ", modId=" + modId + ", content=" + content +
+               ", imgLink=" + imgLink + ", regDt=" + regDt + ", modDt=" + modDt +
+               ", views=" + views + ", gname=" + gname + ", userName=" + userName + 
+               ", userPw=" + userPw + ", userEmail=" + userEmail + 
                ", userBirth=" + userBirth + ", userGrade=" + userGrade + ", userAddress=" + userAddress +
                ", userDetailAddress=" + userDetailAddress + ", userRegDt=" + userRegDt + "]";
     }
