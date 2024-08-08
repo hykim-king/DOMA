@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,11 +30,6 @@ public class MainController implements PLog {
 	@Autowired
 	AccInfoService accInfoService;
 	
-	@Autowired
-	FreezingService freezingService;
-	
-	@Autowired
-	PointService pointService;
 	
 	public MainController() {
 		log.debug("┌──────────────────────────────┐");
@@ -41,10 +38,10 @@ public class MainController implements PLog {
 	}
 	
 	//http://localhost:8080/doma/main/emergency.do
-	@RequestMapping(value="/emergency.do"
+	@RequestMapping(value="/main.do"
 					,method=RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
-	public String emergency(Model model, Accident inVO) throws SQLException {
+	public String emergency(Model model) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ main()                       │");
 		log.debug("└──────────────────────────────┘");
@@ -65,51 +62,14 @@ public class MainController implements PLog {
 		model.addAttribute("A11List", A11List);
 		return viewName;
 	}
-	
-	@RequestMapping(value="/freezing.do"
-					,method=RequestMethod.GET
-					,produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String freezing(Model model, @RequestParam(value = "years", required = false) List<Integer> years) throws SQLException {
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ freezingMain()               │");
-		log.debug("└──────────────────────────────┘");
-		
-		String viewName = "main/main_freezing_info";
-		if (years == null || years.isEmpty()) {
-		    years = Arrays.asList(2018, 2019, 2020, 2021, 2022, 2023);
-		}
-		
-	 // Freezing 데이터 조회
-	    List<Map<String, Object>> freezingData;
-	    try {
-	        freezingData = freezingService.selectFreezingData(years);
-	    } catch (IOException e) {
-	        log.error("Error retrieving freezing data", e);
-	        throw new SQLException("Unable to retrieve freezing data", e);
-	    }
-	    model.addAttribute("freezingData", freezingData);
-		return viewName;
+	@RequestMapping(value = "/accIdSelect.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	public String accIdSelect(@RequestParam("accId") String accId, Model model) throws SQLException {
+	    Accident accident = new Accident();
+	    accident.setAccId(accId);
+	    Accident accIdSelect = accInfoService.doSelectOne(accident);
+	    model.addAttribute("accIdSelect", accIdSelect);
+	    return "main/main_emergency_info_detail";  // Thymeleaf fragment 방식으로 특정 영역만 업데이트
 	}
 	
-	@RequestMapping(value="/point.do"
-			,method=RequestMethod.GET
-			,produces = "text/plain;charset=UTF-8")
-	public String point(Model model) throws Exception {
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ point()               		  │");
-		log.debug("└──────────────────────────────┘");
-		
-		String viewName = "main/main_occur_info";
-		
-		List<Point> listPoint = pointService.fullTableScan();
-		log.debug("┌ list ┐");
-		for(Point point : listPoint) {
-			log.debug("│ point : " + point);
-		}
-		log.debug("└");
-		
-		model.addAttribute("pointData", listPoint);
-		
-		return viewName;
-	}	
+
 }

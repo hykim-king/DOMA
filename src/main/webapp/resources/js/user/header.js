@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		console.log("mainPage()");
 		alert("메인 페이지로 이동합니다");
 		
-		window.location.href= "/doma/main/emergency.do";
+		window.location.href= "/doma/main/main.do";
 	}
 	
 });

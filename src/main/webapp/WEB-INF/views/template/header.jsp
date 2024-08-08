@@ -16,7 +16,7 @@
 <body>
     <header>
         <div class="logo">
-            <a class="navbar-brand" href="/doma/main/emergency.do">
+            <a class="navbar-brand" href="/doma/main/main.do">
                 <img src="${CP}/resources/img/logoo.png" alt="Logo">
             </a>
         </div>
@@ -37,7 +37,7 @@
         <nav class="main-nav">
             <ul>
                 <li class="dropdown">
-                    <a aria-current="page" href="${CP}/user/doRetrieve.do">상황별 안전 정보(공사중)</a>
+                    <a aria-current="page" href="${CP}/safe/safePage.do">상황별 안전 정보(공사중)</a>
                 </li>
                 <li class="dropdown">
                     <a aria-current="page" href="${CP}/board/doDelete.do">데이터 시각화(공사중)</a>

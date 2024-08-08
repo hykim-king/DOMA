@@ -12,4 +12,8 @@ public interface BoardService extends WorkDiv<Board> {
      
 	List<Board> mpSelect(String userId) throws SQLException;
 	
+	public int mpBoardUp(Board inVO) throws Exception; 
+	
+	public Board mpBoardSelectOne(Board board) throws Exception; 
+	
 }

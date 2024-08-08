@@ -169,47 +169,7 @@ document.addEventListener("DOMContentLoaded", function(){
      }       
 	
 </script>
-<style>
-    /* Custom Styles */
-    .btn-custom {
-        background-color: #ff9800;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 8px;
-    }
 
-    .btn-custom:hover {
-        background-color: #e68a00;
-    }
-
-    .table-custom th {
-        background-color: #ffcc80;
-        color: black;
-    }
-
-    .table-custom td, .table-custom th {
-        text-align: center;
-        vertical-align: middle;
-    }
-
-    .search-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .search-container select, .search-container input[type="search"] {
-        margin-right: 10px;
-    }
-</style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -252,9 +212,9 @@ document.addEventListener("DOMContentLoaded", function(){
                 </select>
             </div>
 	        <div class="col-sm-1">
-	            <select name="searchDiv" class="form-select" id="searchDiv">
+	            <select name="searchDiv" class="form-select" id=searchDiv>
 	                <option value="">구 선택</option>
-	                <c:forEach var="item" items="${BOARD_SEARCH}">
+	                <c:forEach var="item" items="${GNAME}">
 	                   <option value="${item.detCode}"  <c:if test="${item.detCode == search.searchDiv }">selected</c:if>    >${ item.detNm}</option>
 	                </c:forEach>
 	            </select>
@@ -264,6 +224,13 @@ document.addEventListener("DOMContentLoaded", function(){
 	             value="${search.searchWord }"
 	             placeholder="검색어">
 	        </div>
+	        <div class="col-sm-1">
+            <select name="pageSize" id="pageSize" class="form-select">
+                <c:forEach var="item" items="${COM_PAGE_SIZE }">
+                   <option value="${item.detCode}"   <c:if test="${item.detCode == search.pageSize }">selected</c:if> >${ item.detNm}</option>
+                </c:forEach>
+            </select>
+            </div>
 	    </form>
         <!-- //검색 --------------------------------------------------------------------->
         

@@ -63,7 +63,6 @@ public class DeathMapperTest implements PLog {
 //		deathMapper.dataInsert(death);
 		deathMapper.doDeleteAll();
 	}
-	@Ignore
 	@Test
     public void deathDayNight() throws Exception {
         
@@ -73,7 +72,7 @@ public class DeathMapperTest implements PLog {
     }
 	
 	
-	@Ignore
+
 	@Test
 	public void countAll() throws Exception{
 		int count = deathMapper.countAll();

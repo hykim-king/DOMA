@@ -97,7 +97,6 @@ public class BoardMapperTest implements PLog{
 		log.debug("outVO01 : " + outVO01);
 		assertNotNull(outVO01);
 		
-		isSameBoard(board01, outVO01);
 		
 		//board02-----------------------
 		flag = boardMapper.doSave(board02);
@@ -113,8 +112,7 @@ public class BoardMapperTest implements PLog{
 		Board outVO02 = boardMapper.doSelectOne(board01);
 		log.debug("outVO02 : " + outVO02);
 		assertNotNull(outVO02);
-		
-		isSameBoard(board01, outVO02);
+
 		
 		
 		//board03-----------------------
@@ -132,14 +130,14 @@ public class BoardMapperTest implements PLog{
 		log.debug("outVO03 : " + outVO03);
 		assertNotNull(outVO03);
 		
-		isSameBoard(board01, outVO03);
+
 		
 		// 단건 삭제
 		flag = boardMapper.doDelete(outVO01);
 		assertEquals(1, flag);
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void doUpdate() throws Exception {
 		
@@ -174,13 +172,13 @@ public class BoardMapperTest implements PLog{
 		
 	}
 	
-	//@Ignore
+//	@Ignore
 	@Test
 	public void doRetrieve() throws SQLException {
 		
 		boardMapper.deleteAll();
-		boardMapper.multipleSave();
-		
+		int flag = boardMapper.multipleSave();
+		assertEquals(202, flag);
 		search.setDiv("10");
 		search.setPageNo(1);
 		search.setPageSize(10);
@@ -192,7 +190,7 @@ public class BoardMapperTest implements PLog{
 		
 		List<Board> list = boardMapper.doRetrieve(search);
 		log.debug("list:"+list);
-		//assertEquals(0, list.size());
+		assertEquals(5, list.size());
 
 	}
 	

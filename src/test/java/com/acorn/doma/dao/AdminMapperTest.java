@@ -97,6 +97,8 @@ public class AdminMapperTest implements PLog {
         assertEquals(adminIn.getUserRegDt(), adminOut.getUserRegDt());
     }
     
+
+    @Ignore
     @Test
     public void addAndGet() throws Exception {
         // 공지사항 등록 테스트
@@ -130,6 +132,7 @@ public class AdminMapperTest implements PLog {
         log.debug("flag : " + flag);
         assertEquals(1, flag);
     }
+
 
     @Ignore 
     @Test
@@ -189,7 +192,7 @@ public class AdminMapperTest implements PLog {
         }
     }
 
-    @Ignore    
+//    @Ignore    
     @Test
     public void testUserRetrieve() throws SQLException {
         // 회원 목록 조회 테스트

@@ -4,13 +4,13 @@
 	<c:set var="CP" value="${pageContext.request.contextPath}" />
 <body>
 		<div class="map-fn-l-box" style="float : left">
-	        <a href="/doma/main/emergency.do" class="fn-alert" title="돌발">
+	        <a href="/doma/main/main.do" class="fn-alert" title="돌발">
 	            <span class="blind">돌발</span>
 	        </a>
-	        <a href="/doma/main/freezing.do" class="fn-freezing" title="결빙">
+	        <a href="/doma/freezing/freezing.do" class="fn-freezing" title="결빙">
 	            <span class="blind">결빙</span>    
 	        </a> 
-	        <a href="/doma/main/point.do" class="fn-freezing" title="결빙">
+	        <a href="/doma/point/point.do" class="fn-freezing" title="사고다발">
 	            <span class="blind">사고다발</span>    
 	        </a>   
 	    </div>	    
