@@ -59,6 +59,7 @@
     </select>
     <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
         SELECT
+            f.freezing_id,
             s.GNAME,
             s.DNAME,
             f.YEAR,

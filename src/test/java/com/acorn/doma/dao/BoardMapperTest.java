@@ -76,7 +76,7 @@ public class BoardMapperTest implements PLog{
 		assertEquals(boardIn.getViews(), boardOut.getViews());
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void addAndGet() throws Exception{
 		
@@ -172,13 +172,13 @@ public class BoardMapperTest implements PLog{
 		
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void doRetrieve() throws SQLException {
 		
 		boardMapper.deleteAll();
-		boardMapper.multipleSave();
-		
+		int flag = boardMapper.multipleSave();
+		assertEquals(202, flag);
 		search.setDiv("10");
 		search.setPageNo(1);
 		search.setPageSize(10);
@@ -190,11 +190,11 @@ public class BoardMapperTest implements PLog{
 		
 		List<Board> list = boardMapper.doRetrieve(search);
 		log.debug("list:"+list);
-		//assertEquals(0, list.size());
+		assertEquals(5, list.size());
 
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void beans() {
 		log.debug("┌──────────────────────────────┐");

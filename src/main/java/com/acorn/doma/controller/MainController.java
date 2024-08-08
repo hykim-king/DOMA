@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +41,7 @@ public class MainController implements PLog {
 	@RequestMapping(value="/main.do"
 					,method=RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
-	public String emergency(Model model,Accident inVO) throws SQLException {
+	public String emergency(Model model) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ main()                       │");
 		log.debug("└──────────────────────────────┘");
@@ -60,16 +62,13 @@ public class MainController implements PLog {
 		model.addAttribute("A11List", A11List);
 		return viewName;
 	}
-	@RequestMapping(value = "/accIdSelect.do"
-	    	, method = RequestMethod.GET
-	        , produces = "text/plain;charset=UTF-8"
-	        ) //produces : 화면으로 전송 encoding)
-	@ResponseBody
-	public String accIdSelect(Model model, Accident inVO) throws SQLException{
-		String viewName = "main/main_emergency_info";
-		Accident outVO = accInfoService.doSelectOne(inVO);
-		model.addAttribute("accIdSelect",outVO);
-		return viewName;
+	@RequestMapping(value = "/accIdSelect.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	public String accIdSelect(@RequestParam("accId") String accId, Model model) throws SQLException {
+	    Accident accident = new Accident();
+	    accident.setAccId(accId);
+	    Accident accIdSelect = accInfoService.doSelectOne(accident);
+	    model.addAttribute("accIdSelect", accIdSelect);
+	    return "main/main_emergency_info_detail";  // Thymeleaf fragment 방식으로 특정 영역만 업데이트
 	}
 	
 
