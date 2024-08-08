@@ -49,7 +49,7 @@ public class FreezingMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectFreezingData() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -84,7 +84,7 @@ public class FreezingMapperTest implements PLog{
 		assertNotNull(outVO);
 		
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void dataInsert() throws Exception{
 		log.debug("┌──────────────────────────────┐");

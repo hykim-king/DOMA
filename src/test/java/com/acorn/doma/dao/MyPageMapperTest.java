@@ -107,7 +107,7 @@ public class MyPageMapperTest implements PLog {
 	
 	
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void mpSelectOne() throws Exception{  
 		
@@ -119,7 +119,7 @@ public class MyPageMapperTest implements PLog {
 		log.debug("outVO : " + outVO);
 		
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void mpGradeUp() throws Exception{
 		
@@ -165,7 +165,7 @@ public class MyPageMapperTest implements PLog {
 	}	
 	 
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void doUpdate() throws Exception{
 		//2. 데이터 1건 입력

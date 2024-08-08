@@ -41,6 +41,7 @@ public class PointMapperTest implements PLog{
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		point = new Point("3", "d", 1, 1, 1, 1, 1, "type", 1, 2, "2", "d");
+		pointMapper.doDeleteAll();
 	}
 	
 	@After
@@ -55,7 +56,8 @@ public class PointMapperTest implements PLog{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ fullTableScan()              │");
 		log.debug("└──────────────────────────────┘");
-		
+		int flag = pointMapper.dataInsert(point);
+		assertEquals(1, flag);
 		List<Point> listPoint = pointMapper.fullTableScan();
 
 		log.debug("┌ list ┐");
@@ -64,18 +66,18 @@ public class PointMapperTest implements PLog{
 		}
 		log.debug("└");
 		
-		assertEquals(6, listPoint.size());
+		assertEquals(1, listPoint.size());
 		
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void dataInsert() throws Exception{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ dataInsert()                 │");
 		log.debug("└──────────────────────────────┘");
-//		int flag = pointMapper.dataInsert(point);
-//		assertEquals(1, flag);
+		int flag = pointMapper.dataInsert(point);
+		assertEquals(1, flag);
 		
 	}
 	

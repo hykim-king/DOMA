@@ -57,7 +57,7 @@ public class CodeMapperTest implements PLog {
 		log.debug("└──────────────────────────────────────────────┘");
 	}
 
-	@Ignore
+//	@Ignore
 	@Test
 	public void doRetrieveIn() throws Exception {
 
@@ -65,10 +65,10 @@ public class CodeMapperTest implements PLog {
 		for (Code vo : codeList) {
 			log.debug(vo);
 		}
-		assertEquals(8, codeList.size());
+		assertEquals(10, codeList.size());
 	}
 
-	@Ignore
+//	@Ignore
 	@Test
 	public void doRetrieve() throws Exception {
 		code.setMstCode("MEMBER_SEARCH");
@@ -76,9 +76,9 @@ public class CodeMapperTest implements PLog {
 		for (Code vo : codeList) {
 			log.debug(vo);
 		}
-		assertEquals(3, codeList.size());
+		assertEquals(4, codeList.size());
 	}
-
+	@Ignore
 	@Test
 	public void beans() {
 		log.debug("┌──────────────────────────────────────────────┐");

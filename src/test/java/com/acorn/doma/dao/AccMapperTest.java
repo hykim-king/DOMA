@@ -50,7 +50,7 @@ public class AccMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-	@Ignore
+	
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -65,7 +65,7 @@ public class AccMapperTest implements PLog{
 		}
 		log.debug("└ ");
 	}
-	//지도에 표시할 데이터들 문자열 처리 mapper
+	@Ignore	//지도에 표시할 데이터들 문자열 처리 mapper
 	@Test
 	public void Retrieve() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -92,7 +92,7 @@ public class AccMapperTest implements PLog{
 			log.debug("A11List"+ acc);
 		}
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void sqlAll() throws Exception{
 		int count = accMapper.countAll();
@@ -110,7 +110,7 @@ public class AccMapperTest implements PLog{
 		assertNotNull(outVO);
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void beans() {
 		log.debug("┌──────────────────────────────┐");

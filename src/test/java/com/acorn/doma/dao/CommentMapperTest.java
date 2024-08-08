@@ -62,7 +62,7 @@ public class CommentMapperTest implements PLog {
 		log.debug("=======tearDown=========");
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
     public void doRetrieve() throws Exception {
 		// 저장
@@ -77,7 +77,7 @@ public class CommentMapperTest implements PLog {
         assertNotNull(list);
     }
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void doUpdate() throws Exception {
 	    //저장
@@ -112,7 +112,7 @@ public class CommentMapperTest implements PLog {
 	}
 	
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void addAndGet() throws Exception {
 		
