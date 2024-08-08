@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
 <link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
@@ -31,7 +31,7 @@
 								</colgroup>
 								<tbody>
 									<tr>
-										<h2 style="font-wight : bold; text-align : center; border: 3px solid black">${occur.year}</h2>
+										<input type="button" onclick="detailSelect(this.value)" id="occur_year${occur.year}" name="occur_year${occur.year}" value="${occur.year}" style="background-color:white; width:331px;font-wight : bold; text-align : center; border: 3px solid black;">
 									</tr>
 									<tr>
 										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;" >사고</th>
@@ -64,6 +64,7 @@
        		<jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
 	</div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+    <script src="${CP}/resources/js/main/main_occur_detail.js"></script>
 	<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
 <script>
     window.onload = function() {
