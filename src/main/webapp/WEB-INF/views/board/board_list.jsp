@@ -69,23 +69,25 @@ document.addEventListener("DOMContentLoaded", function(){
     //페이지사이즈
     const pageSizeSelect = document.querySelector("#pageSize");
     
-    
 	
 //이벤트 처리=================================================================================================  
-    //조회버튼
-	doRetrieveBtn.addEventListener("click",function(event){
-        console.log("doRetrieveBtn click");
-        event.stopPropagation();
-        doRetrieve(1);
-    });
+    
 
 	//등록 이동 버튼
 	moveToRegBtn.addEventListener("click",function(event){
-        console.log("moveToRegBtn click");
+	    console.log("moveToRegBtn click");
         moveToReg();
+    });;
+	
+	//구분
+    searchDivSelect.addEventListener("change",function(event){
+        if("" === searchDivSelect.value){
+            searchWordInput.value = "";//검색어
+            pageSizeSelect.value  = 10;//페이지 사이즈
+        }
     });
 	
-	//검색어(엔터키 이벤트)
+    //검색어(엔터키 이벤트)
     searchWordInput.addEventListener("keydown",function(event){
         console.log("searchWordInput keydown");
         if(event.key === 'Enter' && event.keyCode === 13){
@@ -94,13 +96,11 @@ document.addEventListener("DOMContentLoaded", function(){
         }
     });
 	
-	//구분
-	searchDivSelect.addEventListener("change",function(event){
-        
-        if("" === searchDivSelect.value){
-            searchWordInput.value = "";//검색어
-            pageSizeSelect.value  = 10;//페이지 사이즈
-        }
+    //조회버튼
+    doRetrieveBtn.addEventListener("click",function(event){
+        console.log("doRetrieveBtn click");
+        event.stopPropagation();
+        doRetrieve(1);
     });
 	
        
@@ -108,67 +108,108 @@ document.addEventListener("DOMContentLoaded", function(){
 //함수=================================================================================================  
 	//doSelectOne()
 	function doSelectOne(seq){
-           console.log("doSelectOne seq:"+seq);
-           //div
-           //seq
-           //등록자 정보
-           
-           const frm = document.querySelector("#boardForm");
-           let div = frm.div.value;
-           
-           window.location.href = "/doma/board/doSelectOne.do?seq="+seq+"&div="+div;
+	    console.log("doSelectOne seq:"+seq);
+        //div
+        //seq
+        //등록자 정보
+        
+        const frm = document.querySelector("#boardForm");
+        let div = frm.div.value;
+        
+        window.location.href = "/doma/board/doSelectOne.do?seq="+seq+"&div="+div;
            
     }
 	
 	//moveToReg()
 	function moveToReg(){
-           const frm      = document.querySelector("#boardForm");
-           //frm.pageNo.value = 1;
-           frm.action = "/doma/board/moveToReg.do";
-           frm.submit();
+	    const frm = document.querySelector("#boardForm");
+        //frm.pageNo.value = 1;
+        frm.action = "/doma/board/moveToReg.do";
+        frm.submit();
     }
 	
 	//pageRetrieve
 	function pageRetrieve(url, pageNo){
-           console.log("pageRetrieve()");
-           const frm      = document.querySelector("#boardForm");
-           let searchDiv  = frm.searchDiv.value;
-           let searchWord = frm.searchWord.value;
-           let pageSize   = frm.pageSize.value;
-           frm.pageNo.value = pageNo;
-           let div  = frm.div.value;
-           console.log("searchDiv:"+searchDiv);
-           console.log("searchWord:"+searchWord);
-           console.log("pageSize:"+pageSize);
-           console.log("pageNo:"+pageNo);
-           console.log("div:"+div);
-           console.log("url:"+url);
-           
-           frm.action = url;
-           frm.submit();
+	    console.log("pageRetrieve()");
+        const frm      = document.querySelector("#boardForm");
+        let searchDiv  = frm.searchDiv.value;
+        let searchWord = frm.searchWord.value;
+        let pageSize   = frm.pageSize.value;
+        frm.pageNo.value = pageNo;
+        let div  = frm.div.value;
+        console.log("searchDiv:"+searchDiv);
+        console.log("searchWord:"+searchWord);
+        console.log("pageSize:"+pageSize);
+        console.log("pageNo:"+pageNo);
+        console.log("div:"+div);
+        console.log("url:"+url);
+        
+        frm.action = url;
+        frm.submit();
     }
 	
 	//doRetrieve()
 	function doRetrieve(pageNo){
-         console.log("doRetrieve()");
-         const frm      = document.querySelector("#boardForm");
-         let searchDiv  = frm.searchDiv.value;
-         let searchWord = frm.searchWord.value;
-         let pageSize   = frm.pageSize.value;
-         frm.pageNo.value = pageNo;
-         let div  = frm.div.value;
-         frm.div.value = "";
-         console.log("searchDiv:"+searchDiv);
-         console.log("searchWord:"+searchWord);
-         console.log("pageSize:"+pageSize);
-         console.log("pageNo:"+pageNo);
-         console.log("div:"+div);
-         
-         frm.action = "/doma/board/doRetrieve.do";
-         frm.submit();
+	    console.log("doRetrieve()");
+        const frm      = document.querySelector("#boardForm");
+        let searchDiv  = frm.searchDiv.value;
+        let searchWord = frm.searchWord.value;
+        let pageSize   = frm.pageSize.value;
+        frm.pageNo.value = pageNo;
+        let div  = frm.div.value;
+        frm.div.value = "";
+        console.log("searchDiv:"+searchDiv);
+        console.log("searchWord:"+searchWord);
+        console.log("pageSize:"+pageSize);
+        console.log("pageNo:"+pageNo);
+        console.log("div:"+div);
+        
+        frm.action = "/doma/board/doRetrieve.do";
+        frm.submit();
      }       
 	
 </script>
+<style>
+    /* Custom Styles */
+    .btn-custom {
+        background-color: #ff9800;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    .btn-custom:hover {
+        background-color: #e68a00;
+    }
+
+    .table-custom th {
+        background-color: #ffcc80;
+        color: black;
+    }
+
+    .table-custom td, .table-custom th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .search-container select, .search-container input[type="search"] {
+        margin-right: 10px;
+    }
+</style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -178,14 +219,15 @@ document.addEventListener("DOMContentLoaded", function(){
 		<div class="page-header  mb-4">
 		  <h2>
 		      <c:choose>
-		         <c:when test="${ '10'==search.getDiv() }">커뮤니티</c:when>
-		         <c:when test="${ '20'==search.getDiv() }">공지사항</c:when>
+		         <c:when test="${ '10'== search.getDiv() }">커뮤니티</c:when>
+		         <c:when test="${ '20'== search.getDiv() }">공지사항</c:when>
 		         <c:otherwise>
 		                              공지사항/자유게시판
 		         </c:otherwise>
 		     </c:choose>
 		  </h2>
 		</div> 
+		<!--// 제목 end ------------------------------------------------------------->
         <!-- 버튼 -->
         <div class="form-buttons" style="margin : 20px 0px 10px 30px">
             <input type="button" value="글쓰기" id="moveToReg" class="g-col-6 member-action-button">

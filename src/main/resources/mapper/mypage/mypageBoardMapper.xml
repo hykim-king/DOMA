@@ -3,26 +3,38 @@
 <mapper namespace="com.acorn.doma.mapper.BoardMapper">
  
 	    
-    <select id="mpSelect" parameterType="Board"  resultType="Board">
+    <select id="mpSelect" parameterType="String"  resultType="Board">
       SELECT 
-    b.title,
-    b.user_id,
-    b.mod_id,
-    b.content,
-    b.img_link,
-    TO_CHAR(b.reg_dt, 'YYYY/MM/DD HH24:MI:SS') AS reg_dt_formatted,
-    TO_CHAR(b.mod_dt, 'YYYY/MM/DD HH24:MI:SS') AS mod_dt_formatted,
-    b.views,
-    b.gname
-FROM
-    d_board b
-INNER JOIN
-    d_user u ON b.user_id = u.user_id
-WHERE
-    u.user_id =   #{userId}                                                  
+    		b.title,
+    		b.user_id,
+    		b.mod_id,
+    		b.content, 
+    		TO_CHAR(b.reg_dt, 'YYYY/MM/DD HH24:MI:SS') AS reg_dt_formatted,
+    		TO_CHAR(b.mod_dt, 'YYYY/MM/DD HH24:MI:SS') AS mod_dt_formatted,
+    		b.views,
+    		b.gname
+		FROM
+    		d_board b
+		INNER JOIN
+    		d_user u ON b.user_id = u.user_id
+		WHERE
+    		u.user_id =   #{userId}                                                  
     </select>
     
- 	 
+    
+ 	 <update id="mpBoardUp" parameterType="User">
+         UPDATE d_board             
+         SET      
+         
+             title   	= #{userName},     
+             content   		= #{userPw},     
+             user_email     = #{userEmail},  
+             birth          = #{birth},     
+             reg_dt          = #{ragDt},     
+             mod_dt        = SYSDATE 
+         WHERE                     
+                user_id = #{userId}     
+    </update>
 
 
 

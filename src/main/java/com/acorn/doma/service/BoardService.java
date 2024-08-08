@@ -10,5 +10,6 @@ import com.acorn.doma.domain.User;
 
 public interface BoardService extends WorkDiv<Board> {
      
-	List<Board> mpSelect(Board inVO) throws SQLException;
+	List<Board> mpSelect(String userId) throws SQLException;
+	
 }

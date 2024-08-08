@@ -1,7 +1,8 @@
 package com.acorn.doma.cmn;
 
 import java.text.SimpleDateFormat;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -9,6 +10,46 @@ import java.util.UUID;
 import com.acorn.doma.domain.Code;
 
 public class StringUtil  implements PLog {
+
+	public static String getDateUUID(String pattern) {
+		if(null == pattern || "".equals(pattern)) {
+			pattern = "yyyyMMdd";
+		}
+		
+		return getCurrentDate(pattern) + "_" + getUUID();
+	}
+	
+	/**
+	 * 파일 확장자 : ex)pom.xml
+	 * @param fileName
+	 * @return xml
+	 */
+	public static String getExt(String fileName) {
+		String ext = "";
+		
+		//p.o.m.xml
+		if(fileName.lastIndexOf(".") > -1) {
+			int lastIndex = fileName.lastIndexOf(".");
+			ext = fileName.substring(lastIndex+1);
+		}
+		
+		return ext;
+	}
+	
+	/**
+	 * pattern에 따른 년, 월, 일
+	 * @param pattern
+	 * @return String
+	 */
+	public static String getCurrentDate(String pattern) {
+		if(null == pattern || "".equals(pattern)) {
+			pattern = "yyyyMMdd";
+		}
+		
+		
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
+	}
+	
 	/**
 	 *  날짜 Format
 	 * @param format ex)yyyyMMddhhmmss
@@ -43,11 +84,10 @@ public class StringUtil  implements PLog {
 	   
 	   //maxNum =21
 	   //currentPageNo = 1
-	   //rowPerPage    = 10 
+	   //rowPerPage    = 10
 	   //bottomCount   = 10
-	   int add = (maxNum % rowPerPage == 0)?0:1;
-	   int maxPageNo = (maxNum  / rowPerPage) + add;// 3
-	   ; 
+	   
+	   int maxPageNo   = (maxNum -1)/rowPerPage + 1;//3
 	   int startPageNo = ((currentPageNo -1)/bottomCount) * bottomCount +1   ;//1,11,21...
 	   int endPageNo   = ((currentPageNo -1)/bottomCount+1) * bottomCount    ;//10,20,20...
 	   
@@ -111,9 +151,8 @@ public class StringUtil  implements PLog {
 		   
 	   }
 	   //>
-	   
-	   log.debug("maxPageNo:"+maxPageNo);
-	   log.debug("inx:"+inx);     
+	   log.debug("maxPageNo:" + maxPageNo);
+	   log.debug("inx:" + inx);
 	   
 	   if(maxPageNo>=inx) {
 		   log.debug("nowBlocNo:"+nowBlocNo);

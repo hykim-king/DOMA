@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", function(){
   function MoveBoard(userId){ 
            //frm.pageNo.value = 1; 
           //window.location.href = "/doma/doma/mpSelect.do?userId="+userId;
-          window.location.href = '/doma/mypage/mpSelect.do?userId='+userId;
-
+          window.location.href = '/doma/mypage/mpSelect.do?userId='+userIdInput.value;
+    
           
 
 
