@@ -95,11 +95,13 @@ public class MyPageMapperTest implements PLog {
 		log.debug("list : " + list);
 	}
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void mpBoardUp() throws Exception {
-
-		int flag = boardMapper.doSave(boardV001);
+		
+		boardMapper.doDelete(boardV001);
+		
+		 int flag = boardMapper.doSave(boardV001);
 		log.debug("flag : " + flag);
 		log.debug("boardV001 : " + boardV001);
 
@@ -125,7 +127,7 @@ public class MyPageMapperTest implements PLog {
 
 	}
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void mpBoardSelectOne() throws Exception {
 
