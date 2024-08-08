@@ -3,6 +3,7 @@
 */
 function detailSelect(input) {
     console.log("detailSelect()");
+    console.log("input : " + input);
 
     //비동기 통신
     let type= "POST";  
@@ -17,6 +18,7 @@ function detailSelect(input) {
     };
 
     if(confirm("조회 하시겠습니까?")===false)return;        
+    
 
     PClass.pAjax(url,params,dataType,type,async,function(data){
         if(data){
