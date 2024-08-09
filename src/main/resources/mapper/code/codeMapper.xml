@@ -21,7 +21,18 @@
 		ORDER BY seq        
     </select>
     
-     <sql id="CodeColumn">
+    <select id="doSelectOne" parameterType="Code" resultMap="codeResultMap">
+        SELECT
+		    <include refid="CodeColumn"/>
+		FROM
+		    d_code
+		WHERE 
+		    mst_code = 'GNAME'
+		    AND det_code = #{detCode} 
+    </select>
+    
+    
+    <sql id="CodeColumn">
        mst_code    as mstCode,
        det_code    as detCode,
        det_code_nm as detCodeNm,

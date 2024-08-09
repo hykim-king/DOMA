@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function(){
         let pageSize   = frm.pageSize.value;
         frm.pageNo.value = pageNo;
         let div  = frm.div.value;
-        frm.div.value = "";
+        frm.div.value = "10";
         console.log("searchDiv:"+searchDiv);
         console.log("searchWord:"+searchWord);
         console.log("pageSize:"+pageSize);

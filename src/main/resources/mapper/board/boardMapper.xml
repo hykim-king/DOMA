@@ -78,8 +78,11 @@
     
     <sql id="GuRetrieve">
        <choose>
-           <when test="searchGu != null and searchGu == '1' ">
-               AND gname = #{searchGu}
+           <when test="searchDiv != null and searchDiv == '1' ">
+               AND '강남구' LIKE = #{searchWord} || '%'
+           </when>
+           <when test="searchDiv != null and searchDiv == '2' ">
+               AND '강동구' LIKE = #{searchWord} || '%'
            </when>
        </choose>
     </sql>
