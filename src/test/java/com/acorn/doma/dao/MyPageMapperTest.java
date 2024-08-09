@@ -89,7 +89,7 @@ public class MyPageMapperTest implements PLog {
 		
 		commentVO01 = new Comments(300, 1, "user1", "user1", "내용2",  "x", "x");
 		
-		
+		 
 		search = new Search();
 	}
 
@@ -185,7 +185,9 @@ public class MyPageMapperTest implements PLog {
 	@Ignore
 	@Test
 	public void mpBoardUp() throws Exception {
-
+		
+		//boardMapper.doSave(boardV001);
+		
 	    // `seq` 값을 가져오기 위한 작업
 	    int seq = boardMapper.getSequence();
 	    log.debug("seq : " + seq);
@@ -217,11 +219,10 @@ public class MyPageMapperTest implements PLog {
 	    isSameBoard(outVO01Update, outVO);
 	}
 
-	//
 	@Ignore
 	@Test
 	public void mpBoardSelectOne() throws Exception {
-		
+		//boardMapper.doSave(boardV001);
 		Board outVO = boardService.mpBoardSelectOne(boardV001);
 		log.debug("outVO : " + outVO);
 
