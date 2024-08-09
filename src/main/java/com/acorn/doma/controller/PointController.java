@@ -68,19 +68,8 @@ public class PointController implements PLog{
 		}
 		log.debug("└");
 		
-		String content = "";
-		int flag = 0;
-		if(guList != null) {
-			content = "구 조회에 성공했습니다.";
-			flag = 1;
-		}else {
-			content = "실패했습니다.";
-		}
-		
-		Message message = new Message(flag, content);
-		
 		Gson gson = new Gson();
-		String jsonString = gson.toJson(message);
+		String jsonString = gson.toJson(guList);
 		
 		return jsonString;
 	}

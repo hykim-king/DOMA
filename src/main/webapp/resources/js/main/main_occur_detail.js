@@ -32,13 +32,9 @@ function detailSelect(input) {
         if(data){
             try{ 
             //JSON문자열을 JSON Object로 변환
-                const message =JSON.parse(data)     
-                console.log("message.messagId:"+message.messageId);
-                console.log("message.messageContents:"+message.messageContents);
-                
-                if(isEmpty(message) === false && 1 === message.messagId){   
-                    alert(message.messageContents);
-                	
+                const data =JSON.parse(data)     
+                if(isEmpty(data) === false){
+                    console.log("data : " + data);
                 	const yearH2=ducument.querySelector("#yearH2");
                 	
                 	data.forEach(gu => {
@@ -55,7 +51,7 @@ function detailSelect(input) {
 		            });
 		            
                 }else{
-                    alert(message.messageContents);
+                    alert("data가 null혹은, undefined 입니다.");     
                 }          
             }catch(e){
                 console.error("data가 null혹은, undefined 입니다.",e);
