@@ -9,7 +9,6 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff !important;
-    padding: 10px 40px;
     border-bottom: 1px solid #ccc;
 }
 
@@ -41,6 +40,7 @@ header nav .menu {
 
 .menu-align {
     padding-top: 170px; /* 원하는 만큼의 여백 추가 */
+    margin-left :  100px;
 }
 
 .menu-align a {
@@ -91,7 +91,7 @@ header nav .menu {
 
 /* header-container 스타일 */
 .header-container {
-    padding: 20px;
+    padding-top: 20px;
     background-color: #ffffff;
     text-align: center;
     border-bottom: 2px solid #000000;
@@ -144,6 +144,10 @@ header nav .menu {
 }
 
 /* 각 드롭다운 메뉴 스타일 */
+.dropdown {
+	padding : 20px;
+	width : 200px;
+}
 .dropdown-menu {
     margin-bottom: 10px;
 }
@@ -154,24 +158,23 @@ header nav .menu {
     color: #000000;
 }
 
-.dropdown-menu ul {
-    list-style: none;
+.dropdown-menu table {
     padding: 0;
     margin: 0;
 }
 
-.dropdown-menu li {
+.dropdown-menu td {
     padding: 5px 0;
 }
 
-.dropdown-menu li a {
+.dropdown-menu td a {
     color: #000000;
     padding: 0;
     font-size: 16px;
     display: inline-block; /* 오른쪽 정렬을 위해 */
 }
 
-.dropdown-menu li a:hover {
+.dropdown-menu td a:hover {
     background-color: #f0f0f0;
 }
 

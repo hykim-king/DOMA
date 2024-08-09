@@ -84,7 +84,7 @@ document.getElementById('gnameDiv').addEventListener('change', function() {
 								</colgroup>
 								<tbody>
                                     <tr>
-										<input type="button" value="${item.accPoint}" style="background-color:white; width:331px;font-wight : bold; text-align : center; border: 3px solid black;">
+										<input type="text" value="${item.accPoint}" onclick="moveToMarker(${item.latitude},${item.longitude})" style="background-color:white; width:331px;font-wight : bold; text-align : center; border: 3px solid black;">
 									</tr>
 									<tr>
 										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;" >사고</th>
@@ -124,3 +124,4 @@ document.getElementById('gnameDiv').addEventListener('change', function() {
         });
     }
 });
+
