@@ -90,5 +90,12 @@ public interface AdminMapper {
      * @return 가장 최근의 시퀀스 값
      * @throws SQLException
      */
+    int insertUser(Admin admin) throws SQLException;
+
+    /**
+     * 가장 최근에 삽입된 시퀀스 값을 조회
+     * @return 가장 최근의 시퀀스 값
+     * @throws SQLException
+     */
     Integer getLastInsertedSeq() throws SQLException;    
 }

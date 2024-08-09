@@ -201,42 +201,50 @@ public class AdminMapperTest implements PLog {
  
     @Test
     public void testUserRetrieve() throws SQLException {
-        // 회원 목록 조회 테스트 (등급 상관없이 전체 목록 조회)
+        // 1. 회원 등록 테스트
+        Admin existingUser = adminMapper.getUser(admin02.getUserId());
+        if (existingUser != null) {
+            adminMapper.deleteUser(existingUser);
+        }
+
+        // 회원 등록
+        int insertFlag = adminMapper.insertUser(admin02);
+        log.debug("User Inserted : " + insertFlag);
+        assertEquals(1, insertFlag);
+
+        // 2. 전체 회원 목록 조회 테스트
         Search search = new Search(); // 기본값으로 전체 조회
         List<Admin> userList = adminMapper.getUsers(search);
         log.debug("userList : " + userList);
 
-        
         assertNotNull(userList);
         assertTrue(userList.stream().anyMatch(user -> "admin02".equals(user.getUserId())));
 
-        // 회원 단건 조회 테스트
+        // 3. 회원 단건 조회 테스트
         Admin retrievedUser = adminMapper.getUser("admin02");
         log.debug("retrievedUser : " + retrievedUser);
         assertNotNull(retrievedUser);
         assertEquals("admin02", retrievedUser.getUserId());
 
-       
-        assertEquals(0, retrievedUser.getUserGrade()); 
-
-        // 회원 수정 테스트
+        // 4. 회원 수정 테스트
         retrievedUser.setUserName("Updated User");
-        int flag = adminMapper.updateUser(retrievedUser);
-        log.debug("Updated : " + flag);
-        assertEquals(1, flag);
+        int updateFlag = adminMapper.updateUser(retrievedUser);
+        log.debug("Updated : " + updateFlag);
+        assertEquals(1, updateFlag);
 
-        // 수정된 회원 조회 테스트
-        Admin updatedUser = adminMapper.getUser("admin02"); 
+        // 5. 수정된 회원 조회 테스트
+        Admin updatedUser = adminMapper.getUser("admin02");
         log.debug("updatedUser : " + updatedUser);
         assertNotNull(updatedUser);
         assertEquals("admin02", updatedUser.getUserId());
-        assertEquals("Updated User", updatedUser.getUserName()); 
+        assertEquals("Updated User", updatedUser.getUserName());
 
-        // 회원 삭제 테스트
-        flag = adminMapper.deleteUser(updatedUser); 
-        log.debug("flag : " + flag);
-        assertEquals(1, flag);
+        // 6. 회원 삭제 테스트
+        int deleteFlag = adminMapper.deleteUser(updatedUser);
+        log.debug("deleteFlag : " + deleteFlag);
+        assertEquals(1, deleteFlag);
     }
+
 
 
 

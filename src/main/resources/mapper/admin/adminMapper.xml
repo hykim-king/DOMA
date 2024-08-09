@@ -129,4 +129,13 @@
     WHERE USER_ID = #{userId}
 </select>
 
+<!-- 회원 등록 -->
+<insert id="insertUser" parameterType="Admin">
+    INSERT INTO d_user(
+        USER_ID, USER_NAME, USER_PW, USER_EMAIL, BIRTH, GRADE, ADDRESS, DETAIL_ADDRESS, REG_DT
+    ) VALUES (
+        #{userId}, #{userName}, #{userPw}, #{userEmail}, #{userBirth}, #{userGrade}, #{userAddress}, #{userDetailAddress}, #{userRegDt}
+    )
+</insert>
+
 </mapper>
