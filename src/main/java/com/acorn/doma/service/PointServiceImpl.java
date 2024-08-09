@@ -127,7 +127,7 @@ public class PointServiceImpl implements PointService, PLog{
 	            String gname = extractedData.get("gname");
 				point.setPid(getJsonElementAsString(data, "acc_risk_area_id"));
 				point.setAccPoint( getJsonElementAsString(data, "acc_risk_area_nm"));
-				point.setAccdient(Integer.parseInt(getJsonElementAsString(data, "tot_acc_cnt")));
+				point.setAccident(Integer.parseInt(getJsonElementAsString(data, "tot_acc_cnt")));
 				point.setDead(Integer.parseInt(getJsonElementAsString(data, "tot_dth_dnv_cnt")));
 				point.setSeriously(Integer.parseInt(getJsonElementAsString(data, "tot_se_dnv_cnt")));
 				point.setOrdinary(Integer.parseInt(getJsonElementAsString(data, "tot_sl_dnv_cnt")));
@@ -170,6 +170,34 @@ public class PointServiceImpl implements PointService, PLog{
 		log.debug("└");
 		
 		return listPoint;
+	}
+
+	@Override
+	public List<Point> detailInfoLoad(Point inVO) throws Exception {
+		
+		List<Point> pointList = pointMapper.detailInfoLoad(inVO);
+		log.debug("1. pointVO02 : " + inVO);
+		log.debug("┌ list ┐");
+		for(Point point : pointList) {
+			log.debug("│ Point : " + point);
+		}
+		log.debug("└─────────────────────────────────────────────");
+		
+		return pointList;
+	}
+
+	@Override
+	public List<String> guLoad(String year) throws Exception {
+		
+		List<String> guList = pointMapper.guLoad(year);
+		log.debug("1. year : " + year);
+		log.debug("┌ list ┐");
+		for(String gu : guList) {
+			log.debug("│ gu : " + gu);
+		}
+		log.debug("└─────────────────────────────────────────────");
+		
+		return guList;
 	}
 
 }

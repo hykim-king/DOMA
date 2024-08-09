@@ -17,9 +17,13 @@
 	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<div style="display : flex">
 		<jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
-	    <div id="subMap" style="height : 815px;">
+	    <div id="subMap" style="height : 815px; diplay : inline-block">
 			<section id="mapContainer">
+<<<<<<< HEAD
 				<div class="aside" style="height:800px; width: 350px; overflow : scroll">
+=======
+				<div class="aside" style="height:1000px; width: 350px; overflow : scroll; diplay : inline-block" >
+>>>>>>> 4b5ffcff17043f49368597b4456d4028322098fa
 					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">사고다발</h2>
 					<c:forEach var="occur" items="${pointData }">
 					<ul class="info_ul">
@@ -35,7 +39,7 @@
 									</tr>
 									<tr>
 										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;" >사고</th>
-										<td style="border: 1px solid black; text-align : center; width : 230px;">${occur.accdient}건</td>
+										<td style="border: 1px solid black; text-align : center; width : 230px;">${occur.accident}건</td>
 									</tr>
 									<tr>
 										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;">사망</th>
@@ -61,7 +65,12 @@
 				</div>
 			</section>
    			</div>
+<<<<<<< HEAD
        		       <div id="map" style="width:100%;height:800px"></div>
+=======
+   			<jsp:include page="/WEB-INF/views/main/main_point_detail.jsp"></jsp:include>
+       		<jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
+>>>>>>> 4b5ffcff17043f49368597b4456d4028322098fa
 	</div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
     <script src="${CP}/resources/js/main/main_occur_detail.js"></script>

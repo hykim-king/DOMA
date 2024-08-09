@@ -3,7 +3,7 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 	<c:set var="CP" value="${pageContext.request.contextPath}" />
 <body>
-		<div class="map-fn-l-box" style="float : left">
+		<div class="map-fn-l-box" style="diplay : inline-block">
 	        <a href="/doma/main/main.do" class="fn-alert" title="돌발">
 	            <span class="blind">돌발</span>
 	        </a>
