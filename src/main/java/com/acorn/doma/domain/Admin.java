@@ -16,7 +16,7 @@ public class Admin extends DTO {
     private String modId; // MOD_ID
     private String content; // CONTENT
     private String imgLink; // IMG_LINK
-    private String regDt; // REG_DT
+    private String boardRegDt; // REG_DT
     private String modDt; // MOD_DT
     private int views; // VIEWS
     private String gname; // GNAME
@@ -38,7 +38,7 @@ public class Admin extends DTO {
 
     // 생성자
     public Admin(int seq, String div, String title, String userId, String modId,
-                 String content, String imgLink, String regDt, String modDt,
+                 String content, String imgLink, String boardRegDt, String modDt,
                  int views, String gname, String userName, String userPw,
                  String userEmail, String userBirth, int userGrade, String userAddress,
                  String userDetailAddress, String userRegDt) {
@@ -50,7 +50,7 @@ public class Admin extends DTO {
         this.modId = modId;
         this.content = content;
         this.imgLink = imgLink;
-        this.regDt = regDt;
+        this.boardRegDt = boardRegDt;
         this.modDt = modDt;
         this.views = views;
         this.gname = gname;
@@ -121,12 +121,12 @@ public class Admin extends DTO {
         this.imgLink = imgLink;
     }
 
-    public String getRegDt() {
-        return regDt;
+    public String getBoardRegDt() {
+        return boardRegDt;
     }
 
-    public void setRegDt(String regDt) {
-        this.regDt = regDt;
+    public void setBoardRegDt(String boardRegDt) {
+        this.boardRegDt = boardRegDt;
     }
 
     public String getModDt() {
@@ -221,7 +221,7 @@ public class Admin extends DTO {
     public String toString() {
         return "Admin [seq=" + seq + ", div=" + div + ", title=" + title +
                ", userId=" + userId + ", modId=" + modId + ", content=" + content +
-               ", imgLink=" + imgLink + ", regDt=" + regDt + ", modDt=" + modDt +
+               ", imgLink=" + imgLink + ", boardRegDt=" + boardRegDt + ", modDt=" + modDt +
                ", views=" + views + ", gname=" + gname + ", userName=" + userName + 
                ", userPw=" + userPw + ", userEmail=" + userEmail + 
                ", userBirth=" + userBirth + ", userGrade=" + userGrade + ", userAddress=" + userAddress +

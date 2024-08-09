@@ -13,14 +13,16 @@
         ORDER BY reg_dt DESC
     </select>
 
+    <!-- 마지막 시퀸스  -->
+	<select id="getLastInsertedSeq" resultType="int">
+	    SELECT d_board_seq.CURRVAL FROM dual
+	</select>
+   
     <!-- 공지사항 등록 -->
     <insert id="insertNotice" parameterType="Admin">
         INSERT INTO d_board (seq, div, title, user_id, mod_id, content, img_link, reg_dt, mod_dt, views, gname)
         VALUES (d_board_seq.NEXTVAL, '20', #{title}, #{userId}, #{modId}, #{content}, #{imgLink}, SYSDATE, SYSDATE, #{views}, #{gname})
     </insert>
-
-
-
 
     <!-- 공지사항 수정 -->
     <update id="updateNotice" parameterType="Admin">
@@ -37,19 +39,43 @@
     </update>
 
 
-    <!-- 공지사항 삭제 -->
-<delete id="deleteNotice" parameterType="Admin">
-    DELETE FROM d_board
-    WHERE seq = #{seq} AND div = '20'
-</delete>
+	    <!-- 공지사항 삭제 -->
+	<delete id="deleteNotice" parameterType="Admin">
+	    DELETE FROM d_board
+	    WHERE seq = #{seq} AND div = '20'
+	</delete>
 
 
-    <!-- 공지사항 단건 조회 -->
-    <select id="getNoticeById" parameterType="int" resultType="Admin">
-        SELECT seq AS seq, div AS div, title AS title, user_id AS userId, mod_id AS modId, content AS content, img_link AS imgLink, reg_dt AS regDt, mod_dt AS modDt, views AS views, gname AS gname
-        FROM d_board
-        WHERE seq = #{seq} AND div = '20'
-    </select>
+
+<!-- 게시판 단건 조회 (게시판과 유저 테이블 조인) -->
+<select id="getNoticeById" parameterType="Admin" resultType="Admin">
+    SELECT 
+        b.seq AS seq, 
+        b.div AS div, 
+        b.title AS title, 
+        b.user_id AS userId, 
+        b.mod_id AS modId, 
+        b.content AS content, 
+        b.img_link AS imgLink, 
+        b.reg_dt AS boardRegDt, 
+        b.mod_dt AS modDt, 
+        b.views AS views, 
+        b.gname AS gname,
+        u.user_name AS userName, 
+        u.user_pw AS userPw, 
+        u.user_email AS userEmail, 
+        u.birth AS userBirth, 
+        u.grade AS userGrade, 
+        u.address AS userAddress, 
+        u.detail_address AS userDetailAddress, 
+        u.reg_dt AS userRegDt
+    FROM d_board b
+    LEFT JOIN d_user u ON b.user_id = u.user_id
+    WHERE b.seq = #{seq} AND b.div = '20'
+</select>
+
+
+
 
 
 

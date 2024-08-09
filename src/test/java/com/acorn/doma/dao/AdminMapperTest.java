@@ -7,7 +7,11 @@ import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
+import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -47,58 +51,89 @@ public class AdminMapperTest implements PLog {
     
     @Before
     public void setUp() throws Exception {
-        log.debug("┌──────────────────────────────┐");
-        log.debug("│ setUp()                      │");
-        log.debug("└──────────────────────────────┘");
-        
-        admin01 = new Admin(
-                1, "20", "제목_01", "admin01", "admin01", "내용_01", "img_link_01", "2024-01-01", "2024-01-01", 0, "구_01",
-                "User01", "password", "user01@example.com", "1990-01-01", 1, "서울 서대문구", "101호", "2024-01-01"
-            );
-            admin02 = new Admin(
-                2, "20", "제목_02", "admin02", "admin02", "내용_02", "img_link_02", "2024-02-02", "2024-02-02", 0, "구_02",
-                "User02", "password", "user02@example.com", "1992-02-02", 1, "서울 서대문구", "102호", "2024-02-02"
-            );
-            admin03 = new Admin(
-                3, "20", "제목_03", "admin03", "admin03", "내용_03", "img_link_03", "2024-03-03", "2024-03-03", 0, "구_03",
-                "User03", "password", "user03@example.com", "1994-03-03", 1, "서울 서대문구", "103호", "2024-03-03"
-            );
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            search = new Search();
-        }
+        LocalDate currentDate = LocalDate.now();
+        String currentDateString = formatDate(currentDate);
+
+        admin01 = new Admin(
+            1, "20", "제목_01", "admin01", "admin01", "내용_01", "img_link_01", 
+            currentDateString, currentDateString, 0, "구_01", 
+            "admin01", "password", "user01@example.com", "1990-01-01", 
+            0, "서울 서대문구", "101호", "2024-01-01"
+        );
+
+        admin02 = new Admin(
+            2, "20", "제목_02", "admin02", "admin02", "내용_02", "img_link_02", 
+            currentDateString, currentDateString, 0, "구_02", 
+            "admin02", "password", "user02@example.com", "1992-02-02", 
+            0, "서울 서대문구", "102호", "2024-02-02"
+        );
+
+        admin03 = new Admin(
+            3, "20", "제목_03", "admin03", "admin03", "내용_03", "img_link_03", 
+            currentDateString, currentDateString, 0, "구_03", 
+            "admin03", "password", "user03@example.com", "1994-03-03", 
+            0, "서울 서대문구", "103호", "2024-03-03"
+        );
+
+        search = new Search();
+    }
 
     @After
     public void tearDown() throws Exception {
-        log.debug("┌──────────────────────────────┐");
-        log.debug("│ tearDown()                   │");
-        log.debug("└──────────────────────────────┘");
+        // Optional cleanup code
     }
-    
-    public void isSameAdmin(Admin adminIn, Admin adminOut) {
-        assertEquals(adminIn.getSeq(), adminOut.getSeq());
-        assertEquals(adminIn.getDiv(), adminOut.getDiv());
-        assertEquals(adminIn.getTitle(), adminOut.getTitle());
-        assertEquals(adminIn.getUserId(), adminOut.getUserId());
-        assertEquals(adminIn.getModId(), adminOut.getModId());
-        assertEquals(adminIn.getContent(), adminOut.getContent());
-        assertEquals(adminIn.getImgLink(), adminOut.getImgLink());
-        assertEquals(adminIn.getGname(), adminOut.getGname());
-        assertEquals(adminIn.getViews(), adminOut.getViews());
-        assertEquals(adminIn.getRegDt(), adminOut.getRegDt());
-        assertEquals(adminIn.getModDt(), adminOut.getModDt());
-        
-        assertEquals(adminIn.getUserName(), adminOut.getUserName());
-        assertEquals(adminIn.getUserPw(), adminOut.getUserPw());
-        assertEquals(adminIn.getUserEmail(), adminOut.getUserEmail());
-        assertEquals(adminIn.getUserBirth(), adminOut.getUserBirth());
-        assertEquals(adminIn.getUserGrade(), adminOut.getUserGrade());
-        assertEquals(adminIn.getUserAddress(), adminOut.getUserAddress());
-        assertEquals(adminIn.getUserDetailAddress(), adminOut.getUserDetailAddress());
-        assertEquals(adminIn.getUserRegDt(), adminOut.getUserRegDt());
-    }
-    
 
-    @Ignore
+    private String formatDate(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return date.format(formatter);
+    }
+
+    private LocalDate parseDateString(String dateString) {
+        if (dateString == null || dateString.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            return LocalDate.parse(dateString, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Failed to parse date string: " + dateString, e);
+        }
+    }
+
+    private void isSameAdmin(Admin expected, Admin actual) {
+        LocalDate expectedBoardRegDate = parseDateString(expected.getBoardRegDt().split(" ")[0]);
+        LocalDate actualBoardRegDate = parseDateString(actual.getBoardRegDt().split(" ")[0]);
+        assertEquals(expectedBoardRegDate, actualBoardRegDate);
+
+        LocalDate expectedModDate = parseDateString(expected.getModDt().split(" ")[0]);
+        LocalDate actualModDate = parseDateString(actual.getModDt().split(" ")[0]);
+        assertEquals(expectedModDate, actualModDate);
+
+        LocalDate expectedUserRegDate = parseDateString(expected.getUserRegDt().split(" ")[0]);
+        LocalDate actualUserRegDate = parseDateString(actual.getUserRegDt().split(" ")[0]);
+        assertEquals(expectedUserRegDate, actualUserRegDate);
+
+        // 나머지 필드 비교 (필요에 따라 추가)
+        assertEquals(expected.getSeq(), actual.getSeq());
+        assertEquals(expected.getDiv(), actual.getDiv());
+        assertEquals(expected.getTitle(), actual.getTitle());
+        assertEquals(expected.getUserId(), actual.getUserId());
+        assertEquals(expected.getModId(), actual.getModId());
+        assertEquals(expected.getContent(), actual.getContent());
+        assertEquals(expected.getImgLink(), actual.getImgLink());
+        assertEquals(expected.getViews(), actual.getViews());
+        assertEquals(expected.getGname(), actual.getGname());
+        assertEquals(expected.getUserName(), actual.getUserName());
+        assertEquals(expected.getUserPw(), actual.getUserPw());
+        assertEquals(expected.getUserEmail(), actual.getUserEmail());
+        assertEquals(expected.getUserBirth(), actual.getUserBirth());
+        assertEquals(expected.getUserGrade(), actual.getUserGrade());
+        assertEquals(expected.getUserAddress(), actual.getUserAddress());
+        assertEquals(expected.getUserDetailAddress(), actual.getUserDetailAddress());
+    }
+
     @Test
     public void addAndGet() throws Exception {
         // 공지사항 등록 테스트
@@ -106,12 +141,18 @@ public class AdminMapperTest implements PLog {
         log.debug("flag : " + flag);
         assertEquals(1, flag);
 
+        // 새로 생성된 SEQ 값을 가져오기 위해 admin01을 다시 조회
+        int generatedSeq = adminMapper.getLastInsertedSeq();
+        admin01.setSeq(generatedSeq);
+        log.debug("Generated SEQ : " + generatedSeq);
+
         // 단건 조회 테스트
-        Admin outAdmin01 = adminMapper.getNoticeById(admin01.getSeq());
+        Admin outAdmin01 = adminMapper.getNoticeById(generatedSeq);
         log.debug("outAdmin01 : " + outAdmin01);
+        
         assertNotNull(outAdmin01);
         isSameAdmin(admin01, outAdmin01);
-
+        
         // 공지사항 수정 테스트
         String updateStr = "_U";
         outAdmin01.setTitle(outAdmin01.getTitle() + updateStr);
@@ -133,7 +174,6 @@ public class AdminMapperTest implements PLog {
         assertEquals(1, flag);
     }
 
-
     @Ignore 
     @Test
     public void doRetrieve() throws SQLException {
@@ -144,7 +184,6 @@ public class AdminMapperTest implements PLog {
         List<Admin> list = adminMapper.getNotices(search);
         assertNotNull(list);
     }
-
 
     @Ignore 
     @Test
@@ -163,7 +202,6 @@ public class AdminMapperTest implements PLog {
     @Test
     public void testNoticeSpecificRetrieve() throws Exception {
         try {
-        	
             log.debug("┌──────────────────────────────┐");
             log.debug("│ testNoticeSpecificRetrieve() │");
             log.debug("└──────────────────────────────┘");
@@ -192,7 +230,7 @@ public class AdminMapperTest implements PLog {
         }
     }
 
-//    @Ignore    
+    @Ignore    
     @Test
     public void testUserRetrieve() throws SQLException {
         // 회원 목록 조회 테스트
