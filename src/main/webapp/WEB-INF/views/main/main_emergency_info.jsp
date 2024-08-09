@@ -24,9 +24,9 @@ document.addEventListener("DOMContentLoaded",function(){
 <body>
     <div style="display : flex">
     <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
-    <div id="subMap" style="width:500px; height : 815px;">
+    <div id="subMap" style="width:520px; height : 200px;">
         <section id="mapContainer">
-            <div class="aside" style="height:1000px; width: 350px; overflow : scroll">
+            <div class="aside" style="height:800px; width: 350px; overflow : scroll">
                 <h2 style="font-weight : bold; text-align : center; border: 3px solid black">돌발정보</h2>
                 <c:forEach var="acc" items="${accList}">
                 <ul class="info_ul">
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded",function(){
             </div>
         </section>
     </div>
-    <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
+       <div id="map" style="width:100%;height:800px"></div>
 </div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </body>
@@ -81,7 +81,7 @@ function initKakaoMap() {
         var container = document.getElementById('map');
         var options = {
             center: new kakao.maps.LatLng(37.564214, 127.001699),
-            level: 7
+            level: 8
         };
         map = new kakao.maps.Map(container, options);
 
@@ -164,12 +164,12 @@ function initKakaoMap() {
         });
 
         // 맵에 마우스 드래그 이벤트를 추가하여 인포윈도우를 닫습니다
-        kakao.maps.event.addListener(map, 'dragstart', function() {
+         kakao.maps.event.addListener(map, 'dragend', function() {
             if (currentInfoWindow) {
                 currentInfoWindow.close();
                 currentInfoWindow = null;
             }
-        });
+        }); 
     });
 }
 

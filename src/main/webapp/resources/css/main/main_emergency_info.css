@@ -1,10 +1,10 @@
 #map {
     width: 70%;
-    height: 100px; /* 맵의 상하 크기 조정 */
+    height: 300px; /* 맵의 상하 크기 조정 */
 }
 .mapContainer {
     width: 1300px;
-    height: 1000px; /* 맵 컨테이너 크기 조정 */
+    height: 300px; /* 맵 컨테이너 크기 조정 */
 }
 .map-fn-l-box {
     z-index: 500;

@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -135,7 +136,8 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
 
         return accInfoList;
     }
-	
+	@Override
+//	@Scheduled(fixedDelay = 60000)
 	public void insertAccidentData() {
         try {
             String xmlData = fetchDataFromApi();

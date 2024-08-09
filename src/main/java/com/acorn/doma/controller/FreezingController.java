@@ -34,13 +34,12 @@ public class FreezingController implements PLog{
 	@RequestMapping(value="/freezing.do"
 			,method=RequestMethod.GET
 			,produces = "text/plain;charset=UTF-8")
-	@ResponseBody
 	public String freezing(Model model, @RequestParam(value = "years", required = false) List<Integer> years) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ freezingMain()               │");
 		log.debug("└──────────────────────────────┘");
 		
-		String viewName = "main/main_freezing_info";
+		String viewName = "freezing/main_freezing_info";
 		if (years == null || years.isEmpty()) {
 		    years = Arrays.asList(2018, 2019, 2020, 2021, 2022, 2023);
 		}

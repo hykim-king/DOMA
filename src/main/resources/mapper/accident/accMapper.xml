@@ -71,6 +71,9 @@
 		        D_ACC_TYPE T ON A.ACC_TYPE = T.ACC_TYPE
 		    JOIN 
 		        D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
+		    ORDER BY 
+            TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD') DESC,
+            TO_DATE(A.OCCR_TIME, 'HH24:MI:SS') DESC
 		)
     </select>
     <select id="A01Retrieve" resultType="Accident">

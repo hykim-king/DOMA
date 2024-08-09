@@ -53,7 +53,7 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
-//	@Ignore
+	@Ignore
 	@Test
 	public void doSelectOne() throws Exception{
 		log.debug("┌──────────────────────────────────────┐");
@@ -64,14 +64,12 @@ public class AccInfoServiceImplTest implements PLog{
 		assertNotNull(outVO);
 		
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌─────────────────────────────────────────────────────────");
 		log.debug("│ fullTableScan()");
 		log.debug("└─────────────────────────────────────────────────────────");
-		int flag = accMapper.countAll();
-		log.debug("flag : " + flag);
 		
 		List<Accident> list = accInfoService.fullTableScan();
 		log.debug("┌ list ┐");

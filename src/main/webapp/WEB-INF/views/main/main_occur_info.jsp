@@ -19,7 +19,7 @@
 		<jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
 	    <div id="subMap" style="height : 815px;">
 			<section id="mapContainer">
-				<div class="aside" style="height:1000px; width: 350px; overflow : scroll">
+				<div class="aside" style="height:800px; width: 350px; overflow : scroll">
 					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">사고다발</h2>
 					<c:forEach var="occur" items="${pointData }">
 					<ul class="info_ul">
@@ -61,7 +61,7 @@
 				</div>
 			</section>
    			</div>
-       		<jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
+       		       <div id="map" style="width:100%;height:800px"></div>
 	</div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
     <script src="${CP}/resources/js/main/main_occur_detail.js"></script>
