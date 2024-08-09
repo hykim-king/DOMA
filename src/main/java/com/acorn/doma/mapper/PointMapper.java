@@ -17,4 +17,8 @@ public interface PointMapper extends WorkDiv<Point> {
 	int countAll() throws SQLException;
 	
 	List<Point> fullTableScan() throws SQLException;
+		
+	List<Point> detailInfoLoad(Point inVO) throws SQLException;
+	
+	List<String> guLoad(String year) throws SQLException;
 }

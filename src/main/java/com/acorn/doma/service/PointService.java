@@ -20,4 +20,8 @@ public interface PointService {
 	void saveDataToDatabase(JsonArray items);
 	
 	List<Point> fullTableScan() throws Exception;
+	
+	List<Point> detailInfoLoad(Point inVO) throws Exception;
+	
+	List<String> guLoad(String year) throws Exception;
 }

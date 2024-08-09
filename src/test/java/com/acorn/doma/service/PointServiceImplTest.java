@@ -33,11 +33,15 @@ public class PointServiceImplTest implements PLog{
 	@Autowired
 	PointMapper pointMapper;
 	
+	Point pointVO;
+	
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────────────┐");
 		log.debug("│ setUp()                              │");
 		log.debug("└──────────────────────────────────────┘");
+		
+		pointVO = new Point("", "", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");
 		
 	}
 
@@ -48,10 +52,45 @@ public class PointServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
+	@Test
+	public void guLoad() throws Exception	{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ guLoad()                │");
+		log.debug("└──────────────────────────────┘");
+		
+		List<String> guList = pointService.guLoad("2022");
+		log.debug("┌ list ┐");
+		for(String gu : guList) {
+			log.debug("│ gu : " + gu);
+		}
+		log.debug("└─────────────────────────────────────────────");
+		
+		assertEquals(25, guList.size());
+	}
+	@Ignore
+	@Test
+	public void detailInfoLoad() throws Exception {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ detailInfoLoad()             │");
+		log.debug("└──────────────────────────────┘");
+		
+		List<Point> pointList = pointService.detailInfoLoad(pointVO);
+		log.debug("1. pointVO : " + pointVO);
+		log.debug("┌ list ┐");
+		for(Point point : pointList) {
+			log.debug("│ Point : " + point);
+		}
+		log.debug("└─────────────────────────────────────────────");
+		
+		assertEquals(25, pointList.size());
+	}
+	
 	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
-		
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ fullTableScan()              │");
+		log.debug("└──────────────────────────────┘");
 		List<Point> listPoint = pointService.fullTableScan();
 		
 		log.debug("┌ list ┐");
@@ -62,7 +101,8 @@ public class PointServiceImplTest implements PLog{
 		
 		assertEquals(6, listPoint.size());
 	}
-//	@Ignore
+	
+	@Ignore
 	@Test
 	public void testInsertPointData() throws Exception{
 		pointMapper.doDeleteAll();

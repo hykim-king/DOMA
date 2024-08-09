@@ -34,14 +34,17 @@ public class PointMapperTest implements PLog{
 	PointMapper pointMapper;
 	
 	Point point;
+	Point pointVO02;
 	
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
+		
 		point = new Point("3", "d", 1, 1, 1, 1, 1, "type", 1, 2, "2", "d");
-		pointMapper.doDeleteAll();
+		pointVO02 = new Point("", "", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");
+		//pointMapper.doDeleteAll();
 	}
 	
 	@After
@@ -50,7 +53,42 @@ public class PointMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
+	@Test
+	public void guLoad() throws Exception	{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ guLoad()                │");
+		log.debug("└──────────────────────────────┘");
+		
+		List<String> guList = pointMapper.guLoad("2022");
+		log.debug("┌ list ┐");
+		for(String gu : guList) {
+			log.debug("│ gu : " + gu);
+		}
+		log.debug("└─────────────────────────────────────────────");
+		
+		assertEquals(25, guList.size());
+	}
 	
+	@Ignore
+	@Test
+	public void detailInfoLoad() throws Exception {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ detailInfoLoad()             │");
+		log.debug("└──────────────────────────────┘");
+		
+		List<Point> pointList = pointMapper.detailInfoLoad(pointVO02);
+		log.debug("1. pointVO02 : " + pointVO02);
+		log.debug("┌ list ┐");
+		for(Point point : pointList) {
+			log.debug("│ Point : " + point);
+		}
+		log.debug("└─────────────────────────────────────────────");
+		
+		assertEquals(25, pointList.size());
+	}
+	
+	
+	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -70,7 +108,7 @@ public class PointMapperTest implements PLog{
 		
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void dataInsert() throws Exception{
 		log.debug("┌──────────────────────────────┐");
