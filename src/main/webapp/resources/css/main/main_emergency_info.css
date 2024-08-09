@@ -37,3 +37,7 @@
 .info_table {
     border: 1px solid black;
 }
+
+ul{
+	padding : 0px;
+}

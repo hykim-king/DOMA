@@ -160,7 +160,9 @@ public class PointServiceImpl implements PointService, PLog{
 	}
 	
 	public List<Point> fullTableScan() throws Exception{
-		
+		log.debug("┌────────────────────────────────────────┐");
+		log.debug("│ PointServiceImpl() : fullTableScan     │");
+		log.debug("└────────────────────────────────────────┘");
 		List<Point> listPoint = pointMapper.fullTableScan();
 		
 		log.debug("┌ list ┐");
@@ -174,7 +176,9 @@ public class PointServiceImpl implements PointService, PLog{
 
 	@Override
 	public List<Point> detailInfoLoad(Point inVO) throws Exception {
-		
+		log.debug("┌────────────────────────────────────────┐");
+		log.debug("│ PointServiceImpl() : detailInfoLoad    │");
+		log.debug("└────────────────────────────────────────┘");
 		List<Point> pointList = pointMapper.detailInfoLoad(inVO);
 		log.debug("1. pointVO02 : " + inVO);
 		log.debug("┌ list ┐");
@@ -188,7 +192,9 @@ public class PointServiceImpl implements PointService, PLog{
 
 	@Override
 	public List<String> guLoad(String year) throws Exception {
-		
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ PointServiceImpl() : guLoad  │");
+		log.debug("└──────────────────────────────┘");
 		List<String> guList = pointMapper.guLoad(year);
 		log.debug("1. year : " + year);
 		log.debug("┌ list ┐");

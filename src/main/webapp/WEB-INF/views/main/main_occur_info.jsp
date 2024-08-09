@@ -19,7 +19,7 @@
 		<jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
 	    <div id="subMap" style="height : 815px; diplay : inline-block">
 			<section id="mapContainer">
-				<div class="aside" style="height:1000px; width: 350px; overflow : scroll; diplay : inline-block" >
+				<div class="aside" style="height:820px; width: 350px; overflow : scroll; diplay : inline-block" >
 					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">사고다발</h2>
 					<c:forEach var="occur" items="${pointData }">
 					<ul class="info_ul">

@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.acorn.doma.cmn.Message;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Point;
 import com.acorn.doma.service.PointService;
@@ -33,7 +33,7 @@ public class PointController implements PLog{
 			,produces = "text/plain;charset=UTF-8")
 	public String point(Model model) throws Exception {
 		log.debug("┌──────────────────────────────┐");
-		log.debug("│ point()               		  │");
+		log.debug("│ PointController : point()    │");
 		log.debug("└──────────────────────────────┘");
 		
 		String viewName = "main/main_occur_info";
@@ -56,9 +56,9 @@ public class PointController implements PLog{
 			,produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String guListLoad(Model model,String year) throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ guListLoad()            	  │");
-		log.debug("└──────────────────────────────┘");
+		log.debug("┌───────────────────────────────────┐");
+		log.debug("│ PointController : guListLoad()	   │");
+		log.debug("└───────────────────────────────────┘");
 		
 		List<String> guList = pointService.guLoad(year);
 		
@@ -78,10 +78,12 @@ public class PointController implements PLog{
 			,method=RequestMethod.POST
 			,produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String pointDetailInfo(Point inVO, Model model) throws Exception {
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ pointDetailInfo()            │");
-		log.debug("└──────────────────────────────┘");
+	public String pointDetailInfo(Point inVO) throws Exception {
+		log.debug("┌─────────────────────────────────────┐");
+		log.debug("│ PointController : pointDetailInfo() │");
+		log.debug("└─────────────────────────────────────┘");
+		
+		log.debug("inVO : " + inVO);
 		
 		List<Point> listPoint = pointService.detailInfoLoad(inVO);
 		
@@ -90,8 +92,6 @@ public class PointController implements PLog{
 			log.debug("│ point : " + point);
 		}
 		log.debug("└");
-		
-		model.addAttribute("detailData", listPoint);
 		
 		Gson gson = new Gson();
 		
