@@ -120,8 +120,7 @@
              mod_id  = #{modId},
              content = #{content},
              mod_dt  = SYSDATE
-          WHERE seq = #{seq}
-            AND user_id = #{userId}
+          WHERE seq = #{seq} 
     </update>
     
     <select id="doSelectOne" parameterType="Board" resultType="Board">

@@ -75,7 +75,7 @@ public class MyPageMapperTest implements PLog {
 		userVO01 = new User("user2", "user2", "2222", "user2@naver.com", "2002-02-02", 1, "서울 서대문구", "101호", "x");
 		// userMapper.doDelete(userVO01);
 
-		boardV001 = new Board(0, "10", "구20", "제목_01", "user1", "user1", "내용2", "이미지2", "x", "x", 1);
+		boardV001 = new Board(300, "10", "구20", "제목_01", "user1", "user1", "내용2", "이미지2", "x", "x", 1);
 
 		search = new Search();
 	}
@@ -98,39 +98,43 @@ public class MyPageMapperTest implements PLog {
 	//@Ignore
 	@Test
 	public void mpBoardUp() throws Exception {
-		
-		boardMapper.doDelete(boardV001);
-		
-		 int flag = boardMapper.doSave(boardV001);
-		log.debug("flag : " + flag);
-		log.debug("boardV001 : " + boardV001);
 
-		int seq = boardMapper.getSequence();
-		log.debug("seq : " + seq);
-		boardV001.setSeq(seq);
+	    // `seq` 값을 가져오기 위한 작업
+	    int seq = boardMapper.getSequence();
+	    log.debug("seq : " + seq);
 
-		Board outVO = boardMapper.doSelectOne(boardV001);
-		log.debug("outV1 : " + outVO);
-		assertNotNull(outVO);
+	    // `boardV001` 객체에 `seq` 설정
+	    boardV001.setSeq(seq);
 
-		String updateStr = "_U";
-		outVO.setTitle(outVO.getTitle() + updateStr);
+	    // `seq` 번호로 데이터를 조회
+	    Board outVO = boardMapper.doSelectOne(boardV001);
+	    log.debug("outV1 : " + outVO);
+	    assertNotNull(outVO);
 
-		flag = boardMapper.doUpdate(outVO);
-		log.debug("outVO++++++:" + outVO);
-		log.debug("flag : " + flag);
-		assertEquals(1, flag);
+	    // 타이틀 업데이트
+	    String updateStr = "_U";
+	    outVO.setTitle(outVO.getTitle() + updateStr);
+	    outVO.setContent(outVO.getContent() + updateStr);
+	    // 업데이트 수행
+	    int flag = boardMapper.doUpdate(outVO);
+	    log.debug("outVO++++++:" + outVO);
+	    log.debug("flag : " + flag);
+	    assertEquals(1, flag);
 
-		Board outVO01Update = boardMapper.doSelectOne(outVO);
-		log.debug("outVO01Update : " + outVO01Update);
-		assertNotNull(outVO01Update);
+	    // 업데이트된 데이터 다시 조회하여 확인
+	    Board outVO01Update = boardMapper.doSelectOne(outVO);
+	    log.debug("outVO01Update : " + outVO01Update);
+	    assertNotNull(outVO01Update);
 
+	    // 업데이트된 값이 예상한 대로 동일한지 확인
+	    isSameBoard(outVO01Update, outVO);
 	}
 
-	//@Ignore
+
+	@Ignore
 	@Test
 	public void mpBoardSelectOne() throws Exception {
-
+		
 		Board outVO = boardService.mpBoardSelectOne(boardV001);
 		log.debug("outVO : " + outVO);
 
