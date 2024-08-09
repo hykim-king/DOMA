@@ -67,7 +67,7 @@ if(session.getAttribute("user")!=null){
         padding: 20px;
     }
     .left-container {
-    	margin-left : 250px;
+    	margin-left : 200px;
         flex-basis: 30%; /* Set left-container to 30% of the width */
         padding: 20px;
     }
@@ -123,14 +123,14 @@ if(session.getAttribute("user")!=null){
 </style>
 <title>내 정보</title>
  <script src="${CP}/resources/js/mypage/mypageinfo.js"></script>
-  
+ <p>${user.userId}</p>
 </head>
 <body>
     <div class="container">
     <div class="left-container">
     <div class="form-container">
                 <h2>내 정보</h2>
-                 
+                <p> ${userId }</p>
                 <div class="form-content">
                     <form action="" method="">
                         <div>
@@ -169,6 +169,8 @@ if(session.getAttribute("user")!=null){
     </div>
       
 </div>
+
+
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %>
  

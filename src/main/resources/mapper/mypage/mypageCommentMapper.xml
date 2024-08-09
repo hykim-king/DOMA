@@ -5,10 +5,10 @@
 
 	<select id="mpCommentSelect" parameterType="String" resultType="Comments">
         SELECT
-		       c.comseq,
+		       c.comseq as seq,
 		       c.seq,
-		       c.user_id, 
-		       c.mod_id,
+		       c.user_id as modId, 
+		       c.mod_id as modId,
 		       c.comments,
 		       TO_CHAR(c.reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
 		       TO_CHAR(c.mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt

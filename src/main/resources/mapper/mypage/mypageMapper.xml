@@ -27,7 +27,7 @@
              user_pw   		= #{userPw},     
              user_email     = #{userEmail},  
              birth          = #{birth},     
-             grade          = #{grade}+2,     
+             grade          = #{grade}+1,     
              address        = #{address},  
              detail_address      = #{detailAddress} , 
              reg_dt  = SYSDATE

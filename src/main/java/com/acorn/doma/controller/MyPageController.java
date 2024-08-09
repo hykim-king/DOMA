@@ -77,7 +77,10 @@ public class MyPageController implements PLog {
 		return viewName;
 	}
 	
-	 
+	
+	
+	
+	
 	@RequestMapping(value = "/mpSelect.do", method = RequestMethod.GET)
 	public String moveToBoard(HttpSession session, Model model,Board inVO) throws SQLException {
 	    String viewName = "mypage/MyPageBoard";
@@ -97,6 +100,8 @@ public class MyPageController implements PLog {
 	    
 	    return viewName;
 	}
+	
+	
 	
 	@RequestMapping(value = "/mpCommentSelect.do", method = RequestMethod.GET)
 	public String moveToComment(HttpSession session, Model model,Comments inVO) throws SQLException {
