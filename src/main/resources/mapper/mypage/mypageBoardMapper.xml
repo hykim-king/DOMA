@@ -4,13 +4,15 @@
  
 	    
     <select id="mpSelect" parameterType="String"  resultType="Board">
-      SELECT 
+      SELECT
+      		b.seq as seq,
+      		b.div as div,
     		b.title,
-    		b.user_id,
-    		b.mod_id,
+    		b.user_id as userId,
+    		b.mod_id  as modId,
     		b.content, 
-    		TO_CHAR(b.reg_dt, 'YYYY/MM/DD HH24:MI:SS') AS reg_dt_formatted,
-    		TO_CHAR(b.mod_dt, 'YYYY/MM/DD HH24:MI:SS') AS mod_dt_formatted,
+    		TO_CHAR(b.reg_dt, 'YYYY/MM/DD HH24:MI:SS') AS regDt,
+    		TO_CHAR(b.mod_dt, 'YYYY/MM/DD HH24:MI:SS') AS modDt,
     		b.views,
     		b.gname
 		FROM
@@ -42,13 +44,13 @@
         SELECT 
         		seq,
     			title,
-    			user_id,
-    			mod_id,
+    			user_id as userId,
+    			mod_id  as modId,
     			content,
-    			img_link,
-    			reg_dt,
-    			mod_dt,
-    			views  
+    			img_link as imgLink,
+    			TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+		    	TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt,
+		    	views
 		FROM
     			d_board
     	where

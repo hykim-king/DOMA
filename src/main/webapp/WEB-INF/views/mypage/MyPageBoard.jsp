@@ -59,61 +59,156 @@
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css">
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<title>게시판</title>
+<style>
+    .table-content {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+     
+
+	.table {
+		margin: 20px;
+    	width: 800px; /* 테이블 너비를 부모 컨테이너에 맞게 조정 */
+    	 
+	}
+
+	.table thead th, .table tbody td {
+    	text-align: center; /* 가운데 정렬 */
+	}
+</style>
+
+
+
 <script>
-    document.addEventListener("DOMContentLoaded", function(){
-        console.log("<%= userId %>");
-        console.log("DOMContentLoaded");
-    });
+document.addEventListener("DOMContentLoaded", function(){
+    console.log("DOMContentLoaded");
+    
+    const seqInput = document.querySelector("#seq"); 
+    //div
+    const divInput = document.querySelector("#div");
+    
+    const doDeleteBtn = document.querySelector("#deleteBoard");
+    
+    doDeleteBtn.addEventListener("click", function(event){
+        const seq = button.getAttribute("deleteBoard"); 
+        deleteBoard(seq);
+     
+	});
+    
+    
+    // Update Board function
+    function updateBoard(seq) { 
+    	
+    	const url = "/doma/board/doSelectOne.do?seq=" + seq +"&div=10"; 
+    	window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
+    }
+
+    // Delete Board function (Placeholder)
+    function deleteBoard(seq) { 
+		console.log("doDelete()");
+        
+        if(isEmpty(seqInput.value) == true){
+            alert('seq를 확인 하세요.')
+            //seqInput.focus();
+            return;
+        }
+        
+        if(confirm("삭제 하시겠습니까?") === false)return;
+        
+        //비동기 통신
+        let type = "GET";
+        let url = "/doma/board/doDelete.do";
+        let async = "true";
+        let dataType = "html";
+        
+        let params = {
+            "seq"    : seqInput.value
+        };
+
+        PClass.pAjax(url, params, dataType, type, async, function(data){
+            if(data){
+                try{
+                    //JSON문자열을 JSON Object로 변환
+                    const message = JSON.parse(data)
+                    if(isEmpty(message) === false && 1 === message.messageId){
+                        alert(message.messageContents);
+                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+                        moveToList();
+                    }else{
+                        alert(message.messageContents);
+                    }
+                    
+                }catch(e){
+                    alert("data를 확인 하세요");
+                }
+            }
+        });
+    }
+
+    // Attach event listeners to each button after the page is loaded
+    document.querySelectorAll(".updateBoardBtn").forEach(function(button){
+        button.addEventListener("click", function(event){
+            const seq = button.getAttribute("data-seq"); 
+            updateBoard(seq);
+        });
+    }); 
+});
 </script>
 
-</head>
+<title>게시판</title> 
+  
+</head> 
 <body> 
-     <!-- <p>${user}</p> -->
-    ${list} 
-    
-    <h2>게시글</h2> 
-            	<div class="table-content">
-            	<table  class="table table-hover">
+    <div class="table-content text-center d-flex justify-content-center">
+        <div>
+            <h2>게시글 목록</h2>
+            <table class="table table-hover">
                 <thead>
                     <tr class="table-secondary">
-      				<!-- <th scope="row">Warning</th> -->
-     				<th>순번</th>
-      				<th>제목</th>
-      				<th>지역</th>
-     			    <th>추천수</th>
-     			    <th>***</th>
-    				</tr>
-    				</thead>
-    			<tbody>
-		          <c:choose>
-		            <c:when test="${list.size() > 0 }">
-		              <c:forEach var="vo" items="${list }">
-    				
-					<tr> 
-					<td class="text-center" ><c:out value="${vo.title }"></c:out></td>
-					<td class="text-center" ><c:out value="${vo.gname }"></c:out></td>
-					<td class="text-center" ><c:out value="${vo.views }"></c:out></td>
-					<th><button type="button" class="btn btn-outline-secondary" >수정</button>
-						<button type="button" class="btn btn-outline-danger" >삭제</button></th>
-					  
-					</tr>
-					 </c:forEach>
-		            </c:when>
-		            <c:otherwise>
-		                <tr><td class="text-center" colspan="99" >No data found!</td></tr>
-		            </c:otherwise>
-		          </c:choose>
-                
-                    <!-- 실제 데이터는 서버에서 가져와서 여기에 추가 -->
+                    	<th>seq</th>
+                        <th>제목</th>
+                        <th>수정자</th>
+                        <th>코멘트</th>
+                        <th>지역</th>
+                        <th>조회수</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:choose>
+                        <c:when test="${list.size() > 0}">
+                            <c:forEach var="vo" items="${list}">
+                                <tr>
+                                	<td class="text-center"><c:out value="${vo.seq}"></c:out></td>
+                                    <td class="text-center"><c:out value="${vo.title}"></c:out></td>
+                                    <td class="text-center"><c:out value="${vo.modId}"></c:out></td>
+                                    
+                                    
+                                    
+                                    <td class="text-center"><c:out value="${vo.content}"></c:out></td>
+                                    
+                                    <td class="text-center"><c:out value="${vo.gname}"></c:out></td>
+                                    <td class="text-center"><c:out value="${vo.views}"></c:out></td>
+                 <th>
+    					<button type="button" class="btn btn-outline-secondary updateBoardBtn" data-seq="${vo.seq}"  >
+       			 				수정  </button>
+    					<button type="button" class="btn btn-outline-danger  " id="deleteBoardBtn"  >
+        						삭제 </button>
+				</th>
+				
+				
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <tr><td class="text-center" colspan="99">No data found!</td></tr>
+                        </c:otherwise>
+                    </c:choose>
                 </tbody>
-            	</table>
-            	 
-            	
+            </table>
+        </div>
     </div>
-    </div>
-    
-    
+
+    <%@ include file="/WEB-INF/views/template/footer.jsp" %>
 </body>
-<%@ include file="/WEB-INF/views/template/footer.jsp" %>
 </html>
