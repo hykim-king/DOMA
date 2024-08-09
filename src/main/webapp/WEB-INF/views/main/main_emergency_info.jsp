@@ -59,11 +59,10 @@ document.addEventListener("DOMContentLoaded",function(){
                 </c:forEach>
             </div>
         </section>
+    </div>            
+            <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
     </div>
-       <div id="map" style="width:100%;height:800px"></div>
-</div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-</body>
 <script>
 var map;
 var markers = []; // 모든 마커를 저장할 배열

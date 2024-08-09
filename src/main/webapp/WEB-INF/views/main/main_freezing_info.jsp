@@ -58,9 +58,9 @@
 					</c:forEach>
 				</div>
 			</section>
-   			</div>
-       		       <div id="map" style="width:100%;height:800px"></div>
-    </div>
+   			</div>            
+            <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
+        </div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 	<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
 <script>
