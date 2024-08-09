@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.acorn.doma.domain.Freezing;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -16,5 +17,6 @@ public interface FreezingService {
 	String getJsonElementAsString(JsonObject jsonObject, String key);
 	 void insertFreezingData() throws IOException;
 	 void saveDataToDatabase(JsonArray items);
-	List<Map<String, Object>> selectFreezingData(@Param("years") List<Integer> years) throws IOException, SQLException;
+	 List<Freezing> selectAllData() throws SQLException;
+	 Freezing selectFreezingDataById(String fid) throws SQLException;
 }

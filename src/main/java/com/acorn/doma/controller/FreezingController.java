@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.Freezing;
 import com.acorn.doma.domain.Point;
 import com.acorn.doma.service.FreezingService;
 import com.acorn.doma.service.PointService;
@@ -34,25 +35,14 @@ public class FreezingController implements PLog{
 	@RequestMapping(value="/freezing.do"
 			,method=RequestMethod.GET
 			,produces = "text/plain;charset=UTF-8")
-	public String freezing(Model model, @RequestParam(value = "years", required = false) List<Integer> years) throws SQLException {
+	public String freezing(Model model) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ freezingMain()               │");
 		log.debug("└──────────────────────────────┘");
 		
-		String viewName = "freezing/main_freezing_info";
-		if (years == null || years.isEmpty()) {
-		    years = Arrays.asList(2018, 2019, 2020, 2021, 2022, 2023);
-		}
-		
-		// Freezing 데이터 조회
-		List<Map<String, Object>> freezingData;
-			try {
-			    freezingData = freezingService.selectFreezingData(years);
-			} catch (IOException e) {
-			    log.error("Error retrieving freezing data", e);
-			    throw new SQLException("Unable to retrieve freezing data", e);
-			}
-		model.addAttribute("freezingData", freezingData);
+		String viewName = "main/main_freezing_info";
+		List<Freezing> allData = freezingService.selectAllData();
+		model.addAttribute("allData", allData);
 		return viewName;
 	}
 		

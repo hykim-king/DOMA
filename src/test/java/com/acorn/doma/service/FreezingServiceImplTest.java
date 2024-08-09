@@ -1,5 +1,6 @@
 package com.acorn.doma.service;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.Freezing;
 import com.acorn.doma.mapper.FreezingMapper;
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
@@ -32,11 +34,17 @@ public class FreezingServiceImplTest implements PLog{
 	
 	@Autowired
 	FreezingMapper freezingMapper;
+	
+	Freezing freezing;
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────────────┐");
 		log.debug("│ setUp()                              │");
 		log.debug("└──────────────────────────────────────┘");
+		freezing = new Freezing();
+		freezingMapper.doDeleteAll();
+		freezingService.insertFreezingData();
+		freezingMapper.countAll();
 		
 	}
 
@@ -49,20 +57,18 @@ public class FreezingServiceImplTest implements PLog{
 	}
 //	@Ignore
 	@Test
-	public void testInsertFreezingData() throws Exception{
-		freezingMapper.doDeleteAll();
-		freezingService.insertFreezingData();
-		freezingMapper.countAll();
+	public void serviceAll() throws Exception{
+		List<Freezing> allData = freezingService.selectAllData();		
+		assertNotNull(allData);
+		String fid = "6571253";
+		Freezing outVO = freezingService.selectFreezingDataById(fid);
+		assertNotNull(outVO);
+		List<Integer> years = Arrays.asList(2023, 2022, 2021, 2020, 2019, 2018); // Specify the years you want to test
+		List<Map<String, Object>> freezingData = freezingMapper.selectYearData(years);
+		assertNotNull(freezingData);
+	    assertFalse(freezingData.isEmpty());
 	}
-	@Ignore
-	@Test
-	public void selectFreezingData() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ selectFreezingData()         │");
-		log.debug("└──────────────────────────────┘");
-		List<Integer> years = Arrays.asList(2021, 2020);
-		 List<Map<String, Object>> result = freezingService.selectFreezingData(years);
-	}
+	
 	@Ignore
 	@Test
 	public void test() {

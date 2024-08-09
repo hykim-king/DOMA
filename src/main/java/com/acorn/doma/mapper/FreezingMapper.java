@@ -16,8 +16,8 @@ public interface FreezingMapper extends WorkDiv<Freezing> {
 	int dataInsert(Freezing inVO) throws SQLException;
 	int doDeleteAll() throws SQLException;
 	int countAll() throws SQLException;
-	List<Map<String, Object>> selectFreezingData(@Param("years") List<Integer> years) throws IOException, SQLException;
-	List<Map<String, Object>> selectAllFreezingData() throws SQLException;
+	List<Freezing> selectAllData() throws SQLException;
     Freezing selectFreezingDataById(String fid) throws SQLException;
+    List<Map<String, Object>> selectYearData(List<Integer> years) throws SQLException;
 	
 }

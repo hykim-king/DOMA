@@ -8,59 +8,69 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
-<link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
+<link rel="stylesheet" href="${CP}/resources/css/main/main_freezing_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-	<div style="display : flex">
-		<jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
-	    <div id="subMap" style="height : 815px;">
-			<section id="mapContainer">
-				<div class="aside" style="height:800px; width: 350px; overflow : scroll">
-					<h2 style="font-wight : bold; text-align : center; border: 3px solid black">결빙정보</h2>
-					<c:forEach var="acc" items="${accList }">
-					<ul class="info_ul">
-						<li>
-							<table class="info_table">
-								<colgroup>
-									<col>
-									<col>
-								</colgroup>
-								<tbody>
-									<tr>
-										<th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;" >년도</th>
-                                        <td style="border: 1px solid black; text-align : center; width : 230px;">${freezingData.year}년</td>
-									</tr>
-									<tr>
-                                        <th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;" >사고</th>
-                                        <td style="border: 1px solid black; text-align : center; width : 230px;">${freezingData.accdient}건</td>
-                                    </tr>
+	 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+    <div style="display: flex;">
+        <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
+        <div id="subMap" style="height: 815px;">
+            <section id="mapContainer">
+                <div class="aside" style="height:800px; width: 350px; overflow: scroll;">
+                    <h2 style="font-weight: bold; text-align: center; border: 3px solid black;">결빙정보</h2>
+                    
+                    <!-- 커스텀 드롭다운 메뉴 -->
+                    <div class="dropdown">
+                        <div class="dropdown-button">전체년도</div>
+                        <div class="dropdown-content">
+                            <div class="select-all">
+                                <input type="checkbox" id="selectAll" />
+                                <label for="selectAll">전체</label>
+                            </div>
+                            <label><input type="checkbox" name="years" value="2018" />2018</label>
+                            <label><input type="checkbox" name="years" value="2019" />2019</label>
+                            <label><input type="checkbox" name="years" value="2020" />2020</label>
+                            <label><input type="checkbox" name="years" value="2021" />2021</label>
+                            <label><input type="checkbox" name="years" value="2022" />2022</label>
+                            <label><input type="checkbox" name="years" value="2023" />2023</label>
+                        </div>
+                    </div>
+
+                    <!-- 테이블 추가 -->
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>년도</th>
+                                    <th>발생 건수</th>
+                                    <th>사상자 수</th>
+                                    <th>사망자 수</th>
+                                    <th>중상자 수</th>
+                                    <th>경상자 수</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="freezing" items="${allData}">
                                     <tr>
-                                        <th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;">사망</th>
-                                        <td style="border: 1px solid black; text-align : center; width : 230px;">${freezingData.dead}건</td>
+                                        <td>${freezing.year}년</td>
+                                        <td>${freezing.accident}건</td>
+                                        <td>${freezing.casualties}명</td>
+                                        <td>${freezing.dead}명</td>
+                                        <td>${freezing.seriously}명</td>
+                                        <td>${freezing.ordinary}명</td>
                                     </tr>
-                                    <tr>
-                                        <th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;">중상</th>
-                                        <td style="border: 1px solid black; text-align : center; width : 230px;">${freezingData.seriously}건</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="info_th" style="background-color: #FFDF00; border: 1px solid black; width : 100px;">경상</th>
-                                        <td style="border: 1px solid black; text-align : center; width : 230px;">${freezingData.ordinary}건</td>
-                                    </tr>
-                                    
-								</tbody>
-							</table>
-						</li>
-					</ul>
-					</c:forEach>
-				</div>
-			</section>
-   			</div>            
-            <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
-        </div>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>            
+        <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
+    </div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 	<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
 <script>

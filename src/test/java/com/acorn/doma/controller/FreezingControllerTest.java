@@ -48,7 +48,6 @@ public class FreezingControllerTest implements PLog {
 	WebApplicationContext webApplicationContext;
 	MockMvc mockMvc;
 
-
 	@Autowired
 	FreezingService freezingService;
 
@@ -56,6 +55,7 @@ public class FreezingControllerTest implements PLog {
 	FreezingMapper freezingMapper;
 
 	Freezing freezing;
+
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────┐");
@@ -74,23 +74,25 @@ public class FreezingControllerTest implements PLog {
 
 //	@Ignore
 	@Test
-	public void freezing() throws Exception {
-		log.debug("┌───────────────────────────┐");
-		log.debug("│ freezing()                │");
-		log.debug("└───────────────────────────┘");
-		List<Integer> years=Arrays.asList(2018, 2019, 2020, 2021, 2022, 2023);
-		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/freezing/freezing.do")
-				.params((MultiValueMap<String, String>) years);
+    public void testFreezing() throws Exception {
+        List<String> years = Arrays.asList("2018", "2019", "2020", "2021", "2022", "2023");
 
-		ResultActions resultActions = mockMvc.perform(requestBuilder)
-				.andExpect(status().is2xxSuccessful());
-		
-		//Model
-		MvcResult mvcResult = resultActions.andDo(print()).andReturn();
-		Map<String, Object> modelMap = mvcResult.getModelAndView().getModel();
+        MockHttpServletRequestBuilder requestBuilder = 
+        		MockMvcRequestBuilders.get("/freezing/freezing.do")
+                .param("years", years.toArray(new String[0])); // "years" 파라미터 설정
 
-	}
+        ResultActions resultActions = mockMvc.perform(requestBuilder)
+                .andExpect(status().is2xxSuccessful()); // HTTP 2xx 상태 응답 기대
+        
+        // 결과 출력 및 모델 데이터 검증
+        MvcResult mvcResult = resultActions.andDo(print()).andReturn();
+        Map<String, Object> modelMap = mvcResult.getModelAndView().getModel();
 
+        // 모델 데이터 검증 예시 (필요한 대로 수정)
+        List<Map<String, Object>> freezingData = (List<Map<String, Object>>) modelMap.get("freezingData");
+        assertNotNull(freezingData);
+        assertFalse(freezingData.isEmpty());
+    }
 	@Ignore
 	@Test
 	public void beans() {

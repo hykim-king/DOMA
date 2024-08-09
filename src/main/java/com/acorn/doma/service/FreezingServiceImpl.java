@@ -136,8 +136,16 @@ public class FreezingServiceImpl implements FreezingService, PLog {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectFreezingData(List<Integer> years) throws IOException, SQLException {
-		List<Map<String, Object>> result = freezingMapper.selectFreezingData(years);
-        return result;
+	public List<Freezing> selectAllData() throws SQLException {
+		List<Freezing> allData = freezingMapper.selectAllData();
+		return allData;
 	}
+
+	@Override
+	public Freezing selectFreezingDataById(String fid) throws SQLException {
+		Freezing outVO = freezingMapper.selectFreezingDataById(fid);
+		return outVO;
+	}
+
+	
 }

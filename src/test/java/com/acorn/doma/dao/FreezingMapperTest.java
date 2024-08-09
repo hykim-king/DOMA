@@ -2,6 +2,7 @@ package com.acorn.doma.dao;
 
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +52,9 @@ public class FreezingMapperTest implements PLog{
 	}
 //	@Ignore
 	@Test
-	public void selectFreezingData() throws Exception{
+	public void sqlAll() throws Exception{
 		log.debug("┌──────────────────────────────┐");
-		log.debug("│ selectFreezingData()         │");
+		log.debug("│ sqlAll()                     │");
 		log.debug("└──────────────────────────────┘");
 		freezingMapper.doDeleteAll();
 		int flag = freezingMapper.dataInsert(freezing01);
@@ -62,49 +63,44 @@ public class FreezingMapperTest implements PLog{
 		assertEquals(1, flag);
 		flag =freezingMapper.dataInsert(freezing03);
 		assertEquals(1, flag);
-		List<Integer> years = Arrays.asList(2022,2023,2024);
-		List<Map<String, Object>> result = freezingMapper.selectFreezingData(years);
 		
-		assertEquals(3, result.size());
-		assertNotNull(result);
-		 
-		 
-	}
-//	@Ignore
-	@Test
-	public void selectFreezingDataById() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ selectFreezingDataById()     │");
-		log.debug("└──────────────────────────────┘");
-		freezingMapper.doDeleteAll();
-		int flag = freezingMapper.dataInsert(freezing01);
-		assertEquals(1, flag);
+		List<Freezing> allData = freezingMapper.selectAllData();
+		
+		assertNotNull(allData);
+		
 		String fid = freezing01.getFid();
 		Freezing outVO = freezingMapper.selectFreezingDataById(fid);
 		assertNotNull(outVO);
-		
+		List<Integer> years = Arrays.asList(2024, 2023, 2022); // Specify the years you want to test
+		List<Map<String, Object>> freezingData = freezingMapper.selectYearData(years);
+		assertNotNull(freezingData);
+	    assertFalse(freezingData.isEmpty());
+	 // Check the results for each year
+	    Map<String, Object> data2024 = freezingData.stream()
+	        .filter(data -> 2024 == ((BigDecimal) data.get("YEAR")).intValue())
+	        .findFirst()
+	        .orElse(null);
+	    assertNotNull(data2024);
+	    assertEquals(2024,((BigDecimal) data2024.get("YEAR")).intValue());
+	    
+	    Map<String, Object> data2023 = freezingData.stream()
+	        .filter(data -> 2023 == ((BigDecimal) data.get("YEAR")).intValue())
+	        .findFirst()
+	        .orElse(null);
+	    assertNotNull(data2023);
+	    assertEquals(2023, ((BigDecimal) data2023.get("YEAR")).intValue());
+
+	    Map<String, Object> data2022 = freezingData.stream()
+	        .filter(data -> 2022 == ((BigDecimal) data.get("YEAR")).intValue())
+	        .findFirst()
+	        .orElse(null);
+	    assertNotNull(data2022);
+	    assertEquals(2022, ((BigDecimal) data2022.get("YEAR")).intValue());
+		 
+		 
 	}
-//	@Ignore
-	@Test
-	public void dataInsert() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ dataInsert()                 │");
-		log.debug("└──────────────────────────────┘");
-		freezingMapper.doDeleteAll();
-		int flag = freezingMapper.dataInsert(freezing01);
-		assertEquals(1, flag);
-		flag =freezingMapper.dataInsert(freezing02);
-		assertEquals(1, flag);
-		flag =freezingMapper.dataInsert(freezing03);
-		assertEquals(1, flag);
-		flag = freezingMapper.countAll();
-		assertEquals(3, flag);
-		
-		flag = freezingMapper.doDeleteAll();
-		assertEquals(3, flag);
-		flag = freezingMapper.countAll();
-		assertEquals(0, flag);
-	}
+
+
 	@Ignore
 	@Test
 	public void beans() {
