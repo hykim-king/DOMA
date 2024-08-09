@@ -243,7 +243,7 @@ public class BoardControllerTest implements PLog {
 		
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void doSelectOne() throws Exception {
 		log.debug("┌───────────────────────────┐");

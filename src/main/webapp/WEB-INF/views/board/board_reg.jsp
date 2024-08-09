@@ -55,11 +55,21 @@ document.addEventListener("DOMContentLoaded", function(){
     const userIdInput = document.querySelector("#userId");
     const contentsTextArea = document.querySelector("#content");
     const divInput = document.querySelector("#div");
-    const gnameInput = document.querySelector("#gname");
     const imgLinkInput = document.querySelector("#imgLink");
+    //구분
+    const searchDivSelect = document.querySelector("#searchDiv");
+    
     
 //이벤트 처리=================================================================================================    
     
+	//구분
+    searchDivSelect.addEventListener("change",function(event){
+        if("" === searchDivSelect.value){
+            searchWordInput.value = "";//검색어
+            pageSizeSelect.value  = 10;//페이지 사이즈
+        }
+    });
+	
 	//moveToListBtn
     moveToListBtn.addEventListener("click",function(event){
         console.log("moveToListBtn click");
@@ -73,6 +83,8 @@ document.addEventListener("DOMContentLoaded", function(){
         console.log("doSaveBtn click");     
         doSave();
     });
+	
+    
     
 //함수=================================================================================================    
     
@@ -85,11 +97,16 @@ document.addEventListener("DOMContentLoaded", function(){
 	function doSave(){
         console.log("doSave()");
         
+        if(isEmpty(searchDivSelect.value) == true){
+            alert('구를 선택 하세요.')
+            searchDivSelect.focus();
+            return;
+        }
+        
         if(isEmpty(titleInput.value) == true){
             alert('제목을 입력 하세요.')
             titleInput.focus();
             return;
-            
         }
         
         if(isEmpty(userIdInput.value) == true){
@@ -114,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function(){
         let dataType = "html";
         
         let params = {
-       		"gname"   : gnameInput.value,
+       		"gname"   : searchDivSelect.value,
             "title"    : titleInput.value,
             "userId"    : userIdInput.value,
             "content" : simplemde.value(),
@@ -141,12 +158,15 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         });
     }
+	
+	
     
 });
 </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+user : ${user }
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
@@ -172,10 +192,15 @@ document.addEventListener("DOMContentLoaded", function(){
   <form action="#" class="form-horizontal"  name="regForm" id="regForm">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
     <div class="row mb-2">
-        <label for="gname" class="col-sm-2 col-form-label">구이름</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="gname" id="gname"  maxlength="75" required="required">
-        </div>
+	    <label for="gname" class="col-sm-2 col-form-label">구이름</label>
+	    <div class="col-sm-1">
+	        <select name="searchDiv" class="form-select" id=searchDiv>
+	            <option value="">구 선택</option>
+	            <c:forEach var="item" items="${GNAME}">
+	               <option value="${item.detNm}"  <c:if test="${item.detNm == search.searchDiv }">selected</c:if>    >${ item.detNm}</option>
+	            </c:forEach>
+	        </select>
+	    </div>
     </div>
     <div class="row mb-2">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
@@ -186,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function(){
     <div class="row mb-2">
         <label for="userId" class="col-sm-2 col-form-label">등록자</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" name="userId" id="userId"  maxlength="20" required="required">
+          <input type="text" value="<c:out value='${user.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">

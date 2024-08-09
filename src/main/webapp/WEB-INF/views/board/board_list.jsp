@@ -172,7 +172,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
 </head>
 <body>
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+user : ${user }
 <!-- container -->
 <div class="container"> 
         <!-- 제목 -->

@@ -123,6 +123,11 @@ public class BoardController implements PLog {
 		code.setMstCode("COM_PAGE_SIZE");
 		List<Code> pageSizeSearch = this.codeService.doRetrieve(code);
 		model.addAttribute("COM_PAGE_SIZE", pageSizeSearch); //페이지 사이즈
+		
+		//GNAME : 구이름
+		code.setMstCode("GNAME");
+		List<Code> gname = this.codeService.doRetrieve(code);
+		model.addAttribute("GNAME", gname); //구이름
 		//----------------------------------------------------------------------
 		
 		return viewName;
@@ -143,6 +148,34 @@ public class BoardController implements PLog {
 		
 		log.debug("1.param inVO:" + inVO);
 		model.addAttribute("board", inVO);
+		
+		Search search = new Search();
+		
+		List<Board> list = this.boardService.doRetrieve(search);
+		
+		//2.화면 전송 데이터
+		//조회 데이터
+		model.addAttribute("list", list);
+		
+		//검색 조건
+		model.addAttribute("search", search);
+		
+		//페이징 : totalCnt
+		int totalCnt = 0;
+		if(null != list && list.size() > 0) {
+			Board firstVO = list.get(0);
+			totalCnt = firstVO.getTotalCnt();
+		}
+		//검색 조건
+		model.addAttribute("totalCnt", totalCnt);
+		
+		//----------------------------------------------------------------------
+		Code code = new Code();
+		//GNAME : 구이름
+		code.setMstCode("GNAME");
+		List<Code> gname = this.codeService.doRetrieve(code);
+		model.addAttribute("GNAME", gname); //구이름
+		//----------------------------------------------------------------------
 		
 		return viewName;
 	}
@@ -283,9 +316,9 @@ public class BoardController implements PLog {
 		
 		String message = "";
 		if(1 == flag) {
-			message = inVO.getTitle() + "님이 등록 되었습니다.";
+			message = inVO.getUserId() + "님이 등록 되었습니다.";
 		}else {
-			message = inVO.getTitle() + "님 등록 실패 했습니다.";
+			message = inVO.getUserId() + "님 등록 실패 했습니다.";
 		}
 		
 		Message messageObj = new Message(flag, message);

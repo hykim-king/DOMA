@@ -10,21 +10,47 @@
     </update>
     
     <insert id="multipleSave">
-        INSERT INTO d_board
-        SELECT ROWNUM,
-               DECODE(MOD(ROWNUM,2),1,'10','20'),
-               '제목'||LPAD(ROWNUM,7,0),
-               'ADMIN',
-               'ADMIN',
-               '내용'||LPAD(ROWNUM,7,0),
-               '이미지'||LPAD(ROWNUM,7,0),
-               SYSDATE-ROWNUM/24,
-               SYSDATE-ROWNUM/24,
-               MOD(ROWNUM,10),
-               '구'||LPAD(ROWNUM,2,0)
-        FROM dual
-        CONNECT BY LEVEL  <![CDATA[<= 202]]>
-    </insert>
+    INSERT INTO d_board
+    SELECT ROWNUM,
+           DECODE(MOD(ROWNUM,2),1,'10','20'),
+           '제목'||LPAD(ROWNUM,7,0),
+           'ADMIN',
+           'ADMIN',
+           '내용'||LPAD(ROWNUM,7,0),
+           '이미지'||LPAD(ROWNUM,7,0),
+           SYSDATE-ROWNUM/24,
+           SYSDATE-ROWNUM/24,
+           MOD(ROWNUM,10),
+           CASE ROUND(DBMS_RANDOM.VALUE(1, 25))
+                WHEN 1 THEN '강남구'
+                WHEN 2 THEN '강동구'
+                WHEN 3 THEN '강북구'
+                WHEN 4 THEN '강서구'
+                WHEN 5 THEN '관악구'
+                WHEN 6 THEN '광진구'
+                WHEN 7 THEN '구로구'
+                WHEN 8 THEN '금천구'
+                WHEN 9 THEN '노원구'
+                WHEN 10 THEN '도봉구'
+                WHEN 11 THEN '동대문구'
+                WHEN 12 THEN '동작구'
+                WHEN 13 THEN '마포구'
+                WHEN 14 THEN '서대문구'
+                WHEN 15 THEN '서초구'
+                WHEN 16 THEN '성동구'
+                WHEN 17 THEN '성북구'
+                WHEN 18 THEN '송파구'
+                WHEN 19 THEN '양천구'
+                WHEN 20 THEN '영등포구'
+                WHEN 21 THEN '용산구'
+                WHEN 22 THEN '은평구'
+                WHEN 23 THEN '종로구'
+                WHEN 24 THEN '중구'
+                WHEN 25 THEN '중랑구'
+	           END
+	    FROM dual
+	    CONNECT BY LEVEL <![CDATA[<= 202]]>
+	</insert>
     
     <sql id="divDoRetrieve">
         <choose>
@@ -46,6 +72,14 @@
                AND (title LIKE #{searchWord} || '%'
                OR
                content LIKE #{searchWord} || '%')
+           </when>
+       </choose>
+    </sql>
+    
+    <sql id="GuRetrieve">
+       <choose>
+           <when test="searchGu != null and searchGu == '1' ">
+               AND gname = #{searchGu}
            </when>
        </choose>
     </sql>
@@ -73,6 +107,7 @@
               WHERE 1=1
               <include refid="divDoRetrieve"></include>
               <include refid="whereDoRetrieve"></include>
+              <include refid="GuRetrieve"></include>
               ORDER BY mod_dt DESC
         )T1
             WHERE rownum  <![CDATA[ <= ( #{pageSize} * (#{pageNo} -1) + #{pageSize} )]]>
@@ -85,6 +120,7 @@
             WHERE 1=1
             <include refid="divDoRetrieve"></include>
             <include refid="whereDoRetrieve"></include>
+            <include refid="GuRetrieve"></include>
         )B
     </select>
     

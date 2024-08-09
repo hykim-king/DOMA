@@ -14,6 +14,7 @@
     Copyright (C) by KandJang All right reserved.
 */
  --%>
+<%@page import="com.acorn.doma.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -43,6 +44,7 @@
 
 <!-- simplemde -->
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
+
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 
 <style>
@@ -72,11 +74,23 @@ document.addEventListener("DOMContentLoaded", function(){
     //div
     const divInput = document.querySelector("#div");
     
+    //구이름
+    const gnameInput = document.querySelector("#gname");
+    
     //제목
     const titleInput = document.querySelector("#title");
     
+    //이미지
+    const imgLinkInput = document.querySelector("#imgLink");
+    
     //내용
     const contentsTextArea = document.querySelector("#content");
+    
+    //구분
+    const searchDivSelect = document.querySelector("#searchDiv");
+    
+    const userIdInput = document.querySelector("#userId");
+    
 
 //이벤트 처리=================================================================================================
     //moveToListBtn
@@ -134,11 +148,12 @@ document.addEventListener("DOMContentLoaded", function(){
         let dataType = "html";
         
         let params = {
-            "seq"      : seqInput.value,
-            "div"      : divInput.value,
-            "title"    : titleInput.value,
-            "content" : simplemde.value()
-        };
+        		"seq"      : seqInput.value,
+                "div"      : divInput.value,
+                "userId"   : userIdInput.value,
+                "title"    : titleInput.value,
+                "content"  : simplemde.value()
+            };
 
         PClass.pAjax(url, params, dataType, type, async, function(data){
             if(data){
@@ -170,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function(){
         
         if(isEmpty(seqInput.value) == true){
             alert('seq를 확인 하세요.')
-            //seqInput.focus();
+            seqInput.focus();
             return;
         }
         
@@ -183,7 +198,8 @@ document.addEventListener("DOMContentLoaded", function(){
         let dataType = "html";
         
         let params = {
-            "seq"    : seqInput.value
+            "seq"    : seqInput.value,
+            "userId" : userIdInput.value
         };
 
         PClass.pAjax(url, params, dataType, type, async, function(data){
@@ -210,6 +226,8 @@ document.addEventListener("DOMContentLoaded", function(){
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+user : ${user }
+seq : ${seq }
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
@@ -235,16 +253,18 @@ document.addEventListener("DOMContentLoaded", function(){
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
   <form action="#" class="form-horizontal"  name="regForm" id="regForm">
+    <input type="hidden" name="seq"    id="seq" value="${board.seq}">
+    <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
     <div class="row mb-2">
-        <label for="seq" class="col-sm-2 col-form-label">SEQ</label>
+        <label for="seq" class="col-sm-2 col-form-label">seq</label>
         <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.seq}'/>" class="form-control readonly-input" readonly="readonly" name="seq" id="seq">
+          <input type="text" value="<c:out value='${board.seq}'/>" class="form-control readonly-input" readonly="readonly" name="seq" id="seq"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">
-        <label for="div" class="col-sm-2 col-form-label">구분</label>
+        <label for="div" class="col-sm-2 col-form-label">div</label>
         <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.getDiv()}'/>" class="form-control readonly-input" readonly="readonly" name="div" id="div">
+          <input type="text" value="<c:out value='${board.getDiv()}'/>" class="form-control readonly-input" readonly="readonly" name="div" id="div"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">
@@ -260,17 +280,17 @@ document.addEventListener("DOMContentLoaded", function(){
         </div>
     </div>
     <div class="row mb-2">
+        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="imgLink" id="imgLink"  maxlength="75" required="required">
+        </div>
+    </div>
+    <div class="row mb-2">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
         <div class="col-sm-10">
           <input type="text" value="<c:out value='${board.title}'/>" class="form-control" name="title" id="title"  maxlength="75" required="required">
         </div>
     </div>
-    <!-- 일반 사용자 -->
-    <div class="row mb-2"">
-        <label for="content" class="col-sm-2 col-form-label">내용</label>
-        <div class="col-sm-10">${markdownContents}</div>
-    </div> 
-    <!-- 관리자 -->
     <div class="row mb-2"">
         <label for="content" class="col-sm-2 col-form-label">내용</label>
         <div class="col-sm-10">
