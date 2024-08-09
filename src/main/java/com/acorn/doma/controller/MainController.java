@@ -58,6 +58,8 @@ public class MainController implements PLog {
 		model.addAttribute("A02List", A02List);
 		List<Accident> A04List = accInfoService.A04Retrieve();
 		model.addAttribute("A04List", A04List);
+		List<Accident> A10List = accInfoService.A10Retrieve();
+		model.addAttribute("A10List", A10List);
 		List<Accident> A11List = accInfoService.A11Retrieve();
 		model.addAttribute("A11List", A11List);
 		return viewName;
@@ -67,6 +69,7 @@ public class MainController implements PLog {
 	    Accident accident = new Accident();
 	    accident.setAccId(accId);
 	    Accident accIdSelect = accInfoService.doSelectOne(accident);
+	    log.debug("accIdSelect: "+accIdSelect);
 	    model.addAttribute("accIdSelect", accIdSelect);
 	    return "main/main_emergency_info_detail";  // Thymeleaf fragment 방식으로 특정 영역만 업데이트
 	}

@@ -1,44 +1,39 @@
-
-    #map {
-    	width : 70%;
-    }
-    .mapContainer{
-    	width : 1300px;
-    }
-	.map-fn-l-box {
-	    z-index: 500;
-	    display: inline-block;
-	    width : 60px;
-	    background-color: #f6f6f6;
-	    border-right: 1px solid #ddd;
-	}
-    .map-fn-l-box .fn-alert {
-	    display: inline-block;
-	    width: 60px;
-	    height: 60px;
-	}
-	.map-fn-l-box .fn-road{
-	    display: inline-block;
-	    width: 60px;
-	    height: 60px;
-	}
-	.map-fn-l-box .fn-freezing {
-	    display: inline-block;
-	    width: 60px;
-	    height: 60px;
-	}
-    #mapContainer {
-    	position: inline-block;
-    }
-    .aside{
-    	position: inline-block;
-    	height: 579px;
-    }
-    .info_ul{
-    	list-style : none;
-    	border : 1px solid black;
-    	padding : 0px;
-    }
-    .info_table{
-    	boreder : 1px solid black;
-    }
+#map {
+    width: 70%;
+    height: 100px; /* 맵의 상하 크기 조정 */
+}
+.mapContainer {
+    width: 1300px;
+    height: 1000px; /* 맵 컨테이너 크기 조정 */
+}
+.map-fn-l-box {
+    z-index: 500;
+    display: inline-block;
+    width: 60px;
+    background-color: #f6f6f6;
+    border-right: 1px solid #ddd;
+}
+.map-fn-l-box .fn-alert, 
+.map-fn-l-box .fn-road, 
+.map-fn-l-box .fn-freezing {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+}
+#mapContainer {
+    display: inline-block;
+}
+.aside {
+    display: inline-block;
+    height: 800px;
+    width: 350px;
+    overflow: scroll;
+}
+.info_ul {
+    list-style: none;
+    border: 1px solid black;
+    padding: 0px;
+}
+.info_table {
+    border: 1px solid black;
+}

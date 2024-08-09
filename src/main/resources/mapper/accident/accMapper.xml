@@ -32,10 +32,10 @@
     dai.acc_id as accId,
     dat.acc_name AS accName,
     dad.acc_dname AS accDname,
-    dai.occr_date, 
-    dai.occr_time, 
-    dai.end_date, 
-    dai.end_time, 
+    dai.occr_date AS occrDate, 
+    dai.occr_time AS occrTime, 
+    dai.end_date AS endDate, 
+    dai.end_time AS endTime, 
     dai.info, 
     dai.longitude, 
     dai.latitude
@@ -137,6 +137,28 @@
             JOIN 
                 D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
             WHERE A.ACC_DTYPE LIKE '04%'
+            )
+    </select>
+    <select id="A10Retrieve" resultType="Accident">
+    SELECT * FROM (
+        SELECT 
+            T.ACC_NAME as accName,
+            A.ACC_DTYPE as accDtype,
+            D.ACC_DNAME as accDName,
+            TO_CHAR(TO_DATE(A.OCCR_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS occrDate,
+            TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
+            TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
+            TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
+            REPLACE(REPLACE(REPLACE(A.INFO, CHR(13) || CHR(10), ' '), CHR(13), ' '), CHR(10), ' ') AS info,  -- CRLF, CR, LF 처리
+            A.LONGITUDE as longitude,
+            A.LATITUDE as latitude
+            FROM 
+                D_ACCINFO A
+            JOIN 
+                D_ACC_TYPE T ON A.ACC_TYPE = T.ACC_TYPE
+            JOIN 
+                D_ACC_DTYPE D ON A.ACC_DTYPE = D.ACC_DTYPE
+            WHERE A.ACC_DTYPE LIKE '10%'
             )
     </select>
     <select id="A11Retrieve" resultType="Accident">

@@ -214,6 +214,11 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
 		return list;
 	}
 	@Override
+	public List<Accident> A10Retrieve() throws SQLException {
+		List<Accident> list = accMapper.A10Retrieve();
+		return list;
+	}
+	@Override
 	public List<Accident> A11Retrieve() throws SQLException {
 		List<Accident> list = accMapper.A11Retrieve();
 		return list;

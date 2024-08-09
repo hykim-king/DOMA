@@ -1,5 +1,6 @@
 package com.acorn.doma.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -41,6 +42,8 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("│ setUp()                              │");
 		log.debug("└──────────────────────────────────────┘");
 		accident = new Accident();
+		accInfoService.insertAccidentData();
+		accMapper.countAll();
 	}
 
 	@After
@@ -50,13 +53,13 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void doSelectOne() throws Exception{
 		log.debug("┌──────────────────────────────────────┐");
 		log.debug("│ doSelectOne()                        │");
 		log.debug("└──────────────────────────────────────┘");
-		accident.setAccId("983589"); //db에 실제 값을 받아야 됨.
+		accident.setAccId("887084"); //db에 실제 값을 받아야 됨.
 		Accident outVO =  accInfoService.doSelectOne(accident);
 		assertNotNull(outVO);
 		
@@ -102,12 +105,14 @@ public class AccInfoServiceImplTest implements PLog{
 			log.debug("A11List"+ acc);
 		}
 	}
-//	@Ignore
+	
+	@Ignore
 	@Test
 	public void testInsertAccidentData() throws Exception{
 		accInfoService.insertAccidentData();
 		accMapper.countAll();
 	}
+	@Ignore
 	@Test
 	public void test() {
 		log.debug("┌──────────────────────────────────────┐");
