@@ -2,6 +2,7 @@ package com.acorn.doma.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -115,7 +116,7 @@ public class AdminMapperTest implements PLog {
         LocalDate actualUserRegDate = parseDateString(actual.getUserRegDt().split(" ")[0]);
         assertEquals(expectedUserRegDate, actualUserRegDate);
 
-        // 나머지 필드 비교 (필요에 따라 추가)
+        
         assertEquals(expected.getSeq(), actual.getSeq());
         assertEquals(expected.getDiv(), actual.getDiv());
         assertEquals(expected.getTitle(), actual.getTitle());
@@ -141,7 +142,7 @@ public class AdminMapperTest implements PLog {
         log.debug("flag : " + flag);
         assertEquals(1, flag);
 
-        // 새로 생성된 SEQ 값을 가져오기 위해 admin01을 다시 조회
+        
         int generatedSeq = adminMapper.getLastInsertedSeq();
         admin01.setSeq(generatedSeq);
         log.debug("Generated SEQ : " + generatedSeq);
@@ -174,18 +175,17 @@ public class AdminMapperTest implements PLog {
         assertEquals(1, flag);
     }
 
-    @Ignore 
+
     @Test
     public void doRetrieve() throws SQLException {
         // 공지사항 목록 조회 테스트
         search.setDiv("20");
-        search.setSearchWord("공지사항");
+        search.setSearchWord("제목");
 
         List<Admin> list = adminMapper.getNotices(search);
         assertNotNull(list);
     }
 
-    @Ignore 
     @Test
     public void beans() {
         log.debug("┌──────────────────────────────┐");
@@ -198,71 +198,46 @@ public class AdminMapperTest implements PLog {
         assertNotNull(adminMapper);
     }
 
-    @Ignore 
-    @Test
-    public void testNoticeSpecificRetrieve() throws Exception {
-        try {
-            log.debug("┌──────────────────────────────┐");
-            log.debug("│ testNoticeSpecificRetrieve() │");
-            log.debug("└──────────────────────────────┘");
-            // Given: 테스트 데이터 삽입
-            int noticeId = admin01.getSeq(); // 예시로 admin01의 ID를 사용
-            int flag = adminMapper.insertNotice(admin01);
-            log.debug("Insert flag: " + flag);
-            assertEquals(1, flag);
-
-            // When: 공지사항 조회
-            Admin retrievedAdmin = adminMapper.getNoticeById(noticeId);
-            log.debug("Retrieved Admin: " + retrievedAdmin);
-
-            // Then: 조회 결과 확인
-            assertNotNull(retrievedAdmin); // 공지사항이 존재해야 함
-            assertEquals(noticeId, retrievedAdmin.getSeq()); // 공지사항의 ID가 맞아야 함
-            isSameAdmin(admin01, retrievedAdmin); // 공지사항 데이터가 올바른지 확인
-
-            // Clean up: 삽입한 공지사항 삭제
-            flag = adminMapper.deleteNotice(retrievedAdmin);
-            log.debug("Delete flag: " + flag);
-            assertEquals(1, flag);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            fail("SQLException occurred: " + e.getMessage());
-        }
-    }
-
-    @Ignore    
+ 
     @Test
     public void testUserRetrieve() throws SQLException {
-        // 회원 목록 조회 테스트
-        search.setDiv("20"); // 또는 적절한 값을 설정합니다
-        search.setSearchWord("User Two"); // 또는 적절한 검색어 설정
-
+        // 회원 목록 조회 테스트 (등급 상관없이 전체 목록 조회)
+        Search search = new Search(); // 기본값으로 전체 조회
         List<Admin> userList = adminMapper.getUsers(search);
         log.debug("userList : " + userList);
+
+        
         assertNotNull(userList);
-        assertTrue(userList.stream().anyMatch(user -> user.getUserId().equals(admin02.getUserId())));
+        assertTrue(userList.stream().anyMatch(user -> "admin02".equals(user.getUserId())));
 
         // 회원 단건 조회 테스트
-        Admin retrievedUser = adminMapper.getUser(admin02);
+        Admin retrievedUser = adminMapper.getUser("admin02");
         log.debug("retrievedUser : " + retrievedUser);
         assertNotNull(retrievedUser);
-        assertEquals(admin02.getUserId(), retrievedUser.getUserId());
+        assertEquals("admin02", retrievedUser.getUserId());
+
+       
+        assertEquals(0, retrievedUser.getUserGrade()); 
 
         // 회원 수정 테스트
         retrievedUser.setUserName("Updated User");
         int flag = adminMapper.updateUser(retrievedUser);
-        log.debug("flag : " + flag);
+        log.debug("Updated : " + flag);
         assertEquals(1, flag);
 
         // 수정된 회원 조회 테스트
-        Admin updatedUser = adminMapper.getUser(retrievedUser);
+        Admin updatedUser = adminMapper.getUser("admin02"); 
         log.debug("updatedUser : " + updatedUser);
         assertNotNull(updatedUser);
-        assertEquals("Updated User", updatedUser.getUserName());
+        assertEquals("admin02", updatedUser.getUserId());
+        assertEquals("Updated User", updatedUser.getUserName()); 
 
         // 회원 삭제 테스트
-        flag = adminMapper.deleteUser(retrievedUser);
+        flag = adminMapper.deleteUser(updatedUser); 
         log.debug("flag : " + flag);
         assertEquals(1, flag);
     }
+
+
+
 }

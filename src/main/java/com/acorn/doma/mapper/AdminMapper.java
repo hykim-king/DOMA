@@ -83,7 +83,7 @@ public interface AdminMapper {
      * @return 회원 객체
      * @throws SQLException
      */
-    Admin getUser(Admin admin) throws SQLException;
+    Admin getUser(String userId) throws SQLException;
 
     /**
      * 가장 최근에 삽입된 시퀀스 값을 조회
