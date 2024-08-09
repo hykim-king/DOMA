@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Board;
+import com.acorn.doma.domain.Comments;
 import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.BoardMapper;
+import com.acorn.doma.mapper.CommentsMapper;
 import com.acorn.doma.mapper.UserMapper;
 import com.acorn.doma.service.BoardService;
+import com.acorn.doma.service.CommentsService;
 import com.acorn.doma.service.UserService;
 import com.google.gson.Gson;
 import com.acorn.doma.cmn.Message; 
@@ -28,21 +31,32 @@ import com.acorn.doma.cmn.Message;
 @Controller
 @RequestMapping("mypage")
 public class MyPageController implements PLog {
-
+	
+	//─────────────────────────────────서비스
 	@Autowired
 	@Qualifier("userServiceImpl")
 	UserService userService;
 	
-	@Autowired
-	UserMapper userMapper;
-	
-	
-	
 	@Qualifier("boardServiceImpl")
 	BoardService boardService;
 	
+	@Qualifier("commentServiceImpl")
+	CommentsService commentService;
+	
+	
+	//─────────────────────────────────매퍼
 	@Autowired
-	BoardMapper boardMapper; 
+	UserMapper userMapper;
+	
+	@Autowired
+	BoardMapper boardMapper;
+	
+	@Autowired
+	CommentsMapper commentMapper;
+	
+	
+	
+	 
 	
 	
 	
@@ -74,6 +88,26 @@ public class MyPageController implements PLog {
 	        model.addAttribute("board", user); // Use user instead of inVO
 	        
 	        List<Board> list = boardMapper.mpSelect(inVO); 
+	        log.debug(list);
+		    model.addAttribute("list", list); 
+		    
+	    } else {
+	        log.debug("No user in session"); 
+	    }
+	    
+	    return viewName;
+	}
+	
+	@RequestMapping(value = "/mpCommentSelect.do", method = RequestMethod.GET)
+	public String moveToComment(HttpSession session, Model model,Comments inVO) throws SQLException {
+	    String viewName = "mypage/MyPageComment";
+	    
+	    User user = (User) session.getAttribute("user");
+	    if (user != null) {
+	        log.debug("User from session: " + user);
+	        model.addAttribute("comment", user); // Use user instead of inVO
+	        
+	        List<Comments> list = commentMapper.mpCommentSelect(inVO); 
 	        log.debug(list);
 		    model.addAttribute("list", list); 
 		    

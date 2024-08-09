@@ -33,12 +33,25 @@ document.addEventListener("DOMContentLoaded", function(){
     const boardBtn = document.querySelector("#MoveBoard");
     console.log("boardBtn:", boardBtn);
 
+    const commentBtn = document.querySelector("#MoveComment");
+    console.log("commentBtn:", commentBtn);
+
+
+    commentBtn.addEventListener("click",function(event){
+      console.log("commentBtn click");
+      
+      MoveComment();
+    });
+
 
     boardBtn.addEventListener("click",function(event){
       console.log("boardBtn click");
       
       MoveBoard();
     });
+
+
+
 
 
     doUpdateBtn.addEventListener("click",function(event){
@@ -54,11 +67,23 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 
 
+
+  function MoveComment(userId){ 
+        //frm.pageNo.value = 1; 
+        //window.location.href = "/doma/doma/mpSelect.do?userId="+userId;
+        window.location.href = '/doma/mypage/mpCommentSelect.do?userId='+userIdInput.value;
+        // 팝업 창으로 열기
+        //window.open('/doma/mypage/mpSelect.do?userId=' + userIdInput.value, 'popupWindow', 'width=600,height=400,scrollbars=yes');
+
+        
+}
   function MoveBoard(userId){ 
            //frm.pageNo.value = 1; 
           //window.location.href = "/doma/doma/mpSelect.do?userId="+userId;
           window.location.href = '/doma/mypage/mpSelect.do?userId='+userIdInput.value;
-    
+          // 팝업 창으로 열기
+          //window.open('/doma/mypage/mpSelect.do?userId=' + userIdInput.value, 'popupWindow', 'width=600,height=400,scrollbars=yes');
+
           
 
 

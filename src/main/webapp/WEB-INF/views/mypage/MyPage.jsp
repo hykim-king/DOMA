@@ -164,7 +164,7 @@ if(session.getAttribute("user")!=null){
             	<br>
             	<br>
              
-            	<h2>&nbsp;&nbsp;답글 &nbsp;<input type="button" id="commentBtn" class="btn btn-outline-success " value="관리하기" > </h2>
+            	<h2>&nbsp;&nbsp;답글 &nbsp;<input type="button" id="MoveComment" class="btn btn-outline-success " value="관리하기" > </h2>
             	 
     </div>
       
