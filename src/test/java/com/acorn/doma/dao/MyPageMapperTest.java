@@ -25,10 +25,13 @@ import org.springframework.web.context.WebApplicationContext;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.domain.Board;
+import com.acorn.doma.domain.Comments;
 import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.BoardMapper;
+import com.acorn.doma.mapper.CommentsMapper;
 import com.acorn.doma.mapper.UserMapper;
 import com.acorn.doma.service.BoardService;
+import com.acorn.doma.service.CommentsService;
 import com.acorn.doma.service.UserService;
 
 @WebAppConfiguration
@@ -53,6 +56,9 @@ public class MyPageMapperTest implements PLog {
 
 	@Autowired
 	BoardMapper boardMapper;
+	
+	@Autowired
+	CommentsMapper commentsMapper;
 
 	// ─────────────────────서비스
 	@Autowired
@@ -60,10 +66,14 @@ public class MyPageMapperTest implements PLog {
 
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	CommentsService commentsService;
 
 	User userVO01;
 	Board boardV001;
-
+	Comments commentVO01;
+	
 	Search search;
 
 	@Before
@@ -76,7 +86,10 @@ public class MyPageMapperTest implements PLog {
 		// userMapper.doDelete(userVO01);
 
 		boardV001 = new Board(300, "10", "구20", "제목_01", "user1", "user1", "내용2", "이미지2", "x", "x", 1);
-
+		
+		commentVO01 = new Comments(300, 1, "user1", "user1", "내용2",  "x", "x");
+		
+		
 		search = new Search();
 	}
 
@@ -86,7 +99,80 @@ public class MyPageMapperTest implements PLog {
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
+	
+	
+	/** mypage comments 관리
+	 * ───────────────────────────────────────────────────────────────────────────────────────────────────
+	 * @throws Exception
+	 */ 
+	 
+	@Ignore 
+	@Test
+	public void mpCommentSelect() throws Exception {
+		List<Comments> list = commentsMapper.mpCommentSelect(commentVO01);
+		log.debug("list : " + list);
+	}
+	
+	@Ignore
+	@Test
+	public void mpCommentSelectOne() throws Exception {
+		
+		Comments outVO = commentsMapper.mpCommentSelectOne(commentVO01);
+		log.debug("outVO : " + outVO);
 
+	}
+	 
+	@Ignore
+	@Test
+	public void mpCommentUp() throws Exception {
+
+	    // `seq` 값을 가져오기 위한 작업
+	    int seq = commentsMapper.getSequence();
+	    log.debug("seq : " + seq);
+
+	    // `boardV001` 객체에 `seq` 설정
+	    commentVO01.setSeq(seq);
+
+	    // `seq` 번호로 데이터를 조회
+	    Comments outVO = commentsMapper.doSelectOne(commentVO01);
+	    log.debug("outV1 : " + outVO);
+	    assertNotNull(outVO);
+
+	    // 타이틀 업데이트
+	    String updateStr = "_U";
+	    outVO.setComments(outVO.getComments() + updateStr); 
+	    
+	    // 업데이트 수행
+	    int flag = commentsMapper.doUpdate(outVO); 
+	    log.debug("flag : " + flag);
+	    assertEquals(1, flag);
+
+	    // 업데이트된 데이터 다시 조회하여 확인
+	    Comments outVO01Update = commentsMapper.doSelectOne(outVO);
+	    log.debug("outVO01Update : " + outVO01Update);
+	    assertNotNull(outVO01Update);
+
+	    // 업데이트된 값이 예상한 대로 동일한지 확인
+	    isSameComments(outVO01Update, outVO);
+	}
+
+	
+	
+	public void isSameComments(Comments commentsIn, Comments commentsOut) {
+		assertEquals(commentsIn.getComSeq(), commentsOut.getComSeq());
+		assertEquals(commentsIn.getSeq(), commentsOut.getSeq());
+		assertEquals(commentsIn.getUserId(), commentsOut.getUserId());
+		assertEquals(commentsIn.getModId(), commentsOut.getModId());
+		assertEquals(commentsIn.getComments(), commentsOut.getComments());
+	}
+	
+	
+	
+	/** mypage board 관리
+	 * ───────────────────────────────────────────────────────────────────────────────────────────────────
+	 * @throws Exception
+	 */ 
+	
 	// 게시판 셀렉
 	@Ignore
 	@Test
@@ -95,7 +181,8 @@ public class MyPageMapperTest implements PLog {
 		log.debug("list : " + list);
 	}
 
-	//@Ignore
+	//게사판 수정
+	@Ignore
 	@Test
 	public void mpBoardUp() throws Exception {
 
@@ -130,7 +217,7 @@ public class MyPageMapperTest implements PLog {
 	    isSameBoard(outVO01Update, outVO);
 	}
 
-
+	//
 	@Ignore
 	@Test
 	public void mpBoardSelectOne() throws Exception {
@@ -148,7 +235,13 @@ public class MyPageMapperTest implements PLog {
 		assertEquals(boardIn.getImgLink(), boardOut.getImgLink());
 		assertEquals(boardIn.getViews(), boardOut.getViews());
 	}
-
+	
+	/** mypage user 관리
+	 * ───────────────────────────────────────────────────────────────────────────────────────────────────
+	 * @throws Exception
+	 */ 
+	
+	//정보셀렉
  	@Ignore
 	@Test
 	public void mpSelectOne() throws Exception {
@@ -158,7 +251,8 @@ public class MyPageMapperTest implements PLog {
 		log.debug("outVO : " + outVO);
 
 	}
-
+ 	
+ 	//회원등급 - 회원탈퇴
 	@Ignore
 	@Test
 	public void mpGradeUp() throws Exception {
@@ -203,6 +297,7 @@ public class MyPageMapperTest implements PLog {
 
 	}
 
+	//회원 업데이트
 	@Ignore
 	@Test
 	public void doUpdate() throws Exception {

@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.acorn.doma.mapper.CommentMapper">
+<mapper namespace="com.acorn.doma.mapper.CommentsMapper">
 
 
 	<select id="mpCommentSelect" parameterType="String" resultType="Comments">
         SELECT
-		       comseq,
-		       seq,
-		       user_id as userId, 
-		       mod_id as modId,
-		       comments,
-		       TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
-		       TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt
+		       c.comseq,
+		       c.seq,
+		       c.user_id, 
+		       c.mod_id,
+		       c.comments,
+		       TO_CHAR(c.reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+		       TO_CHAR(c.mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt
 		  FROM
-		       D_COMMENT
-		 WHERE comseq = #{comSeq}   
+		       D_COMMENT c 
+		 INNER JOIN
+    		d_user u ON c.user_id = u.user_id
+		WHERE
+    		u.user_id =   #{userId}      
     </select>
 
 
@@ -32,14 +35,15 @@
 		 WHERE comseq = #{comSeq}   
     </select>
     
-	<update id="mpCommenUp" parameterType="Comments">
+    
+    
+	<update id="mpCommentUp" parameterType="Comments">
         UPDATE D_COMMENT
 		   SET mod_id = #{modId},
 		       comments = #{comments},
 		       mod_dt  = SYSDATE
 		 WHERE comseq = #{comSeq}
-		   AND seq = #{seq}
-		   AND user_id = #{userId}
+		   AND seq = #{seq} 
     </update>
 
 

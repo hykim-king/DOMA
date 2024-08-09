@@ -67,8 +67,11 @@ public class BoardServiceImpl implements BoardService, PLog {
 		return outVO;
 	}
 	/*
-	 * @Override public List<Board> mpSelect(Board inVO) throws SQLException {
-	 * log.debug("1. param :"+inVO); return this.boardMapper.mpSelect(inVO); }
+	 * @Override 
+	 * public List<Board> mpSelect(Board inVO) throws SQLException {
+	 * log.debug("1. param :"+inVO); 
+	 * return this.boardMapper.mpSelect(inVO); 
+	 * }
 	 */
  
 

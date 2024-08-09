@@ -1,10 +1,11 @@
 package com.acorn.doma.mapper;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.acorn.doma.cmn.WorkDiv;
+import com.acorn.doma.cmn.WorkDiv; 
 import com.acorn.doma.domain.Comments;
 
 @Mapper
@@ -24,5 +25,12 @@ public interface CommentsMapper extends WorkDiv<Comments> {
 	 */
 	int deleteAll() throws SQLException;
 	
+	List<Comments> mpCommentSelect(Comments inVO) throws SQLException; 
+	
+	List<Comments> mpCommentSelect(String userId); 
+	
+	Comments mpCommentSelectOne(Comments inVO) throws SQLException;
+	
+	int mpCommentUp(Comments inVO) throws SQLException;
 	
 }
