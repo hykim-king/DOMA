@@ -34,6 +34,7 @@ public class FreezingMapperTest implements PLog{
 	Freezing freezing01;
 	Freezing freezing02;
 	Freezing freezing03;
+	Freezing freezing04;
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────┐");
@@ -42,6 +43,7 @@ public class FreezingMapperTest implements PLog{
 		freezing01 = new Freezing("1", "1111010300", "2024", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
 		freezing02 = new Freezing("2", "1111010300", "2023", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
 		freezing03 = new Freezing("3", "1111010300", "2022", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
+		freezing04 = new Freezing("4", "1111010300", "2024", 1, 1, 1, 1, 1, 1, 1, 1, "poly", "accPoint");
 	}
 
 	@After
@@ -63,6 +65,10 @@ public class FreezingMapperTest implements PLog{
 		assertEquals(1, flag);
 		flag =freezingMapper.dataInsert(freezing03);
 		assertEquals(1, flag);
+		flag =freezingMapper.dataInsert(freezing04);
+		assertEquals(1, flag);
+		int count = freezingMapper.countAll();
+		assertEquals(4, count);
 		
 		List<Freezing> allData = freezingMapper.selectAllData();
 		
@@ -71,31 +77,10 @@ public class FreezingMapperTest implements PLog{
 		String fid = freezing01.getFid();
 		Freezing outVO = freezingMapper.selectFreezingDataById(fid);
 		assertNotNull(outVO);
-		List<Integer> years = Arrays.asList(2024, 2023, 2022); // Specify the years you want to test
-		List<Map<String, Object>> freezingData = freezingMapper.selectYearData(years);
-		assertNotNull(freezingData);
-	    assertFalse(freezingData.isEmpty());
-	 // Check the results for each year
-	    Map<String, Object> data2024 = freezingData.stream()
-	        .filter(data -> 2024 == ((BigDecimal) data.get("YEAR")).intValue())
-	        .findFirst()
-	        .orElse(null);
-	    assertNotNull(data2024);
-	    assertEquals(2024,((BigDecimal) data2024.get("YEAR")).intValue());
-	    
-	    Map<String, Object> data2023 = freezingData.stream()
-	        .filter(data -> 2023 == ((BigDecimal) data.get("YEAR")).intValue())
-	        .findFirst()
-	        .orElse(null);
-	    assertNotNull(data2023);
-	    assertEquals(2023, ((BigDecimal) data2023.get("YEAR")).intValue());
-
-	    Map<String, Object> data2022 = freezingData.stream()
-	        .filter(data -> 2022 == ((BigDecimal) data.get("YEAR")).intValue())
-	        .findFirst()
-	        .orElse(null);
-	    assertNotNull(data2022);
-	    assertEquals(2022, ((BigDecimal) data2022.get("YEAR")).intValue());
+		String year = "2024";
+		List<Freezing> yearVO = freezingMapper.selectPolyByYear(year);
+		assertNotNull(yearVO);
+		
 		 
 		 
 	}

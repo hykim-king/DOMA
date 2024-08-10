@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded",function(){
 <body>
     <div style="display : flex">
     <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
-    <div id="subMap" style="width:520px; height : 200px;">
+    <div id="subMap" style="height: 815px;">
         <section id="mapContainer">
             <div class="aside" style="height:800px; width: 350px; overflow : scroll">
                 <h2 style="font-weight : bold; text-align : center; border: 3px solid black">돌발정보</h2>
@@ -83,7 +83,8 @@ function initKakaoMap() {
             level: 8
         };
         map = new kakao.maps.Map(container, options);
-
+        // 교통 혼잡도 표시
+        map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC); 
         // 지도에 추가할 컨트롤들 초기화
         var mapTypeControl = new kakao.maps.MapTypeControl();
         map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);

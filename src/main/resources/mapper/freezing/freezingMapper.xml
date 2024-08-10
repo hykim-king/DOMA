@@ -50,21 +50,15 @@
         GROUP BY YEAR
         ORDER BY YEAR DESC
     </select>
-    <select id="selectYearData" parameterType="list" resultType="map">
+    <select id="selectPolyByYear" parameterType="Freezing" resultType="Freezing">
     SELECT
-        YEAR,
-        SUM(ACCIDENT) AS ACCIDENT,
-        SUM(CASUALTIES) AS CASUALTIES,
-        SUM(DEAD) AS DEAD,
-        SUM(SERIOUSLY) AS SERIOUSLY,
-        SUM(ORDINARY) AS ORDINARY
+        freezing_id,
+        sido_code,
+        longitude,
+        latitude,
+        polygon
     FROM d_freezing
-    WHERE YEAR IN
-    <foreach item="year" index="index" collection="list" open="(" separator="," close=")">
-        #{year}
-    </foreach>
-    GROUP BY YEAR
-    ORDER BY YEAR DESC
+    WHERE YEAR =#{year}
 </select>
     <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
         SELECT

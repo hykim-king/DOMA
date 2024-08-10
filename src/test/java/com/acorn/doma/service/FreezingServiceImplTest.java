@@ -57,16 +57,16 @@ public class FreezingServiceImplTest implements PLog{
 	}
 //	@Ignore
 	@Test
-	public void serviceAll() throws Exception{
+	public void serviceSqlAll() throws Exception{
 		List<Freezing> allData = freezingService.selectAllData();		
 		assertNotNull(allData);
 		String fid = "6571253";
 		Freezing outVO = freezingService.selectFreezingDataById(fid);
 		assertNotNull(outVO);
-		List<Integer> years = Arrays.asList(2023, 2022, 2021, 2020, 2019, 2018); // Specify the years you want to test
-		List<Map<String, Object>> freezingData = freezingMapper.selectYearData(years);
-		assertNotNull(freezingData);
-	    assertFalse(freezingData.isEmpty());
+		String year = "2018";
+		List<Freezing> yearData = freezingService.selectPolyByYear(year);
+		assertNotNull(yearData);
+		
 	}
 	
 	@Ignore

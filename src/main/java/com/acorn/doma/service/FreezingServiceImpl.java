@@ -146,6 +146,12 @@ public class FreezingServiceImpl implements FreezingService, PLog {
 		Freezing outVO = freezingMapper.selectFreezingDataById(fid);
 		return outVO;
 	}
+	
+	@Override
+	public List<Freezing> selectPolyByYear(String year) throws SQLException {
+		List<Freezing> outVO = freezingMapper.selectPolyByYear(year);
+		return outVO;
+	}
 
 	
 }

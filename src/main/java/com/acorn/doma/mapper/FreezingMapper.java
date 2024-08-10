@@ -18,6 +18,6 @@ public interface FreezingMapper extends WorkDiv<Freezing> {
 	int countAll() throws SQLException;
 	List<Freezing> selectAllData() throws SQLException;
     Freezing selectFreezingDataById(String fid) throws SQLException;
-    List<Map<String, Object>> selectYearData(List<Integer> years) throws SQLException;
+    List<Freezing> selectPolyByYear(String year) throws SQLException;
 	
 }

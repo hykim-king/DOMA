@@ -40,7 +40,9 @@ public class PointServiceImplTest implements PLog{
 		log.debug("┌──────────────────────────────────────┐");
 		log.debug("│ setUp()                              │");
 		log.debug("└──────────────────────────────────────┘");
-		
+		pointMapper.doDeleteAll();
+		pointService.insertPointData();
+		pointMapper.countAll();
 		pointVO = new Point("", "", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");
 		
 	}
@@ -52,6 +54,7 @@ public class PointServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
+//	@Ignore
 	@Test
 	public void guLoad() throws Exception	{
 		log.debug("┌──────────────────────────────┐");
@@ -100,14 +103,6 @@ public class PointServiceImplTest implements PLog{
 		log.debug("└");
 		
 		assertEquals(6, listPoint.size());
-	}
-	
-	@Ignore
-	@Test
-	public void testInsertPointData() throws Exception{
-		pointMapper.doDeleteAll();
-		pointService.insertPointData();
-		pointMapper.countAll();
 	}
 	@Ignore
 	@Test

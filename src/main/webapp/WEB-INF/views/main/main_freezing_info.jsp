@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
-<link rel="stylesheet" href="${CP}/resources/css/main/main_freezing_info.css">
+<link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
 <title>Insert title here</title>
@@ -21,24 +21,6 @@
             <section id="mapContainer">
                 <div class="aside" style="height:800px; width: 350px; overflow: scroll;">
                     <h2 style="font-weight: bold; text-align: center; border: 3px solid black;">결빙정보</h2>
-                    
-                    <!-- 커스텀 드롭다운 메뉴 -->
-                    <div class="dropdown">
-                        <div class="dropdown-button">전체년도</div>
-                        <div class="dropdown-content">
-                            <div class="select-all">
-                                <input type="checkbox" id="selectAll" />
-                                <label for="selectAll">전체</label>
-                            </div>
-                            <label><input type="checkbox" name="years" value="2018" />2018</label>
-                            <label><input type="checkbox" name="years" value="2019" />2019</label>
-                            <label><input type="checkbox" name="years" value="2020" />2020</label>
-                            <label><input type="checkbox" name="years" value="2021" />2021</label>
-                            <label><input type="checkbox" name="years" value="2022" />2022</label>
-                            <label><input type="checkbox" name="years" value="2023" />2023</label>
-                        </div>
-                    </div>
-
                     <!-- 테이블 추가 -->
                     <div class="table-container">
                         <table class="table">
