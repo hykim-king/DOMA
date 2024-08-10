@@ -60,6 +60,15 @@
     FROM d_freezing
     WHERE YEAR =#{year}
 </select>
+<select id="selectPolyAll" resultType="Freezing">
+    SELECT
+        freezing_id as fid,
+        sido_code as sidoCode,
+        longitude,
+        latitude,
+        polygon
+    FROM d_freezing
+</select>
     <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
         SELECT
             f.freezing_id as fid,

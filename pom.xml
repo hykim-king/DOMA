@@ -35,9 +35,15 @@
         <commonmark-version>0.18.2</commonmark-version>
         <proj4j-version>1.2.2</proj4j-version>
         <commons-fileupload-version>1.5</commons-fileupload-version>
+        <jackson-databind-version>2.13.1</jackson-databind-version>
 
     </properties>
     <dependencies>
+    <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>${jackson-databind-version}</version>
+	</dependency>
     <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 	<dependency>
 	    <groupId>commons-fileupload</groupId>

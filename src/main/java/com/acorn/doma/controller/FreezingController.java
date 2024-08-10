@@ -1,10 +1,7 @@
 package com.acorn.doma.controller;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Freezing;
-import com.acorn.doma.domain.Point;
 import com.acorn.doma.service.FreezingService;
-import com.acorn.doma.service.PointService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping("freezing")
@@ -48,17 +45,45 @@ public class FreezingController implements PLog{
 	@RequestMapping(value="/yearSelect.do"
 			,method=RequestMethod.GET
 			,produces = "text/plain;charset=UTF-8")
-	public String yearSelect(@RequestParam("year") String year,Model model) throws SQLException {
+	@ResponseBody
+	public String yearSelect(@RequestParam("year") String year) throws SQLException {
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ yearSelect()                 │");
 		log.debug("└──────────────────────────────┘");
-		String viewName = "main/main_freezing_info";
-		List<Freezing> yearPoly = freezingService.selectPolyByYear(year);
-		model.addAttribute("yearPoly",yearPoly);
-		return viewName;
+		 List<Freezing> inVO = freezingService.selectPolyByYear(year);
+		 // ObjectMapper를 사용해 리스트를 JSON 문자열로 변환
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    String jsonString = "";
+	    try {
+	        jsonString = objectMapper.writeValueAsString(inVO);
+	    } catch (JsonProcessingException e) {
+	        log.error("Error converting to JSON", e);
+	    }
+		return jsonString;
+	}
+	@RequestMapping(value="/allYearsSelect.do"
+			,method=RequestMethod.GET
+			,produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String allYear() throws SQLException {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ allYear()                    │");
+		log.debug("└──────────────────────────────┘");
+		List<Freezing> inVO = freezingService.selectPolyAll();
+		 // ObjectMapper를 사용해 리스트를 JSON 문자열로 변환
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    String jsonString = "";
+	    try {
+	        jsonString = objectMapper.writeValueAsString(inVO);
+	    } catch (JsonProcessingException e) {
+	        log.error("Error converting to JSON", e);
+	    }
+		return jsonString;
 	}
 	
-	@RequestMapping(value = "/IdSelect.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@RequestMapping(value="/idSelect.do"
+			,method=RequestMethod.GET
+			,produces = "text/plain;charset=UTF-8")
 	public String freezingIdSelect(@RequestParam("fid") String fid, Model model) throws SQLException{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ freezingIdSelect()           │");

@@ -72,7 +72,27 @@ public class FreezingControllerTest implements PLog {
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-
+	@Test
+	public void allYear() throws Exception{
+		MockHttpServletRequestBuilder requestBuilder 
+		= MockMvcRequestBuilders.get("/freezing/allYearsSelect.do");
+		//호출 및 결과
+		ResultActions resultActions = mockMvc.perform(requestBuilder)
+				//Controller produces = "text/plain;charset=UTF-8" 
+				.andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=UTF-8"))
+				//Web상태
+				.andExpect(status().is2xxSuccessful());
+		
+		//json문자열
+		String jsonResult = resultActions.andDo(print())
+							.andReturn()
+							.getResponse().getContentAsString()
+							;
+		
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ jsonResult:" + jsonResult      );
+		log.debug("└──────────────────────────────┘");
+	}
 //	@Ignore
 	@Test
     public void yearSelect() throws Exception {
@@ -82,17 +102,24 @@ public class FreezingControllerTest implements PLog {
 		= MockMvcRequestBuilders.get("/freezing/yearSelect.do")
 		.param("year", freezing.getYear());
 		;
+		
+		//호출 및 결과
 		ResultActions resultActions = mockMvc.perform(requestBuilder)
+				//Controller produces = "text/plain;charset=UTF-8" 
+				.andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=UTF-8"))
+				//Web상태
 				.andExpect(status().is2xxSuccessful());
 		
-		//Model
-		MvcResult mvcResult = resultActions.andDo(print()).andReturn();
+		//json문자열
+		String jsonResult = resultActions.andDo(print())
+							.andReturn()
+							.getResponse().getContentAsString()
+							;
 		
-		Map<String, Object> modelMap = mvcResult.getModelAndView().getModel();
-		List<Freezing> list = (List<Freezing>) modelMap.get("yearPoly");
-		for(Freezing vo :list) {
-			log.debug(vo);
-		}
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ jsonResult:" + jsonResult      );
+		log.debug("└──────────────────────────────┘");
+
     }
 //	@Ignore
 	@Test
@@ -100,7 +127,7 @@ public class FreezingControllerTest implements PLog {
         String fid = "6805181";
         freezing.setFid(fid);
         MockHttpServletRequestBuilder requestBuilder 
-		= MockMvcRequestBuilders.get("/freezing/IdSelect.do")
+		= MockMvcRequestBuilders.get("/freezing/idSelect.do")
 		.param("fid", freezing.getFid());
 		;
 		//호출 및 결과

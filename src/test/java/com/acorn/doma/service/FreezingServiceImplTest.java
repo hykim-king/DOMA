@@ -66,6 +66,8 @@ public class FreezingServiceImplTest implements PLog{
 		String year = "2018";
 		List<Freezing> yearData = freezingService.selectPolyByYear(year);
 		assertNotNull(yearData);
+		List<Freezing> allYear = freezingService.selectPolyAll();
+		assertNotNull(allYear);
 		
 	}
 	

@@ -81,6 +81,9 @@ public class FreezingMapperTest implements PLog{
 		List<Freezing> yearVO = freezingMapper.selectPolyByYear(year);
 		assertNotNull(yearVO);
 		
+		List<Freezing> allYear = freezingMapper.selectPolyAll();
+		assertNotNull(allYear);
+		
 		 
 		 
 	}

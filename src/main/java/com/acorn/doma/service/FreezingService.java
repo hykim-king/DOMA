@@ -20,4 +20,5 @@ public interface FreezingService {
 	 List<Freezing> selectAllData() throws SQLException;
 	 Freezing selectFreezingDataById(String fid) throws SQLException;
 	 List<Freezing> selectPolyByYear(String year) throws SQLException;
+	 List<Freezing> selectPolyAll() throws SQLException;
 }

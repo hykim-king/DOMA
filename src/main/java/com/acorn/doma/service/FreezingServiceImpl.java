@@ -153,5 +153,11 @@ public class FreezingServiceImpl implements FreezingService, PLog {
 		return outVO;
 	}
 
+	@Override
+	public List<Freezing> selectPolyAll() throws SQLException {
+		List<Freezing> outVO = freezingMapper.selectPolyAll();
+		return outVO;
+	}
+
 	
 }

@@ -1,32 +1,284 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
-	    pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-	<c:set var="CP" value="${pageContext.request.contextPath}" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
-<link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
-<script src="${CP}/resources/js/jquery_3_7_1.js"></script>
-<script src="${CP}/resources/js/common.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
+    <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
+    <script src="${CP}/resources/js/common.js"></script>    
+    <style>
+        #map { width: 100%; height: 800px; }
+        .area { background: #fff; padding: 5px; border: 1px solid #333; }
+        .info { background: #fff; padding: 5px; border: 1px solid #333; }
+        .details div { margin-bottom: 5px; }
+        .table-container { margin-top: 20px; }
+    </style>
+   <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900&autoload=false"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-    console.log("DOMContentLoaded");
-    
+var map;
+var infowindow;
+var customOverlay;
+var polygons = {}; // 각 년도별 폴리곤 저장 객체
+var polygonColors = {}; // 년도별 색상 객체
+document.addEventListener("DOMContentLoaded", function() {	
+    kakao.maps.load(function() {
+        var container = document.getElementById('map');
+        var options = {
+            center: new kakao.maps.LatLng(37.564214, 127.001699),
+            level: 8
+        };        
+        map = new kakao.maps.Map(container, options);
+
+        var mapTypeControl = new kakao.maps.MapTypeControl();
+        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+        var zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+        infowindow = new kakao.maps.InfoWindow();
+        customOverlay = new kakao.maps.CustomOverlay();
+        
+     // 전체 보기 체크박스 상태에 따라 폴리곤을 로드합니다.
+        if (document.getElementById('showAllCheckbox').checked) {
+            loadAllPolygons();
+        }
+        
+        document.getElementById('showAllCheckbox').addEventListener('change', function() {
+            if (this.checked) {
+                loadAllPolygons();
+            } else {
+                removeAllPolygons();
+            }  
+        });
+    });
 });
+function loadAllPolygons() {
+    $.ajax({
+        url: "/doma/freezing/allYearsSelect.do",
+        type: 'GET',
+        dataType: "json",
+        success: function(response) {
+            response.forEach(function(freezing) {
+                if (freezing.polygon) {
+                    var polygonData = JSON.parse(freezing.polygon);
+
+                    if (polygonData.type !== 'Polygon' || !polygonData.coordinates) {
+                        console.error("Invalid polygon data format:", polygonData);
+                        return;
+                    }
+
+                    var coordinates = polygonData.coordinates[0];
+                    var polygonPath = coordinates.map(function(coord) {
+                        return new kakao.maps.LatLng(coord[1], coord[0]);
+                    });
+
+                    var color = polygonColors[freezing.year] || getRandomColor();
+                    polygonColors[freezing.year] = color;
+
+                    var polygon = new kakao.maps.Polygon({
+                        path: polygonPath,
+                        strokeWeight: 3,
+                        strokeColor: color,
+                        strokeOpacity: 0.8,
+                        strokeStyle: 'longdash',
+                        fillColor: color,
+                        fillOpacity: 0.7
+                    });
+
+                    polygon.setMap(map);
+                    polygons[freezing.year] = polygons[freezing.year] || [];
+                    polygons[freezing.year].push(polygon);
+
+                    kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
+                        polygon.setOptions({ fillColor: '#09f' });
+                        customOverlay.setContent('<div class="area">' + freezing.accPoint + '</div>');
+                        customOverlay.setPosition(mouseEvent.latLng);
+                        customOverlay.setMap(map);
+                    });
+
+                    kakao.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
+                        customOverlay.setPosition(mouseEvent.latLng);
+                    });
+
+                    kakao.maps.event.addListener(polygon, 'mouseout', function() {
+                        polygon.setOptions({ fillColor: color });
+                        customOverlay.setMap(null);
+                    });
+
+                    kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
+                        onPolygonClick(freezing.fid, mouseEvent); // 폴리곤 클릭 시 상세 정보 로드
+                    });
+                }
+            });
+        },
+        error: function(error) {
+            console.error("Error loading all polygons:", error);
+        }
+    });
+}
+
+    function removeAllPolygons() {
+        // polygons 객체가 올바르게 정의되어 있는지 확인합니다.
+        if (polygons) {
+            Object.keys(polygons).forEach(function(year) {
+                if (polygons[year]) {
+                    polygons[year].forEach(function(polygon) {
+                        polygon.setMap(null);
+                    });
+                }
+            });
+            polygons = {}; // 모든 폴리곤을 제거한 후 객체를 비웁니다.
+        }
+    }
+
+    function polyData(year) {
+        if (document.getElementById('showAllCheckbox').checked) {
+            alert("해당 년도를 보기 전, 전체보기를 해제해주세요.");
+            return;
+        }
+
+        if (polygons[year] && polygons[year].length > 0) {
+            polygons[year].forEach(function(polygon) {
+                polygon.setMap(null);
+            });
+            polygons[year] = [];
+        } else {
+            $.ajax({
+                url: "/doma/freezing/yearSelect.do",
+                type: 'GET',
+                data: { year: year },
+                dataType: "json",
+                success: function(response) {
+                    response.forEach(function(freezing) {
+                        if (freezing.polygon) {
+                            try {
+                                var polygonData = JSON.parse(freezing.polygon);
+
+                                if (polygonData.type !== 'Polygon' || !polygonData.coordinates) {
+                                    console.error("Invalid polygon data format:", polygonData);
+                                    return;
+                                }
+
+                                var coordinates = polygonData.coordinates[0];
+                                var polygonPath = coordinates.map(function(coord) {
+                                    if (Array.isArray(coord) && coord.length === 2) {
+                                        return new kakao.maps.LatLng(coord[1], coord[0]);
+                                    } else {
+                                        console.error("Invalid coordinate format:", coord);
+                                        return null;
+                                    }
+                                }).filter(function(latLng) { return latLng !== null; });
+
+                                var color = polygonColors[year] || getRandomColor();
+                                polygonColors[year] = color;
+
+                                var polygon = new kakao.maps.Polygon({
+                                    path: polygonPath,
+                                    strokeWeight: 3,
+                                    strokeColor: color,
+                                    strokeOpacity: 0.8,
+                                    strokeStyle: 'longdash',
+                                    fillColor: color,
+                                    fillOpacity: 0.7
+                                });
+
+                                polygon.setMap(map);
+                                polygons[year] = polygons[year] || [];
+                                polygons[year].push(polygon);
+
+                                kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
+                                    polygon.setOptions({ fillColor: '#09f' });
+                                    customOverlay.setContent('<div class="area">' + freezing.accPoint + '</div>');
+                                    customOverlay.setPosition(mouseEvent.latLng);
+                                    customOverlay.setMap(map);
+                                });
+
+                                kakao.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
+                                    customOverlay.setPosition(mouseEvent.latLng);
+                                });
+
+                                kakao.maps.event.addListener(polygon, 'mouseout', function() {
+                                    polygon.setOptions({ fillColor: color });
+                                    customOverlay.setMap(null);
+                                });
+
+                                kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
+                                    onPolygonClick(freezing.fid, mouseEvent); // 폴리곤 클릭 시 상세 정보 로드
+                                });
+
+                            } catch (e) {
+                                console.error("Error parsing polygon data:", e);
+                            }
+                        } else {
+                            console.error("No polygon data available for freezing:", freezing);
+                        }
+                    });
+                },
+                error: function(error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+    }
+
+    function onPolygonClick(fid, mouseEvent) {
+        $.ajax({
+            url: "/doma/freezing/idSelect.do",
+            type: 'GET',
+            data: { fid: fid },
+            dataType: "json",
+            success: function(response) {
+                var content = '<div class="info">' +
+                    '   <div class="title">' + response.gname + '</div>' +
+                    '   <div class="details">' +
+                    '       <div>동네: ' + response.dname + '</div>' +
+                    '       <div>년도: ' + response.year + '</div>' +
+                    '       <div>사고 발생 건수: ' + response.accident + '</div>' +
+                    '       <div>총 사상자 수: ' + response.casualties + '</div>' +
+                    '       <div>사망자 수: ' + response.dead + '</div>' +
+                    '       <div>중상자 수: ' + response.seriously + '</div>' +
+                    '       <div>경상자 수: ' + response.ordinary + '</div>' +
+                    '   </div>' +
+                    '</div>';
+
+                infowindow.setContent(content);
+                infowindow.setPosition(mouseEvent.latLng);
+                infowindow.open(map);
+            },
+            error: function(error) {
+                console.error("Error fetching freezing data:", error);
+            }
+        });
+    }
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 </script>
-<title>Insert title here</title>
 </head>
 <body>
-	 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <div style="display: flex;">
         <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
         <div id="subMap" style="height: 815px;">
             <section id="mapContainer">
                 <div class="aside" style="height:800px; width: 350px; overflow: scroll;">
                     <h2 style="font-weight: bold; text-align: center; border: 3px solid black;">결빙정보</h2>
+                    <div>
+                        <label>
+                            <input type="checkbox" id="showAllCheckbox" checked>
+                            전체 보기
+                        </label>
+                    </div>
                     <!-- 테이블 추가 -->
                     <div class="table-container">
                         <table class="table">
@@ -43,7 +295,12 @@ document.addEventListener("DOMContentLoaded", function(){
                             <tbody>
                                 <c:forEach var="freezing" items="${allData}">
                                     <tr>
-                                        <td onclick="polyData('${freezing.year}')">${freezing.year}년</td>
+                                        <td>
+                                            <button type="button" onclick="polyData('${freezing.year}')">
+                                                ${freezing.year}
+                                                <span style="background-color: ${polygonColors[freezing.year] || '#FFFFFF'}; color: #FFF; padding: 0 4px;"></span>
+                                            </button>
+                                        </td>
                                         <td>${freezing.accident}건</td>
                                         <td>${freezing.casualties}명</td>
                                         <td>${freezing.dead}명</td>
@@ -57,55 +314,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 </div>
             </section>
         </div>            
-        <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
+        <div id="map"></div> <!-- 지도 표시 영역 -->
     </div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-	<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
-<script>
-    window.onload = function() {
-        var container = document.getElementById('map');
-        var options = {
-        	center: new kakao.maps.LatLng(37.564214, 127.001699),
-            level: 8
-        };
-        var map = new kakao.maps.Map(container, options);
-        
-        // 교통 혼잡도 표시
-        map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC); 
-        
-
-
-    
-        
-       // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-        var mapTypeControl = new kakao.maps.MapTypeControl();
-
-        // 지도 타입 컨트롤을 지도에 표시합니다
-        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-        
-       // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-       // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-       map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성합니다
-       var zoomControl = new kakao.maps.ZoomControl();
-       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-    };
-    function polyData(year){
-    	$.ajax({
-    		url:"/doma/freezing/yearSelect.do",
-    		type:'GET',
-    		data:{year:year},
-    		dataType:"json",
-    		success:function(response){
-    			console.log(response);
-    		},
-    		error: function(error){
-    			console.error("Error:",error);
-    		}
-    	});
-    }
-</script>
 </body>
 </html>
-	    
