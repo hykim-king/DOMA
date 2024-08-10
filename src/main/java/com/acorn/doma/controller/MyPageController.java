@@ -282,7 +282,7 @@ public class MyPageController implements PLog {
 		log.debug("2.flag:" + flag);
 		String message = "";
 		if(1 == flag) {
-			message =  "님이 수정 되었습니다.";
+			message =  "수정 되었습니다.";
 		}else {
 			message = "수정 실패 했습니다.";
 		}
