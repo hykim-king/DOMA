@@ -292,6 +292,34 @@ public class BoardController implements PLog {
 		model.addAttribute("board", outVO);
 		model.addAttribute("message", message);
 		
+		Search search = new Search();
+		
+		List<Board> list = this.boardService.doRetrieve(search);
+		
+		//2.화면 전송 데이터
+		//조회 데이터
+		model.addAttribute("list", list);
+		
+		//검색 조건
+		model.addAttribute("search", search);
+		
+		//페이징 : totalCnt
+		int totalCnt = 0;
+		if(null != list && list.size() > 0) {
+			Board firstVO = list.get(0);
+			totalCnt = firstVO.getTotalCnt();
+		}
+		//검색 조건
+		model.addAttribute("totalCnt", totalCnt);
+		
+		//----------------------------------------------------------------------
+		Code code = new Code();
+		//GNAME : 구이름
+		code.setMstCode("GNAME");
+		List<Code> gname = this.codeService.doRetrieve(code);
+		model.addAttribute("GNAME", gname); //구이름
+		//----------------------------------------------------------------------
+		
 		return viewName;
 	}
 	

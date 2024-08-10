@@ -34,9 +34,16 @@
         <servlet-api-version>2.5</servlet-api-version>
         <commonmark-version>0.18.2</commonmark-version>
         <proj4j-version>1.2.2</proj4j-version>
+        <commons-fileupload-version>1.5</commons-fileupload-version>
 
     </properties>
     <dependencies>
+    <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+	<dependency>
+	    <groupId>commons-fileupload</groupId>
+	    <artifactId>commons-fileupload</artifactId>
+	    <version>${commons-fileupload-version}</version>
+	</dependency>
     <dependency>
     <groupId>org.locationtech.proj4j</groupId>
     <artifactId>proj4j-epsg</artifactId>

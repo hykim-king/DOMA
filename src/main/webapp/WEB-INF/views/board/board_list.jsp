@@ -275,10 +275,6 @@ user : ${user }
 		    </table>
 		    <!--// table end ------------------------------------------------------------->
             <div >
-                <form class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <input type="search" class="g-col-6">
-                    <input type="button" value="검색" class="g-col-6 btn btn-secondary">
-                </form>
                 <div class="grid gap-0 column-gap-6">
                     <table> 
                         <tr>

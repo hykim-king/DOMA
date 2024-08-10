@@ -89,7 +89,8 @@ document.addEventListener("DOMContentLoaded", function(){
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
-    const userIdInput = document.querySelector("#userId");
+    
+    const modIdInput = document.querySelector("#modId");
     
 
 //이벤트 처리=================================================================================================
@@ -149,9 +150,10 @@ document.addEventListener("DOMContentLoaded", function(){
         
         let params = {
         		"seq"      : seqInput.value,
-                "div"      : divInput.value,
-                "userId"   : userIdInput.value,
+        		"div"      : divInput.value,
+        		"gname"    : searchDivSelect.value,
                 "title"    : titleInput.value,
+                "modId"    : modIdInput.value,
                 "content"  : simplemde.value()
             };
 
@@ -274,9 +276,21 @@ seq : ${seq }
         </div>
     </div>
     <div class="row mb-2">
-        <label for="userId" class="col-sm-2 col-form-label">등록자</label>
+	    <label for="searchDiv" class="col-sm-2 col-form-label">구 이름</label>
+	    <div class="col-sm-10">
+	        <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">
+	        <select name="searchDiv" class="form-select" id="selectDiv" onchange="document.getElementById('searchDiv').value=this.options[this.selectedIndex].text">
+	            <option value="">구 선택</option>
+	            <c:forEach var="item" items="${GNAME}">
+	                <option value="${item.detCode}" <c:if test="${item.detCode == search.searchDiv }">selected</c:if>>${item.detNm}</option>
+	            </c:forEach>
+	        </select>
+	    </div>
+	</div>
+    <div class="row mb-2">
+        <label for="modId" class="col-sm-2 col-form-label">등록자</label>
         <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
+          <input type="text" value="<c:out value='${board.modId}'/>" class="form-control readonly-input" readonly="readonly" name="modId" id="modId"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">

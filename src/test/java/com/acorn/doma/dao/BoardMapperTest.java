@@ -158,7 +158,6 @@ public class BoardMapperTest implements PLog{
 		String updateStr = "_U";
 		outVO01.setDiv("10");
 		outVO01.setTitle(outVO01.getTitle() + updateStr);
-		outVO01.setModId(outVO01.getModId() + updateStr);
 		outVO01.setContent(outVO01.getContent() + updateStr);
 		outVO01.setViews(1);
 		
