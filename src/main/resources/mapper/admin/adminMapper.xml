@@ -136,6 +136,6 @@
     ) VALUES (
         #{userId}, #{userName}, #{userPw}, #{userEmail}, #{userBirth}, #{userGrade}, #{userAddress}, #{userDetailAddress}, #{userRegDt}
     )
-</insert>
+</insert> 
 
 </mapper>

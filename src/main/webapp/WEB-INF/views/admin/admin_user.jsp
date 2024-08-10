@@ -87,40 +87,32 @@
                 <h2>상세정보</h2>
                 <form class="member-form">
                     <div class="form-group">
-                        <label for="memberId">회원 ID</label>
+                        <label for="memberId"></label>
                         <input type="text" id="memberId" name="memberId" placeholder="회원 ID" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="name">이름</label>
+                        <label for="name"></label>
                         <input type="text" id="name" name="name" placeholder="이름">
                     </div>
                     <div class="form-group">
-                        <label for="email">이메일</label>
+                        <label for="email"></label>
                         <input type="email" id="email" name="email" placeholder="e-mail">
                     </div>
                     <div class="form-group">
-                        <label for="address">주소</label>
+                        <label for="address"></label>
                         <input type="text" id="address" name="address" placeholder="주소">
                     </div>
                     <div class="form-group">
-                        <label for="detailAddress">상세주소</label>
+                        <label for="detailAddress"></label>
                         <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소">
                     </div>
                     <div class="form-group">
-                        <label for="birthdate">생년월일</label>
+                        <label for="birthdate"></label>
                         <input type="text" id="birthdate" name="birthdate" placeholder="생년월일">
                     </div>
                     <div class="form-group">
-                        <label for="joinDate">가입일</label>
+                        <label for="joinDate"></label>
                         <input type="text" id="joinDate" name="joinDate" placeholder="가입일">
-                    </div>
-                    <div class="form-group">
-                        <label for="grade">등급</label>
-                        <select id="grade" name="grade">
-                            <option value="super_admin">Super Admin</option>
-                            <option value="content_admin">Content Admin</option>
-                            <option value="user">User</option>
-                        </select>
                     </div>
                     <div class="form-buttons">
                         <button type="submit" class="member-action-button" data-action="update">수정</button>
