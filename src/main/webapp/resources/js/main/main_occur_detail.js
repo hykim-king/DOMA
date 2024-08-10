@@ -69,7 +69,8 @@ document.getElementById('gnameDiv').addEventListener('change', function() {
             success: function(response) {
                 console.log("통신 성공 :", response);
                 const data = JSON.parse(response);
-
+	
+				initKakaoMap();
                 // 기존의 <ul> 요소 비우기
                 detailInfo.innerHTML = '';
 
@@ -83,6 +84,7 @@ document.getElementById('gnameDiv').addEventListener('change', function() {
 									<col>
 								</colgroup>
 								<tbody>
+									item : ${item}
                                     <tr>
 										<input type="text" value="${item.accPoint}" onclick="moveToMarker(${item.latitude},${item.longitude})" style="background-color:white; width:331px;font-wight : bold; text-align : center; border: 3px solid black;">
 									</tr>

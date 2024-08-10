@@ -68,65 +68,125 @@
     <script src="${CP}/resources/js/main/main_occur_detail.js"></script>
 	<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
 <script>
-    window.onload = function() {
+    
+var map;
+var markers = []; // 모든 마커를 저장할 배열
+var currentInfoWindow = null; // 현재 열려 있는 인포윈도우
+
+function loadKakaoMapScript(callback) {
+    var script = document.createElement('script');
+    script.onload = callback;
+    script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900&autoload=false";
+    document.head.appendChild(script);
+}
+
+function initKakaoMap() {
+    kakao.maps.load(function() {
         var container = document.getElementById('map');
         var options = {
-            center: new kakao.maps.LatLng(37.566826, 126.9786567),
-            level: 4
+            center: new kakao.maps.LatLng(37.564214, 127.001699),
+            level: 8
         };
-        var map = new kakao.maps.Map(container, options);
-        
-        // 교통 혼잡도 표시
-        map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC); 
-        
-        // 다각형을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 다각형을 표시합니다
-        var polygonPath = [
-            new kakao.maps.LatLng(37.566968133550304, 126.97742409773512),
-            new kakao.maps.LatLng(37.56690087032515, 126.97911631874376),
-            new kakao.maps.LatLng(37.565990821166096, 126.97887321579489),
-            new kakao.maps.LatLng(37.56613043481272, 126.97864679733107),
-            new kakao.maps.LatLng(37.56614823271141, 126.97745264256177) 
+        map = new kakao.maps.Map(container, options);
+
+        // 지도에 추가할 컨트롤들 초기화
+        var mapTypeControl = new kakao.maps.MapTypeControl();
+        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+        var zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+        // 모든 마커를 지도에 추가
+        var positions = [
+            <c:forEach var='occur' items='${item}' varStatus='status'>
+            {
+                latlng: new kakao.maps.LatLng(${occur.latitude}, ${occur.longitude}),
+                imageSrc: '${CP}/resources/img/map/occur_warning.png',
+                info: "${occur.type}'
+            }<c:if test='${status.last}'></c:if>
+            </c:forEach>
         ];
 
-        // 지도에 표시할 다각형을 생성합니다
-        var polygon = new kakao.maps.Polygon({
-            path: polygonPath, // 그려질 다각형의 좌표 배열입니다
-            strokeWeight: 3, // 선의 두께입니다
-            strokeColor: '#39DE2A', // 선의 색깔입니다
-            strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-            strokeStyle: 'longdash', // 선의 스타일입니다
-            fillColor: '#A2FF99', // 채우기 색깔입니다
-            fillOpacity: 0.7 // 채우기 불투명도 입니다
+
+        var imageSize = new kakao.maps.Size(24, 35);
+        positions.forEach(function(pos) {
+            var markerImage = new kakao.maps.MarkerImage(pos.imageSrc, imageSize);
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: pos.latlng,
+                image: markerImage
+            });
+            var infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="padding:5px; font-size:12px; color:white; background-color:black;">' + pos.info + '</div>'
+            });
+
+         // 마커에 마우스오버 이벤트를 등록합니다
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+              // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+                infowindow.open(map, marker);
+            });
+
+            // 마커에 마우스아웃 이벤트를 등록합니다
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+                infowindow.close();
+            });
+
+            // 마커와 인포윈도우 객체를 배열에 저장합니다
+            markers.push({
+                marker: marker,
+                infoWindow: infowindow,
+                latlng: pos.latlng
+            });
         });
 
-        // 지도에 다각형을 표시합니다
-        polygon.setMap(map);
-        
-        // 마커가 표시될 위치입니다 
-        var markerPosition  = new kakao.maps.LatLng(37.565337286306466, 126.97719255385478); 
+        // 맵에 마우스 드래그 이벤트를 추가하여 인포윈도우를 닫습니다
+         kakao.maps.event.addListener(map, 'dragend', function() {
+            if (currentInfoWindow) {
+                currentInfoWindow.close();
+                currentInfoWindow = null;
+            }
+        }); 
+    });
+    
 
-        // 마커를 생성합니다
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
-        });
+    console.log(markers);
+    console.log(currentInfoWindow);
+}
 
-        // 마커가 지도 위에 표시되도록 설정합니다
-        marker.setMap(map);
-        
-       // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-        var mapTypeControl = new kakao.maps.MapTypeControl();
 
-        // 지도 타입 컨트롤을 지도에 표시합니다
-        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-        
-       // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-       // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-       map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
-       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성합니다
-       var zoomControl = new kakao.maps.ZoomControl();
-       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-    };
+function moveToMarker(lat, lng) {
+	console.log("moveTomarker()");
+	console.log("latitude : " + lat);
+	console.log("longitude : " + lng);
+	
+    var moveLatLon = new kakao.maps.LatLng(lat, lng);
+    map.setCenter(moveLatLon);
+
+    // 클릭된 위치와 일치하는 마커를 찾습니다
+    markers.forEach(function(item) {
+        var markerLatLng = item.latlng;
+        if (Math.abs(markerLatLng.getLat() - lat) < 0.0001 && Math.abs(markerLatLng.getLng() - lng) < 0.0001) {
+            // 마커의 인포윈도우를 엽니다
+            if (currentInfoWindow && currentInfoWindow !== item.infoWindow) {
+                currentInfoWindow.close(); // 이전 인포윈도우 닫기
+            }
+            item.infoWindow.open(map, item.marker);
+            currentInfoWindow = item.infoWindow; // 현재 열려 있는 인포윈도우 업데이트
+        }
+    });
+    
+
+}
+
+// 외부에서 돌발정보 클릭 시 인포윈도우 열기
+function onInfoClick(lat, lng) {
+    moveToMarker(lat, lng);
+}
+
+// 초기화 스크립트 로딩
+loadKakaoMapScript(initKakaoMap);
 </script>
 </body>
 </html>
