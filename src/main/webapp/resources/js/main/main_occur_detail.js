@@ -51,6 +51,11 @@ function detailSelect(input) {
      
 }
 
+// 외부에서 돌발정보 클릭 시 인포윈도우 열기
+function onInfoClick(lat, lng) {
+    moveToMarker(lat, lng);
+}
+
 document.getElementById('gnameDiv').addEventListener('change', function() {
     const selectedValue = this.value;
     const yearH2 = document.querySelector('#yearH2').innerText;
@@ -70,7 +75,6 @@ document.getElementById('gnameDiv').addEventListener('change', function() {
                 console.log("통신 성공 :", response);
                 const data = JSON.parse(response);
 	
-				initKakaoMap();
                 // 기존의 <ul> 요소 비우기
                 detailInfo.innerHTML = '';
 
@@ -117,6 +121,48 @@ document.getElementById('gnameDiv').addEventListener('change', function() {
                     `;
                     detailInfo.appendChild(listItem);
                 });
+                
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+			    
+			    mapOption = { 
+			        center: new kakao.maps.LatLng(37.564214, 127.001699), // 지도의 중심좌표
+			        level: 3 // 지도의 확대 레벨
+			        
+			    };
+			
+				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+				 
+				// 마커를 표시할 위치와 title 객체 배열입니다 
+				
+				var positions = data.map(function(item) {
+                    return {
+                        latlng: new kakao.maps.LatLng(parseFloat(item.latitude), parseFloat(item.longitude)), // 숫자로 변환
+                        imageSrc: "/doma/resources/img/map/occur_warning.png"
+                        
+                    };
+                    
+                });
+				
+				// 마커 이미지의 이미지 주소입니다
+				var imageSrc = "/doma/resources/img/map/occur_warning.png"; 
+					
+				for (var i = 0; i < positions.length; i ++) {
+					
+					// 마커 이미지의 이미지 크기 입니다
+					var imageSize = new kakao.maps.Size(24, 35); 
+					
+					console.log(positions[i]);	
+					// 마커 이미지를 생성합니다    
+					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+					
+					// 마커를 생성합니다
+					var marker = new kakao.maps.Marker({
+						map: map, // 마커를 표시할 지도
+						position: positions[i].latlng, // 마커를 표시할 위치
+						title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+						image : markerImage // 마커 이미지 
+					});
+				}
             },
             error: function(response) {
                 console.log("Error:", response);
@@ -126,4 +172,22 @@ document.getElementById('gnameDiv').addEventListener('change', function() {
         });
     }
 });
+
+function moveToMarker(lat, lng) {
+    var moveLatLon = new kakao.maps.LatLng(lat, lng);
+    map.setCenter(moveLatLon);
+
+    // 클릭된 위치와 일치하는 마커를 찾습니다
+    markers.forEach(function(item) {
+        var markerLatLng = item.latlng;
+        if (Math.abs(markerLatLng.getLat() - lat) < 0.0001 && Math.abs(markerLatLng.getLng() - lng) < 0.0001) {
+            // 마커의 인포윈도우를 엽니다
+            if (currentInfoWindow && currentInfoWindow !== item.infoWindow) {
+                currentInfoWindow.close(); // 이전 인포윈도우 닫기
+            }
+            item.infoWindow.open(map, item.marker);
+            currentInfoWindow = item.infoWindow; // 현재 열려 있는 인포윈도우 업데이트
+        }
+    });
+}
 

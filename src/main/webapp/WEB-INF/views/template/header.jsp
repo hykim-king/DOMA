@@ -39,7 +39,7 @@
 	                </td>
                 </tr>
             </table>
-            <table class="menu-align" style="margin-left : 50%;">
+            <table class="menu-align" style="margin-left : 30%;">
 		         <tr>
 		             <td><a id="main_page" style="margin-right : 20px;">Home</a></td>
 		             <td><a id="register_page"  style="margin-right : 20px;">Join</a></td>
