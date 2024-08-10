@@ -239,9 +239,9 @@ public class BoardController implements PLog {
 		String message = "";
 		
 		if(1 == flag) {
-			message = inVO.getSeq() + "이 삭제 되었습니다.";
+			message =  "삭제 되었습니다.";
 		}else {
-			message = inVO.getSeq() + "삭제 실패 되었습니다.";
+			message =   "실패 되었습니다.";
 		}
 		
 		Message messageObj = new Message(flag, message);

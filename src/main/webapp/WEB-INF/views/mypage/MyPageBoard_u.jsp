@@ -101,7 +101,22 @@ document.addEventListener("DOMContentLoaded", function(){
      
     
 //함수=================================================================================================
-    //doUpdate : 수정
+    
+    function MoveBoard(userId){ 
+        //frm.pageNo.value = 1; 
+       //window.location.href = "/doma/doma/mpSelect.do?userId="+userId;
+       window.location.href = '/doma/mypage/mpSelect.do?userId='+userIdInput.value;
+       // 팝업 창으로 열기
+       //window.open('/doma/mypage/mpSelect.do?userId=' + userIdInput.value, 'popupWindow', 'width=600,height=400,scrollbars=yes');
+
+       
+
+
+}
+	
+	
+	
+	//doUpdate : 수정
     function doUpdate() {
         console.log("doUpdate()");
         
@@ -144,18 +159,17 @@ document.addEventListener("DOMContentLoaded", function(){
         PClass.pAjax(url, params, dataType, type, async, function(data){
             if(data){
                 try{
-                    //JSON문자열을 JSON Object로 변환
-                    const message = JSON.parse(data)
+                    // JSON 문자열을 JSON Object로 변환
+                    const message = JSON.parse(data);
                     if(isEmpty(message) === false && 1 === message.messageId){
                         alert(message.messageContents);
-                        popupWindow.close();
-                         
-                    }else{
-                        alert(message.messageContents);
-                    }
+                        location.reload();
+                        window.close(); // 수정이 완료되면 창을 닫습니다.
+                        
+                    }  
                     
-                }catch(e){
-                	  popupWindow.close();
+                } catch(e) {
+                    console.error(e);
                 }
             }
         });
@@ -183,8 +197,7 @@ seq : ${seqInput }
   
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end"> 
-      <input type="button" value="수정"  id="doUpdate" class="btn btn-primary">
-      <input type="reset" value="초기화"   class="btn btn-primary">
+      <input type="button" value="수정"  id="doUpdate" class="btn btn-primary"> 
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->

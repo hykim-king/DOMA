@@ -86,11 +86,19 @@ document.addEventListener("DOMContentLoaded", function(){
     const seqInput = document.querySelector("#seq");
     const userIdInput = document.querySelector("#userId");
 
+    let popupWindow = null;
+
     function updateBoard(seq) { 
         console.log("updateBoard called with seq:", seq);
         const url = "/doma/mypage/mpBoardSelectOne.do?seq=" + seq + "&div=10"; 
-        window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
+        popupWindow = window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
     }
+
+    window.onfocus = function() {
+        if (popupWindow && popupWindow.closed) {
+            window.location.reload();
+        }
+    };
 
     function deleteBoard(seq, userId) { 
         console.log("deleteBoard called with seq:", seq, "and userId:", userId);
@@ -120,12 +128,10 @@ document.addEventListener("DOMContentLoaded", function(){
                     const message = JSON.parse(data);
                     if (message && message.messageId === 1) {
                         alert(message.messageContents);
-                        moveToList();
-                    } else {
-                        alert(message.messageContents);
-                    }
+                        location.reload();
+                    }  
                 } catch (e) {
-                    alert("data를 확인 하세요");
+                	location.reload();
                 }
             }
         });
