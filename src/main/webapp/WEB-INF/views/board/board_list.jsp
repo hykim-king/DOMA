@@ -62,6 +62,8 @@ document.addEventListener("DOMContentLoaded", function(){
     //등록
     const moveToRegBtn = document.querySelector("#moveToReg");
     console.log("moveToRegBtn:", moveToRegBtn);
+    //등록시 파일업로드로
+    const fileUploadgBtn = document.querySelector("#fileUpload");
     //검색어
     const searchWordInput = document.querySelector("#searchWord");
     //구분
@@ -72,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 //이벤트 처리=================================================================================================  
     
-
 	//등록 이동 버튼
 	moveToRegBtn.addEventListener("click",function(event){
 	    console.log("moveToRegBtn click");

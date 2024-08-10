@@ -2,6 +2,10 @@ package com.acorn.doma.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
+
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.service.BoardService;
@@ -41,6 +49,54 @@ public class BoardController implements PLog {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ BoardController()         │");
 		log.debug("└───────────────────────────┘");
+		
+	}
+	
+	/**
+	 * 상세페이지 이동
+	 * @param inVO
+	 * @param model
+	 * @return
+	 * @throws SQLException
+	 * http://localhost:8080/doma/board/moveToReg.do
+	 */
+	@RequestMapping(value = "/moveToReg.do"
+			   , method = RequestMethod.GET)
+	public String moveToReg(Board inVO, Model model) throws SQLException {
+		String viewName = "board/board_reg";
+		
+		log.debug("1.param inVO:" + inVO);
+		model.addAttribute("board", inVO);
+		
+		Search search = new Search();
+		
+		List<Board> list = this.boardService.doRetrieve(search);
+		
+		//2.화면 전송 데이터
+		//조회 데이터
+		model.addAttribute("list", list);
+		
+		//검색 조건
+		model.addAttribute("search", search);
+		
+		//페이징 : totalCnt
+		int totalCnt = 0;
+		if(null != list && list.size() > 0) {
+			Board firstVO = list.get(0);
+			totalCnt = firstVO.getTotalCnt();
+		}
+		//검색 조건
+		model.addAttribute("totalCnt", totalCnt);
+		
+		//----------------------------------------------------------------------
+		Code code = new Code();
+		//GNAME : 구이름
+		code.setMstCode("GNAME");
+		List<Code> gname = this.codeService.doRetrieve(code);
+		model.addAttribute("GNAME", gname); //구이름
+		//----------------------------------------------------------------------
+		
+		return viewName;
 	}
 	
 	//http://localhost:8080/doma/board/board.do
@@ -134,54 +190,6 @@ public class BoardController implements PLog {
 	}
 	
 	/**
-	 * 상세페이지 이동
-	 * @param inVO
-	 * @param model
-	 * @return
-	 * @throws SQLException
-	 * http://localhost:8080/doma/board/moveToReg.do
-	 */
-	@RequestMapping(value = "/moveToReg.do"
-			   , method = RequestMethod.GET)
-	public String moveToReg(Board inVO, Model model) throws SQLException {
-		String viewName = "board/board_reg";
-		
-		log.debug("1.param inVO:" + inVO);
-		model.addAttribute("board", inVO);
-		
-		Search search = new Search();
-		
-		List<Board> list = this.boardService.doRetrieve(search);
-		
-		//2.화면 전송 데이터
-		//조회 데이터
-		model.addAttribute("list", list);
-		
-		//검색 조건
-		model.addAttribute("search", search);
-		
-		//페이징 : totalCnt
-		int totalCnt = 0;
-		if(null != list && list.size() > 0) {
-			Board firstVO = list.get(0);
-			totalCnt = firstVO.getTotalCnt();
-		}
-		//검색 조건
-		model.addAttribute("totalCnt", totalCnt);
-		
-		//----------------------------------------------------------------------
-		Code code = new Code();
-		//GNAME : 구이름
-		code.setMstCode("GNAME");
-		List<Code> gname = this.codeService.doRetrieve(code);
-		model.addAttribute("GNAME", gname); //구이름
-		//----------------------------------------------------------------------
-		
-		return viewName;
-	}
-	
-	
-	/**
 	 * 업데이트
 	 * @param inVO
 	 * @return
@@ -239,9 +247,9 @@ public class BoardController implements PLog {
 		String message = "";
 		
 		if(1 == flag) {
-			message =  "삭제 되었습니다.";
+			message = inVO.getSeq() + "이 삭제 되었습니다.";
 		}else {
-			message =   "실패 되었습니다.";
+			message = inVO.getSeq() + "삭제 실패 되었습니다.";
 		}
 		
 		Message messageObj = new Message(flag, message);

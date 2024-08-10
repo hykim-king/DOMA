@@ -61,32 +61,31 @@
     </sql>
     
     <sql id="whereDoRetrieve">
-       <choose>
-           <when test="searchDiv != null and searchDiv == '10' ">
-               AND title LIKE #{searchWord} || '%'
+	   <choose>
+	       <!-- 제목 검색 -->
+	       <when test="searchDiv != null and searchDiv == '10' ">
+	           AND title LIKE '%' || #{searchWord} || '%'
+	       </when>
+	       <!-- 내용 검색 -->
+	       <when test="searchDiv != null and searchDiv == '20' ">
+	           AND content LIKE '%' || #{searchWord} || '%'
+	       </when>
+	       <!-- 제목 + 내용 검색 -->
+	       <when test="searchDiv != null and searchDiv == '30'">
+	           AND (title LIKE '%' || #{searchWord} || '%'
+	           OR
+	           content LIKE '%' || #{searchWord} || '%')
+	       </when>
+	       <when test="searchDiv != null and searchDiv == '51' ">
+               AND gname = (SELECT det_code_nm FROM d_code WHERE mst_code = 'GNAME' AND det_code = #{searchDiv})
            </when>
-           <when test="searchDiv != null and searchDiv == '20' ">
-               AND content LIKE #{searchWord} || '%'
-           </when>
-           <when test="searchDiv != null and searchDiv == '30'">
-               AND (title LIKE #{searchWord} || '%'
-               OR
-               content LIKE #{searchWord} || '%')
-           </when>
-       </choose>
-    </sql>
-    
-    <sql id="GuRetrieve">
-       <choose>
-           <when test="searchDiv != null and searchDiv == '1' ">
-               AND '강남구' LIKE = #{searchWord} || '%'
-           </when>
-           <when test="searchDiv != null and searchDiv == '2' ">
-               AND '강동구' LIKE = #{searchWord} || '%'
-           </when>
-       </choose>
-    </sql>
-    
+	       <!-- GNAME 관련 검색 -->
+	       <when test="searchDiv != null and searchDiv &gt;= '51' and searchDiv &lt;= '75'">
+	           AND gname = (SELECT det_code_nm FROM d_code WHERE mst_code = 'GNAME' AND det_code = #{searchDiv})
+	       </when>
+	   </choose>
+	</sql>
+	
     <select id="doRetrieve" parameterType="Search" resultType="Board">
     -- TODO : 커뮤니티(10), 공지사항(20)
     SELECT A.*, B.*
@@ -110,7 +109,6 @@
               WHERE 1=1
               <include refid="divDoRetrieve"></include>
               <include refid="whereDoRetrieve"></include>
-              <include refid="GuRetrieve"></include>
               ORDER BY mod_dt DESC
         )T1
             WHERE rownum  <![CDATA[ <= ( #{pageSize} * (#{pageNo} -1) + #{pageSize} )]]>
@@ -123,7 +121,6 @@
             WHERE 1=1
             <include refid="divDoRetrieve"></include>
             <include refid="whereDoRetrieve"></include>
-            <include refid="GuRetrieve"></include>
         )B
     </select>
     

@@ -189,7 +189,7 @@ user : ${user }
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
-  <form action="#" class="form-horizontal"  name="regForm" id="regForm">
+  <form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="regForm" id="regForm" action="${CP}/file/fileUpload.do" method="post" enctype="multipart/form-data">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
     <div class="row mb-2">
 	    <label for="gname" class="col-sm-2 col-form-label">구이름</label>
@@ -217,8 +217,8 @@ user : ${user }
     <div class="row mb-2">
         <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" name="imgLink" id="imgLink"  maxlength="75" required="required">
-        </div>
+          <input type="file" class="form-control" name="imgLink" id="imgLink">        
+        </div>        
     </div>
     <div class="row mb-2">
         <label for="content" class="col-sm-2 col-form-label">내용</label>
@@ -228,6 +228,7 @@ user : ${user }
     </div>
   </form>
   <!--// form end -->
+  fileList:${fileList }
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->
