@@ -86,70 +86,56 @@ document.addEventListener("DOMContentLoaded", function(){
     const seqInput = document.querySelector("#seq"); 
     //div
     const divInput = document.querySelector("#div");
-    
-    const doDeleteBtn = document.querySelector("#deleteBoard");
-    
-    doDeleteBtn.addEventListener("click", function(event){
-        const seq = button.getAttribute("deleteBoard"); 
-        deleteBoard(seq);
-     
-	});
-    
-    
-    // Update Board function
+      
+ // Update Board function
     function updateBoard(seq) { 
-    	
-    	const url = "/doma/board/doSelectOne.do?seq=" + seq +"&div=10"; 
-    	window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
+        const url = "/doma/board/doSelectOne.do?seq=" + seq +"&div=10"; 
+        window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
     }
 
-    // Delete Board function (Placeholder)
+    // Delete Board function
     function deleteBoard(seq) { 
-		console.log("doDelete()");
-        
-        if(isEmpty(seqInput.value) == true){
-            alert('seq를 확인 하세요.')
-            //seqInput.focus();
-            return;
-        }
-        
-        if(confirm("삭제 하시겠습니까?") === false)return;
-        
-        //비동기 통신
-        let type = "GET";
-        let url = "/doma/board/doDelete.do";
-        let async = "true";
-        let dataType = "html";
-        
-        let params = {
-            "seq"    : seqInput.value
-        };
+    if(confirm("삭제하시겠습니까?") === false) return;
 
-        PClass.pAjax(url, params, dataType, type, async, function(data){
-            if(data){
-                try{
-                    //JSON문자열을 JSON Object로 변환
-                    const message = JSON.parse(data)
-                    if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
-                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-                        moveToList();
-                    }else{
-                        alert(message.messageContents);
-                    }
-                    
-                }catch(e){
-                    alert("data를 확인 하세요");
+    let type = "GET";
+    let url = "/doma/board/doDelete.do";
+    let async = true;
+    let dataType = "json";
+
+    let params = {
+        "seq": seq
+    };
+
+    PClass.pAjax(url, params, dataType, type, async, function(data) {
+        if(data) {
+            try {
+                const message = JSON.parse(data);
+                if(message && message.messageId === 1) {
+                    alert(message.messageContents);
+                    // 성공 시 리다이렉트
+                    window.location.href = "/doma/board/mpSelect.do?userId=user1";  
+                } else {
+                    alert(message.messageContents);
                 }
+            } catch(e) {
+                alert("데이터를 확인하세요");
             }
-        });
-    }
+        }
+    });
+}
 
-    // Attach event listeners to each button after the page is loaded
+
     document.querySelectorAll(".updateBoardBtn").forEach(function(button){
         button.addEventListener("click", function(event){
             const seq = button.getAttribute("data-seq"); 
             updateBoard(seq);
+        });
+    });
+    
+    document.querySelectorAll(".deleteBoardBtn").forEach(function(button){
+        button.addEventListener("click", function(event){
+            const seq = button.getAttribute("data-seq"); 
+            deleteBoard(seq);
         });
     }); 
 });
@@ -160,9 +146,12 @@ document.addEventListener("DOMContentLoaded", function(){
 </head> 
 <body> 
     <div class="table-content text-center d-flex justify-content-center">
+    <!-- Hidden input to hold the seq value -->
+    <input type="hidden" id="seq" value="">
+    <!-- Your table and other content -->
+    <table class="table table-hover"> 
         <div>
-            <h2>게시글 목록</h2>
-            <table class="table table-hover">
+            <h2>게시글 목록</h2> 
                 <thead>
                     <tr class="table-secondary">
                     	<th>seq</th>
@@ -192,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function(){
                  <th>
     					<button type="button" class="btn btn-outline-secondary updateBoardBtn" data-seq="${vo.seq}"  >
        			 				수정  </button>
-    					<button type="button" class="btn btn-outline-danger  " id="deleteBoardBtn"  >
+    					<button type="button" class="btn btn-outline-danger  deleteBoardBtn" data-seq="${vo.seq}" >
         						삭제 </button>
 				</th>
 				
@@ -205,9 +194,10 @@ document.addEventListener("DOMContentLoaded", function(){
                         </c:otherwise>
                     </c:choose>
                 </tbody>
+                </div>
             </table>
-        </div>
-    </div>
+            
+        </div> 
 
     <%@ include file="/WEB-INF/views/template/footer.jsp" %>
 </body>
