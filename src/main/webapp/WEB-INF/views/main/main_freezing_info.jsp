@@ -11,6 +11,12 @@
 <link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    console.log("DOMContentLoaded");
+    
+});
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -37,7 +43,7 @@
                             <tbody>
                                 <c:forEach var="freezing" items="${allData}">
                                     <tr>
-                                        <td>${freezing.year}년</td>
+                                        <td onclick="polyData('${freezing.year}')">${freezing.year}년</td>
                                         <td>${freezing.accident}건</td>
                                         <td>${freezing.casualties}명</td>
                                         <td>${freezing.dead}명</td>
@@ -85,6 +91,20 @@
        var zoomControl = new kakao.maps.ZoomControl();
        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
     };
+    function polyData(year){
+    	$.ajax({
+    		url:"/doma/freezing/yearSelect.do",
+    		type:'GET',
+    		data:{year:year},
+    		dataType:"json",
+    		success:function(response){
+    			console.log(response);
+    		},
+    		error: function(error){
+    			console.error("Error:",error);
+    		}
+    	});
+    }
 </script>
 </body>
 </html>

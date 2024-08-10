@@ -64,14 +64,15 @@ public class MainController implements PLog {
 		model.addAttribute("A11List", A11List);
 		return viewName;
 	}
-	@RequestMapping(value = "/accIdSelect.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@RequestMapping(value = "/IdSelect.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String accIdSelect(@RequestParam("accId") String accId, Model model) throws SQLException {
+		String viewName = "main/main_emergency_info";
 	    Accident accident = new Accident();
 	    accident.setAccId(accId);
 	    Accident accIdSelect = accInfoService.doSelectOne(accident);
 	    log.debug("accIdSelect: "+accIdSelect);
 	    model.addAttribute("accIdSelect", accIdSelect);
-	    return "main/main_emergency_info_detail";  // Thymeleaf fragment 방식으로 특정 영역만 업데이트
+	    return viewName;
 	}
 	
 

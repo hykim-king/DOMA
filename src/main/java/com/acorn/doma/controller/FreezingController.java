@@ -45,5 +45,28 @@ public class FreezingController implements PLog{
 		model.addAttribute("allData", allData);
 		return viewName;
 	}
+	@RequestMapping(value="/yearSelect.do"
+			,method=RequestMethod.GET
+			,produces = "text/plain;charset=UTF-8")
+	public String yearSelect(@RequestParam("year") String year,Model model) throws SQLException {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ yearSelect()                 │");
+		log.debug("└──────────────────────────────┘");
+		String viewName = "main/main_freezing_info";
+		List<Freezing> yearPoly = freezingService.selectPolyByYear(year);
+		model.addAttribute("yearPoly",yearPoly);
+		return viewName;
+	}
+	
+	@RequestMapping(value = "/IdSelect.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	public String freezingIdSelect(@RequestParam("fid") String fid, Model model) throws SQLException{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ freezingIdSelect()           │");
+		log.debug("└──────────────────────────────┘");
+		String viewName = "main/main_freezing_info";
+		Freezing fidSelect = freezingService.selectFreezingDataById(fid);
+		model.addAttribute("fidSelect",fidSelect);
+		return viewName;
+	}
 		
 }

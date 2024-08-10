@@ -31,6 +31,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
+import com.acorn.doma.domain.Board;
 import com.acorn.doma.domain.Freezing;
 import com.acorn.doma.mapper.AccMapper;
 import com.acorn.doma.mapper.FreezingMapper;
@@ -74,24 +75,44 @@ public class FreezingControllerTest implements PLog {
 
 //	@Ignore
 	@Test
-    public void testFreezing() throws Exception {
-        List<String> years = Arrays.asList("2018", "2019", "2020", "2021", "2022", "2023");
-
-        MockHttpServletRequestBuilder requestBuilder = 
-        		MockMvcRequestBuilders.get("/freezing/freezing.do")
-                .param("years", years.toArray(new String[0])); // "years" 파라미터 설정
-
-        ResultActions resultActions = mockMvc.perform(requestBuilder)
-                .andExpect(status().is2xxSuccessful()); // HTTP 2xx 상태 응답 기대
-        
-        // 결과 출력 및 모델 데이터 검증
-        MvcResult mvcResult = resultActions.andDo(print()).andReturn();
-        Map<String, Object> modelMap = mvcResult.getModelAndView().getModel();
-
-        // 모델 데이터 검증 예시 (필요한 대로 수정)
-        List<Map<String, Object>> freezingData = (List<Map<String, Object>>) modelMap.get("freezingData");
-        assertNotNull(freezingData);
-        assertFalse(freezingData.isEmpty());
+    public void yearSelect() throws Exception {
+		String year = "2018";
+		freezing.setYear(year);
+		MockHttpServletRequestBuilder requestBuilder 
+		= MockMvcRequestBuilders.get("/freezing/yearSelect.do")
+		.param("year", freezing.getYear());
+		;
+		ResultActions resultActions = mockMvc.perform(requestBuilder)
+				.andExpect(status().is2xxSuccessful());
+		
+		//Model
+		MvcResult mvcResult = resultActions.andDo(print()).andReturn();
+		
+		Map<String, Object> modelMap = mvcResult.getModelAndView().getModel();
+		List<Freezing> list = (List<Freezing>) modelMap.get("yearPoly");
+		for(Freezing vo :list) {
+			log.debug(vo);
+		}
+    }
+//	@Ignore
+	@Test
+    public void freezingIdSelect() throws Exception {
+        String fid = "6805181";
+        freezing.setFid(fid);
+        MockHttpServletRequestBuilder requestBuilder 
+		= MockMvcRequestBuilders.get("/freezing/IdSelect.do")
+		.param("fid", freezing.getFid());
+		;
+		//호출 및 결과
+		ResultActions resultActions = mockMvc.perform(requestBuilder)
+				.andExpect(status().is2xxSuccessful());
+		//Model
+		MvcResult mvcResult = resultActions.andDo(print()).andReturn();
+		
+		Map<String, Object> modelMap = mvcResult.getModelAndView().getModel();
+		Freezing outVO = (Freezing) modelMap.get("fidSelect");
+		log.debug(outVO);
+		
     }
 	@Ignore
 	@Test

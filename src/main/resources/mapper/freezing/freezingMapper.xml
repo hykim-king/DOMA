@@ -52,8 +52,8 @@
     </select>
     <select id="selectPolyByYear" parameterType="Freezing" resultType="Freezing">
     SELECT
-        freezing_id,
-        sido_code,
+        freezing_id as fid,
+        sido_code as sidoCode,
         longitude,
         latitude,
         polygon
@@ -62,7 +62,7 @@
 </select>
     <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
         SELECT
-            f.freezing_id,
+            f.freezing_id as fid,
             s.GNAME,
             s.DNAME,
             f.YEAR,
@@ -73,7 +73,7 @@
             f.ORDINARY,
             f.LONGITUDE,
             f.LATITUDE,
-            f.ACC_POINT
+            f.ACC_POINT as accPoint
         FROM
             d_freezing f
         JOIN
