@@ -14,6 +14,6 @@ public interface BoardService extends WorkDiv<Board> {
 	
 	public int mpBoardUp(Board inVO) throws Exception; 
 	
-	public Board mpBoardSelectOne(Board board) throws Exception; 
+	public Board mpBoardSelectOne(Board inVO) throws SQLException, NullPointerException; 
 	
 }

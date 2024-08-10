@@ -59,8 +59,7 @@ document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
 //객체 생성=================================================================================================    
     //moveToList : 목록으로 이동
-    const moveToListBtn = document.querySelector("#moveToList");
-    
+     
     //doDelete : 삭제
     const doDeleteBtn = document.querySelector("#doDelete");
     console.log("doDeleteBtn", doDeleteBtn);
@@ -89,18 +88,12 @@ document.addEventListener("DOMContentLoaded", function(){
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
-    
+    const userId = document.querySelector("userId");
     const modIdInput = document.querySelector("#modId");
     
 
 //이벤트 처리=================================================================================================
-    //moveToListBtn
-    moveToListBtn.addEventListener("click",function(event){
-        console.log("moveToListBtn click");
-        event.stopPropagation();
-        if(confirm("목록 으로 이동 하시겠습니까?") === false)return;
-        moveToList();
-    });
+  
     
     //doUpdate : 수정
     doUpdateBtn.addEventListener("click",function(event){
@@ -177,9 +170,7 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     }
     
-    function moveToList() {
-        window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-    }
+    
     
     //doDelete : 삭제
     function doDelete() {
@@ -212,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     if(isEmpty(message) === false && 1 === message.messageId){
                         alert(message.messageContents);
                         //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-                        moveToList();
+                       
                     }else{
                         alert(message.messageContents);
                     }
@@ -226,11 +217,10 @@ document.addEventListener("DOMContentLoaded", function(){
 });    
 </script>
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<body> 
 user : ${user }
-seq : ${seq }
 board : ${board }
+seq : ${seqInput }
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
@@ -248,8 +238,7 @@ board : ${board }
   <!--// 제목 end ------------------------------------------------------------->
   
   <!-- 버튼 -->
-  <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
-      <input type="button" value="목록"  id="moveToList" class="btn btn-primary">
+  <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end"> 
       <input type="button" value="수정"  id="doUpdate" class="btn btn-primary">
       <input type="button" value="삭제"  id="doDelete" class="btn btn-primary">
   </div>
@@ -291,7 +280,7 @@ board : ${board }
     <div class="row mb-2">
         <label for="modId" class="col-sm-2 col-form-label">등록자</label>
         <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.modId}'/>" class="form-control readonly-input" readonly="readonly" name="modId" id="modId"  maxlength="20" required="required">
+          <input type="text" value="<c:out value='${board.userId}'/>" class="form-control readonly-input" readonly="readonly" name="modId" id="modId"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">
@@ -315,7 +304,7 @@ board : ${board }
     </div>
   </form>
   <!--// form end -->
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+ 
 </div>
 <!--// container end ---------------------------------------------------------->
 <script>

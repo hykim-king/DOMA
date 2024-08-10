@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.cmn.Search;
+import com.acorn.doma.cmn.StringUtil;
 import com.acorn.doma.domain.Board;
+import com.acorn.doma.domain.Code;
 import com.acorn.doma.domain.Comments;
 import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.BoardMapper;
@@ -24,6 +27,7 @@ import com.acorn.doma.mapper.CommentsMapper;
 import com.acorn.doma.mapper.UserMapper;
 import com.acorn.doma.service.BoardService;
 import com.acorn.doma.service.CommentsService;
+import com.acorn.doma.service.MarkdownService;
 import com.acorn.doma.service.UserService;
 import com.google.gson.Gson;
 import com.acorn.doma.cmn.Message; 
@@ -33,14 +37,13 @@ import com.acorn.doma.cmn.Message;
 public class MyPageController implements PLog {
 	
 	//─────────────────────────────────서비스
-	@Autowired
-	@Qualifier("userServiceImpl")
+	@Autowired 
 	UserService userService;
 	
-	@Qualifier("boardServiceImpl")
+	@Autowired 
 	BoardService boardService;
 	
-	@Qualifier("commentServiceImpl")
+	@Autowired 
 	CommentsService commentService;
 	
 	
@@ -55,7 +58,8 @@ public class MyPageController implements PLog {
 	CommentsMapper commentMapper;
 	
 	
-	
+	@Autowired
+	MarkdownService markdownService;
 	 
 	
 	
@@ -68,7 +72,7 @@ public class MyPageController implements PLog {
 	}
 
 	@GetMapping("myPage.do")
-	public String MyPage(Model model)throws Exception {
+	public String MyPage(HttpSession session,Model model)throws Exception {
 		String viewName = "/mypage/MyPage";
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ mypage()                                 │");
@@ -216,6 +220,49 @@ public class MyPageController implements PLog {
 	    return list; 
 	    
 	 }
+	 
+	 /**
+		 * 단건 조회
+		 * @param inVO
+		 * @param model
+		 * @return
+	 * @throws Exception 
+		 */
+	 @RequestMapping(value = "/mpBoardSelectOne.do", 
+			 method = RequestMethod.GET, 
+			 produces = "text/plain;charset=UTF-8") 
+	 public String mpBoardSelectOne(Board inVO, Model model) throws SQLException  {
+		 log.debug("┌─────────────────────┐");
+		 log.debug("│     boardSelect     │");
+		 log.debug("└─────────────────────┘");
+		 String viewName = "mypage/MyPageBoard_u";
+		 log.debug("1.param inVO :" + inVO); 
+		 inVO.setUserId(StringUtil.nvl(inVO.getUserId(), "admin"));
+			
+		 Board outVO = boardService.doSelectOne(inVO);
+		 String markdownContents = this.markdownService.convertMarkdownToHtml(outVO.getContent());
+			
+			log.debug("2.outVO :" + outVO);
+			
+			String message = "";
+			int flag = 0;
+			if(null != outVO) {
+				message = outVO.getTitle() + "이 조회 되었습니다.";
+				flag = 1;
+			}else {
+				message = outVO.getTitle() + "조회 실패 했습니다.";
+			}
+			
+			Message messageObj = new Message(flag, message);
+			
+			model.addAttribute("markdownContents", markdownContents);
+			model.addAttribute("board", outVO);
+			model.addAttribute("message", message);
+			
+	     return viewName;
+	 }
+
+	 
 	 
 	 
 		

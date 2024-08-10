@@ -204,9 +204,9 @@ public class BoardController implements PLog {
 		log.debug("2.flag:" + flag);
 		String message = "";
 		if(1 == flag) {
-			message = inVO.getTitle() + "님이 수정 되었습니다.";
+			message = inVO.getUserId() + "님이 수정 되었습니다.";
 		}else {
-			message = inVO.getTitle() + "수정 실패 했습니다.";
+			message = inVO.getUserId() + "수정 실패 했습니다.";
 		}
 		
 		Message messageObj = new Message(flag, message);

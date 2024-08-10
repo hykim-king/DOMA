@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function(){
       
  // Update Board function
     function updateBoard(seq) { 
-        const url = "/doma/board/doSelectOne.do?seq=" + seq +"&div=10"; 
+        const url = "/doma/mypage/mpBoardSelectOne.do?seq=" + seq +"&div=10"; 
         window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
     }
 

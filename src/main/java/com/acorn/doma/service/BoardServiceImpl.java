@@ -89,18 +89,26 @@ public class BoardServiceImpl implements BoardService, PLog {
 	}
 
 	@Override
-	public Board mpBoardSelectOne(Board board) throws Exception {
-		log.debug("┌───────────────────────────┐");
-		log.debug("│ mpBoardSelectOne() : login      │");
-		log.debug("└───────────────────────────┘");
+	public Board mpBoardSelectOne(Board inVO) throws SQLException {
+		//단건 조회
+		log.debug("1. param :"+inVO);
+		Board outVO = boardMapper.mpBoardSelectOne(inVO);
+		log.debug("2. outVO :"+outVO);
 		
-		log.debug("┌ 1. param : " + board);
+		int flag = 0;
+		//조회 count증가
+		if(null != outVO) {
+			flag = boardMapper.readCntUpdate(inVO);
+			log.debug("3. 조회 count증가 :"+flag);
+			
+			if(1==flag) {
+				outVO.setViews(outVO.getViews()+1);
+			}
+		}
 		
-		Board outVO = boardMapper.mpBoardSelectOne(board);
-		log.debug("└ 2. outVO : " + outVO);
 		
 		return outVO;
-	} 
+	}
 	 
 
  

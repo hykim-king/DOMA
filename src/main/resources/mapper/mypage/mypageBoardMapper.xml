@@ -43,7 +43,9 @@
 	<select id="mpBoardSelectOne" parameterType="Board"  resultType="Board">
         SELECT 
         		seq,
+        		div,
     			title,
+    			gname,
     			user_id as userId,
     			mod_id  as modId,
     			content,
