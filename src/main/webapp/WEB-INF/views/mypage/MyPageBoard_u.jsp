@@ -59,11 +59,7 @@ document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
 //객체 생성=================================================================================================    
     //moveToList : 목록으로 이동
-     
-    //doDelete : 삭제
-    const doDeleteBtn = document.querySelector("#doDelete");
-    console.log("doDeleteBtn", doDeleteBtn);
-    
+      
     //doUpdate : 수정
     const doUpdateBtn = document.querySelector("#doUpdate");
     
@@ -102,12 +98,7 @@ document.addEventListener("DOMContentLoaded", function(){
         doUpdate();
     });
     
-    //doDelete : 삭제
-    doDeleteBtn.addEventListener("click",function(event){
-        console.log("doDeleteBtn click");
-        event.stopPropagation();
-        doDelete();
-    });
+     
     
 //함수=================================================================================================
     //doUpdate : 수정
@@ -137,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function(){
         
         //비동기 통신
         let type = "POST";
-        let url = "/doma/board/doUpdate.do";
+        let url = "/doma/mypage/mpBoardUp.do";
         let async = "true";
         let dataType = "html";
         
@@ -157,14 +148,14 @@ document.addEventListener("DOMContentLoaded", function(){
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
                         alert(message.messageContents);
-                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+                        popupWindow.close();
                          
                     }else{
                         alert(message.messageContents);
                     }
                     
                 }catch(e){
-                    alert("data를 확인 하세요");
+                	  popupWindow.close();
                 }
             }
         });
@@ -172,48 +163,7 @@ document.addEventListener("DOMContentLoaded", function(){
     
     
     
-    //doDelete : 삭제
-    function doDelete() {
-        console.log("doDelete()");
-        
-        if(isEmpty(seqInput.value) == true){
-            alert('seq를 확인 하세요.')
-            seqInput.focus();
-            return;
-        }
-        
-        if(confirm("삭제 하시겠습니까?") === false)return;
-        
-        //비동기 통신
-        let type = "GET";
-        let url = "/doma/board/doDelete.do";
-        let async = "true";
-        let dataType = "html";
-        
-        let params = {
-            "seq"    : seqInput.value 
-             
-        };
-
-        PClass.pAjax(url, params, dataType, type, async, function(data){
-            if(data){
-                try{
-                    //JSON문자열을 JSON Object로 변환
-                    const message = JSON.parse(data)
-                    if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
-                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-                       
-                    }else{
-                        alert(message.messageContents);
-                    }
-                    
-                }catch(e){
-                    alert("data를 확인 하세요");
-                }
-            }
-        });
-    }
+     
 });    
 </script>
 </head>
@@ -226,13 +176,7 @@ seq : ${seqInput }
   <!-- 제목 -->
   <div class="page-header  mb-4">
     <h2>
-        <c:choose>
-           <c:when test="${ '10'== board.getDiv() }">커뮤니티</c:when>
-           <c:when test="${ '20'== board.getDiv() }">공지사항</c:when>
-           <c:otherwise>
-                                공지사항/자유게시판
-           </c:otherwise>
-       </c:choose>
+         
     </h2>
   </div> 
   <!--// 제목 end ------------------------------------------------------------->
@@ -240,14 +184,15 @@ seq : ${seqInput }
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end"> 
       <input type="button" value="수정"  id="doUpdate" class="btn btn-primary">
-      <input type="button" value="삭제"  id="doDelete" class="btn btn-primary">
+      <input type="reset" value="초기화"   class="btn btn-primary">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
   <form action="#" class="form-horizontal"  name="regForm" id="regForm">
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
-    <div class="row mb-2">
+    <input type="hidden" name="modId"    id="modId" value="${board.modId}"> 
+    <%-- <div class="row mb-2">
         <label for="seq" class="col-sm-2 col-form-label">seq</label>
         <div class="col-sm-10">
           <input type="text" value="<c:out value='${board.seq}'/>" class="form-control readonly-input" readonly="readonly" name="seq" id="seq"  maxlength="20" required="required">
@@ -264,17 +209,13 @@ seq : ${seqInput }
         <div class="col-sm-10">
           <input type="text" value="<c:out value='${board.views}'/>" class="form-control readonly-input" readonly="readonly" name="views" id="views">
         </div>
-    </div>
+    </div> --%>
+    
     <div class="row mb-2">
 	    <label for="searchDiv" class="col-sm-2 col-form-label">구 이름</label>
 	    <div class="col-sm-10">
 	        <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">
-	        <select name="searchDiv" class="form-select" id="selectDiv" onchange="document.getElementById('searchDiv').value=this.options[this.selectedIndex].text">
-	            <option value="">구 선택</option>
-	            <c:forEach var="item" items="${GNAME}">
-	                <option value="${item.detCode}" <c:if test="${item.detCode == search.searchDiv }">selected</c:if>>${item.detNm}</option>
-	            </c:forEach>
-	        </select>
+	         
 	    </div>
 	</div>
     <div class="row mb-2">
@@ -282,7 +223,7 @@ seq : ${seqInput }
         <div class="col-sm-10">
           <input type="text" value="<c:out value='${board.userId}'/>" class="form-control readonly-input" readonly="readonly" name="modId" id="modId"  maxlength="20" required="required">
         </div>
-    </div>
+    </div> 
     <div class="row mb-2">
         <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
         <div class="col-sm-10">

@@ -82,63 +82,72 @@
 <script>
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
-    
-    const seqInput = document.querySelector("#seq"); 
-    //div
-    const divInput = document.querySelector("#div");
-      
- // Update Board function
+
+    const seqInput = document.querySelector("#seq");
+    const userIdInput = document.querySelector("#userId");
+
     function updateBoard(seq) { 
-        const url = "/doma/mypage/mpBoardSelectOne.do?seq=" + seq +"&div=10"; 
+        console.log("updateBoard called with seq:", seq);
+        const url = "/doma/mypage/mpBoardSelectOne.do?seq=" + seq + "&div=10"; 
         window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
     }
 
-    // Delete Board function
-    function deleteBoard(seq) { 
-    if(confirm("삭제하시겠습니까?") === false) return;
+    function deleteBoard(seq, userId) { 
+        console.log("deleteBoard called with seq:", seq, "and userId:", userId);
 
-    let type = "GET";
-    let url = "/doma/board/doDelete.do";
-    let async = true;
-    let dataType = "json";
-
-    let params = {
-        "seq": seq
-    };
-
-    PClass.pAjax(url, params, dataType, type, async, function(data) {
-        if(data) {
-            try {
-                const message = JSON.parse(data);
-                if(message && message.messageId === 1) {
-                    alert(message.messageContents);
-                    // 성공 시 리다이렉트
-                    window.location.href = "/doma/board/mpSelect.do?userId=user1";  
-                } else {
-                    alert(message.messageContents);
-                }
-            } catch(e) {
-                alert("데이터를 확인하세요");
-            }
+        if (isEmpty(seq)) {
+            alert('seq를 확인 하세요.');
+            return;
         }
-    });
-}
 
+        if (confirm("삭제 하시겠습니까?") === false) return;
+
+        let type = "GET";
+        let url = "/doma/board/doDelete.do";
+        let async = "true";
+        let dataType = "html";
+        let params = {
+            "seq": seq,
+            "userId": userId
+        };
+
+        console.log("Sending AJAX request with params:", params);
+
+        PClass.pAjax(url, params, dataType, type, async, function(data){
+            console.log("AJAX response received:", data);
+            if (data) {
+                try {
+                    const message = JSON.parse(data);
+                    if (message && message.messageId === 1) {
+                        alert(message.messageContents);
+                        moveToList();
+                    } else {
+                        alert(message.messageContents);
+                    }
+                } catch (e) {
+                    alert("data를 확인 하세요");
+                }
+            }
+        });
+    }
 
     document.querySelectorAll(".updateBoardBtn").forEach(function(button){
         button.addEventListener("click", function(event){
-            const seq = button.getAttribute("data-seq"); 
+            const seq = button.getAttribute("data-seq");
             updateBoard(seq);
         });
     });
-    
+
     document.querySelectorAll(".deleteBoardBtn").forEach(function(button){
         button.addEventListener("click", function(event){
-            const seq = button.getAttribute("data-seq"); 
-            deleteBoard(seq);
+            const seq = button.getAttribute("data-seq");
+            const userId = button.getAttribute("data-userId");
+            // Get userId from hidden input or embedded variable
+            deleteBoard(seq, userId);
         });
-    }); 
+    });
 });
+
 </script>
 
 <title>게시판</title> 
@@ -181,8 +190,8 @@ document.addEventListener("DOMContentLoaded", function(){
                  <th>
     					<button type="button" class="btn btn-outline-secondary updateBoardBtn" data-seq="${vo.seq}"  >
        			 				수정  </button>
-    					<button type="button" class="btn btn-outline-danger  deleteBoardBtn" data-seq="${vo.seq}" >
-        						삭제 </button>
+    					<button type="button" class="btn btn-outline-danger deleteBoardBtn" data-seq="${vo.seq}" data-userId="${vo.userId}" >삭제</button>
+        						  </button>
 				</th>
 				
 				

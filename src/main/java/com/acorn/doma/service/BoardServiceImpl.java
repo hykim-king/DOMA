@@ -83,7 +83,7 @@ public class BoardServiceImpl implements BoardService, PLog {
 	}
 
 	@Override
-	public int mpBoardUp(Board inVO) throws Exception {
+	public int mpBoardUp(Board inVO) throws SQLException {
 		log.debug("1. param :"+inVO);
 		return boardMapper.doUpdate(inVO);
 	}

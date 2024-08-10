@@ -30,6 +30,7 @@ import com.acorn.doma.service.CommentsService;
 import com.acorn.doma.service.MarkdownService;
 import com.acorn.doma.service.UserService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.acorn.doma.cmn.Message; 
 
 @Controller
@@ -261,7 +262,38 @@ public class MyPageController implements PLog {
 			
 	     return viewName;
 	 }
-
+	 
+	 @RequestMapping(value = "/mpBoardUp.do"
+			   , method = RequestMethod.POST            //textarea post로
+			   , produces = "text/plain;charset=UTF-8") //json encoding 
+	@ResponseBody //json으로 리턴하기 위한
+	public String mpBoardUp(Board inVO) throws SQLException {
+		
+		String jsonString = "";
+		log.debug("1.param:" + inVO);
+		
+		if (inVO.getUserId() == null) {
+	        log.error("UserId is null in the received Board object.");
+	    } else {
+	        log.debug("Received UserId: " + inVO.getUserId());
+	    } 
+		
+		int flag = boardService.mpBoardUp(inVO);
+		log.debug("2.flag:" + flag);
+		String message = "";
+		if(1 == flag) {
+			message =  "님이 수정 되었습니다.";
+		}else {
+			message = "수정 실패 했습니다.";
+		}
+		
+		Message messageObj = new Message(flag, message);
+		jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+		log.debug("3.jsonString:" + jsonString);
+		
+		return jsonString;
+		
+	}
 	 
 	 
 	 

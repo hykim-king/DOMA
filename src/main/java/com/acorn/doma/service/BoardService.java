@@ -12,7 +12,7 @@ public interface BoardService extends WorkDiv<Board> {
      
 	List<Board> mpSelect(String userId) throws SQLException;
 	
-	public int mpBoardUp(Board inVO) throws Exception; 
+	public int mpBoardUp(Board inVO) throws SQLException; 
 	
 	public Board mpBoardSelectOne(Board inVO) throws SQLException, NullPointerException; 
 	
