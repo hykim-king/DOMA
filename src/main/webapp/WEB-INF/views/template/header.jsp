@@ -9,10 +9,7 @@
     <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="${CP}/resources/css/styles.css">
     <link rel="icon" href="${CP}/resources/img/pcon.png" type="image/x-icon">
-    
-    <script src="${CP }/resources/js/user/header.js"></script>
 </head>
-
 <body>
     <header>
     <!-- Header Container -->
@@ -26,24 +23,41 @@
             <table class="menu-align">
             	<tr>
 	                <td class="dropdown">
-	                    <a style="width:200px;"aria-current="page" href="${CP}/safe/safePage.do">상황별 안전 정보</a>
+	                    <a style="width:200px;" aria-current="page" href="${CP}/safe/safePage.do">상황별 안전 정보</a>
 	                </td>
 	                <td class="dropdown">
-	                    <a style="width:200px; aria-current="page" href="${CP}/board/doDelete.do">데이터 시각화</a>
+	                    <a style="width:200px;" aria-current="page" href="${CP}/board/doDelete.do">데이터 시각화</a>
 	                </td>
 	                <td class="dropdown">
-	                    <a style="width:200px; aria-current="page" href="${CP }/template/list.do">공지사항</a>
+	                    <a style="width:200px;" aria-current="page" href="${CP }/template/list.do">공지사항</a>
 	                </td>
 	                <td class="dropdown">
-	                    <a style="width:200px; aria-current="page" href="${CP}/board/doRetrieve.do?div=10">커뮤니티</a>
+	                    <a style="width:200px;" aria-current="page" href="${CP}/board/doRetrieve.do?div=10">커뮤니티</a>
 	                </td>
                 </tr>
             </table>
             <table class="menu-align" style="margin-left : 30%;">
 		         <tr>
-		             <td><a id="main_page" style="margin-right : 20px;">Home</a></td>
-		             <td><a id="register_page"  style="margin-right : 20px;">Join</a></td>
-		             <td><a id="login_page"  style="margin-right : 20px;">Login</a></td>
+		             <c:choose>
+						<c:when test="${user ne null}">
+							<c:choose>
+								<c:when test="${user.grade == 0}">
+									<td><a id="main_page" style="margin-right : 20px;" href="${CP }/main/main.do">Home</a></td>
+									<td><a id="my_page"  style="margin-right : 20px;" href="${CP }/mypage/myPage.do">MyPage</a></td>
+									<td><a id="admin_page" style="margin-right : 20px;" href="${CP }/admin/adminnotice.do">AdminPage</a></td>
+								</c:when>
+								<c:when test="${user.grade == 1}">
+									<td><a id="main_page" style="margin-right : 20px;" href="${CP }/main/main.do">Home</a></td>
+									<td><a id="my_page"  style="margin-right : 20px;" href="${CP }/mypage/myPage.do">MyPage</a></td>
+								</c:when>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<td><a id="main_page" style="margin-right : 20px;" href="${CP }/main/main.do">Home</a></td>
+							<td><a id="register_page"  style="margin-right : 20px;" href="${CP }/user/RegisterPage.do">Join</a></td>
+							<td><a id="login_page"  style="margin-right : 20px;" href="${CP }/user/loginPage.do">Login</a></td>
+						</c:otherwise>
+					</c:choose>
 		         </tr>
 	        </table>
         </div>
