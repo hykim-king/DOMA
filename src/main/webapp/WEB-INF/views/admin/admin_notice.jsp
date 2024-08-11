@@ -5,13 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <title>DOMA</title>
-    
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
-    <script src="${CP }/resources/js/common.js"></script>
-    <script src="${CP }/resources/js/jquery_3_7_1.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/script.js"></script>
+    <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/pcon.png">
 </head>
 <body>
-    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+    <%@ include file="/WEB-INF/views/template/header.jsp" %>
 
     <main class="main-content">
         <h1>공지사항</h1>
