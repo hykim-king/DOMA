@@ -65,9 +65,15 @@ public class BoardController implements PLog {
 	public String moveToReg(Board inVO, Model model) throws SQLException {
 		String viewName = "board/board_reg";
 		
+		//TODO : SESSION처리
+		inVO.setUserId(StringUtil.nvl(inVO.getUserId(), ""));
+		
 		log.debug("1.param inVO:" + inVO);
 		model.addAttribute("board", inVO);
 		
+		
+		
+		//reg 구선택--------------------------------------------------------
 		Search search = new Search();
 		
 		List<Board> list = this.boardService.doRetrieve(search);
@@ -100,6 +106,7 @@ public class BoardController implements PLog {
 	}
 	
 	//http://localhost:8080/doma/board/board.do
+	//http://localhost:8080/doma/board/doRetrieve.do?div=10
 	@GetMapping("/board.do")
 	public String boardList(Model model) throws Exception {
 		log.debug("┌───────────────────────────┐");
@@ -131,6 +138,9 @@ public class BoardController implements PLog {
 		
 		String div = StringUtil.nvl(req.getParameter("div"), "");
 		search.setDiv(div);
+		
+		String searchGu = StringUtil.nvl(req.getParameter("searchGu"), "");
+		search.setSearchGu(searchGu);
 		
 		//검색구분
 		//검색 null 처리 : null -> ""

@@ -14,11 +14,18 @@
     Copyright (C) by KandJang All right reserved.
 */
  --%>
+<%@page import="com.acorn.doma.domain.User"%>
 <%@ page import="com.acorn.doma.cmn.StringUtil"%>
 <%@ page import="com.acorn.doma.cmn.Search"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% 
+    String userId = (String) session.getAttribute("userId");
+    if (userId == null) {
+        userId = ""; // userId가 없을 경우 빈 문자열로 초기화
+    }
+%>
     <c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -71,13 +78,17 @@ document.addEventListener("DOMContentLoaded", function(){
     //페이지사이즈
     const pageSizeSelect = document.querySelector("#pageSize");
     
+    // JSP에서 userId 값을 JavaScript 변수로 설정
+    const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+    
+    console.log("checkSessionAndMove: userId = " + userId);
 	
 //이벤트 처리=================================================================================================  
     
 	//등록 이동 버튼
 	moveToRegBtn.addEventListener("click",function(event){
 	    console.log("moveToRegBtn click");
-        moveToReg();
+	    moveToReg();
     });;
 	
 	//구분
@@ -107,6 +118,24 @@ document.addEventListener("DOMContentLoaded", function(){
        
 });   
 //함수=================================================================================================  
+	// checkSessionAndMove()
+	/* function checkSessionAndMove() {
+	    if (userId !== "") {
+	        moveToReg(); // 세션이 존재하면 등록 페이지로 이동
+	    } else {
+	        alert("로그인이 필요합니다.");
+	        window.location.href = "/doma/user/loginPage.do"; // 세션이 없으면 로그인 페이지로 리다이렉트
+	    }
+	} */
+	
+	//moveToReg()
+    function moveToReg(){
+        const frm = document.querySelector("#boardForm");
+        //frm.pageNo.value = 1;
+        frm.action = "/doma/board/moveToReg.do";
+        frm.submit();
+    }
+    
 	//doSelectOne()
 	function doSelectOne(seq){
 	    console.log("doSelectOne seq:"+seq);
@@ -119,14 +148,6 @@ document.addEventListener("DOMContentLoaded", function(){
         
         window.location.href = "/doma/board/doSelectOne.do?seq="+seq+"&div="+div;
            
-    }
-	
-	//moveToReg()
-	function moveToReg(){
-	    const frm = document.querySelector("#boardForm");
-        //frm.pageNo.value = 1;
-        frm.action = "/doma/board/moveToReg.do";
-        frm.submit();
     }
 	
 	//pageRetrieve
@@ -167,7 +188,9 @@ document.addEventListener("DOMContentLoaded", function(){
         
         frm.action = "/doma/board/doRetrieve.do";
         frm.submit();
-     }       
+     }
+	
+	
 	
 </script>
 

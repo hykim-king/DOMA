@@ -61,30 +61,35 @@
     </sql>
     
     <sql id="whereDoRetrieve">
-	   <choose>
-	       <!-- 제목 검색 -->
-	       <when test="searchDiv != null and searchDiv == '10' ">
-	           AND title LIKE '%' || #{searchWord} || '%'
-	       </when>
-	       <!-- 내용 검색 -->
-	       <when test="searchDiv != null and searchDiv == '20' ">
-	           AND content LIKE '%' || #{searchWord} || '%'
-	       </when>
-	       <!-- 제목 + 내용 검색 -->
-	       <when test="searchDiv != null and searchDiv == '30'">
-	           AND (title LIKE '%' || #{searchWord} || '%'
-	           OR
-	           content LIKE '%' || #{searchWord} || '%')
-	       </when>
-	       <when test="searchDiv != null and searchDiv == '51' ">
-               AND gname = (SELECT det_code_nm FROM d_code WHERE mst_code = 'GNAME' AND det_code = #{searchDiv})
-           </when>
-	       <!-- GNAME 관련 검색 -->
-	       <when test="searchDiv != null and searchDiv &gt;= '51' and searchDiv &lt;= '75'">
-	           AND gname = (SELECT det_code_nm FROM d_code WHERE mst_code = 'GNAME' AND det_code = #{searchDiv})
-	       </when>
-	   </choose>
+	    <choose>
+	        <!-- 제목 검색 -->
+	        <when test="searchDiv != null and searchDiv == '10' ">
+	            AND title LIKE '%' || #{searchWord} || '%'
+	        </when>
+	        <!-- 내용 검색 -->
+	        <when test="searchDiv != null and searchDiv == '20' ">
+	            AND content LIKE '%' || #{searchWord} || '%'
+	        </when>
+	        <!-- 제목 + 내용 검색 -->
+	        <when test="searchDiv != null and searchDiv == '30'">
+	            AND (title LIKE '%' || #{searchWord} || '%'
+	            OR
+	            content LIKE '%' || #{searchWord} || '%')
+	        </when>
+	    </choose>
 	</sql>
+	
+    
+	
+	<sql id="whereGuRetrieve">
+	    <choose>
+	        <!-- GNAME 관련 검색 -->
+	        <when test="searchDiv != null and searchDiv &gt;= 51 and searchDiv &lt;= 75">
+	            AND gname = (SELECT det_code_nm FROM d_code WHERE mst_code = 'GNAME' AND det_code = #{searchDiv})
+	        </when>
+	    </choose>
+	</sql>
+    
 	
     <select id="doRetrieve" parameterType="Search" resultType="Board">
     -- TODO : 커뮤니티(10), 공지사항(20)
@@ -109,6 +114,7 @@
               WHERE 1=1
               <include refid="divDoRetrieve"></include>
               <include refid="whereDoRetrieve"></include>
+              <include refid="whereGuRetrieve"></include>
               ORDER BY mod_dt DESC
         )T1
             WHERE rownum  <![CDATA[ <= ( #{pageSize} * (#{pageNo} -1) + #{pageSize} )]]>
@@ -121,6 +127,7 @@
             WHERE 1=1
             <include refid="divDoRetrieve"></include>
             <include refid="whereDoRetrieve"></include>
+            <include refid="whereGuRetrieve"></include>
         )B
     </select>
     
@@ -157,6 +164,7 @@
              content = #{content},
              mod_dt  = SYSDATE
           WHERE seq = #{seq} 
+            AND user_id = #{userId}
     </update>
     
     <select id="doSelectOne" parameterType="Board" resultType="Board">
