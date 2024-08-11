@@ -225,13 +225,20 @@ public class UserController implements PLog {
 		
 		String message = "";
 		int flag = 0;
+		
 		if(null != outVO) {
 			message = "\"" + outVO.getUserName() + "\"" + "님이 로그인 하셨습니다.";
-			httpSession.setAttribute("user", outVO);
-			flag = 1;
 		}else {
 			message = "아이디 혹은 비밀번호가 일치하지 않습니다.";
 		}
+		
+		if(outVO.getGrade() == 1 || outVO.getGrade() == 0) {
+			flag = 1;
+			httpSession.setAttribute("user", outVO);	
+		}else {
+			message = "탈퇴한 계정이므로 로그인을 제한합니다.";
+		}
+		
 		
 		jsonString = new Gson().toJson(new Message(flag, message));
 		log.debug("└ 4.jsonString:" + jsonString);

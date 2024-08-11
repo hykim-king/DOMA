@@ -27,19 +27,22 @@
 	
 	function login() {
 		console.log("login()");
+		const id = userIdInput.value;
+		const pw = passwordInput.value;
 		
-		if(isEmpty(userIdInput.value) == true){
+		if(isEmpty(id) == true){
 			alert("아이디를 입력하세요.");
 			userIdInput.focus();
 			return;
 		}
 		
-		if(isEmpty(passwordInput.value) == true){
+		if(isEmpty(pw) == true){
 			alert("비밀번호를 입력하세요.");
 			passwordInput.focus();
 			return;
 		}  
 		
+
 		let type="POST";
         let url ="/doma/user/Login.do";
         let async = "true";
