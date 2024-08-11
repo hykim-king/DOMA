@@ -200,21 +200,39 @@
 	
 	function passwordCheck() {
 		console.log("passwordCheck()");
-		let flag =passwordVaildation(passwordInput.value);
-		console.log("flag : " +flag);
-		
-		spaceCheck(passwordInput.value);
+		console.log("passwordInput.value : " + passwordInput.value);
+		//패스워드 인풋
+		const pw = passwordInput.value;
+		//패스워드 체크 인풋
+		const pwc = passwordCheckInput.value;
 
-		if(flag === false){
-			alert("특수문자나 대소문자를 포함한 8~20자 이내의 비밀번호를 사용하세요."); 
-			return
+		console.log("pw : " + pw);
+		console.log("pwc : " + pwc);
+
+		if(pw.indexOf(" ") !== -1 || pwc.indexOf(" ") !== -1){
+			alert("비밀번호와 비밀번호 확인에 공백 문자가 있습니다.");
+			passwordInput.focus();
+			return false;
 		}
-		if(passwordInput.value === passwordCheckInput.value){
-			
+
+		if(passwordValidation(pw) === false){
+			alert("특수문자나 대소문자를 포함한 8~20자 이내의 비밀번호를 사용하세요."); 
+			return;
+		}
+
+		 // 길이 체크 (8자리 ~ 20자리)
+		 if (password.length < 8 || password.length > 20) {
+			alert("비밀번호는 8자리에서 20자리 사이여야 합니다.");
+			passwordInput.focus();
+			return;
+		}
+
+		if(passwordInput.value === passwordCheckInput.value){	
 			passwordCheckCount = 1;
 			alert("비밀번호가 일치합니다.");
 		}else{
 			alert("비밀번호가 일치하지 않습니다.");
+			return;
 		}
 		
 	}
@@ -223,16 +241,9 @@
   		return /^[A-Za-z0-9][A-Za-z0-9]*$/.test(input);
 	}  
 	
-	function passwordVaildation (input) {
-	  return /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(input);
+	function passwordValidation(input) {
+		return /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/.test(input);
 	}
 	
-	function spaceCheck(input) {
-	    if (/\s/.test(input) == false) {
-	        alert("비밀번호에는 공백을 사용할 수 없습니다.");
-	        passwordInput.focus();
-	        return;
-	    }
-    }
 });
         
