@@ -6,7 +6,6 @@
 	const nameInput = document.querySelector("#name");
 	const passwordInput = document.querySelector("#password");
 	const passwordCheckInput = document.querySelector("#passwordCheck");
-	const emailInput = document.querySelector("#email");
 	const birthInput = document.querySelector("#birth");
 	const addrInput = document.querySelector("#sample4_roadAddress");
 	const detailAddrInput = document.querySelector("#sample4_detailAddress");
@@ -67,11 +66,6 @@
 			passwordCheckInput.focus();
 			return;
 		}
-		if(isEmpty(emailInput.value) == true){
-			alert("이메일을 입력하세요.");
-			emailInput.focus();
-			return;
-		}
 		if(isEmpty(birthInput.value) == true){
 			alert("생년월일을 입력하세요.");
 			birthInput.focus();
@@ -112,7 +106,6 @@
             "userId" : idInput.value,
             "userName" : nameInput.value,
             "userPw" : passwordInput.value,
-            "userEmail" : emailInput.value,
             "birth" : birthInput.value,
             "address" : addrInput.value,
             "detailAddress" : detailAddrInput.value
