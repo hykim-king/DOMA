@@ -20,7 +20,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
 
+    User outVO = (User) session.getAttribute("user");
+    String userId = (outVO != null) ? outVO.getUserId() : "";
+    
+
+%> 
 <c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -161,20 +167,49 @@ document.addEventListener("DOMContentLoaded", function(){
     //페이지사이즈
     const pageSizeSelect = document.querySelector("#pageSize");
     
-    const gangNamInput = document.querySelector("#gangNam");
+    const div = document.querySelector("#div");
     
-    <%-- // JSP에서 userId 값을 JavaScript 변수로 설정
-    const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+    // 구 선택 드롭다운
+    const searchGuSelect = document.querySelector("#searchGu");
     
-    console.log("checkSessionAndMove: userId = " + userId); --%>
+    // 구 버튼들
+    const guButtons = document.querySelectorAll("input[type='button'][name='gu']");
+    
+    const resetBtn = document.querySelector("#reset");
 	
 //이벤트 처리=================================================================================================  
     
 	//등록 이동 버튼
-	moveToRegBtn.addEventListener("click",function(event){
-	    console.log("moveToRegBtn click");
-	    moveToReg();
+    moveToRegBtn.addEventListener("click",function(event){
+        console.log("moveToRegBtn click");
+        checkSessionAndMove();
     });;
+    
+	//resetBtn
+	resetBtn.addEventListener("click",function(event){
+        console.log("resetBtn click");
+        event.stopPropagation();
+        reset();
+    });
+	
+	
+	// 구 버튼 클릭 시 해당 값을 드롭다운에 설정
+	guButtons.forEach(button => {
+	    button.addEventListener("click", function(event){
+	        const gname = button.getAttribute("data-gname");
+	        console.log("Selected gname: ", gname);
+
+	        // 드롭다운에서 해당 gname 값을 찾아서 선택
+	        for (let option of searchGuSelect.options) {
+	            if (option.text === gname) {
+	                option.selected = true;
+	                break;
+	            }
+	        }
+	        doRetrieve(1);
+	    });
+	});
+
 	
 	//구분
     searchDivSelect.addEventListener("change",function(event){
@@ -200,25 +235,25 @@ document.addEventListener("DOMContentLoaded", function(){
         doRetrieve(1);
     });
     
-    gangNamInput.addEventListener("click",function(event){
-        console.log("doRetrieveBtn click");
-        event.stopPropagation();
-        doRetrieve(1);
-    });
-	
        
 });   
 //함수=================================================================================================  
-	// checkSessionAndMove()
-    function checkSessionAndMove() {
-        console.log("checkSessionAndMove: userId = " + userId);
-           
-        if (userId !== "" && userId !== " ") {
-            moveToReg(); // 세션이 존재하면 등록 페이지로 이동
-        } else {
-            alert("로그인이 필요합니다.");
-            window.location.href = "/doma/user/loginPage.do"; // 세션이 없으면 로그인 페이지로 리다이렉트
-        }
+	
+	//checkSessionAndMove()
+	function checkSessionAndMove() {
+	
+		// JSP에서 userId 값을 JavaScript 변수로 설정
+	    const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+	    
+	    //userId값 확인
+	    console.log("checkSessionAndMove: userId = " + userId); 
+	
+		if (userId !== "" && userId !== " ") {
+			moveToReg();
+		}else {
+			alert("로그인이 필요합니다.");
+			window.location.href = "/doma/user/loginPage.do";
+		}
     }
 	
 	//moveToReg()
@@ -228,7 +263,11 @@ document.addEventListener("DOMContentLoaded", function(){
         frm.action = "/doma/board/moveToReg.do";
         frm.submit();
     }
-    
+	
+	function reset() {
+        window.location.href = "/doma/board/doRetrieve.do?div=10";
+    }
+	
 	//doSelectOne()
 	function doSelectOne(seq){
 	    console.log("doSelectOne seq:"+seq);
@@ -339,7 +378,7 @@ user : ${user}
 	                <option value="${item.detCode}" <c:if test="${item.detCode == search.searchGu}">selected</c:if>>${item.detNm}</option>
 	            </c:forEach>
 	        </select>
-	    </div>
+	        </div>
 	        <div class="col-sm-4">
 	            <input type="search" name="searchWord" class="form-control" id="searchWord"
 	             value="${search.searchWord }"
@@ -397,43 +436,96 @@ user : ${user}
                 <div class="grid gap-0 column-gap-6">
                     <table class="boardTable">
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="강남구" id="gangNam" name="gangNam" class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="강동구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="강북구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="강서구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="전체" id="reset" name="reset" class="btn btn-outline-secondary">
+                            </td>
+                            <td class="p-2 g-col-8">
+							    <input type="button" value="강남구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="강남구">
+							</td>
+							<td class="p-2 g-col-8">
+                                <input type="button" value="강동구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="강동구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="강북구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="강북구">
+                            </td>
+                        </tr>
+                        <tr>   
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="강서구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="강서구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="관악구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="관악구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="광진구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="광진구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="구로구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="구로구">
+                            </td>
                         </tr>
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="관악구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="광진구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="구로구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="금천구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="금천구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="금천구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="노원구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="노원구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="도봉구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="도봉구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="동대문구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="동대문구">
+                            </td>
                         </tr>
-                        <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="노원구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="도봉구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="동대문구" class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="동작구"  class="btn btn-outline-secondary"></td>
+                        <tr>    
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="동작구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="동작구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="마포구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="마포구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="서대문구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="서대문구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="서초구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="서초구">
+                            </td>
                         </tr>
-                        <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="마포구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="서대문구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="서초구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="성동구"  class="btn btn-outline-secondary"></td>
+                        <tr>     
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="성동구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="성동구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="성북구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="성북구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="송파구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="송파구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="양천구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="양천구">
+                            </td>
                         </tr>
-                        <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="성북구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="송파구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="양천구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="영등포구"  class="btn btn-outline-secondary"></td>
+                        <tr>    
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="영등포구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="영등포구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="용산구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="용산구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="은평구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="은평구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="종로구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="종로구">
+                            </td>
                         </tr>
-                        <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="용산구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="은평구" class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="종로구"  class="btn btn-outline-secondary"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="중구"  class="btn btn-outline-secondary"></td>
-                        </tr>
-                        <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="중랑구"  class="btn btn-outline-secondary"></td>
+                        <tr>    
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="중구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="중구">
+                            </td>
+                            <td class="p-2 g-col-8">
+                                <input type="button" value="중랑구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="중랑구">
+                            </td>
                         </tr>
                     </table>
                 </div>
