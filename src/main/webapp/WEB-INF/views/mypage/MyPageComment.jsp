@@ -62,14 +62,14 @@
  
 <style>
     .table-content {
-        margin-top: 100px;
-        margin-bottom: 100px;
+        margin-top: 50px;
+        margin-bottom:50px;
     }
      
 
 	.table {
 		margin: 20px;
-    	width: 800px; /* 테이블 너비를 부모 컨테이너에 맞게 조정 */
+    	width: 1000px; /* 테이블 너비를 부모 컨테이너에 맞게 조정 */
     	 
 	}
 
@@ -82,17 +82,18 @@ document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
 
     // Update Board function
-    function updateComment(seq) { 
-    	
-    	const url = "/doma/comments/doSelectOne.do?seq=" + seq ; 
-    	window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
+    function updateComment(seq) {  
+    	//http://localhost:8080/doma/main/boardInfo.do?seq=1&div=10
+    	const url = "/doma/main/boardInfo.do?seq=" + seq +"&div=10"; 
+    	popupWindow = window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
     }
-
-    // Delete Board function (Placeholder)
-    function deleteComment(seq) { 
-        // Implement delete functionality here
-        console.log("Delete functionality not implemented yet.");
-    }
+    
+    window.onfocus = function() {
+        if (popupWindow && popupWindow.closed) {
+            window.location.reload();
+        }
+    };
+ 
 
     // Attach event listeners to each button after the page is loaded
     document.querySelectorAll(".updateCommentBtn").forEach(function(button){
@@ -102,12 +103,7 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     });
 
-    document.querySelectorAll(".deleteCommentBtn").forEach(function(button){
-        button.addEventListener("click", function(event){
-            const seq = button.getAttribute("data-seq"); 
-            deleteComment(seq);
-        });
-    });
+    
 
 });
 </script>
@@ -145,9 +141,8 @@ document.addEventListener("DOMContentLoaded", function(){
 					<td class="text-center" ><c:out value="${vo.modDt }"></c:out></td>
 					<th>
     					<button type="button" class="btn btn-outline-secondary updateCommentBtn" data-seq="${vo.seq}"  >
-       			 				수정  </button>
-    					<button type="button" class="btn btn-outline-danger deleteCommentBtn" data-seq="${vo.seq}" >
-        						삭제 </button>
+       			 				바로가기  </button>
+    					 
 				</th>
 					 </c:forEach>
 		            </c:when>
