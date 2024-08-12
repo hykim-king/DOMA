@@ -84,14 +84,20 @@ public class FreezingController implements PLog{
 	@RequestMapping(value="/idSelect.do"
 			,method=RequestMethod.GET
 			,produces = "text/plain;charset=UTF-8")
-	public String freezingIdSelect(@RequestParam("fid") String fid, Model model) throws SQLException{
+	@ResponseBody
+	public String freezingIdSelect(@RequestParam("fid") String fid) throws SQLException{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ freezingIdSelect()           │");
 		log.debug("└──────────────────────────────┘");
-		String viewName = "main/main_freezing_info";
+		String jsonString = "";
 		Freezing fidSelect = freezingService.selectFreezingDataById(fid);
-		model.addAttribute("fidSelect",fidSelect);
-		return viewName;
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+	        jsonString = objectMapper.writeValueAsString(fidSelect);
+	    } catch (JsonProcessingException e) {
+	        log.error("Error converting to JSON", e);
+	    }
+		return jsonString;
 	}
 		
 }

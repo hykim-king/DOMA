@@ -92,7 +92,7 @@ function loadAllPolygons() {
                     polygon.setMap(map);
                     polygons[freezing.year] = polygons[freezing.year] || [];
                     polygons[freezing.year].push(polygon);
-
+                    
                     kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
                         polygon.setOptions({ fillColor: '#09f' });
                         customOverlay.setContent('<div class="area">' + freezing.accPoint + '</div>');
@@ -108,10 +108,11 @@ function loadAllPolygons() {
                         polygon.setOptions({ fillColor: color });
                         customOverlay.setMap(null);
                     });
-
                     kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
                         onPolygonClick(freezing.fid, mouseEvent); // 폴리곤 클릭 시 상세 정보 로드
                     });
+
+                    
                 }
             });
         },
@@ -189,7 +190,7 @@ function loadAllPolygons() {
                                 polygon.setMap(map);
                                 polygons[year] = polygons[year] || [];
                                 polygons[year].push(polygon);
-
+                                
                                 kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
                                     polygon.setOptions({ fillColor: '#09f' });
                                     customOverlay.setContent('<div class="area">' + freezing.accPoint + '</div>');
@@ -205,7 +206,6 @@ function loadAllPolygons() {
                                     polygon.setOptions({ fillColor: color });
                                     customOverlay.setMap(null);
                                 });
-
                                 kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
                                     onPolygonClick(freezing.fid, mouseEvent); // 폴리곤 클릭 시 상세 정보 로드
                                 });
@@ -232,13 +232,14 @@ function loadAllPolygons() {
             data: { fid: fid },
             dataType: "json",
             success: function(response) {
+            	console.log(response);
                 var content = '<div class="info">' +
                     '   <div class="title">' + response.gname + '</div>' +
                     '   <div class="details">' +
-                    '       <div>동네: ' + response.dname + '</div>' +
+                    '       <div>동: ' + response.dname + '</div>' +
                     '       <div>년도: ' + response.year + '</div>' +
-                    '       <div>사고 발생 건수: ' + response.accident + '</div>' +
-                    '       <div>총 사상자 수: ' + response.casualties + '</div>' +
+                    '       <div>사고 건수: ' + response.accident + '</div>' +
+                    '       <div>사상자 수: ' + response.casualties + '</div>' +
                     '       <div>사망자 수: ' + response.dead + '</div>' +
                     '       <div>중상자 수: ' + response.seriously + '</div>' +
                     '       <div>경상자 수: ' + response.ordinary + '</div>' +

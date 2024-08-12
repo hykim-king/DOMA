@@ -51,29 +51,10 @@
         ORDER BY YEAR DESC
     </select>
     <select id="selectPolyByYear" parameterType="Freezing" resultType="Freezing">
-    SELECT
-        freezing_id as fid,
-        sido_code as sidoCode,
-        longitude,
-        latitude,
-        polygon
-    FROM d_freezing
-    WHERE YEAR =#{year}
-</select>
-<select id="selectPolyAll" resultType="Freezing">
-    SELECT
-        freezing_id as fid,
-        sido_code as sidoCode,
-        longitude,
-        latitude,
-        polygon
-    FROM d_freezing
-</select>
-    <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
-        SELECT
+   SELECT
             f.freezing_id as fid,
-            s.GNAME,
-            s.DNAME,
+            s.GNAME as gname,
+            s.DNAME as dname,
             f.YEAR,
             f.ACCIDENT,
             f.CASUALTIES,
@@ -82,7 +63,49 @@
             f.ORDINARY,
             f.LONGITUDE,
             f.LATITUDE,
-            f.ACC_POINT as accPoint
+            f.ACC_POINT as accPoint,
+            f.polygon
+        FROM
+            d_freezing f
+        JOIN
+            d_sido s ON f.sido_code = s.sido_code
+    WHERE YEAR =#{year}
+</select>
+<select id="selectPolyAll" resultType="Freezing">
+        SELECT
+            f.freezing_id as fid,
+            s.GNAME as gname,
+            s.DNAME as dname,
+            f.YEAR,
+            f.ACCIDENT,
+            f.CASUALTIES,
+            f.DEAD,
+            f.SERIOUSLY,
+            f.ORDINARY,
+            f.LONGITUDE,
+            f.LATITUDE,
+            f.ACC_POINT as accPoint,
+            f.polygon
+        FROM
+            d_freezing f
+        JOIN
+            d_sido s ON f.sido_code = s.sido_code
+</select>
+    <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
+        SELECT
+            f.freezing_id as fid,
+            s.GNAME as gname,
+            s.DNAME as dname,
+            f.YEAR,
+            f.ACCIDENT,
+            f.CASUALTIES,
+            f.DEAD,
+            f.SERIOUSLY,
+            f.ORDINARY,
+            f.LONGITUDE,
+            f.LATITUDE,
+            f.ACC_POINT as accPoint,
+            f.polygon
         FROM
             d_freezing f
         JOIN

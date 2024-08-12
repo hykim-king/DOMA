@@ -14,9 +14,12 @@ public class Freezing {
 	private double latitude;
 	private String polygon;
 	private String accPoint;
+	private String gname;
+	private String dname;
 	public Freezing() {}
 	public Freezing(String fid, String sidoCode, String year, int accident, int casualties, int dead, int seriously,
-			int ordinary, int report, double longitude, double latitude, String polygon, String accPoint) {
+			int ordinary, int report, double longitude, double latitude, String polygon, String accPoint, String gname,
+			String dname) {
 		super();
 		this.fid = fid;
 		this.sidoCode = sidoCode;
@@ -31,6 +34,8 @@ public class Freezing {
 		this.latitude = latitude;
 		this.polygon = polygon;
 		this.accPoint = accPoint;
+		this.gname = gname;
+		this.dname = dname;
 	}
 	public String getFid() {
 		return fid;
@@ -110,12 +115,24 @@ public class Freezing {
 	public void setAccPoint(String accPoint) {
 		this.accPoint = accPoint;
 	}
+	public String getGname() {
+		return gname;
+	}
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
+	public String getDname() {
+		return dname;
+	}
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
 	@Override
 	public String toString() {
 		return "Freezing [fid=" + fid + ", sidoCode=" + sidoCode + ", year=" + year + ", accident=" + accident
 				+ ", casualties=" + casualties + ", dead=" + dead + ", seriously=" + seriously + ", ordinary="
 				+ ordinary + ", report=" + report + ", longitude=" + longitude + ", latitude=" + latitude + ", polygon="
-				+ polygon + ", accPoint=" + accPoint + "]";
+				+ polygon + ", accPoint=" + accPoint + ", gname=" + gname + ", dname=" + dname + "]";
 	}
 	
 }
