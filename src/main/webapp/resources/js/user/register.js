@@ -120,7 +120,7 @@
                     	console.log(message.messageContent);
                     	console.log(message.messageId);
                         alert(message.messageContents);
-                        window.location.href="/doma/community/community.do";
+                        window.location.href="/doma/user/loginPage.do";
                     }else{
                         alert(message.messageContents);
                     }
