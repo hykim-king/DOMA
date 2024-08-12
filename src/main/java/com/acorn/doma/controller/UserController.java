@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,14 +34,23 @@ public class UserController implements PLog {
 		log.debug("└───────────────────────────┘");
 	}
 	
+	@GetMapping(value = "/logout.do")
+	public String logout(HttpSession session) throws SQLException{
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ logout()                  │");
+		log.debug("└───────────────────────────┘");
+		String viewName = "main/main_emergency_info";
+		
+		session.invalidate(); //세션 끊기
+		
+		return viewName;
+	}
 	
 	@RequestMapping(value = "/RegisterPage.do"
 			   , method = RequestMethod.GET
 			   , produces = "text/plain;charset=UTF-8"
-			   ) //produces : 화면으로 전송 encoding 
+			   )
 	public String RegisterPage(Model model) throws SQLException{
-		// /WEB-INF/views+ viewName + ".jsp
-		// /WEB-INF/views/user/user_list.jsp		
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ RegisterPage()            │");
 		log.debug("└───────────────────────────┘");
@@ -52,10 +62,8 @@ public class UserController implements PLog {
 	@RequestMapping(value = "/loginPage.do"
 			   , method = RequestMethod.GET
 			   , produces = "text/plain;charset=UTF-8"
-			   ) //produces : 화면으로 전송 encoding 
+			   ) 
 	public String loginPage(Model model) throws SQLException{
-		// /WEB-INF/views+ viewName + ".jsp
-		// /WEB-INF/views/user/user_list.jsp		
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ loginPage()               │");
 		log.debug("└───────────────────────────┘");
@@ -67,7 +75,7 @@ public class UserController implements PLog {
 	@RequestMapping(value = "/idCheck.do"
 			   , method = RequestMethod.GET
 			   , produces = "text/plain;charset=UTF-8"
-			   ) //produces : 화면으로 전송 encoding 
+			   )
 	@ResponseBody
 	public String idCheck(@RequestParam("userId") String inVO) throws Exception{
 		// /WEB-INF/views+ viewName + ".jsp
@@ -226,17 +234,13 @@ public class UserController implements PLog {
 		String message = "";
 		int flag = 0;
 		
-		if(null != outVO) {
+		if(null != outVO && (outVO.getGrade() == 1 || outVO.getGrade() == 0)) {
+			flag = 1;
 			message = "\"" + outVO.getUserName() + "\"" + "님이 로그인 하셨습니다.";
+			httpSession.setAttribute("user", outVO);	
+			httpSession.setMaxInactiveInterval(600); //10분간 아이디 유지
 		}else {
 			message = "아이디 혹은 비밀번호가 일치하지 않습니다.";
-		}
-		
-		if(outVO.getGrade() == 1 || outVO.getGrade() == 0) {
-			flag = 1;
-			httpSession.setAttribute("user", outVO);	
-		}else {
-			message = "탈퇴한 계정이므로 로그인을 제한합니다.";
 		}
 		
 		

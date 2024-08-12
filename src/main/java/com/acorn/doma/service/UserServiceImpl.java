@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService, PLog{
 	}
 
 	@Override
-	public User login(User user) throws Exception {
+	public User login(User user) throws SQLException, NullPointerException {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ UserServiceImpl() : login │");
 		log.debug("└───────────────────────────┘");
