@@ -138,7 +138,7 @@ if(session.getAttribute("user")!=null){
                             <input type="text" class="form-control" 	value="<c:out value='${user.userId }'/>" 		id="userId"    		name="userId"     disabled="disabled">
                              <input type="text" class="form-control"	value="<c:out value='${user.userName }'/>"  	id="userName"  		name="userName" >   
                             <input type="password" class="form-control" value="<c:out value='${user.userPw }'/>"  		id="userPw"    		name="userPw"  > 
-                            <input type="email" class="form-control" 	value="<c:out value='${user.userEmail }'/>" 	id="userEmail" 		name="userEmail" > 
+                         
                             <input type="text" class="form-control" 	value="<c:out value='${user.birth }'/>" 		id="birth"	   		name="birth" >  
                             <input type="text" class="form-control" 	value="<c:out value='${user.address }'/>"	    id="address"   		name="address"       disabled="disabled">
                             <input type="text" class="form-control" 	value="<c:out value='${user.detailAddress }'/>" id="detailAddress"  name="detailAddress"    disabled="disabled">  

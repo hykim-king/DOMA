@@ -14,9 +14,17 @@
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
+
+
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
-<script src="${CP }/resources/js/safeInfoPage/safe_save.js"></script>
+<script src="${CP}/resources/js/safeInfoPage/safe_save.js"></script>
 <title>오늘 사람 프로그램</title>
+<style>
+    .fixed-width-input {
+        width: 300px;
+    }
+</style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -25,31 +33,43 @@
       <h2>
       </h2>
   </div>
+  
   <!--// 제목 end ------------------------------------------------------------->
   <!-- 버튼 -->
-  <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
-      <input type="button" value="목록" id="moveToList" class="btn btn-primary">
-      <input type="button" value="등록"  id="doSave" class="btn btn-primary">
-  </div>
+  <br> <br>
+<div class="d-flex align-items-center justify-content-between">
+    <h2 class="mb-0">상황별 안전 정보 게시판</h2>
+    <div class="d-flex">
+        <input type="button" value="목록" id="moveToList" class="btn btn-secondary me-2">
+        <input type="button" value="등록" id="doSave" class="btn btn-dark">
+    </div>
+</div>
+  <br> <br>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
-  <form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="regForm" id="regForm" action="${CP}/file/fileUpload.do" method="post" enctype="multipart/form-data">
-  	<div style="display : flex">
-  		<label for="boardDiv" class="col-sm-1 col-form-label">게시판 구분</label>
-  		<select id="boardDiv" name="boardDiv" class="form-select" style="width:300px;">
+  <form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="regForm" id="regForm" method="post" enctype="multipart/form-data">
+  	   
+  	  
+  	   <div class="row mb-2"> 
+  		<label for="boardDiv" class="col-sm-2 col-form-label">게시판 구분</label>
+  		  <div class="col-sm-1">
+  		<select id="boardDiv" name="boardDiv" class="form-select fixed-width-input">
         	<option value="">전체</option>
         	<option value="30">상황별 안전 정보</option>
         	<option value="40">위급상황 대처방법</option>
 		</select>
-		<label for="userId" class="col-sm-1 col-form-label" style="margin-left : 15%;">등록자</label>
-        <div class="col-sm-2">
-          <input type="text" value="<c:out value='${user.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
-        </div>
+		  </div>
  	</div>
-    <div class="row mb-2">
-        <label for="title" class="col-sm-1 col-form-label">제목</label>
+   <div class="row mb-2">
+        <label for="title" class="col-sm-2 col-form-label">제목</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" name="title" id="title"  maxlength="75" required="required">
+        </div>
+    </div>
+    <div class="row mb-2">
+        <label for="userId" class="col-sm-2 col-form-label">작성자</label>
+        <div class="col-sm-10">
+          <input type="text" value="<c:out value='${user.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">
@@ -63,12 +83,14 @@
         <div class="col-sm-10">
          <textarea style="height: 200px"  class="form-control" id="content" name="content"></textarea>
         </div>
+    </div> 
+    </form>
     </div>
-  </form>
+  
   <!--// form end -->
   fileList:${fileList }
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-</div>
+ 
 <!--// container end ---------------------------------------------------------->
 <script>
     var simplemde = new SimpleMDE({ element: document.getElementById("content")})
