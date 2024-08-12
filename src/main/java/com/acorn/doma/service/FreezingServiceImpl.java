@@ -10,9 +10,13 @@ import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import com.acorn.doma.cmn.PLog;
@@ -146,7 +150,6 @@ public class FreezingServiceImpl implements FreezingService, PLog {
 		Freezing outVO = freezingMapper.selectFreezingDataById(fid);
 		return outVO;
 	}
-	
 	@Override
 	public List<Freezing> selectPolyByYear(String year) throws SQLException {
 		List<Freezing> outVO = freezingMapper.selectPolyByYear(year);
@@ -157,6 +160,24 @@ public class FreezingServiceImpl implements FreezingService, PLog {
 	public List<Freezing> selectPolyAll() throws SQLException {
 		List<Freezing> outVO = freezingMapper.selectPolyAll();
 		return outVO;
+	}
+	@Async
+    @Override
+    public Future<List<Freezing>> selectPolyByYearAsync(String year) throws SQLException {
+        List<Freezing> result = freezingMapper.selectPolyByYear(year);
+        return new AsyncResult<>(result);
+    }
+
+	@Override
+	public List<Freezing> selectPolyAllAsync() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Freezing selectFreezingDataByIdAsync(String fid) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

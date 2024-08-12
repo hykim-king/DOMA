@@ -91,6 +91,9 @@ public class MyPageMapperTest implements PLog {
 		
 		 
 		search = new Search();
+		userMapper.deleteAll();
+		boardMapper.deleteAll();
+		commentsMapper.deleteAll();
 	}
 
 	@After
@@ -106,55 +109,59 @@ public class MyPageMapperTest implements PLog {
 	 * @throws Exception
 	 */ 
 	 
-	@Ignore 
+//	@Ignore
 	@Test
 	public void mpCommentSelect() throws Exception {
+		int flag = commentsMapper.doSave(commentVO01);
+		assertEquals(1, flag);
 		List<Comments> list = commentsMapper.mpCommentSelect(commentVO01);
 		log.debug("list : " + list);
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void mpCommentSelectOne() throws Exception {
-		
+		int flag = commentsMapper.doSave(commentVO01);
+		assertEquals(1, flag);
 		Comments outVO = commentsMapper.mpCommentSelectOne(commentVO01);
 		log.debug("outVO : " + outVO);
 
 	}
 	 
-	@Ignore
-	@Test
-	public void mpCommentUp() throws Exception {
-
-	    // `seq` 값을 가져오기 위한 작업
-	    int seq = commentsMapper.getSequence();
-	    log.debug("seq : " + seq);
-
-	    // `boardV001` 객체에 `seq` 설정
-	    commentVO01.setSeq(seq);
-
-	    // `seq` 번호로 데이터를 조회
-	    Comments outVO = commentsMapper.doSelectOne(commentVO01);
-	    log.debug("outV1 : " + outVO);
-	    assertNotNull(outVO);
-
-	    // 타이틀 업데이트
-	    String updateStr = "_U";
-	    outVO.setComments(outVO.getComments() + updateStr); 
-	    
-	    // 업데이트 수행
-	    int flag = commentsMapper.doUpdate(outVO); 
-	    log.debug("flag : " + flag);
-	    assertEquals(1, flag);
-
-	    // 업데이트된 데이터 다시 조회하여 확인
-	    Comments outVO01Update = commentsMapper.doSelectOne(outVO);
-	    log.debug("outVO01Update : " + outVO01Update);
-	    assertNotNull(outVO01Update);
-
-	    // 업데이트된 값이 예상한 대로 동일한지 확인
-	    isSameComments(outVO01Update, outVO);
-	}
+//	@Ignore
+//	@Test
+//	public void mpCommentUp() throws Exception {
+//		int flag = commentsMapper.doSave(commentVO01);
+//		assertEquals(1, flag);
+//	    // `comSeq` 값을 가져오기 위한 작업
+//	    int comSeq = commentsMapper.getSequence();
+//	    log.debug("comSeq : " + comSeq);
+//
+//	    // `boardV001` 객체에 `seq` 설정
+//	    commentVO01.setComSeq(comSeq);
+//	    
+//	    log.debug("commentVO01: "+commentVO01);
+//	    // `seq` 번호로 데이터를 조회
+//	    Comments outVO = commentsMapper.doSelectOne(commentVO01);
+//	    log.debug("outVO : " + outVO);
+//	    assertNotNull(outVO);
+//
+//	    // 타이틀 업데이트
+//	    String updateStr = "_U";
+//	    outVO.setComments(outVO.getComments() + updateStr); 
+//	    // 업데이트 수행
+//	    flag = commentsMapper.doUpdate(outVO); 
+//	    log.debug("flag : " + flag);
+//	    assertEquals(1, flag);
+//
+//	    // 업데이트된 데이터 다시 조회하여 확인
+//	    Comments outVO01Update = commentsMapper.doSelectOne(outVO);
+//	    log.debug("outVO01Update : " + outVO01Update);
+//	    assertNotNull(outVO01Update);
+//
+//	    // 업데이트된 값이 예상한 대로 동일한지 확인
+//	    isSameComments(outVO01Update, outVO);
+//	}
 
 	
 	
@@ -174,7 +181,7 @@ public class MyPageMapperTest implements PLog {
 	 */ 
 	
 	// 게시판 셀렉
-	@Ignore
+//	@Ignore
 	@Test
 	public void mpSelect() throws Exception {
 		List<Board> list = boardMapper.mpSelect(boardV001);
@@ -182,11 +189,13 @@ public class MyPageMapperTest implements PLog {
 	}
 
 	//게사판 수정
-	@Ignore
+//	@Ignore
 	@Test
 	public void mpBoardUp() throws Exception {
 		
 		//boardMapper.doSave(boardV001);
+		int flag = boardMapper.doSave(boardV001);
+		assertEquals(1, flag);
 		
 	    // `seq` 값을 가져오기 위한 작업
 	    int seq = boardMapper.getSequence();
@@ -205,7 +214,7 @@ public class MyPageMapperTest implements PLog {
 	    outVO.setTitle(outVO.getTitle() + updateStr);
 	    outVO.setContent(outVO.getContent() + updateStr);
 	    // 업데이트 수행
-	    int flag = boardMapper.doUpdate(outVO);
+	    flag = boardMapper.doUpdate(outVO);
 	    log.debug("outVO++++++:" + outVO);
 	    log.debug("flag : " + flag);
 	    assertEquals(1, flag);
@@ -219,7 +228,7 @@ public class MyPageMapperTest implements PLog {
 	    isSameBoard(outVO01Update, outVO);
 	}
 
-	@Ignore
+//	@Ignore
 	@Test
 	public void mpBoardSelectOne() throws Exception {
 		//boardMapper.doSave(boardV001);
@@ -243,7 +252,7 @@ public class MyPageMapperTest implements PLog {
 	 */ 
 	
 	//정보셀렉
- 	@Ignore
+// 	@Ignore
 	@Test
 	public void mpSelectOne() throws Exception {
 		 
@@ -254,7 +263,7 @@ public class MyPageMapperTest implements PLog {
 	}
  	
  	//회원등급 - 회원탈퇴
-	@Ignore
+//	@Ignore
 	@Test
 	public void mpGradeUp() throws Exception {
 
@@ -274,7 +283,6 @@ public class MyPageMapperTest implements PLog {
 
 		outVO.setUserName(outVO.getUserName() + updateStr);
 		outVO.setUserPw(outVO.getUserPw());
-		outVO.setUserEmail(outVO.getUserEmail());
 
 		outVO.setBirth(outVO.getBirth());
 		outVO.setGrade(outVO.getGrade() + 1);
@@ -299,7 +307,7 @@ public class MyPageMapperTest implements PLog {
 	}
 
 	//회원 업데이트
-	@Ignore
+//	@Ignore
 	@Test
 	public void doUpdate() throws Exception {
 		// 2. 데이터 1건 입력
@@ -323,7 +331,6 @@ public class MyPageMapperTest implements PLog {
 
 		outVO.setUserName(outVO.getUserName() + updateStr);
 		outVO.setUserPw(outVO.getUserPw());
-		outVO.setUserEmail(outVO.getUserEmail());
 
 		outVO.setBirth(outVO.getBirth());
 
@@ -351,7 +358,6 @@ public class MyPageMapperTest implements PLog {
 		assertEquals(userVO.getUserId(), outVO.getUserId());
 		assertEquals(userVO.getUserName(), outVO.getUserName());
 		assertEquals(userVO.getUserPw(), outVO.getUserPw());
-		assertEquals(userVO.getUserEmail(), outVO.getUserEmail());
 
 		assertEquals(userVO.getBirth(), outVO.getBirth());
 		assertEquals(userVO.getGrade(), outVO.getGrade());

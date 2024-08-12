@@ -8,7 +8,6 @@
             user_id as userId,
             user_name as userName,
             user_pw as userPw,
-            user_email as userEmail,
             birth,
             grade,
             address,
@@ -25,7 +24,6 @@
           
              user_name   	= #{userName},     
              user_pw   		= #{userPw},     
-             user_email     = #{userEmail},  
              birth          = #{birth},     
              grade          = #{grade} +1 ,     
              address        = #{address},  

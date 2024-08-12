@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.AdminMapper">
-
     <!-- 공지사항 목록 조회 -->
 	<select id="getNotices" parameterType="Search" resultType="Admin">
 	    SELECT *
@@ -61,7 +60,6 @@
         b.gname AS gname,
         u.user_name AS userName, 
         u.user_pw AS userPw, 
-        u.user_email AS userEmail, 
         u.birth AS userBirth, 
         u.grade AS userGrade, 
         u.address AS userAddress, 
@@ -79,7 +77,6 @@
         GRADE AS userGrade, 
         USER_NAME AS userName, 
         USER_PW AS userPw, 
-        USER_EMAIL AS userEmail, 
         BIRTH AS userBirth, 
         ADDRESS AS userAddress, 
         DETAIL_ADDRESS AS userDetailAddress, 
@@ -97,7 +94,6 @@
     <set>
         <if test="userName != null">user_name = #{userName},</if>
         <if test="userPw != null">user_pw = #{userPw},</if>
-        <if test="userEmail != null">user_email = #{userEmail},</if>
         <if test="userBirth != null">birth = #{userBirth},</if>
         <if test="userGrade != null">grade = #{userGrade},</if>
         <if test="userAddress != null">address = #{userAddress},</if>
@@ -120,7 +116,6 @@
         GRADE AS userGrade, 
         USER_NAME AS userName, 
         USER_PW AS userPw, 
-        USER_EMAIL AS userEmail, 
         BIRTH AS userBirth, 
         ADDRESS AS userAddress, 
         DETAIL_ADDRESS AS DETAIL_ADDRESS, 
@@ -132,9 +127,9 @@
 <!-- 회원 등록 -->
 <insert id="insertUser" parameterType="Admin">
     INSERT INTO d_user(
-        USER_ID, USER_NAME, USER_PW, USER_EMAIL, BIRTH, GRADE, ADDRESS, DETAIL_ADDRESS, REG_DT
+        USER_ID, USER_NAME, USER_PW, BIRTH, GRADE, ADDRESS, DETAIL_ADDRESS, REG_DT
     ) VALUES (
-        #{userId}, #{userName}, #{userPw}, #{userEmail}, #{userBirth}, #{userGrade}, #{userAddress}, #{userDetailAddress}, #{userRegDt}
+        #{userId}, #{userName}, #{userPw}, #{userBirth}, #{userGrade}, #{userAddress}, #{userDetailAddress}, #{userRegDt}
     )
 </insert> 
 

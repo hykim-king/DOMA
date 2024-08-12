@@ -43,8 +43,8 @@ public class PointMapperTest implements PLog{
 		log.debug("└──────────────────────────────┘");
 		
 		point = new Point("3", "d", 1, 1, 1, 1, 1, "type", 1, 2, "2", "d");
-		pointVO02 = new Point("", "", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");
-		//pointMapper.doDeleteAll();
+		pointVO02 = new Point("1", "2", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");
+		pointMapper.doDeleteAll();
 	}
 	
 	@After
@@ -54,27 +54,21 @@ public class PointMapperTest implements PLog{
 		log.debug("└──────────────────────────────┘");
 	}
 	@Test
-	public void guLoad() throws Exception	{
+	public void sqlAll() throws Exception{
 		log.debug("┌──────────────────────────────┐");
-		log.debug("│ guLoad()                │");
+		log.debug("│ sqlAll()                     │");
 		log.debug("└──────────────────────────────┘");
-		
+		int flag = pointMapper.dataInsert(point);
+		assertEquals(flag, 1);
+		flag = pointMapper.dataInsert(pointVO02);
+		assertEquals(flag, 1);
 		List<String> guList = pointMapper.guLoad("2022");
 		log.debug("┌ list ┐");
 		for(String gu : guList) {
 			log.debug("│ gu : " + gu);
 		}
 		log.debug("└─────────────────────────────────────────────");
-		
-		assertEquals(25, guList.size());
-	}
-	
-	@Ignore
-	@Test
-	public void detailInfoLoad() throws Exception {
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ detailInfoLoad()             │");
-		log.debug("└──────────────────────────────┘");
+		assertEquals(1, guList.size());
 		
 		List<Point> pointList = pointMapper.detailInfoLoad(pointVO02);
 		log.debug("1. pointVO02 : " + pointVO02);
@@ -83,12 +77,51 @@ public class PointMapperTest implements PLog{
 			log.debug("│ Point : " + point);
 		}
 		log.debug("└─────────────────────────────────────────────");
+		assertEquals(1, pointList.size());
 		
-		assertEquals(25, pointList.size());
+		List<Point> listPoint = pointMapper.fullTableScan();
+		assertEquals(2, listPoint.size());
+		
+		int count = pointMapper.countAll();
+		assertEquals(2, count);
+	}
+	@Test
+	public void guLoad() throws Exception	{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ guLoad()                │");
+		log.debug("└──────────────────────────────┘");
+		int flag = pointMapper.dataInsert(pointVO02);
+		List<String> guList = pointMapper.guLoad("2022");
+		log.debug("┌ list ┐");
+		for(String gu : guList) {
+			log.debug("│ gu : " + gu);
+		}
+		log.debug("└─────────────────────────────────────────────");
+		
+		assertEquals(1, guList.size());
+	}
+	
+
+	@Test
+	public void detailInfoLoad() throws Exception {
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ detailInfoLoad()             │");
+		log.debug("└──────────────────────────────┘");
+		int flag = pointMapper.dataInsert(pointVO02);
+		assertEquals(1, flag);
+		List<Point> pointList = pointMapper.detailInfoLoad(pointVO02);
+		log.debug("1. pointVO02 : " + pointVO02);
+		log.debug("┌ list ┐");
+		for(Point point : pointList) {
+			log.debug("│ Point : " + point);
+		}
+		log.debug("└─────────────────────────────────────────────");
+		
+		assertEquals(1, pointList.size());
 	}
 	
 	
-	@Ignore
+
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -108,16 +141,6 @@ public class PointMapperTest implements PLog{
 		
 	}
 	
-	@Ignore
-	@Test
-	public void dataInsert() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ dataInsert()                 │");
-		log.debug("└──────────────────────────────┘");
-		int flag = pointMapper.dataInsert(point);
-		assertEquals(1, flag);
-		
-	}
 	
 	@Ignore
 	@Test

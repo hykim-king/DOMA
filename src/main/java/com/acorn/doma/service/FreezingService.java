@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,8 @@ public interface FreezingService {
 	 Freezing selectFreezingDataById(String fid) throws SQLException;
 	 List<Freezing> selectPolyByYear(String year) throws SQLException;
 	 List<Freezing> selectPolyAll() throws SQLException;
+	 Future<List<Freezing>> selectPolyByYearAsync(String year) throws SQLException;
+	 List<Freezing> selectPolyAllAsync() throws SQLException;
+	 Freezing selectFreezingDataByIdAsync(String fid) throws SQLException;
+	 
 }

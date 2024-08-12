@@ -2,10 +2,12 @@ package com.acorn.doma.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -97,7 +99,7 @@ public class FreezingController implements PLog{
 	    } catch (JsonProcessingException e) {
 	        log.error("Error converting to JSON", e);
 	    }
-		return jsonString;
+		return jsonString;		
 	}
 		
 }

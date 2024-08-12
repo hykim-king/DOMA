@@ -76,7 +76,7 @@ public class BoardMapperTest implements PLog{
 		assertEquals(boardIn.getViews(), boardOut.getViews());
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void addAndGet() throws Exception{
 		
@@ -137,7 +137,7 @@ public class BoardMapperTest implements PLog{
 		assertEquals(1, flag);
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void doUpdate() throws Exception {
 		
@@ -171,7 +171,7 @@ public class BoardMapperTest implements PLog{
 		
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void doRetrieve() throws SQLException {
 		

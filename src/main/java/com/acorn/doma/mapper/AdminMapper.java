@@ -10,7 +10,6 @@ import com.acorn.doma.domain.Admin;
 
 @Mapper
 public interface AdminMapper {
-
     // 공지사항 관련 메서드
     /**
      * 공지사항 목록 조회

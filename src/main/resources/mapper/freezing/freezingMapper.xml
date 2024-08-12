@@ -51,45 +51,21 @@
         ORDER BY YEAR DESC
     </select>
     <select id="selectPolyByYear" parameterType="Freezing" resultType="Freezing">
-   SELECT
-            f.freezing_id as fid,
-            s.GNAME as gname,
-            s.DNAME as dname,
-            f.YEAR,
-            f.ACCIDENT,
-            f.CASUALTIES,
-            f.DEAD,
-            f.SERIOUSLY,
-            f.ORDINARY,
-            f.LONGITUDE,
-            f.LATITUDE,
-            f.ACC_POINT as accPoint,
-            f.polygon
+     SELECT
+            freezing_id as fid,
+            REGEXP_SUBSTR(ACC_POINT, '\(([^)]+)\)', 1, 1, NULL, 1) AS accPoint,
+            polygon
         FROM
-            d_freezing f
-        JOIN
-            d_sido s ON f.sido_code = s.sido_code
+            d_freezing
     WHERE YEAR =#{year}
 </select>
 <select id="selectPolyAll" resultType="Freezing">
         SELECT
-            f.freezing_id as fid,
-            s.GNAME as gname,
-            s.DNAME as dname,
-            f.YEAR,
-            f.ACCIDENT,
-            f.CASUALTIES,
-            f.DEAD,
-            f.SERIOUSLY,
-            f.ORDINARY,
-            f.LONGITUDE,
-            f.LATITUDE,
-            f.ACC_POINT as accPoint,
-            f.polygon
-        FROM
-            d_freezing f
-        JOIN
-            d_sido s ON f.sido_code = s.sido_code
+        freezing_id AS fid,
+        REGEXP_SUBSTR(ACC_POINT, '\(([^)]+)\)', 1, 1, NULL, 1) AS accPoint,
+        polygon
+    FROM
+        d_freezing
 </select>
     <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
         SELECT
@@ -102,10 +78,7 @@
             f.DEAD,
             f.SERIOUSLY,
             f.ORDINARY,
-            f.LONGITUDE,
-            f.LATITUDE,
-            f.ACC_POINT as accPoint,
-            f.polygon
+            f.ACC_POINT as accPoint
         FROM
             d_freezing f
         JOIN

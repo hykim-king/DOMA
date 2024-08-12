@@ -51,13 +51,14 @@ public class AccMapperTest implements PLog{
 		log.debug("│ tearDown()                   │");
 		log.debug("└──────────────────────────────┘");
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ fullTableScan()              │");
 		log.debug("└──────────────────────────────┘");
-		
+		accMapper.dataInsert(acc);
+		accMapper.dataInsert(acc01);
 		List<Accident> accList = accMapper.fullTableScan();
 		assertNotNull(accList);
 		log.debug("┌ list ");
