@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	    
     
     function moveToList() {
-        window.location.href = "/doma/safe/save.do";
+        window.location.href = "/doma/safe/safePage.do";
     }
 	
 	function doSave(){
