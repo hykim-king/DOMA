@@ -20,13 +20,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% 
-    String userId = (String) session.getAttribute("userId");
-    if (userId == null) {
-        userId = ""; // userId가 없을 경우 빈 문자열로 초기화
-    }
-%>
-    <c:set var="CP" value="${pageContext.request.contextPath}" />
+
+<c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -166,10 +161,12 @@ document.addEventListener("DOMContentLoaded", function(){
     //페이지사이즈
     const pageSizeSelect = document.querySelector("#pageSize");
     
-    // JSP에서 userId 값을 JavaScript 변수로 설정
+    const gangNamInput = document.querySelector("#gangNam");
+    
+    <%-- // JSP에서 userId 값을 JavaScript 변수로 설정
     const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
     
-    console.log("checkSessionAndMove: userId = " + userId);
+    console.log("checkSessionAndMove: userId = " + userId); --%>
 	
 //이벤트 처리=================================================================================================  
     
@@ -202,20 +199,27 @@ document.addEventListener("DOMContentLoaded", function(){
         event.stopPropagation();
         doRetrieve(1);
     });
+    
+    gangNamInput.addEventListener("click",function(event){
+        console.log("doRetrieveBtn click");
+        event.stopPropagation();
+        doRetrieve(1);
+    });
 	
        
 });   
 //함수=================================================================================================  
-	/* // checkSessionAndMove()
-	function checkSessionAndMove() {
-	
-	    if (user.userId !== "") {
-	        moveToReg(); // 세션이 존재하면 등록 페이지로 이동
-	    } else {
-	        alert("로그인이 필요합니다.");
-	        window.location.href = "/doma/user/loginPage.do"; // 세션이 없으면 로그인 페이지로 리다이렉트
-	    }
-	} */
+	// checkSessionAndMove()
+    function checkSessionAndMove() {
+        console.log("checkSessionAndMove: userId = " + userId);
+           
+        if (userId !== "" && userId !== " ") {
+            moveToReg(); // 세션이 존재하면 등록 페이지로 이동
+        } else {
+            alert("로그인이 필요합니다.");
+            window.location.href = "/doma/user/loginPage.do"; // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
+    }
 	
 	//moveToReg()
     function moveToReg(){
@@ -393,7 +397,7 @@ user : ${user}
                 <div class="grid gap-0 column-gap-6">
                     <table class="boardTable">
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="강남구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="강남구" id="gangNam" name="gangNam" class="btn btn-outline-secondary"></td>
                             <td class="p-2 g-col-8"><input type="button" value="강동구"  class="btn btn-outline-secondary"></td>
                             <td class="p-2 g-col-8"><input type="button" value="강북구"  class="btn btn-outline-secondary"></td>
                             <td class="p-2 g-col-8"><input type="button" value="강서구"  class="btn btn-outline-secondary"></td>

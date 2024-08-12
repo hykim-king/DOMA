@@ -1,3 +1,158 @@
+ <%--
+/**
+Class Name: board_list.jsp
+Description:
+Author: acorn
+Modification information
+확장
+message.txt
+19KB
+board_main
+`````` 
+<%--
+/**
+Class Name: board_list.jsp
+Description:
+Author: acorn
+Modification information
+확장
+message.txt
+11KB
+package com.acorn.doma.controller;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.acorn.doma.cmn.Message;
+import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.cmn.Search;
+import com.acorn.doma.cmn.StringUtil;
+import com.acorn.doma.domain.Accident;
+import com.acorn.doma.domain.Board;
+import com.acorn.doma.domain.Code;
+import com.acorn.doma.domain.Point;
+import com.acorn.doma.service.AccInfoService;
+import com.acorn.doma.service.BoardService;
+import com.acorn.doma.service.CodeService;
+import com.acorn.doma.service.FreezingService;
+import com.acorn.doma.service.MarkdownService;
+import com.acorn.doma.service.PointService;
+
+@Controller
+@RequestMapping("main")
+public class MainController implements PLog {
+
+@Autowired
+AccInfoService accInfoService;
+
+@Autowired
+BoardService boardService;
+
+@Autowired
+MarkdownService markdownService;
+
+@Autowired
+CodeService codeService;
+
+public MainController() {
+log.debug("┌──────────────────────────────┐");
+log.debug("│ MainController()             │");
+log.debug("└──────────────────────────────┘");
+}
+
+//http://localhost:8080/doma/main/emergency.do
+@RequestMapping(value="/main.do"
+,method=RequestMethod.GET
+,produces = "text/plain;charset=UTF-8")
+public String emergency(Model model) throws SQLException {
+log.debug("┌──────────────────────────────┐");
+log.debug("│ main()                       │");
+log.debug("└──────────────────────────────┘");
+
+String viewName = "main/main_emergency_info";
+
+List<Accident> accList = accInfoService.fullTableScan();
+
+model.addAttribute("accList", accList);
+
+List<Accident> A01List = accInfoService.A01Retrieve();
+model.addAttribute("A01List", A01List);
+List<Accident> A02List = accInfoService.A02Retrieve();
+model.addAttribute("A02List", A02List);
+List<Accident> A04List = accInfoService.A04Retrieve();
+model.addAttribute("A04List", A04List);
+List<Accident> A10List = accInfoService.A10Retrieve();
+model.addAttribute("A10List", A10List);
+List<Accident> A11List = accInfoService.A11Retrieve();
+model.addAttribute("A11List", A11List);
+return viewName;
+}
+@RequestMapping(value = "/IdSelect.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+public String accIdSelect(@RequestParam("accId") String accId, Model model) throws SQLException {
+String viewName = "main/main_emergency_info";
+    Accident accident = new Accident();
+    accident.setAccId(accId);
+    Accident accIdSelect = accInfoService.doSelectOne(accident);
+    log.debug("accIdSelect: "+accIdSelect);
+    model.addAttribute("accIdSelect", accIdSelect);
+    return viewName;
+}
+
+@RequestMapping(value = "/boardInfo.do"
+, method = RequestMethod.GET
+, produces = "text/plain;charset=UTF-8")  
+public String MyPage(HttpSession session,Model model,Board inVO)throws Exception {
+String viewName = "/board/board_main";
+... (61줄 남음)
+접기
+message.txt
+6KB
+board_mng
+<%--
+/**
+    Class Name: 
+    Description:
+    Author: acorn
+    Modification information
+확장
+message.txt
+13KB
+﻿
+sub
+sub_0215
+ 
+hw
+<%--
+/**
+	Class Name: board_list.jsp
+	Description:
+	Author: acorn
+	Modification information
+	
+	수정일     수정자      수정내용
+    -----   -----  -------------------------------------------
+    2024. 8. 2        최초작성 
+    
+    DOMA 개발팀
+    since 2020.11.23
+    Copyright (C) by KandJang All right reserved.
+*/
+ --%>
 <%@ page import="com.acorn.doma.cmn.StringUtil"%>
 <%@ page import="com.acorn.doma.cmn.Search"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -41,20 +196,138 @@
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header, footer {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    height: 350px;
+}
+
+.post-title {
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+    margin-top: 5px;
+}
+
+.post-content {
+    font-size: 16px;
+    color: #555;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-author {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.post-date {
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+}
+
+.comments {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-form {
+    margin-bottom: 20px;
+}
+
+.comment-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.comment-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+.comment-list {
+    margin-top: 20px;
+}
+
+.comment {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.comment strong {
+    color: #007bff;
+}
+</style>
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
 		console.log("DOMContentLoaded");
-		//객체 생성=================================================================================================    
+//객체 생성=================================================================================================    
 		//moveToList : 목록으로 이동
 		const moveToListBtn = document.querySelector("#moveToList");
 
 		//doDelete : 삭제
 		const doDeleteBtn = document.querySelector("#doDelete");
-		console.log("doDeleteBtn", doDeleteBtn);
 
+		//moveToUp : 수정페이지로 이동
+		const moveToUpBtn = document.querySelector("#moveToUp");
+		
 		//doUpdate : 수정
-		const doUpdateBtn = document.querySelector("#doUpdate");
+        const doUpdateBtn = document.querySelector("#doUpdate");
 
 		//seq
 		const seqInput = document.querySelector("#seq");
@@ -76,11 +349,15 @@
 
 		//구분
 		const searchDivSelect = document.querySelector("#searchDiv");
+		
+		//저장
+		const doSaveInput = document.querySelector("#doSave");
 
 		const modIdInput = document.querySelector("#modId");
 
-		//이벤트 처리=================================================================================================
-		//moveToListBtn
+//이벤트 처리=================================================================================================
+		
+	    //moveToListBtn
 		moveToListBtn.addEventListener("click", function(event) {
 			console.log("moveToListBtn click");
 			event.stopPropagation();
@@ -88,37 +365,86 @@
 				return;
 			moveToList();
 		});
-
-		//doUpdate : 수정
-		doUpdateBtn.addEventListener("click", function(event) {
-			console.log("doUpdateBtn click");
-			event.stopPropagation();
-			doUpdate();
+		
+		//moveToUp
+		moveToUpBtn.addEventListener("click", function(event) {
+            console.log("moveToUpBtn click");
+            event.stopPropagation();
+            if (confirm("수정페이지로 이동 하시겠습니까?") === false)
+                return;
+            moveToUp();
+        });
+		
+		//doSave : 저장
+		doSaveInput.addEventListener("click", function(event) {
+			console.log("doSaveInput click");
+            event.stopPropagation();
+            doSave();
 		});
 
-		//doDelete : 삭제
-		doDeleteBtn.addEventListener("click", function(event) {
-			console.log("doDeleteBtn click");
-			event.stopPropagation();
-			doDelete();
-		});
+		
 
-		//함수=================================================================================================
-		//doUpdate : 수정
+//함수=================================================================================================
+		function moveToList() {
+            window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+        }
+        
+        function moveToUp() {
+            window.location.href = "/doma/main/moveToUp.do?div=" + divInput.value;
+        }
+        
+        //doSave : 저장
+        function doSave() {
+            console.log("doSave()");
+
+            //marker : simplemde.value()
+            if (isEmpty(simplemde.value()) == true) {
+                alert('내용을 입력 하세요.')
+                contentsTextArea.focus();
+                return;
+            }
+
+            if (confirm("저장 하시겠습니까?") === false)
+                return;
+
+            //비동기 통신
+            let type = "POST";
+            let url = "/doma/board/doUpdate.do";
+            let async = "true";
+            let dataType = "html";
+
+            let params = {
+                "comseq" : comseqInput.value,
+                "seq" : seqInput.value,
+                "userId" : userIdInput.value,
+                "modId" : modIdInput.value,
+                "comments" : simplemde.value()
+            };
+
+            PClass.pAjax(url, params, dataType, type, async, function(data) {
+                if (data) {
+                    try {
+                        //JSON문자열을 JSON Object로 변환
+                        const message = JSON.parse(data)
+                        if (isEmpty(message) === false
+                                && 1 === message.messageId) {
+                            alert(message.messageContents);
+                            window.location.href = "/http://localhost:8080/doma/main/boardInfo.do?seq=1&div=" + divInput.value;
+                            
+                        } else {
+                            alert(message.messageContents);
+                        }
+
+                    } catch (e) {
+                        alert("data를 확인 하세요");
+                    }
+                }
+            });
+        }
+	
+        //doUpdate : 수정
 		function doUpdate() {
 			console.log("doUpdate()");
-
-			if (isEmpty(seqInput.value) == true) {
-				alert('seq를 확인 하세요.')
-				//seqInput.focus();
-				return;
-			}
-
-			if (isEmpty(titleInput.value) == true) {
-				alert('제목을 입력 하세요.')
-				titleInput.focus();
-				return;
-			}
 
 			//marker : simplemde.value()
 			if (isEmpty(simplemde.value()) == true) {
@@ -137,12 +463,11 @@
 			let dataType = "html";
 
 			let params = {
+				"comseq" : comseqInput.value,
 				"seq" : seqInput.value,
-				"div" : divInput.value,
-				"gname" : searchDivSelect.value,
-				"title" : titleInput.value,
+				"userId" : userIdInput.value,
 				"modId" : modIdInput.value,
-				"content" : simplemde.value()
+				"comments" : simplemde.value()
 			};
 
 			PClass.pAjax(url, params, dataType, type, async, function(data) {
@@ -153,8 +478,8 @@
 						if (isEmpty(message) === false
 								&& 1 === message.messageId) {
 							alert(message.messageContents);
-							//window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-							moveToList();
+							window.location.href = "/http://localhost:8080/doma/main/boardInfo.do?seq=1&div=" + divInput.value;
+							
 						} else {
 							alert(message.messageContents);
 						}
@@ -164,11 +489,6 @@
 					}
 				}
 			});
-		}
-
-		function moveToList() {
-			window.location.href = "/doma/board/doRetrieve.do?div="
-					+ divInput.value;
 		}
 
 		//doDelete : 삭제
@@ -215,133 +535,23 @@
 			});
 		}
 	});
+	
+	
 </script>
 
-
-<style>
-body {
-	font-family: 'Nanum Gothic', sans-serif;
-	color: #333;
-	background-color: #f4f4f4;
-	margin: 0;
-	padding: 0;
-}
-
-.container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 20px;
-}
-
-header, footer {
-	background-color: #fff;
-	border-bottom: 1px solid #ddd;
-}
-
-.post {
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	margin-bottom: 20px;
-	height: 350px;
-}
-
-.post-title {
-	font-weight: bold;
-	font-size: 24px;
-	color: #333;
-	margin-top: 5px;
-}
-
-.post-content {
-	font-size: 16px;
-	color: #555;
-}
-
-.post-meta {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 10px;
-}
-
-.post-author {
-	margin: 0;
-	font-size: 14px;
-	color: #555;
-}
-
-.post-date {
-	margin: 0;
-	font-size: 14px;
-	color: #777;
-}
-
-.comments {
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.comment-form {
-	margin-bottom: 20px;
-}
-
-.comment-form label {
-	display: block;
-	margin-bottom: 5px;
-	font-weight: bold;
-}
-
-.comment-form textarea {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	font-size: 14px;
-}
-
-.comment-form button {
-	background-color: #007bff;
-	color: #fff;
-	border: none;
-	padding: 10px 20px;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 16px;
-	margin-top: 10px;
-}
-
-.comment-form button:hover {
-	background-color: #0056b3;
-}
-
-.comment-list {
-	margin-top: 20px;
-}
-
-.comment {
-	border-bottom: 1px solid #ddd;
-	padding: 10px 0;
-}
-
-.comment p {
-	margin: 0;
-}
-
-.comment strong {
-	color: #007bff;
-}
-</style>
 
 <title>DOMA 커뮤니티</title>
 </head>
 <body>
+user : ${user }
+board : ${board }
+seq : ${seqInput }
 	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
+    <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
 	<div class="container">
-		<button type="button" class="btn btn-outline-warning">편집하기</button>
+		<button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
+		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
 		<article class="post">
 			<h2 class="post-title">${board.title}</h2>
 			<div class="post-meta">
@@ -360,7 +570,7 @@ header, footer {
 				<form action="submitComment.jsp" method="post">
 					<label for="comment">댓글을 입력하세요:</label>
 					<textarea id="comment" name="comment" rows="4" required></textarea>
-					<button type="submit">댓글 작성</button>
+					<button type="submit" id="doSave" name="doSave">댓글 작성</button>
 				</form>
 			</div>
 			<div class="comment-list">
@@ -373,6 +583,7 @@ header, footer {
 			</div>
 		</section>
 	</div>
+
 </body>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </html>

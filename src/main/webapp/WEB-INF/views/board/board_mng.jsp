@@ -49,91 +49,123 @@
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 
  
-<style> 
-.boardTable {
-        border: 1px #a39485 solid;
-        font-size: .9em;
-        box-shadow: 0 2px 5px rgba(0,0,0,.25);
-        width: 90%;
-        border-collapse: collapse;
-        border-radius: 5px;
-        overflow: hidden;
-        margin-bottom: 30px; /* 두 테이블 사이에 간격을 추가 */
-    }
+<style>
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
 
-    /* 두 번째 테이블의 상단에 간격 추가 */
-    .secondTableContainer {
-        margin-left: 20px; 
-       width: 10%;
-    }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-    /* 나머지 CSS 스타일 그대로 유지 */
-    th {
-        text-align: left;
-    }
+header, footer {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
 
-    thead {
-        font-weight: bold;
-        color: #fff;
-        background: #000000;
-    }
+.post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    height: 350px;
+}
 
-    td, th {
-        padding: 1em .5em;
-        vertical-align: middle;
-    }
+.post-title {
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+    margin-top: 5px;
+}
 
-    td {
-        border-bottom: 1px solid rgba(0,0,0,.1);
-        background: #fff;
-    }
+.post-content {
+    font-size: 16px;
+    color: #555;
+}
 
-    a {
-        color: #73685d;
-    }
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
-    @media all and (max-width: 768px) {
-        table, thead, tbody, th, td, tr {
-            display: block;
-        }
+.post-author {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
 
-        th {
-            text-align: right;
-        }
+.post-date {
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+}
 
-        table {
-            position: relative; 
-            padding-bottom: 0;
-            border: none;
-            box-shadow: 0 0 10px rgba(0,0,0,.2);
-        }
+.comments {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-        thead {
-            float: left;
-            white-space: nowrap;
-        }
+.comment-form {
+    margin-bottom: 20px;
+}
 
-        tbody {
-            overflow-x: auto;
-            overflow-y: hidden;
-            position: relative;
-            white-space: nowrap;
-        }
+.comment-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
 
-        tr {
-            display: inline-block;
-            vertical-align: top;
-        }
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
 
-        th {
-            border-bottom: 1px solid #a39485;
-        }
+.comment-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
 
-        td {
-            border-bottom: 1px solid #e5e5e5;
-        }
-    }
-</style> 
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+.comment-list {
+    margin-top: 20px;
+}
+
+.comment {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.comment strong {
+    color: #007bff;
+}
+</style>
 
 <title>acorn</title>
 <script>
