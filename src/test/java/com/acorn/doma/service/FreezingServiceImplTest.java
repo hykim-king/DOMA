@@ -42,9 +42,7 @@ public class FreezingServiceImplTest implements PLog{
 		log.debug("│ setUp()                              │");
 		log.debug("└──────────────────────────────────────┘");
 		freezing = new Freezing();
-		freezingMapper.doDeleteAll();
-		freezingService.insertFreezingData();
-		freezingMapper.countAll();
+		
 		
 	}
 
@@ -54,6 +52,12 @@ public class FreezingServiceImplTest implements PLog{
 		log.debug("│ tearDown()                           │");
 		log.debug("└──────────────────────────────────────┘");
 		
+	}
+	@Test
+	public void dataInsert() throws Exception{
+		freezingMapper.doDeleteAll();
+		freezingService.insertFreezingData();
+		freezingMapper.countAll();
 	}
 //	@Ignore
 	@Test

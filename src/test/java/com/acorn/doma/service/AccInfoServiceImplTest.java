@@ -42,8 +42,6 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("│ setUp()                              │");
 		log.debug("└──────────────────────────────────────┘");
 		accident = new Accident();
-		accInfoService.insertAccidentData();
-		accMapper.countAll();
 	}
 
 	@After
@@ -53,7 +51,12 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
-	@Ignore
+	@Test
+	public void dataInsert() throws Exception{
+		accInfoService.insertAccidentData();
+		accMapper.countAll();
+	}
+//	@Ignore
 	@Test
 	public void doSelectOne() throws Exception{
 		log.debug("┌──────────────────────────────────────┐");
@@ -77,9 +80,10 @@ public class AccInfoServiceImplTest implements PLog{
 			log.debug("│ "+ acc);
 		}
 		log.debug("└ ");
+		assertNotNull(list);
 		
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void Retrieve() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -104,12 +108,6 @@ public class AccInfoServiceImplTest implements PLog{
 		}
 	}
 	
-	@Ignore
-	@Test
-	public void testInsertAccidentData() throws Exception{
-		accInfoService.insertAccidentData();
-		accMapper.countAll();
-	}
 	@Ignore
 	@Test
 	public void test() {

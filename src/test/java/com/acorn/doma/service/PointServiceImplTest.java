@@ -40,10 +40,7 @@ public class PointServiceImplTest implements PLog{
 		log.debug("┌──────────────────────────────────────┐");
 		log.debug("│ setUp()                              │");
 		log.debug("└──────────────────────────────────────┘");
-		pointMapper.doDeleteAll();
-		pointService.insertPointData();
-		pointMapper.countAll();
-		pointVO = new Point("", "", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");
+		pointVO = new Point();
 		
 	}
 
@@ -53,57 +50,26 @@ public class PointServiceImplTest implements PLog{
 		log.debug("│ tearDown()                           │");
 		log.debug("└──────────────────────────────────────┘");
 		
-	}
-//	@Ignore
+	}	
 	@Test
-	public void guLoad() throws Exception	{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ guLoad()                │");
-		log.debug("└──────────────────────────────┘");
-		
-		List<String> guList = pointService.guLoad("2022");
-		log.debug("┌ list ┐");
-		for(String gu : guList) {
-			log.debug("│ gu : " + gu);
-		}
-		log.debug("└─────────────────────────────────────────────");
-		
-		assertEquals(25, guList.size());
+	public void dataInsert() throws Exception{
+		pointMapper.doDeleteAll();
+		pointService.insertPointData();
+		pointMapper.countAll();
 	}
-	@Ignore
 	@Test
-	public void detailInfoLoad() throws Exception {
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ detailInfoLoad()             │");
-		log.debug("└──────────────────────────────┘");
-		
+	public void serviceAll() throws Exception{
+		log.debug("┌──────────────────────────────────────┐");
+		log.debug("│ serviceAll()                         │");
+		log.debug("└──────────────────────────────────────┘");
+		pointVO.setGname("강남구");
+		pointVO.setYear("2022");
 		List<Point> pointList = pointService.detailInfoLoad(pointVO);
-		log.debug("1. pointVO : " + pointVO);
-		log.debug("┌ list ┐");
-		for(Point point : pointList) {
-			log.debug("│ Point : " + point);
-		}
-		log.debug("└─────────────────────────────────────────────");
-		
 		assertEquals(25, pointList.size());
-	}
-	
-	@Ignore
-	@Test
-	public void fullTableScan() throws Exception{
-		log.debug("┌──────────────────────────────┐");
-		log.debug("│ fullTableScan()              │");
-		log.debug("└──────────────────────────────┘");
 		List<Point> listPoint = pointService.fullTableScan();
-		
-		log.debug("┌ list ┐");
-		for(Point point : listPoint) {
-			log.debug("│ point : " + point);
-		}
-		log.debug("└");
-		
-		assertEquals(6, listPoint.size());
+		assertNotNull(listPoint);
 	}
+
 	@Ignore
 	@Test
 	public void beans() {

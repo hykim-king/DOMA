@@ -42,7 +42,7 @@ public class DeathServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
-	@Ignore
+//	@Ignore
 	@Test
 	public void testInsertDeathData() throws Exception{
 		deathMapper.doDeleteAll();
