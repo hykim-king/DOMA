@@ -53,9 +53,9 @@ button {
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  <div style="margin : 1% 0px 15px 80%;">
 	<c:choose>
-		<c:when test="${user eq null}">
+		<c:when test="${user ne null}">
 			<c:choose>
-				<c:when test="${user eq null}">
+				<c:when test="${user.grade == 0}">
 				<button class="button btnFade btnGray" onclick="saveBtn()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
 					  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
@@ -81,23 +81,10 @@ button {
 		</c:otherwise>
 	</c:choose>
  </div>
+ user : ${user}
  <div style="display:flex">
- 	<div class="pageDiv">
- 		<h2 class="pageH2">상황별 안전 정보</h2>
- 		<hr>
- 		<ul style="border : 2px solid black ">
-			<li>이미지</li>
-			<li>제목</li>
-		</ul>
- 	</div>
- 	<div class="pageDiv">
- 		<h2 class="pageH2">위급상황 대처방법</h2>
- 		<hr>
- 		<ul style="border : 2px solid black">
-			<li>이미지</li>
-			<li>제목</li>
-		</ul>
- 	</div>
+ 	 <jsp:include page="/WEB-INF/views/safe/info_by_situation.jsp"></jsp:include>
+ 	 <jsp:include page="/WEB-INF/views/safe/acting_by_situation.jsp"></jsp:include>
  </div>
  </body>
  <script src="${CP}/resources/js/safeInfoPage/safeInfoPage.js"></script>
