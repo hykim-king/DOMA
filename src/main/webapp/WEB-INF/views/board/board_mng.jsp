@@ -18,6 +18,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <c:set var="CP"  value="${pageContext.request.contextPath}"  />
 <!DOCTYPE html>
 <html>
@@ -235,12 +236,6 @@ document.addEventListener("DOMContentLoaded", function(){
     function doUpdate() {
         console.log("doUpdate()");
         
-        if(isEmpty(seqInput.value) == true){
-            alert('seq를 확인 하세요.')
-            //seqInput.focus();
-            return;
-        }
-        
         if(isEmpty(titleInput.value) == true){
             alert('제목을 입력 하세요.')
             titleInput.focus();
@@ -267,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function(){
         		"div"      : divInput.value,
         		"gname"    : searchDivSelect.value,
                 "title"    : titleInput.value,
-                "modId"    : modIdInput.value,
                 "content"  : simplemde.value()
             };
 
@@ -341,8 +335,7 @@ document.addEventListener("DOMContentLoaded", function(){
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-user : ${user }
-seq : ${seq }
+board : ${board }
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
@@ -400,18 +393,6 @@ seq : ${seq }
 	        </select>
 	    </div>
 	</div>
-    <div class="row mb-2">
-        <label for="modId" class="col-sm-2 col-form-label">등록자</label>
-        <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.modId}'/>" class="form-control readonly-input" readonly="readonly" name="modId" id="modId"  maxlength="20" required="required">
-        </div>
-    </div>
-    <div class="row mb-2">
-        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="imgLink" id="imgLink"  maxlength="75" required="required">
-        </div>
-    </div>
     <div class="row mb-2">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
         <div class="col-sm-10">

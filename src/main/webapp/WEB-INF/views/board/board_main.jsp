@@ -153,11 +153,20 @@ hw
     Copyright (C) by KandJang All right reserved.
 */
  --%>
+<%@page import="com.acorn.doma.domain.User"%>
 <%@ page import="com.acorn.doma.cmn.StringUtil"%>
 <%@ page import="com.acorn.doma.cmn.Search"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+
+    User outVO = (User) session.getAttribute("user");
+    String userId = (outVO != null) ? outVO.getUserId() : "";
+  
+%> 
+
 <c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -354,9 +363,12 @@ header, footer {
 		const doSaveInput = document.querySelector("#doSave");
 
 		const modIdInput = document.querySelector("#modId");
+		
+		
 
 //이벤트 처리=================================================================================================
 		
+	
 	    //moveToListBtn
 		moveToListBtn.addEventListener("click", function(event) {
 			console.log("moveToListBtn click");
@@ -372,7 +384,7 @@ header, footer {
             event.stopPropagation();
             if (confirm("수정페이지로 이동 하시겠습니까?") === false)
                 return;
-            moveToUp();
+            checkSessionAndMove();
         });
 		
 		//doSave : 저장
@@ -385,12 +397,45 @@ header, footer {
 		
 
 //함수=================================================================================================
-		function moveToList() {
-            window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+		
+	    //checkSessionAndMove()
+        function checkSessionAndMove() {
+        
+            // JSP에서 userId 값을 JavaScript 변수로 설정
+            const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+            
+            //userId값 확인
+            console.log("checkSessionAndMove: userId = " + userId); 
+        
+            if (userId !== "" && userId !== " ") {
+            	moveToUp();
+            }else {
+                alert("작성자가 아닙니다.");
+            }
+        }
+	
+	
+	    function moveToList() {
+	    	window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
         }
         
         function moveToUp() {
-            window.location.href = "/doma/main/moveToUp.do?div=" + divInput.value;
+        	//비동기 통신
+            let type = "GET";
+            let url = "/doma/board/moveToUp.do";
+            let async = "true";
+            let dataType = "html";
+
+            let params = {
+                "seq" : seqInput.value,
+                "div" : divInput.value,
+                "gname" : searchDivSelect.value,
+                "title" : titleInput.value,
+                "content"  : contentsTextArea.value
+                
+            };
+            
+        	window.location.href = "/doma/main/moveToUp.do?seq="+seqInput.value+"&div="+divInput.value+"&gname="+searchDivSelect.value+"&title"+titleInput.value+"&content="+contentsTextArea.value;
         }
         
         //doSave : 저장
@@ -543,9 +588,8 @@ header, footer {
 <title>DOMA 커뮤니티</title>
 </head>
 <body>
-user : ${user }
+user : ${user } 
 board : ${board }
-seq : ${seqInput }
 	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
@@ -553,13 +597,19 @@ seq : ${seqInput }
 		<button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
 		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
 		<article class="post">
-			<h2 class="post-title">${board.title}</h2>
+			<h2 name="title" id="title" class="post-title">${board.title}</h2>
 			<div class="post-meta">
-				<p class="post-author">작성자: ${board.userId}</p>
+				<p name="modId" id="modId" class="post-author">작성자: ${board.modId}</p>
 				<p class="post-date">${board.regDt}</p>
 			</div>
+			<div class="row mb-2">
+		        <label for="searchDiv" class="col-sm-2 col-form-label">지역</label>
+		        <div class="col-sm-2">
+		            <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
+		        </div>
+		    </div>
 			<hr>
-			<div class="post-content">
+			<div name="content" id="content" class="post-content">
 				<p>${board.content}</p>
 			</div>
 		</article>
