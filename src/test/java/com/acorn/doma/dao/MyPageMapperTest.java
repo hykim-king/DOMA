@@ -82,7 +82,7 @@ public class MyPageMapperTest implements PLog {
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 
-		userVO01 = new User("user2", "user2", "2222", "user2@naver.com", "2002-02-02", 1, "서울 서대문구", "101호", "x");
+		userVO01 = new User("user2", "user2", "2222", "2002-02-02", 1, "서울 서대문구", "101호", "x");
 		// userMapper.doDelete(userVO01);
 
 		boardV001 = new Board(300, "10", "구20", "제목_01", "user1", "user1", "내용2", "이미지2", "x", "x", 1);
@@ -358,7 +358,10 @@ public class MyPageMapperTest implements PLog {
 		assertEquals(userVO.getUserId(), outVO.getUserId());
 		assertEquals(userVO.getUserName(), outVO.getUserName());
 		assertEquals(userVO.getUserPw(), outVO.getUserPw());
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2a9b903cfa1094c0cbe8f0c713f0a73325405bdd
 		assertEquals(userVO.getBirth(), outVO.getBirth());
 		assertEquals(userVO.getGrade(), outVO.getGrade());
 		assertEquals(userVO.getAddress(), outVO.getAddress());

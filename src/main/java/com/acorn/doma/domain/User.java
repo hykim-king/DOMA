@@ -8,7 +8,6 @@ public class User extends DTO {
 	private String userId        ;
 	private String userName      ;
 	private String userPw        ;
-	private String userEmail     ;
 	private String birth          ;
 	private int grade          	; //0 : 관리자 1 : 사용자
 	private String address        ;
@@ -19,13 +18,12 @@ public class User extends DTO {
 		super();
 	}
 
-	public User(String userId, String userName, String userPw, String userEmail, String birth, int grade,
+	public User(String userId, String userName, String userPw, String birth, int grade,
 			String address, String detailAddress, String regDt) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.userPw = userPw;
-		this.userEmail = userEmail;
 		this.birth = birth;
 		this.grade = grade;
 		this.address = address;
@@ -50,12 +48,6 @@ public class User extends DTO {
 	}
 	public void setUserPw(String userPw) {
 		this.userPw = userPw;
-	}
-	public String getUserEmail() {
-		return userEmail;
-	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
 	}
 	public String getBirth() {
 		return birth;
@@ -87,13 +79,12 @@ public class User extends DTO {
 	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
+
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", userPw=" + userPw + ", userEmail=" + userEmail
-				+ ", birth=" + birth + ", grade=" + grade + ", address=" + address + ", detailAddress=" + detailAddress
-				+ ", regDt=" + regDt + ", toString()=" + super.toString() + "]";
+		return "User [userId=" + userId + ", userName=" + userName + ", userPw=" + userPw + ", birth=" + birth
+				+ ", grade=" + grade + ", address=" + address + ", detailAddress=" + detailAddress + ", regDt=" + regDt
+				+ ", toString()=" + super.toString() + "]";
 	}
-	
-	
 	
 }

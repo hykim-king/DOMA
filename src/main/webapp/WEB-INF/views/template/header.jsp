@@ -36,7 +36,7 @@
 	                </td>
                 </tr>
             </table>
-            <table class="menu-align" style="margin-left : 30%;">
+            <table class="menu-align" style="margin-left : 25%;">
 		         <tr>
 		             <c:choose>
 						<c:when test="${user ne null}">
@@ -45,10 +45,12 @@
 									<td><a id="main_page" style="margin-right : 20px;" href="${CP }/main/main.do">Home</a></td>
 									<td><a id="my_page"  style="margin-right : 20px;" href="${CP }/mypage/myPage.do">MyPage</a></td>
 									<td><a id="admin_page" style="margin-right : 20px;" href="${CP }/admin/adminnotice.do">AdminPage</a></td>
+									<td><a style="margin-right : 20px;" href="${CP }/user/logout.do">logout</a></td>
 								</c:when>
 								<c:when test="${user.grade == 1}">
 									<td><a id="main_page" style="margin-right : 20px;" href="${CP }/main/main.do">Home</a></td>
 									<td><a id="my_page"  style="margin-right : 20px;" href="${CP }/mypage/myPage.do">MyPage</a></td>
+									<td><a style="margin-right : 20px;" href="${CP }/user/logout.do">logout</a></td>
 								</c:when>
 							</c:choose>
 						</c:when>

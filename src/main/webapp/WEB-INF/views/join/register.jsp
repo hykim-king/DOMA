@@ -56,12 +56,6 @@ ${user }
 					</div>
 				</div>
 				<div class="form-group row mb-2">
-					<label for="email" class="col-sm-2 col-form-label">이메일</label>
-					<div class="col-sm-4">
-						<input type="email" class="form-control" name="email" id="email" maxlength="50" required="required">
-					</div>
-				</div>
-				<div class="form-group row mb-2">
 					<label for="birth" class="col-sm-2 col-form-label">생년월일</label>
 					<div class="col-sm-4">
 						<input type="date" class="form-control" name="birth" id="birth" maxlength="10" required="required">
