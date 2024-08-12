@@ -45,13 +45,95 @@
 <!-- simplemde -->
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
 
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 
-<style>
-    .readonly-input {
-        background-color: #e9ecef;
+ 
+<style> 
+.boardTable {
+        border: 1px #a39485 solid;
+        font-size: .9em;
+        box-shadow: 0 2px 5px rgba(0,0,0,.25);
+        width: 90%;
+        border-collapse: collapse;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 30px; /* 두 테이블 사이에 간격을 추가 */
     }
-</style>
+
+    /* 두 번째 테이블의 상단에 간격 추가 */
+    .secondTableContainer {
+        margin-left: 20px; 
+       width: 10%;
+    }
+
+    /* 나머지 CSS 스타일 그대로 유지 */
+    th {
+        text-align: left;
+    }
+
+    thead {
+        font-weight: bold;
+        color: #fff;
+        background: #000000;
+    }
+
+    td, th {
+        padding: 1em .5em;
+        vertical-align: middle;
+    }
+
+    td {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+        background: #fff;
+    }
+
+    a {
+        color: #73685d;
+    }
+
+    @media all and (max-width: 768px) {
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        th {
+            text-align: right;
+        }
+
+        table {
+            position: relative; 
+            padding-bottom: 0;
+            border: none;
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+        }
+
+        thead {
+            float: left;
+            white-space: nowrap;
+        }
+
+        tbody {
+            overflow-x: auto;
+            overflow-y: hidden;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        tr {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        th {
+            border-bottom: 1px solid #a39485;
+        }
+
+        td {
+            border-bottom: 1px solid #e5e5e5;
+        }
+    }
+</style> 
 
 <title>acorn</title>
 <script>

@@ -52,6 +52,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- simplemde -->
+
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 
@@ -59,6 +61,92 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <title>DOMA 커뮤니티</title>
+<style> 
+.boardTable {
+        border: 1px #a39485 solid;
+        font-size: .9em;
+        box-shadow: 0 2px 5px rgba(0,0,0,.25);
+        width: 90%;
+        border-collapse: collapse;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 30px; /* 두 테이블 사이에 간격을 추가 */
+    }
+
+    /* 두 번째 테이블의 상단에 간격 추가 */
+    .secondTableContainer {
+        margin-left: 20px; 
+       width: 10%;
+    }
+
+    /* 나머지 CSS 스타일 그대로 유지 */
+    th {
+        text-align: left;
+    }
+
+    thead {
+        font-weight: bold;
+        color: #fff;
+        background: #000000;
+    }
+
+    td, th {
+        padding: 1em .5em;
+        vertical-align: middle;
+    }
+
+    td {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+        background: #fff;
+    }
+
+    a {
+        color: #73685d;
+    }
+
+    @media all and (max-width: 768px) {
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        th {
+            text-align: right;
+        }
+
+        table {
+            position: relative; 
+            padding-bottom: 0;
+            border: none;
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+        }
+
+        thead {
+            float: left;
+            white-space: nowrap;
+        }
+
+        tbody {
+            overflow-x: auto;
+            overflow-y: hidden;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        tr {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        th {
+            border-bottom: 1px solid #a39485;
+        }
+
+        td {
+            border-bottom: 1px solid #e5e5e5;
+        }
+    }
+</style> 
+
 <script>
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
@@ -218,9 +306,9 @@ user : ${user}
 		</div> 
 		<!--// 제목 end ------------------------------------------------------------->
         <!-- 버튼 -->
-        <div class="form-buttons" style="margin : 20px 0px 10px 30px">
-            <input type="button" value="글쓰기" id="moveToReg" class="g-col-6 member-action-button">
-            <input type="button" value="조회" id="doRetrieve" class="g-col-6 member-action-button" >
+        <div class="form-buttons" style="margin : 20px 0px 10px 30px" >
+            <input type="button" value="글쓰기" id="moveToReg" class="btn btn-dark">
+            <input type="button" value="조회" id="doRetrieve" class="btn btn-dark" >
         </div>
         <!-- //버튼 -------------------------------------------------------------------->
         
@@ -265,9 +353,9 @@ user : ${user}
         
         <div class="d-flex m-2">
             <!-- table -->
-		    <table class="table table-striped table-hover table-bordered m-3" id="boardTable">
+		      <table  class="boardTable">
 		      <thead >
-		        <tr class="table-warning">
+		        <tr  >
 		          <th class="text-center col-sm-1">no</th>
 		          <th class="text-center col-sm-1">구</th>
 		          <th class="text-center col-sm-5">제목</th>
@@ -285,7 +373,7 @@ user : ${user}
 		                    <td class="text-center" ><c:out value="${vo.no }"></c:out></td>
 		                    <td class="text-center" ><c:out value="${vo.gname }"></c:out></td>
 		                    <td class="text-left" >
-		                      <a href="/doma/board/doSelectOne.do?seq=${vo.seq }&div=${vo.getDiv() }"><c:out value="${vo.title }"></c:out></a>
+		                      <a href="/doma/main/boardInfo.do?seq=${vo.seq }&div=${vo.getDiv() }"><c:out value="${vo.title }"></c:out></a>
 		                    </td>
 		                    <td class="text-center" ><c:out value="${vo.modId }"></c:out></td>
 		                    <td class="text-center" ><c:out value="${vo.modDt }"></c:out></td>
@@ -301,54 +389,53 @@ user : ${user}
 		      </tbody>
 		    </table>
 		    <!--// table end ------------------------------------------------------------->
-            <div >
+            <div class="secondTableContainer">
                 <div class="grid gap-0 column-gap-6">
-                    <table> 
+                    <table class="boardTable">
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="강남구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="강동구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="강북구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="강서구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="강남구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="강동구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="강북구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="강서구"  class="btn btn-outline-secondary"></td>
                         </tr>
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="관악구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="광진구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="구로구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="금천구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="관악구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="광진구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="구로구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="금천구"  class="btn btn-outline-secondary"></td>
                         </tr>
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="노원구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="도봉구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="동대문구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="동작구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="노원구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="도봉구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="동대문구" class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="동작구"  class="btn btn-outline-secondary"></td>
                         </tr>
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="마포구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="서대문구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="서초구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="성동구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="마포구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="서대문구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="서초구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="성동구"  class="btn btn-outline-secondary"></td>
                         </tr>
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="성북구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="송파구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="양천구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="영등포구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="성북구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="송파구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="양천구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="영등포구"  class="btn btn-outline-secondary"></td>
                         </tr>
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="용산구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="은평구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="종로구"  class="btn btn-warning btn-lg"></td>
-                            <td class="p-2 g-col-8"><input type="button" value="중구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="용산구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="은평구" class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="종로구"  class="btn btn-outline-secondary"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="중구"  class="btn btn-outline-secondary"></td>
                         </tr>
                         <tr>
-                            <td class="p-2 g-col-8"><input type="button" value="중랑구"  class="btn btn-warning btn-lg"></td>
+                            <td class="p-2 g-col-8"><input type="button" value="중랑구"  class="btn btn-outline-secondary"></td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    
   <!-- pagenation -->
   <div class="text-center">
     <div id="page-selection" class="text-center page">
