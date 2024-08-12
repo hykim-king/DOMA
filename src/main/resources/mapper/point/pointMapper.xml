@@ -58,7 +58,27 @@
 	   WHERE GNAME = #{gname}
 	     AND YEAR= #{year}
 	</select>
-	
+	<select id="databyYearAndGu" resultType="Point" parameterType="Point">
+        SELECT
+            point_id AS pid,
+            acc_point AS accPoint,
+            year,
+            accident,
+            dead,
+            seriously,
+            ordinary,
+            report,
+            POINT_TYPE AS pointType,
+            GNAME AS gname,
+            LATITUDE AS latitude,
+            LONGITUDE AS longitude
+        FROM D_POINT
+        WHERE year = #{year}
+        AND gname IN
+        <foreach item="item" collection="guList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 	<select id="fullTableScan" resultType="Point">
 		select
 		    year,

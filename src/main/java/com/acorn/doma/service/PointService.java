@@ -3,6 +3,8 @@ package com.acorn.doma.service;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.acorn.doma.domain.Point;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -24,4 +26,5 @@ public interface PointService {
 	List<Point> detailInfoLoad(Point inVO) throws Exception;
 	
 	List<String> guLoad(String year) throws Exception;
+	List<Point> databyYearAndGu(@Param("year") int year, @Param("guList") List<String> guList);
 }

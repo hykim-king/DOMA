@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.acorn.doma.cmn.WorkDiv;
 import com.acorn.doma.domain.Point;
@@ -21,4 +22,6 @@ public interface PointMapper extends WorkDiv<Point> {
 	List<Point> detailInfoLoad(Point inVO) throws SQLException;
 	
 	List<String> guLoad(String year) throws SQLException;
+	List<Point> databyYearAndGu(@Param("year") int year, @Param("guList") List<String> guList);
+	
 }

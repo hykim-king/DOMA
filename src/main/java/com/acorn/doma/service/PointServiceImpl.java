@@ -215,4 +215,10 @@ public class PointServiceImpl implements PointService, PLog{
 		return guList;
 	}
 
+	@Override
+	public List<Point> databyYearAndGu(int year, List<String> guList) {
+		List<Point> result = pointMapper.databyYearAndGu(year, guList);
+		return result;
+	}
+
 }

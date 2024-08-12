@@ -1,0 +1,8 @@
+@charset "UTF-8";
+    .select option {
+        padding: 10px;
+    }
+    .selected-option {
+        background-color: lightblue !important;
+        color: black !important;
+    }

@@ -3,6 +3,7 @@ package com.acorn.doma.dao;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -33,7 +34,7 @@ public class PointMapperTest implements PLog{
 	@Autowired
 	PointMapper pointMapper;
 	
-	Point point;
+	Point pointVO01;
 	Point pointVO02;
 	
 	@Before
@@ -42,9 +43,8 @@ public class PointMapperTest implements PLog{
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		
-		point = new Point("3", "d", 1, 1, 1, 1, 1, "type", 1, 2, "2", "d");
-		pointVO02 = new Point("1", "2", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");
-		pointMapper.doDeleteAll();
+		pointVO01 = new Point("3", "d", 1, 1, 1, 1, 1, "type", 1, 2, "2022", "강북구");
+		pointVO02 = new Point("1", "2", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");		
 	}
 	
 	@After
@@ -54,11 +54,34 @@ public class PointMapperTest implements PLog{
 		log.debug("└──────────────────────────────┘");
 	}
 	@Test
+	public void databyYearAndGu() throws Exception{
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ tearDown()                   │");
+		log.debug("└──────────────────────────────┘");
+		pointMapper.doDeleteAll();
+		int flag = pointMapper.dataInsert(pointVO01);
+		assertEquals(flag, 1);
+		flag = pointMapper.dataInsert(pointVO02);
+		assertEquals(flag, 1);
+		List<String> guList = Arrays.asList("강북구", "강남구");
+		int year = 2022;
+		List<Point> result = pointMapper.databyYearAndGu(year, guList);
+		assertEquals(2, result.size());
+		Point result1 = result.get(0);
+        assertEquals("3", result1.getPid());
+
+        Point result2 = result.get(1);
+        assertEquals("1", result2.getPid());
+		
+	}
+//	@Ignore
+	@Test
 	public void sqlAll() throws Exception{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ sqlAll()                     │");
 		log.debug("└──────────────────────────────┘");
-		int flag = pointMapper.dataInsert(point);
+		pointMapper.doDeleteAll();
+		int flag = pointMapper.dataInsert(pointVO01);
 		assertEquals(flag, 1);
 		flag = pointMapper.dataInsert(pointVO02);
 		assertEquals(flag, 1);
@@ -85,6 +108,7 @@ public class PointMapperTest implements PLog{
 		int count = pointMapper.countAll();
 		assertEquals(2, count);
 	}
+//	@Ignore
 	@Test
 	public void guLoad() throws Exception	{
 		log.debug("┌──────────────────────────────┐");
@@ -101,7 +125,7 @@ public class PointMapperTest implements PLog{
 		assertEquals(1, guList.size());
 	}
 	
-
+//	@Ignore
 	@Test
 	public void detailInfoLoad() throws Exception {
 		log.debug("┌──────────────────────────────┐");
@@ -121,13 +145,13 @@ public class PointMapperTest implements PLog{
 	}
 	
 	
-
+//	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ fullTableScan()              │");
 		log.debug("└──────────────────────────────┘");
-		int flag = pointMapper.dataInsert(point);
+		int flag = pointMapper.dataInsert(pointVO01);
 		assertEquals(1, flag);
 		List<Point> listPoint = pointMapper.fullTableScan();
 
