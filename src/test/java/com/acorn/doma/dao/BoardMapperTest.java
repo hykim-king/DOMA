@@ -39,6 +39,10 @@ public class BoardMapperTest implements PLog{
 	Board board02;
 	Board board03;
 	
+	//안전정보페이지 테스트
+	Board safe01;
+	Board safe02;
+	
 	Search search;
 	
 	@Before
@@ -51,6 +55,8 @@ public class BoardMapperTest implements PLog{
 		board02 = new Board(2,"10","마포구","제목_02","admin","admin","내용_02","1111","사용안함","사용안함",0);
 		board03 = new Board(3,"10","마포구","제목_03","admin","admin","내용_03","1111","사용안함","사용안함",0);
 		
+		safe01 = new Board(4,"30","안전정보페이지_01","user1","user1","내용_03","1111","사용안함","사용안함",0);
+		safe02 = new Board(5,"40","위급상황 대처방법_01","user1","user1","내용_03","1111","사용안함","사용안함",0);
 		//boardMapper.deleteAll();
 		
 		search = new Search();
@@ -75,8 +81,19 @@ public class BoardMapperTest implements PLog{
 		assertEquals(boardIn.getImgLink(), boardOut.getImgLink());
 		assertEquals(boardIn.getViews(), boardOut.getViews());
 	}
+	//안전정보페이지용 테스트
+	@Test
+	public void save() throws Exception{
+		int flag = boardMapper.Save(safe01);
+		log.debug("flag : " + flag);
+		assertEquals(1, flag);
+		
+		flag = boardMapper.Save(safe02);
+		log.debug("flag : " + flag);
+		assertEquals(1, flag);
+	}
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void addAndGet() throws Exception{
 		
@@ -137,7 +154,7 @@ public class BoardMapperTest implements PLog{
 		assertEquals(1, flag);
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void doUpdate() throws Exception {
 		
@@ -171,7 +188,7 @@ public class BoardMapperTest implements PLog{
 		
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void doRetrieve() throws SQLException {
 		

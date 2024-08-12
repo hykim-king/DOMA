@@ -17,13 +17,12 @@
 		login();
 	});
 	
-	loginBtn.addEventListener("keydown",function(event){
-		if (event.key ==='Enter') {
-	    	console.log("loginBtn enter");
-			
-			login();
-   		 }
-	});
+	 document.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            console.log("loginBtn enter");
+            login(); 
+        }
+    });
 	
 	function login() {
 		console.log("login()");

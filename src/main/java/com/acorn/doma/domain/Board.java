@@ -18,6 +18,21 @@ public class Board extends DTO {
 	
 	public Board() { }
 
+	public Board(int seq, String div, String title, String userId, String modId, String content, String imgLink,
+			String regDt, String modDt, int views) {
+		super();
+		this.seq = seq;
+		this.div = div;
+		this.title = title;
+		this.userId = userId;
+		this.modId = modId;
+		this.content = content;
+		this.imgLink = imgLink;
+		this.regDt = regDt;
+		this.modDt = modDt;
+		this.views = views;
+	}
+
 	public Board(int seq, String div, String gname, String title, String userId, String modId, String content,
 			String imgLink, String regDt, String modDt, int views) {
 		super();

@@ -111,8 +111,15 @@ public class BoardServiceImpl implements BoardService, PLog {
 	}
 	 
 
- 
-	 
+	@Override
+	public int save(Board inVO) throws SQLException {
+		log.debug("1. inVO : " + inVO);
+		
+		int flag = boardMapper.Save(inVO);
+		log.debug("2. flag : " + flag);
+		
+		return flag;
+	}
 
  
 		 

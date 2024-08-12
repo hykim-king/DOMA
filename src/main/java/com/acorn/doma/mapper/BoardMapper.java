@@ -58,6 +58,9 @@ public interface BoardMapper extends WorkDiv<Board>{
 	Board mpBoardSelectOne(Board inVO) throws SQLException;
 	
 	int mpBoardUp(Board inVO) throws SQLException;
-	 
+	
+	
+	//안전정보페이지에서 사용할 메서드
+	int Save(Board inVO)throws SQLException;
 	
 }

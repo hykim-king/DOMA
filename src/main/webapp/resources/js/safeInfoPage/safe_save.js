@@ -1,28 +1,16 @@
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
-//객체 생성=================================================================================================    
-    const doSaveBtn = document.querySelector("#doSave");
-    const moveToListBtn = document.querySelector("#moveToList");
+
+    const divInput = document.querySelector("#boardDiv");
     const titleInput = document.querySelector("#title");
     const userIdInput = document.querySelector("#userId");
-    const contentsTextArea = document.querySelector("#content");
-    const divInput = document.querySelector("#div");
     const imgLinkInput = document.querySelector("#imgLink");
-    //구분
-    const searchDivSelect = document.querySelector("#searchDiv");
+    const contentsTextArea = document.querySelector("#content");
     
     
-//이벤트 처리=================================================================================================    
-    
-	//구분
-    searchDivSelect.addEventListener("change",function(event){
-        if("" === searchDivSelect.value){
-            searchWordInput.value = "";//검색어
-            pageSizeSelect.value  = 10;//페이지 사이즈
-        }
-    });
-	
-	//moveToListBtn
+    const doSaveBtn = document.querySelector("#doSave");
+    const moveToListBtn = document.querySelector("#moveToList");
+       
     moveToListBtn.addEventListener("click",function(event){
         console.log("moveToListBtn click");
         event.stopPropagation();
@@ -30,40 +18,22 @@ document.addEventListener("DOMContentLoaded", function(){
         moveToList();
     });
 	
-	//등록
     doSaveBtn.addEventListener("click", function(event){
         console.log("doSaveBtn click");     
         doSave();
     });
-	
+	    
     
-    
-//함수=================================================================================================    
-    
-	//moveToList()
     function moveToList() {
-        window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+        window.location.href = "/doma/safe/save.do";
     }
 	
-	//doSave()
 	function doSave(){
         console.log("doSave()");
-        
-        if(isEmpty(searchDivSelect.value) == true){
-            alert('구를 선택 하세요.')
-            searchDivSelect.focus();
-            return;
-        }
         
         if(isEmpty(titleInput.value) == true){
             alert('제목을 입력 하세요.')
             titleInput.focus();
-            return;
-        }
-        
-        if(isEmpty(userIdInput.value) == true){
-            alert('등록자 아이디를 입력 하세요.')
-            userIdInput.focus();
             return;
         }
         
@@ -78,17 +48,16 @@ document.addEventListener("DOMContentLoaded", function(){
         
         //비동기 통신
         let type = "POST";
-        let url = "/doma/board/doSave.do";
+        let url = "/doma/safe/save.do";
         let async = "true";
         let dataType = "html";
         
         let params = {
-       		"gname"   : searchDivSelect.value,
+       		"div"   : divInput.value,
             "title"    : titleInput.value,
             "userId"    : userIdInput.value,
             "content" : simplemde.value(),
-            "imgLink" : imgLinkInput.value,
-            "div"      : divInput.value
+            "imgLink" : imgLinkInput.value
         };
 
         PClass.pAjax(url, params, dataType, type, async, function(data){
@@ -98,8 +67,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
                         alert(message.messageContents);
-                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-                        moveToList();
+                        window.location.href ="/doma/safe/safePage.do";
                     }else{
                         alert(message.messageContents);
                     }

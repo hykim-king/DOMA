@@ -6,16 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%-- favicon  --%>
 <link rel="shortcut icon" href="${CP}/resources/img/favicon.ico" type="image/x-icon">
-
-<%-- bootstrap css --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
-
-<%-- jquery --%>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
-
-<%-- common js --%>
 <script src="${CP}/resources/js/common.js"></script> 
 <title>Insert title here</title>
 

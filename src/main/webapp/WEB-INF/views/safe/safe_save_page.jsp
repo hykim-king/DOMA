@@ -14,8 +14,6 @@
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
-
-
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 <script src="${CP}/resources/js/safeInfoPage/safe_save.js"></script>
@@ -80,9 +78,6 @@ user : ${user}
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 <script>
     var simplemde = new SimpleMDE({ element: document.getElementById("content")})
-</script>
-<script>
-	
 </script>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>
 </body>
