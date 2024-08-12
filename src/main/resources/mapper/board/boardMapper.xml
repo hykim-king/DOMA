@@ -62,19 +62,31 @@
     
     <sql id="whereDoRetrieve">
 	    <choose>
-	        <!-- 제목 검색 -->
-	        <when test="searchDiv != null and searchDiv == '10' ">
-	            AND title LIKE '%' || #{searchWord} || '%'
+	        <when test="searchDiv != null and searchDiv &lt;= 30">
+	            <choose>
+	                <!-- 제목 검색 -->
+	                <when test="searchDiv == '10'">
+	                    AND title LIKE '%' || #{searchWord} || '%'
+	                </when>
+	                <!-- 내용 검색 -->
+	                <when test="searchDiv == '20'">
+	                    AND content LIKE '%' || #{searchWord} || '%'
+	                </when>
+	                <!-- 제목 + 내용 검색 -->
+	                <when test="searchDiv == '30'">
+	                    AND (title LIKE '%' || #{searchWord} || '%'
+	                    OR content LIKE '%' || #{searchWord} || '%')
+	                </when>
+	            </choose>
 	        </when>
-	        <!-- 내용 검색 -->
-	        <when test="searchDiv != null and searchDiv == '20' ">
-	            AND content LIKE '%' || #{searchWord} || '%'
-	        </when>
-	        <!-- 제목 + 내용 검색 -->
-	        <when test="searchDiv != null and searchDiv == '30'">
-	            AND (title LIKE '%' || #{searchWord} || '%'
-	            OR
-	            content LIKE '%' || #{searchWord} || '%')
+	        <!-- GNAME 관련 검색 -->
+	        <when test="searchDiv != null and searchDiv &gt;= 51 and searchDiv &lt;= 75">
+	            AND gname = (
+	                SELECT det_code_nm 
+	                FROM d_code 
+	                WHERE mst_code = 'GNAME' 
+	                  AND det_code = #{searchDiv}
+	            )
 	        </when>
 	    </choose>
 	</sql>
@@ -83,9 +95,14 @@
 	
 	<sql id="whereGuRetrieve">
 	    <choose>
-	        <!-- GNAME 관련 검색 -->
-	        <when test="searchDiv != null and searchDiv &gt;= 51 and searchDiv &lt;= 75">
-	            AND gname = (SELECT det_code_nm FROM d_code WHERE mst_code = 'GNAME' AND det_code = #{searchDiv})
+	        <!-- GNAME 검색 -->
+	        <when test="searchGu != null and searchGu != ''">
+	            AND gname = (
+	                SELECT det_code_nm 
+	                FROM d_code 
+	                WHERE mst_code = 'GNAME' 
+	                  AND det_code = #{searchGu}
+	            )
 	        </when>
 	    </choose>
 	</sql>

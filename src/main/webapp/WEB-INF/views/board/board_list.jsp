@@ -118,9 +118,10 @@ document.addEventListener("DOMContentLoaded", function(){
        
 });   
 //함수=================================================================================================  
-	// checkSessionAndMove()
-	/* function checkSessionAndMove() {
-	    if (userId !== "") {
+	/* // checkSessionAndMove()
+	function checkSessionAndMove() {
+	
+	    if (user.userId !== "") {
 	        moveToReg(); // 세션이 존재하면 등록 페이지로 이동
 	    } else {
 	        alert("로그인이 필요합니다.");
@@ -177,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function(){
         let searchDiv  = frm.searchDiv.value;
         let searchWord = frm.searchWord.value;
         let pageSize   = frm.pageSize.value;
+        let searchGu   = frm.searchGu.value;
         frm.pageNo.value = pageNo;
         let div  = frm.div.value;
         frm.div.value = "10";
@@ -184,6 +186,7 @@ document.addEventListener("DOMContentLoaded", function(){
         console.log("searchWord:"+searchWord);
         console.log("pageSize:"+pageSize);
         console.log("pageNo:"+pageNo);
+        console.log("searchGu:"+searchGu);
         console.log("div:"+div);
         
         frm.action = "/doma/board/doRetrieve.do";
@@ -198,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function(){
 <body>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-user : ${user }
+user : ${user}
 <!-- container -->
 <div class="container"> 
         <!-- 제목 -->
@@ -238,13 +241,13 @@ user : ${user }
                 </select>
             </div>
 	        <div class="col-sm-1">
-	            <select name="searchDiv" class="form-select" id=searchDiv>
-	                <option value="">구 선택</option>
-	                <c:forEach var="item" items="${GNAME}">
-	                   <option value="${item.detCode}"  <c:if test="${item.detCode == search.searchDiv }">selected</c:if>    >${ item.detNm}</option>
-	                </c:forEach>
-	            </select>
-	        </div>
+	        <select name="searchGu" class="form-select" id="searchGu">
+	            <option value="">구 선택</option>
+	            <c:forEach var="item" items="${GNAME}">
+	                <option value="${item.detCode}" <c:if test="${item.detCode == search.searchGu}">selected</c:if>>${item.detNm}</option>
+	            </c:forEach>
+	        </select>
+	    </div>
 	        <div class="col-sm-4">
 	            <input type="search" name="searchWord" class="form-control" id="searchWord"
 	             value="${search.searchWord }"
