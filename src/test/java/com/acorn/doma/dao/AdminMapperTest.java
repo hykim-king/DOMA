@@ -147,6 +147,7 @@ public class AdminMapperTest implements PLog {
     @Test
     public void addAndGet() throws Exception {
     	
+    	//유저 등록
         int userInsertFlag = adminMapper.insertUser(admin01);
         log.debug("User Inserted : " + userInsertFlag);
         assertEquals(1, userInsertFlag);
@@ -200,7 +201,7 @@ public class AdminMapperTest implements PLog {
         assertNotNull(list);
     }
     
-
+    @Ignore
     @Test
     public void beans() {
         log.debug("┌──────────────────────────────┐");

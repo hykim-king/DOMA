@@ -2,6 +2,7 @@ package com.acorn.doma.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,6 +49,7 @@ public class AdminController implements PLog {
         return viewName;
     }
 
+
     // 회원 관리 페이지 이동
     @GetMapping("/adminuser.do")
     public String userManagement() {
@@ -60,40 +62,36 @@ public class AdminController implements PLog {
         return viewName;
     }
 
-    // 공지사항 조회
-    @RequestMapping(value = "/doRetrieveNotices.do", method = RequestMethod.GET)
-    public String doRetrieveNotices(Model model, HttpServletRequest req) throws SQLException {
+ // 공지사항 조회
+    @GetMapping("/doRetrieveNotices.do")
+    public @ResponseBody List<Admin> doRetrieveNotices(@RequestParam Map<String, Object> params) throws SQLException {
         log.debug("┌──────────────────────────────────────────────┐");
         log.debug("│ admin_doRetrieveNotices()                    │");
         log.debug("└──────────────────────────────────────────────┘");
 
-        String viewName = "admin/admin_notice";
         Search search = new Search();
 
         // 검색 조건 처리
-        String searchDiv = StringUtil.nvl(req.getParameter("searchDiv"), "");
-        String searchWord = StringUtil.nvl(req.getParameter("searchWord"), "");
+        String searchDiv = StringUtil.nvl((String) params.get("searchDiv"), "");
+        String searchWord = StringUtil.nvl((String) params.get("searchWord"), "");
 
         search.setSearchDiv(searchDiv);
         search.setSearchWord(searchWord);
 
         // 페이지 크기 및 페이지 번호 설정
-        String pageSize = StringUtil.nvl(req.getParameter("pageSize"), "10");
-        String pageNo = StringUtil.nvl(req.getParameter("pageNo"), "1");
+        String pageSize = StringUtil.nvl((String) params.get("pageSize"), "10");
+        String pageNo = StringUtil.nvl((String) params.get("pageNo"), "1");
 
         search.setPageSize(Integer.parseInt(pageSize));
         search.setPageNo(Integer.parseInt(pageNo));
 
         List<Admin> notices = adminService.getNotices(search);
-        model.addAttribute("notices", notices);
-        model.addAttribute("search", search);
 
-        // 총 개수 처리
-        int totalCnt = notices.size() > 0 ? notices.get(0).getTotalCnt() : 0;
-        model.addAttribute("totalCnt", totalCnt);
-
-        return viewName;
+        // JSON으로 변환하여 반환
+        return notices;
     }
+
+
 
     // 공지사항 등록
     @PostMapping("/doInsertNotice.do")

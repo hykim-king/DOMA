@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
     <script src="<%=request.getContextPath()%>/resources/js/script.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/admin/admin.js"></script>
     <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/pcon.png">
 </head>
 <body>
@@ -19,7 +20,6 @@
             <a href="<%=request.getContextPath()%>/admin/adminuser.do" class="admin-action-button">회원관리</a>
         </div>
 
-        <!-- 회원 관리 섹션 -->
         <div class="member-management">
             <div class="box member-list">
                 <h2>공지사항 목록</h2>
@@ -38,42 +38,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- 빈 행 5개 추가 -->
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <c:forEach var="notice" items="${notices}">
+                            <tr>
+                                <td>${notice.seq}</td>
+                                <td>${notice.title}</td>
+                                <td>${notice.content}</td>
+                                <td>${notice.writer}</td>
+                                <td>${notice.regDt}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
                 <!-- 페이징 섹션 -->
