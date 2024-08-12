@@ -84,8 +84,6 @@ document.addEventListener("DOMContentLoaded", function(){
           // 팝업 창으로 열기
           //window.open('/doma/mypage/mpSelect.do?userId=' + userIdInput.value, 'popupWindow', 'width=600,height=400,scrollbars=yes');
 
-          
-
 
   }
 

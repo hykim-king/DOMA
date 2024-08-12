@@ -4,6 +4,8 @@
 
 function saveBtn() {
     console.log("saveBtn()");
+	
+	window.location.href = "/doma/safe/save.do";
 }
 
 function updateBtn() {
