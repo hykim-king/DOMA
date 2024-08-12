@@ -358,10 +358,6 @@ public class MyPageMapperTest implements PLog {
 		assertEquals(userVO.getUserId(), outVO.getUserId());
 		assertEquals(userVO.getUserName(), outVO.getUserName());
 		assertEquals(userVO.getUserPw(), outVO.getUserPw());
-<<<<<<< HEAD
-
-=======
->>>>>>> 2a9b903cfa1094c0cbe8f0c713f0a73325405bdd
 		assertEquals(userVO.getBirth(), outVO.getBirth());
 		assertEquals(userVO.getGrade(), outVO.getGrade());
 		assertEquals(userVO.getAddress(), outVO.getAddress());
