@@ -24,7 +24,6 @@ public class Admin extends DTO {
     // User 관련 필드
     private String userName; // USER_NAME
     private String userPw; // USER_PW
-    private String userEmail; // USER_EMAIL
     private String userBirth; // BIRTH
     private int userGrade; // GRADE
     private String userAddress; // ADDRESS
@@ -40,7 +39,7 @@ public class Admin extends DTO {
     public Admin(int seq, String div, String title, String userId, String modId,
                  String content, String imgLink, String boardRegDt, String modDt,
                  int views, String gname, String userName, String userPw,
-                 String userEmail, String userBirth, int userGrade, String userAddress,
+                 String userBirth, int userGrade, String userAddress,
                  String userDetailAddress, String userRegDt) {
         super();
         this.seq = seq;
@@ -56,7 +55,6 @@ public class Admin extends DTO {
         this.gname = gname;
         this.userName = userName;
         this.userPw = userPw;
-        this.userEmail = userEmail;
         this.userBirth = userBirth;
         this.userGrade = userGrade;
         this.userAddress = userAddress;
@@ -169,14 +167,6 @@ public class Admin extends DTO {
         this.userPw = userPw;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public String getUserBirth() {
         return userBirth;
     }
@@ -223,7 +213,7 @@ public class Admin extends DTO {
                ", userId=" + userId + ", modId=" + modId + ", content=" + content +
                ", imgLink=" + imgLink + ", boardRegDt=" + boardRegDt + ", modDt=" + modDt +
                ", views=" + views + ", gname=" + gname + ", userName=" + userName + 
-               ", userPw=" + userPw + ", userEmail=" + userEmail + 
+               ", userPw=" + userPw + 
                ", userBirth=" + userBirth + ", userGrade=" + userGrade + ", userAddress=" + userAddress +
                ", userDetailAddress=" + userDetailAddress + ", userRegDt=" + userRegDt + "]";
     }

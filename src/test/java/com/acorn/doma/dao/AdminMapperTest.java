@@ -67,28 +67,27 @@ public class AdminMapperTest implements PLog {
         admin01 = new Admin(
             1, "20", "제목_01", "admin01", "admin01", "내용_01", "img_link_01", 
             currentDateString, currentDateString, 0, "구_01", 
-            "admin01", "password", "user01@example.com", "1990-01-01", 
+            "admin01", "password", "1990-01-01", 
             0, "서울 서대문구", "101호", "2024-01-01"
         );
 
         admin02 = new Admin(
             2, "20", "제목_02", "admin02", "admin02", "내용_02", "img_link_02", 
             currentDateString, currentDateString, 0, "구_02", 
-            "admin02", "password", "user02@example.com", "1992-02-02", 
+            "admin02", "password", "1992-02-02", 
             0, "서울 서대문구", "102호", "2024-02-02"
         );
 
         admin03 = new Admin(
             3, "20", "제목_03", "admin03", "admin03", "내용_03", "img_link_03", 
             currentDateString, currentDateString, 0, "구_03", 
-            "admin03", "password", "user03@example.com", "1994-03-03", 
+            "admin03", "password", "1994-03-03", 
             0, "서울 서대문구", "103호", "2024-03-03"
         );
         
         search = new Search();
         boardMapper.deleteAll();
         userMapper.deleteAll();
-        //일관성 유지를 위해 전체 삭제
         
     }
 
@@ -147,6 +146,11 @@ public class AdminMapperTest implements PLog {
 
     @Test
     public void addAndGet() throws Exception {
+    	
+        int userInsertFlag = adminMapper.insertUser(admin01);
+        log.debug("User Inserted : " + userInsertFlag);
+        assertEquals(1, userInsertFlag);
+        
         // 공지사항 등록 테스트
         int flag = adminMapper.insertNotice(admin01);
         log.debug("flag : " + flag);
@@ -163,30 +167,30 @@ public class AdminMapperTest implements PLog {
         log.debug("admin01 : " + outAdmin01);
         assertNotNull(outAdmin01);
         isSameAdmin(admin01, outAdmin01);
-//        
-//        // 공지사항 수정 테스트
-//        String updateStr = "_U";
-//        outAdmin01.setTitle(outAdmin01.getTitle() + updateStr);
-//        outAdmin01.setModId(outAdmin01.getModId() + updateStr);
-//        outAdmin01.setContent(outAdmin01.getContent() + updateStr);
-//
-//        flag = adminMapper.updateNotice(outAdmin01);
-//        log.debug("flag : " + flag);
-//        assertEquals(1, flag);
-//
-//        Admin outAdmin01Update = adminMapper.getNoticeById(outAdmin01.getSeq());
-//        log.debug("outAdmin01Update : " + outAdmin01Update);
-//        assertNotNull(outAdmin01Update);
-//        isSameAdmin(outAdmin01Update, outAdmin01);
-//
-//        // 공지사항 삭제 테스트
-//        flag = adminMapper.deleteNotice(outAdmin01);
-//        log.debug("flag : " + flag);
-//        assertEquals(1, flag);
+        
+        // 공지사항 수정 테스트
+        String updateStr = "_U";
+        outAdmin01.setTitle(outAdmin01.getTitle() + updateStr);
+        outAdmin01.setModId(outAdmin01.getModId() + updateStr);
+        outAdmin01.setContent(outAdmin01.getContent() + updateStr);
+
+        flag = adminMapper.updateNotice(outAdmin01);
+        log.debug("flag : " + flag);
+        assertEquals(1, flag);
+
+        Admin outAdmin01Update = adminMapper.getNoticeById(outAdmin01.getSeq());
+        log.debug("outAdmin01Update : " + outAdmin01Update);
+        assertNotNull(outAdmin01Update);
+        isSameAdmin(outAdmin01Update, outAdmin01);
+
+        // 공지사항 삭제 테스트
+        flag = adminMapper.deleteNotice(outAdmin01);
+        log.debug("flag : " + flag);
+        assertEquals(1, flag);
     }
 
 
-//    @Test
+    @Test
     public void doRetrieve() throws SQLException {
         // 공지사항 목록 조회 테스트
         search.setDiv("20");
@@ -195,6 +199,7 @@ public class AdminMapperTest implements PLog {
         List<Admin> list = adminMapper.getNotices(search);
         assertNotNull(list);
     }
+    
 
     @Test
     public void beans() {
@@ -208,8 +213,8 @@ public class AdminMapperTest implements PLog {
         assertNotNull(adminMapper);
     }
 
- 
-//    @Test
+
+    @Test
     public void testUserRetrieve() throws SQLException {
         //회원 등록 테스트
         Admin existingUser = adminMapper.getUser(admin02.getUserId());
