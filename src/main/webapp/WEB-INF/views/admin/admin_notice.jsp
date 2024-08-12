@@ -24,8 +24,9 @@
             <div class="box member-list">
                 <h2>공지사항 목록</h2>
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="공지사항 검색">
-                    <button class="search-button">검색</button>
+                    <input type="text" id="searchWord" class="search-input" placeholder="공지사항 검색">
+                    <input type="hidden" id="pageSize" value="10">
+                    <button class="search-button" onclick="loadNotices(1)">검색</button>
                 </div>
                 <table class="member-table">
                     <thead>
@@ -37,24 +38,20 @@
                             <th>작성일</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <c:forEach var="notice" items="${notices}">
-                            <tr>
-                                <td>${notice.seq}</td>
-                                <td>${notice.title}</td>
-                                <td>${notice.content}</td>
-                                <td>${notice.writer}</td>
-                                <td>${notice.regDt}</td>
-                            </tr>
-                        </c:forEach>
+                    <tbody id="list-container">
+                        <!-- 공지사항 항목이 이곳에 추가됩니다. -->
                     </tbody>
                 </table>
+                
+                    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadNotices(1);  // 페이지가 로드될 때 첫 페이지의 공지사항을 로드합니다.
+        });
+    </script>
                 <!-- 페이징 섹션 -->
                 <div class="pagination">
                     <button class="page-button" data-page="prev">이전</button>
-                    <button class="page-button" data-page="1">1</button>
-                    <button class="page-button" data-page="2">2</button>
-                    <button class="page-button" data-page="3">3</button>
+                    <!-- 페이지 번호는 JavaScript에서 동적으로 생성 -->
                     <button class="page-button" data-page="next">다음</button>
                 </div>
             </div>

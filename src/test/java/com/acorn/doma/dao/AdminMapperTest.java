@@ -143,7 +143,7 @@ public class AdminMapperTest implements PLog {
         assertEquals(expected.getUserAddress(), actual.getUserAddress());
         assertEquals(expected.getUserDetailAddress(), actual.getUserDetailAddress());
     }
-
+//    @Ignore
     @Test
     public void addAndGet() throws Exception {
     	
@@ -190,7 +190,7 @@ public class AdminMapperTest implements PLog {
         assertEquals(1, flag);
     }
 
-
+//    @Ignore
     @Test
     public void doRetrieve() throws SQLException {
         // 공지사항 목록 조회 테스트
@@ -260,6 +260,28 @@ public class AdminMapperTest implements PLog {
         log.debug("deleteFlag : " + deleteFlag);
         assertEquals(1, deleteFlag);
     }
+
+    @Test
+    public void testGetNoticeCount() throws SQLException {
+        // 기본 div 값 설정 (div = 20)
+        search.setDiv("20");
+
+        // 공지사항이 없는 상태에서 공지사항 수 조회
+        int initialCount = adminMapper.getNoticeCount(search);
+        log.debug("Initial Notice Count: " + initialCount);
+
+        // 공지사항 추가
+        adminMapper.insertUser(admin01);
+        adminMapper.insertNotice(admin01);
+
+        // 공지사항 추가 후 수 조회
+        int updatedCount = adminMapper.getNoticeCount(search);
+        log.debug("Updated Notice Count: " + updatedCount);
+
+        // 단순히 SQL 문이 실행되고 올바르게 카운트를 반환하는지만 확인
+        assertTrue(updatedCount > initialCount);
+    }
+
 
 
 

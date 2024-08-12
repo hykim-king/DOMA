@@ -1,6 +1,7 @@
 package com.acorn.doma.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,9 +63,10 @@ public class AdminController implements PLog {
         return viewName;
     }
 
- // 공지사항 조회
-    @GetMapping("/doRetrieveNotices.do")
-    public @ResponseBody List<Admin> doRetrieveNotices(@RequestParam Map<String, Object> params) throws SQLException {
+    @RequestMapping(value = "/doRetrieveNotices.do", method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> doRetrieveNotices(
+            @RequestParam Map<String, String> params) throws SQLException {
+
         log.debug("┌──────────────────────────────────────────────┐");
         log.debug("│ admin_doRetrieveNotices()                    │");
         log.debug("└──────────────────────────────────────────────┘");
@@ -72,24 +74,44 @@ public class AdminController implements PLog {
         Search search = new Search();
 
         // 검색 조건 처리
-        String searchDiv = StringUtil.nvl((String) params.get("searchDiv"), "");
-        String searchWord = StringUtil.nvl((String) params.get("searchWord"), "");
-
-        search.setSearchDiv(searchDiv);
+        String searchWord = StringUtil.nvl(params.get("searchWord"), "");
         search.setSearchWord(searchWord);
 
         // 페이지 크기 및 페이지 번호 설정
-        String pageSize = StringUtil.nvl((String) params.get("pageSize"), "10");
-        String pageNo = StringUtil.nvl((String) params.get("pageNo"), "1");
+        String pageSize = StringUtil.nvl(params.get("pageSize"), "10");
+        String pageNo = StringUtil.nvl(params.get("pageNo"), "1");
 
         search.setPageSize(Integer.parseInt(pageSize));
         search.setPageNo(Integer.parseInt(pageNo));
 
         List<Admin> notices = adminService.getNotices(search);
+        int totalCount = adminService.getNoticeCount(search);
 
-        // JSON으로 변환하여 반환
-        return notices;
+        // 로그 추가
+        log.debug("Search Parameters: " + search);
+        log.debug("Notices Retrieved: " + notices);
+        log.debug("Total Count: " + totalCount);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("notices", notices);
+        result.put("totalCount", totalCount);
+        result.put("pageSize", search.getPageSize());
+        result.put("pageNo", search.getPageNo());
+
+        return result;  // JSON 형식으로 반환
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

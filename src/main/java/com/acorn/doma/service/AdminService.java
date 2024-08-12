@@ -21,6 +21,8 @@ public interface AdminService extends WorkDiv<Admin>{
     int deleteNotice(Admin admin) throws SQLException;
 
     Admin getNoticeById(int seq) throws SQLException;
+    
+    int getNoticeCount(Search search) throws SQLException;
 
     // 회원 관리 관련 메서드
     List<Admin> getUsers(Search search) throws SQLException;

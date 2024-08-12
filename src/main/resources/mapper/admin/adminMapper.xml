@@ -42,6 +42,25 @@
 	    DELETE FROM d_board
 	    WHERE seq = #{seq} AND div = '20'
 	</delete>
+	
+<!-- 공지사항 총 개수 조회 쿼리 -->
+<select id="getNoticeCount" parameterType="search" resultType="int">
+    SELECT COUNT(*)
+    FROM d_board
+    WHERE div = 
+    <choose>
+        <when test="searchDiv != null">
+            #{searchDiv}
+        </when>
+        <otherwise>
+            '20'
+        </otherwise>
+    </choose>
+    <if test="searchWord != null and searchWord != ''">
+        AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+    </if>
+</select>
+
 
 
 <!-- 게시판 단건 조회 (게시판과 유저 테이블 조인) -->

@@ -42,6 +42,8 @@ public interface AdminMapper {
      * @throws SQLException
      */
     int deleteNotice(Admin admin) throws SQLException;
+    
+    int getNoticeCount(Search search) throws SQLException;
 
     /**
      * 공지사항 단건 조회

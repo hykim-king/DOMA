@@ -50,6 +50,11 @@ public class AdminServiceImpl implements AdminService, PLog {
         log.debug("1. param :" + seq);
         return adminMapper.getNoticeById(seq);
     }
+    
+    @Override
+    public int getNoticeCount(Search search) throws SQLException {
+        return adminMapper.getNoticeCount(search);
+    }
 
     // 회원 관리 관련 메서드
     @Override
