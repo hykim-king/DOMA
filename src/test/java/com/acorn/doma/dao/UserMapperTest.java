@@ -45,9 +45,9 @@ public class UserMapperTest implements PLog {
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		
-		userVO01 = new User("rkdgur2016", "임강혁", "1234", "rkdgur2016@gmail.com", "2001-01-16", 1, "서울시 마포구 숭문16길 28", "201호", "sysdate");
-		userVO02 = new User("user1", "user1","1111","user1@naver.com",  "2001-01-01", 1,	"서울 서대문구", "101호","sysdate");
-		userVO03 = new User("uki", "엄기은", "1111",	"uki2022751011@gmail.com",	"2001-01-01", 1, "인천 서구", "1111", "sysdate");
+		userVO01 = new User("rkdgur2016", "임강혁", "1234",  "2001-01-16", 1, "서울시 마포구 숭문16길 28", "201호", "sysdate");
+		userVO02 = new User("user1", "user1","1111",  "2001-01-01", 1,	"서울 서대문구", "101호","sysdate");
+		userVO03 = new User("uki", "엄기은", "1111",	"2001-01-01", 1, "인천 서구", "1111", "sysdate");
 		search = new Search();
 		
 	}
@@ -146,7 +146,6 @@ public class UserMapperTest implements PLog {
 		assertEquals(userVO.getUserId(), outVO.getUserId());
 		assertEquals(userVO.getUserName(), outVO.getUserName());
 		assertEquals(userVO.getUserPw(), outVO.getUserPw());
-		assertEquals(userVO.getUserEmail(), outVO.getUserEmail());
 		assertEquals(userVO.getBirth(), outVO.getBirth());
 		assertEquals(userVO.getGrade(), outVO.getGrade());
 		assertEquals(userVO.getAddress(), outVO.getAddress());
