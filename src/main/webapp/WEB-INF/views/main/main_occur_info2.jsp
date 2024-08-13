@@ -97,19 +97,36 @@ function removeExistingMarkers() {
 // 응답 데이터로 마커를 지도에 추가하는 함수
 function addMarkersToMap(data) {
     data.forEach(item => {
-        // 마커 이미지 URL (옵션)
-        const imageSrc = "/doma/resources/img/map/occur_warning.png";
-        const imageSize = new kakao.maps.Size(24, 35); // 이미지 크기
-        const imageOption = { offset: new kakao.maps.Point(12, 35) }; // 이미지의 기준 좌표
+        let imageSrc = "";
+        let imageSize = new kakao.maps.Size(24, 32); // 기본 크기
+
+        // accFrequency 값에 따른 이미지 경로 및 크기 설정
+        switch (item.accFrequency) {
+            case 4:
+                imageSrc = "/doma/resources/img/map/location_green.png";
+                break;
+            case 6:
+                imageSrc = "/doma/resources/img/map/location_blue.png";
+                break;
+            case 8:
+                imageSrc = "/doma/resources/img/map/location_orange.png";
+                break;
+            case 12:
+                imageSrc = "/doma/resources/img/map/location_red.png";
+                break;
+            case 14:
+                imageSrc = "/doma/resources/img/map/location_purple.png";
+                break;
+        }
+
+        const imageOption = { offset: new kakao.maps.Point(12, 35) };
         const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
-        // 마커 생성
         const marker = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(item.latitude, item.longitude),
             image: markerImage
         });
 
-        // 마커 클릭 시 정보창 열기
         const infowindow = new kakao.maps.InfoWindow({
             content: `<div style="padding:5px;">${item.accPoint}<br>사고: ${item.accident}<br>중상: ${item.seriously}<br>기타: ${item.ordinary}</div>`
         });
@@ -117,14 +134,13 @@ function addMarkersToMap(data) {
         kakao.maps.event.addListener(marker, 'mouseover', function() {
             infowindow.open(map, marker);
         });
+
         kakao.maps.event.addListener(marker, 'mouseout', function() {
             infowindow.close();
         });
 
-        // 지도에 마커 추가
         marker.setMap(map);
 
-        // 마커를 배열에 저장 (선택 사항)
         markers.push(marker);
     });
 }

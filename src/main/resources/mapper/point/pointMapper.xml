@@ -74,7 +74,8 @@
             POINT_TYPE AS pointType,
             GNAME AS gname,
             LATITUDE AS latitude,
-            LONGITUDE AS longitude
+            LONGITUDE AS longitude,
+            acc_frequency as accFrequency
         FROM D_POINT
         WHERE year = #{year}
         AND gname IN
