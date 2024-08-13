@@ -15,7 +15,8 @@
 			longitude,
 			latitude,
 			year,
-			gname
+			gname,
+			acc_frequency
 		) 
 		VALUES (
 			#{pid}, 
@@ -29,7 +30,8 @@
 			#{longitude}, 
 			#{latitude},
 			#{year},
-			#{gname}
+			#{gname},
+			#{accFrequency}
 		)
 	</insert>
 	
@@ -62,6 +64,7 @@
         SELECT
             point_id AS pid,
             acc_point AS accPoint,
+            acc_frequency as accFrequency,
             year,
             accident,
             dead,

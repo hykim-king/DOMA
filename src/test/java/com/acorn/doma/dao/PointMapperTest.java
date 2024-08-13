@@ -43,8 +43,8 @@ public class PointMapperTest implements PLog{
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		
-		pointVO01 = new Point("3", "d", 1, 1, 1, 1, 1, "type", 1, 2, "2022", "강북구");
-		pointVO02 = new Point("1", "2", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구");		
+		pointVO01 = new Point("3", "d", 1, 1, 1, 1, 1, "type", 1, 2, "2022", "강북구",1);
+		pointVO02 = new Point("1", "2", 0, 0, 0, 0, 0, "", 0.0, 0.0, "2022", "강남구",2);		
 	}
 	
 	@After
@@ -91,7 +91,7 @@ public class PointMapperTest implements PLog{
 			log.debug("│ gu : " + gu);
 		}
 		log.debug("└─────────────────────────────────────────────");
-		assertEquals(1, guList.size());
+		assertEquals(2, guList.size());
 		
 		List<Point> pointList = pointMapper.detailInfoLoad(pointVO02);
 		log.debug("1. pointVO02 : " + pointVO02);
@@ -103,7 +103,7 @@ public class PointMapperTest implements PLog{
 		assertEquals(1, pointList.size());
 		
 		List<Point> listPoint = pointMapper.fullTableScan();
-		assertEquals(2, listPoint.size());
+		assertEquals(1, listPoint.size());
 		
 		int count = pointMapper.countAll();
 		assertEquals(2, count);
@@ -114,6 +114,7 @@ public class PointMapperTest implements PLog{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ guLoad()                │");
 		log.debug("└──────────────────────────────┘");
+		pointMapper.doDeleteAll();
 		int flag = pointMapper.dataInsert(pointVO02);
 		List<String> guList = pointMapper.guLoad("2022");
 		log.debug("┌ list ┐");
@@ -131,6 +132,7 @@ public class PointMapperTest implements PLog{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ detailInfoLoad()             │");
 		log.debug("└──────────────────────────────┘");
+		pointMapper.doDeleteAll();
 		int flag = pointMapper.dataInsert(pointVO02);
 		assertEquals(1, flag);
 		List<Point> pointList = pointMapper.detailInfoLoad(pointVO02);
@@ -151,6 +153,7 @@ public class PointMapperTest implements PLog{
 		log.debug("┌──────────────────────────────┐");
 		log.debug("│ fullTableScan()              │");
 		log.debug("└──────────────────────────────┘");
+		pointMapper.doDeleteAll();
 		int flag = pointMapper.dataInsert(pointVO01);
 		assertEquals(1, flag);
 		List<Point> listPoint = pointMapper.fullTableScan();
