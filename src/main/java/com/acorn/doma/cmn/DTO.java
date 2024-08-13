@@ -10,7 +10,7 @@ public class DTO {
 	private int pageSize;// 페이지 사이즈
 	private int pageNo;// 페이지 번호
 
-	public DTO() {
+	public DTO() {		
 	}
 
 	public int getPageSize() {
@@ -50,4 +50,3 @@ public class DTO {
 		return "DTO [no=" + no + ", totalCnt=" + totalCnt + ", pageSize=" + pageSize + ", pageNo=" + pageNo + "]";
 	}
 }
-

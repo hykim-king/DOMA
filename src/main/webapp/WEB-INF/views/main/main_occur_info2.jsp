@@ -12,8 +12,7 @@
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/main/main_occur_info.js"></script>
-<link rel = "stylesheet" href="${CP}/resources/css/main/main_occur_info.css">
-<!-- CSS 코드 (인라인 스타일로 포함) -->
+<link rel="stylesheet" href="${CP}/resources/css/main/main_occur_info.css">
 <style>
     select option {
         padding: 10px;
@@ -21,6 +20,53 @@
     .selected-option {
         background-color: lightblue !important;
         color: black !important;
+    }
+    .risk-button {
+        display: inline-block;
+        width: 50px;
+        height: 30px;
+        margin: 5px;
+        text-align: center;
+        line-height: 30px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .risk-button:hover {
+        background-color: #e0e0e0;
+    }
+    .selected {
+        background-color: #4caf50;
+        color: white;
+    }
+    .gu-selection {
+        text-align: center;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    #guDropdown {
+        display: none;
+        width: 150px;
+        height: 150px;
+        font-weight: bold;
+        text-align: center;
+        border: 2px solid black;
+    }
+    #showGuList {
+        cursor: pointer;
+        width: 150px;
+        height: 35px;
+        font-weight: bold;
+        text-align: center;
+        border: 2px solid black;
+        background-color: #f0f0f0;
+        margin: 0 auto;
+        line-height: 35px;
+    }
+    .risk-section {
+        display: none;
+        text-align: center;
+        margin-bottom: 20px;
     }
 </style>
 <script>
@@ -36,11 +82,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-    
-    // 마커 이미지의 이미지 주소입니다
-    var imageSrc = "/doma/resources/img/map/occur_warning.png";
+
+    // 기본적으로 사고 위험도 버튼들이 모두 선택된 상태로 설정
+    const riskButtons = document.querySelectorAll('.risk-button');
+    riskButtons.forEach(button => button.classList.add('selected'));
 });
+
 let selectedGuList = [];
+let isAllSelected = false; // 전체 선택 상태를 추적하는 변수
+let selectedRisk = [];
+
 // 년도 선택 시 구 선택 드롭다운을 보이도록 설정
 function selectYear(year) {
     if (year) {
@@ -49,32 +100,86 @@ function selectYear(year) {
     }
 }
 
-//구 선택 시 선택된 구 리스트의 스타일을 변경하고, guList 배열을 업데이트
+// 구 선택 시 선택된 구 리스트의 스타일을 변경하고, guList 배열을 업데이트
 function updateGuSelection() {
     const guDropdown = document.getElementById('guDropdown');
     const options = Array.from(guDropdown.options);
-    const guList = [];
+    selectedGuList = []; // 선택된 구 리스트 초기화
 
     options.forEach(option => {
         if (option.selected) {
-            // 이미 선택된 구는 색상 유지, 새로 선택된 구만 색상 변경
             if (!option.classList.contains('selected-option')) {
                 option.classList.add('selected-option');
-                selectedGuList.push(option.value);
             }
+            selectedGuList.push(option.value);
         } else {
-            // 선택 해제된 구는 색상 제거
             if (option.classList.contains('selected-option')) {
                 option.classList.remove('selected-option');
-                selectedGuList = selectedGuList.filter(value => value !== option.value);
             }
         }
     });
 
-    // 선택된 구 리스트를 콘솔에 출력
+    console.log('Selected Gu List:', selectedGuList);
+
+    // 구 선택 시 사고 위험도 섹션 보이기
+    if (selectedGuList.length > 0) {
+        document.querySelector('.risk-section').style.display = 'block';
+    } else {
+        document.querySelector('.risk-section').style.display = 'none';
+    }
+}
+
+//전체 선택 또는 전체 취소
+function toggleGuDropdown() {
+    const guDropdown = document.getElementById('guDropdown');
+    const showGuListButton = document.getElementById('showGuList');
+    
+    if (guDropdown.style.display === 'none') {
+        guDropdown.style.display = 'block';
+        selectAllGu(); // 드롭다운이 보일 때 전체 선택
+        showGuListButton.innerText = '전체 취소'; // 버튼 텍스트 변경
+    } else {
+        guDropdown.style.display = 'none';
+        showGuListButton.innerText = '전체 선택'; // 버튼 텍스트 변경
+        deselectAllGu(); // 드롭다운이 숨겨질 때 전체 취소
+    }
+}
+
+//전체 선택
+function selectAllGu() {
+    const guDropdown = document.getElementById('guDropdown');
+    const options = Array.from(guDropdown.options);
+
+    options.forEach(option => {
+        if (option.value !== '전체선택') {
+            option.selected = true;
+            if (!option.classList.contains('selected-option')) {
+                option.classList.add('selected-option');
+                selectedGuList.push(option.value);
+            }
+        }
+    });
+
+    isAllSelected = true; // 전체 선택 상태로 변경
     console.log('Selected Gu List:', selectedGuList);
 }
 
+//전체 취소
+function deselectAllGu() {
+    const guDropdown = document.getElementById('guDropdown');
+    const options = Array.from(guDropdown.options);
+
+    options.forEach(option => {
+        option.selected = false;
+        if (option.classList.contains('selected-option')) {
+            option.classList.remove('selected-option');
+        }
+    });
+
+    selectedGuList = []; // 선택된 구 리스트 초기화
+    isAllSelected = false; // 전체 선택 상태로 변경
+    console.log('Selected Gu List:', selectedGuList);
+}
 // 조회 버튼 클릭 시 데이터 로드
 function fetchData() {
     const selectedYear = document.getElementById('yearDropdown').value;
@@ -87,7 +192,8 @@ function fetchData() {
         console.warn('Please select a year and at least one Gu.');
     }
 }
-//기존의 모든 마커를 제거하는 함수 (선택 사항)
+
+// 기존의 모든 마커를 제거하는 함수 (선택 사항)
 let markers = [];
 function removeExistingMarkers() {
     markers.forEach(marker => marker.setMap(null));
@@ -97,40 +203,72 @@ function removeExistingMarkers() {
 // 응답 데이터로 마커를 지도에 추가하는 함수
 function addMarkersToMap(data) {
     data.forEach(item => {
-        // 마커 이미지 URL (옵션)
-        const imageSrc = "/doma/resources/img/map/occur_warning.png";
-        const imageSize = new kakao.maps.Size(24, 35); // 이미지 크기
-        const imageOption = { offset: new kakao.maps.Point(12, 35) }; // 이미지의 기준 좌표
+        let imageSrc = "";
+        let imageSize = new kakao.maps.Size(24, 32); // 기본 크기
+
+        // accFrequency 값에 따른 이미지 경로 및 크기 설정
+        switch (item.accFrequency) {
+            case 1:
+                imageSrc = "/doma/resources/img/map/location_green.png";
+                break;
+            case 2:
+                imageSrc = "/doma/resources/img/map/location_blue.png";
+                break;
+            case 3:
+                imageSrc = "/doma/resources/img/map/location_orange.png";
+                break;
+            case 4:
+                imageSrc = "/doma/resources/img/map/location_red.png";
+                break;
+            case 5:
+                imageSrc = "/doma/resources/img/map/location_purple.png";
+                break;
+        }
+
+        const imageOption = { offset: new kakao.maps.Point(12, 35) };
         const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
-        // 마커 생성
         const marker = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(item.latitude, item.longitude),
             image: markerImage
         });
 
-        // 마커 클릭 시 정보창 열기
         const infowindow = new kakao.maps.InfoWindow({
-            content: `<div style="padding:5px;">${item.accPoint}<br>사고: ${item.accident}<br>중상: ${item.seriously}<br>기타: ${item.ordinary}</div>`
+            content: '<div style="padding:5px;"><br>사고: ' + item.accident + 
+                     '<br>중상: ' + item.seriously + 
+                     '<br>경상: ' + item.ordinary + '</div>'
         });
 
         kakao.maps.event.addListener(marker, 'mouseover', function() {
             infowindow.open(map, marker);
         });
+
         kakao.maps.event.addListener(marker, 'mouseout', function() {
             infowindow.close();
         });
 
-        // 지도에 마커 추가
         marker.setMap(map);
 
-        // 마커를 배열에 저장 (선택 사항)
         markers.push(marker);
     });
 }
 
+//사고 위험도 버튼 선택
+function selectRisk(riskLevel) {
+    const riskButton = document.getElementById(`risk${riskLevel}`);
+    
+    if (riskButton.classList.contains('selected')) {
+        riskButton.classList.remove('selected');
+        selectedRisk = selectedRisk.filter(level => level !== riskLevel);
+    } else {
+        riskButton.classList.add('selected');
+        selectedRisk.push(riskLevel);
+    }
+
+    console.log('Selected Risk Levels:', selectedRisk);
+}
 </script>
-<title>Insert title here</title>
+<title>구 선택 및 사고 위험도</title>
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -152,10 +290,11 @@ function addMarkersToMap(data) {
                     </select>
                 </div>
 
-                <!-- 구 선택 드롭다운 -->
-                <div class="gu-selection" id="guSelection" style="text-align: center; margin-bottom: 20px; display: none;">
+                <!-- 전체 선택 버튼 및 구 선택 드롭다운 -->
+                <div class="gu-selection" id="guSelection" style="display: none;">
                     <h3>구 선택</h3>
-                    <select id="guDropdown" multiple="multiple" style="width: 150px; height: 150px; font-weight: bold; text-align: center; border: 2px solid black;" onchange="updateGuSelection()">
+                    <div id="showGuList" onclick="toggleGuDropdown()">전체 선택</div>
+                    <select id="guDropdown" multiple="multiple" onchange="updateGuSelection()">
                         <option value="강남구">강남구</option>
                         <option value="강동구">강동구</option>
                         <option value="강북구">강북구</option>
@@ -182,6 +321,18 @@ function addMarkersToMap(data) {
                         <option value="중구">중구</option>
                         <option value="중랑구">중랑구</option>
                     </select>
+                </div>
+
+                <!-- 사고 위험도 버튼 -->
+                <div class="risk-section">
+                    <h3>사고 위험도 선택</h3>
+                    <div id="riskButtons">
+                        <div id="risk1" class="risk-button" onclick="selectRisk(1)">1</div>
+                        <div id="risk2" class="risk-button" onclick="selectRisk(2)">2</div>
+                        <div id="risk3" class="risk-button" onclick="selectRisk(3)">3</div>
+                        <div id="risk4" class="risk-button" onclick="selectRisk(4)">4</div>
+                        <div id="risk5" class="risk-button" onclick="selectRisk(5)">5</div>
+                    </div>
                 </div>
 
                 <!-- 조회 버튼 -->

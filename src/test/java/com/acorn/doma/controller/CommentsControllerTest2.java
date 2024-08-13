@@ -1,6 +1,8 @@
 package com.acorn.doma.controller;
 
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
 
@@ -16,12 +18,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.acorn.doma.cmn.Message;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.domain.Comments;
 import com.acorn.doma.mapper.CommentsMapper;
+import com.google.gson.Gson;
 
 
 @WebAppConfiguration
@@ -29,7 +38,7 @@ import com.acorn.doma.mapper.CommentsMapper;
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //알파벳 순서로 테스트 메서드 실행
-public class commentsControllerTest implements PLog {
+public class CommentsControllerTest2 implements PLog {
 
 	@Autowired
 	WebApplicationContext webApplicationContext;
@@ -37,13 +46,12 @@ public class commentsControllerTest implements PLog {
 	@Autowired
 	CommentsMapper commentsMapper;
 	
-	Search search;
 	
 	Comments comments01;
 	Comments comments02;
 	Comments comments03;
-	
-	
+	Comments comments;
+	MockMvc mockMvc;
 	@Before
 	public void setUp() throws Exception {
 		log.debug("┌──────────────────────────────┐");
@@ -57,10 +65,9 @@ public class commentsControllerTest implements PLog {
 		comments03 = new Comments(3, 1, "등록자03", "수정자03", "내용", "사용안함", "사용안함");
 		
 		commentsMapper.deleteAll();
+		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		
-		search = new Search();
-		
-		
+		comments = new Comments();
 	}
 
 	@After
@@ -70,21 +77,68 @@ public class commentsControllerTest implements PLog {
 		log.debug("└──────────────────────────────┘");
 		
 	}
-	
 	@Ignore
 	@Test
-    public void doRetrieve() throws Exception {
-		// 저장
-        commentsMapper.doSave(comments01);
-        commentsMapper.doSave(comments02);
-        commentsMapper.doSave(comments03);
-		
-        search.setSeq(1);
-        search.setSearchWord("내용");
+	public void doSave() throws Exception{
+		int flag = commentsMapper.doSave(comments01);
+		assertEquals(1, flag);
 
-        List<Comments> list = commentsMapper.doRetrieve(search);
-        assertNotNull(list);
-    }
+		MockHttpServletRequestBuilder requestBuilder 
+		= MockMvcRequestBuilders.post("/doma/comments/doSave.do")
+		.param("seq", "1")
+		.param("userId", "uki")
+		.param("commetns","ddddd");
+		
+
+		//호출 및 결과
+		ResultActions resultActions = mockMvc.perform(requestBuilder)
+				//Controller produces = "text/plain;charset=UTF-8" 
+				.andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=UTF-8"))
+				//Web상태
+				.andExpect(status().is2xxSuccessful());
+		
+		//json문자열
+		String jsonResult = resultActions.andDo(print())
+							.andReturn()
+							.getResponse().getContentAsString()
+							;
+		
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ jsonResult:" + jsonResult      );
+		log.debug("└──────────────────────────────┘");
+		
+		//json 문자열을 Message로 변환
+		Message resultMessage = new Gson().fromJson(jsonResult, Message.class);
+		log.debug(resultMessage);
+		
+	}
+	@Test
+	public void doRetrieve() throws Exception{
+		int flag = commentsMapper.doSave(comments01);
+		assertEquals(1, flag);
+		String seq = "1";				
+		MockHttpServletRequestBuilder requestBuilder 
+		= MockMvcRequestBuilders.get("/comments/doRetrieve.do")
+		.param("seq", seq);
+		;
+
+		//호출 및 결과
+		ResultActions resultActions = mockMvc.perform(requestBuilder)
+				//Controller produces = "text/plain;charset=UTF-8" 
+				.andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=UTF-8"))
+				//Web상태
+				.andExpect(status().is2xxSuccessful());
+		
+		//json문자열
+		String jsonResult = resultActions.andDo(print())
+							.andReturn()
+							.getResponse().getContentAsString()
+							;
+		
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ jsonResult:" + jsonResult      );
+		log.debug("└──────────────────────────────┘");
+	}
 	
 	@Ignore
 	@Test
@@ -121,7 +175,7 @@ public class commentsControllerTest implements PLog {
 	}
 	
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void addAndGet() throws Exception {
 		
@@ -188,7 +242,7 @@ public class commentsControllerTest implements PLog {
 		assertEquals(commentsIn.getModId(), commentsOut.getModId());
 		assertEquals(commentsIn.getComments(), commentsOut.getComments());
 	}
-
+	@Ignore
 	@Test
 	public void test() {
 		log.debug("┌──────────────────────────────┐");

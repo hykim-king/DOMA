@@ -1,6 +1,7 @@
 package com.acorn.doma.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.Message;
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.cmn.Search;
+import com.acorn.doma.cmn.StringUtil;
 import com.acorn.doma.domain.Board;
 import com.acorn.doma.service.BoardService;
 import com.acorn.doma.service.CodeService;
@@ -33,6 +36,7 @@ public class SafeController implements PLog {
 		log.debug("│ safeController()                         │");
 		log.debug("└──────────────────────────────────────────┘");	
 	};
+	
 	
 	@RequestMapping(value = "/save.do"
 			   , method = RequestMethod.POST
@@ -61,8 +65,27 @@ public class SafeController implements PLog {
 		return jsonString;
 	}
 	
-	@RequestMapping(value = "/savePage.do"
+	@RequestMapping(value = "/selectOne.do"
 			   , method = RequestMethod.GET)
+	public String selectOne(Model model, Board inVO) throws SQLException {
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ safeController : selectOne()             │");
+		log.debug("└──────────────────────────────────────────┘");
+		
+		log.debug("1. inVO : " + inVO);
+		
+		String viewName = "/safe/safe_selectOne_page";
+		
+		Board outVO = boardService.selectOne(inVO);
+		log.debug("2. outVO : " + outVO);
+		
+		model.addAttribute("info", outVO);
+		return viewName;
+	}
+	
+	@RequestMapping(value = "/savePage.do"
+			   , method = RequestMethod.GET
+			   ,produces = "text/plain;charset=UTF-8")
 	public String savePage() throws SQLException {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController : savePage()              │");
@@ -75,12 +98,30 @@ public class SafeController implements PLog {
 	@RequestMapping(value = "/safePage.do"
 					,method = RequestMethod.GET
 					,produces = "text/plain;charset=UTF-8")
-	public String safePage(Model model, HttpServletRequest req) throws SQLException {
+	public String safePage(Model model) throws SQLException {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController : safePage()              │");
 		log.debug("└──────────────────────────────────────────┘");	
 		String viewName = "/safe/safe_info";
 		
+		Search search = new Search();
+		search.setDiv("30");
+		search.setPageNo(1);
+		search.setPageSize(6);
+		log.debug("1. search:" + search);
+		
+		List<Board> list30 = this.boardService.retrieve(search);
+		log.debug("list:" + list30);
+		model.addAttribute("list30", list30);
+		
+		search.setDiv("40");
+		search.setPageNo(1);
+		search.setPageSize(6);
+		log.debug("1. search:" + search);
+		
+		List<Board> list40 = this.boardService.retrieve(search);
+		log.debug("list40:" + list40);
+		model.addAttribute("list40", list40);
 		
 		return viewName;
 	}

@@ -74,7 +74,7 @@
 	                </when>
 	                <!-- 제목 + 내용 검색 -->
 	                <when test="searchDiv == '30'">
-	                    AND (title LIKE '%' || #{searchWord} || '%'
+	                    AND (modId LIKE '%' || #{searchWord} || '%'
 	                    OR content LIKE '%' || #{searchWord} || '%')
 	                </when>
 	            </choose>
@@ -116,7 +116,7 @@
                tt1.div,
                tt1.gname,
                tt1.title,
-               tt1.user_id as userId,
+               tt1.mod_id as modId,
                DECODE( TO_CHAR(tt1.mod_dt,'YYYYMMDD'),TO_CHAR(SYSDATE,'YYYYMMDD'),
                        TO_CHAR(tt1.mod_dt,'HH24:MI'),TO_CHAR(tt1.mod_dt,'YYYY/MM/DD')
                ) as modDt,
@@ -239,7 +239,9 @@
      )
     </insert>
     
-    <insert id="Save" parameterType="Board">
+    
+    <!-- 안전정보페이지 -->
+    <insert id="save" parameterType="Board">
      INSERT INTO D_BOARD(
         seq,
         div,
@@ -264,4 +266,42 @@
       0
      )
     </insert>
+    
+     <select id="retrieve" parameterType="Search" resultType="Board">
+	    SELECT tt1.no,
+	       tt1.seq,
+	       tt1.div,
+	       tt1.title,
+	       tt1.IMG_LINK
+		  FROM (
+	    		SELECT ROWNUM as no, T1.*
+			      FROM (
+				        SELECT *
+				        FROM d_board
+				        --div : 30 상황별 안전 정보, 40 : 위급상황 대처방법
+				        WHERE div = #{div}
+				        ORDER BY mod_dt DESC
+	    			) T1
+	    			WHERE rownum  <![CDATA[ <= ( #{pageSize} * (#{pageNo} -1) + #{pageSize} )]]>
+        		)TT1
+       			 WHERE tt1.no <![CDATA[ >= ( #{pageSize} * (#{pageNo} -1) + 1 )]]>
+    </select>
+    
+    <select id="selectOne" parameterType="Board" resultType="Board">
+        SELECT
+		    seq,
+		    div,
+		    title,
+		    user_id as userId,
+		    mod_id as modId,
+		    content,
+		    img_link as imgLink,
+		    TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+		    TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt,
+		    views
+		FROM
+		    d_board
+		WHERE seq = #{seq}    
+    </select>
+    
 </mapper>

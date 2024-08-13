@@ -173,8 +173,8 @@ header, footer {
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
 //객체 생성=================================================================================================    
-    //moveToList : 목록으로 이동
-    const moveToListBtn = document.querySelector("#moveToList");
+    //moveToMainBtn : 뒤로 이동
+    const moveToMainBtn = document.querySelector("#moveToMain");
     
     //doDelete : 삭제
     const doDeleteBtn = document.querySelector("#doDelete");
@@ -210,11 +210,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
 //이벤트 처리=================================================================================================
     //moveToListBtn
-    moveToListBtn.addEventListener("click",function(event){
-        console.log("moveToListBtn click");
+    moveToMainBtn.addEventListener("click",function(event){
+        console.log("moveToMainBtn click");
         event.stopPropagation();
-        if(confirm("목록 으로 이동 하시겠습니까?") === false)return;
-        moveToList();
+        if(confirm("뒤로 이동 하시겠습니까?") === false)return;
+        moveToMain();
     });
     
     //doUpdate : 수정
@@ -285,8 +285,8 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     }
     
-    function moveToList() {
-        window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+    function moveToMain() {
+        window.location.href = "/doma/main/boardInfo.do?seq=" + seqInput.value +"&div=" + divInput.value;
     }
     
     //doDelete : 삭제
@@ -354,9 +354,8 @@ board : ${board }
   
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
-      <input type="button" value="목록"  id="moveToList" class="btn btn-primary">
+      <input type="button" value="뒤로가기"  id="moveToMain" class="btn btn-primary">
       <input type="button" value="수정"  id="doUpdate" class="btn btn-primary">
-      <input type="button" value="삭제"  id="doDelete" class="btn btn-primary">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->

@@ -40,8 +40,7 @@ public class CommentMapperTest implements PLog {
 	Comments comment02;
 	Comments comment03;
 	
-	Search search;
-	
+	Comments comments;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -53,7 +52,6 @@ public class CommentMapperTest implements PLog {
 		
 		commentMapper.deleteAll();
 		
-		search = new Search();
 		
 	}
 	
@@ -69,15 +67,13 @@ public class CommentMapperTest implements PLog {
         commentMapper.doSave(comment01);
         commentMapper.doSave(comment02);
         commentMapper.doSave(comment03);
-		
-        search.setSeq(1);
-        search.setSearchWord("내용");
-
-        List<Comments> list = commentMapper.doRetrieve(search);
-        assertNotNull(list);
+		List<Comments> outVO = 	commentMapper.commentsList(1);
+		assertNotNull(outVO);
+       
+        
     }
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void doUpdate() throws Exception {
 	    //저장
@@ -112,7 +108,7 @@ public class CommentMapperTest implements PLog {
 	}
 	
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void addAndGet() throws Exception {
 		

@@ -33,13 +33,35 @@ button {
   background: #343a40;
 }
 .pageDiv{
-	width : 600px;
+	width : 750px;
 	height : 500px;
-	margin : 0px 0px 3% 12%;
+	margin : 0px 0px 2% 7%;
 }
 .pageH2{
 	padding : 5px;
 	font-weight : bold;
+}
+.ui_section{
+	list-style : none;
+	width:30%;
+	display : inline-block;
+	margin : 5px 5px 15px 10px;
+		
+}
+.img_section{
+	height: 150px;
+	border-radius : 20px 20px 0px 0px;
+}
+.title_section{
+	height: 30px;
+	border-radius : 0px 0px 20px 20px;
+	text-align : c
+}
+li{
+	border : 2px solid #495057;
+	margin: 0px;
+	padding : 0px;
+	overflow : hidden;
 }
 </style>
 <body>
@@ -68,7 +90,6 @@ button {
 		</c:otherwise>
 	</c:choose>
  </div>
- user : ${user}
  <div style="display:flex">
  	 <jsp:include page="/WEB-INF/views/safe/info_by_situation.jsp"></jsp:include>
  	 <jsp:include page="/WEB-INF/views/safe/acting_by_situation.jsp"></jsp:include>

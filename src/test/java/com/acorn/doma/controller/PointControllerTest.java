@@ -71,10 +71,12 @@ public class PointControllerTest implements PLog{
 		 // Mock data
         String year = "2021";
         String guList = "강남구,강동구";
+        String accFqList = "1,2,3,4,5";
         MockHttpServletRequestBuilder requestBuilder =
         		MockMvcRequestBuilders.get("/point/yearguSelect.do")
         		.param("year",year)
-        		.param("guList", guList);
+        		.param("guList", guList)
+        		.param("accFrequencyList", accFqList);
         ResultActions resultActions = mockMvc.perform(requestBuilder)
 				//Controller produces = "text/plain;charset=UTF-8" 
 				.andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=UTF-8"))

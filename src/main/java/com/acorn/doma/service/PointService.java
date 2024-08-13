@@ -1,6 +1,7 @@
 package com.acorn.doma.service;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -26,5 +27,5 @@ public interface PointService {
 	List<Point> detailInfoLoad(Point inVO) throws Exception;
 	
 	List<String> guLoad(String year) throws Exception;
-	List<Point> databyYearAndGu(@Param("year") int year, @Param("guList") List<String> guList);
+	List<Point> databyYearAndGu(@Param("year") int year, @Param("guList") List<String> guList, @Param("accFrequencyList") List<String> accFrequencyList) throws Exception;
 }

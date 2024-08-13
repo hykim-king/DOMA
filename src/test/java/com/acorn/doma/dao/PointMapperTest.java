@@ -64,8 +64,9 @@ public class PointMapperTest implements PLog{
 		flag = pointMapper.dataInsert(pointVO02);
 		assertEquals(flag, 1);
 		List<String> guList = Arrays.asList("강북구", "강남구");
+		List<String> accFqList = Arrays.asList("1", "2");
 		int year = 2022;
-		List<Point> result = pointMapper.databyYearAndGu(year, guList);
+		List<Point> result = pointMapper.databyYearAndGu(year, guList,accFqList);
 		assertEquals(2, result.size());
 		Point result1 = result.get(0);
         assertEquals("3", result1.getPid());
@@ -74,7 +75,7 @@ public class PointMapperTest implements PLog{
         assertEquals("1", result2.getPid());
 		
 	}
-//	@Ignore
+	@Ignore
 	@Test
 	public void sqlAll() throws Exception{
 		log.debug("┌──────────────────────────────┐");
@@ -108,7 +109,7 @@ public class PointMapperTest implements PLog{
 		int count = pointMapper.countAll();
 		assertEquals(2, count);
 	}
-//	@Ignore
+	@Ignore
 	@Test
 	public void guLoad() throws Exception	{
 		log.debug("┌──────────────────────────────┐");
@@ -126,7 +127,7 @@ public class PointMapperTest implements PLog{
 		assertEquals(1, guList.size());
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void detailInfoLoad() throws Exception {
 		log.debug("┌──────────────────────────────┐");
@@ -147,7 +148,7 @@ public class PointMapperTest implements PLog{
 	}
 	
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void fullTableScan() throws Exception{
 		log.debug("┌──────────────────────────────┐");

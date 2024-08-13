@@ -84,6 +84,12 @@ public class CommentsServiceImpl implements CommentsService, PLog{
 		return outVO;
 	}
 
+	@Override
+	public List<Comments> commentsList(int seq) throws SQLException {
+		List<Comments> outVO = 	commentMapper.commentsList(seq);
+		return outVO;
+	}
+
 	 
 
 }
