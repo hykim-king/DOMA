@@ -7,31 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.locationtech.proj4j.ProjCoordinate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import com.acorn.doma.cmn.PLog;
-import com.acorn.doma.domain.Point;
-import com.acorn.doma.mapper.PointMapper;
-import com.acorn.doma.proj4j.CoordinateConverter;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,19 +123,38 @@ public class PointServiceImpl implements PointService, PLog {
 
 	@Override
 	public void saveDataToDatabase(JsonArray items) {
-		try {
-			for (JsonElement item : items) {
-				JsonObject data = item.getAsJsonObject();
-				Point point = new Point();
+	    try {
+	        // 1. year별로 accident 데이터 그룹화
+	        Map<String, List<Integer>> accidentDataByYear = new HashMap<>();
 
-				// Extract and set various attributes from JSON
-				String accPoint = getJsonElementAsString(data, "acc_risk_area_nm");
-				 Map<String, String> extractedData = extractYearAndGname(accPoint);
-		            String year = extractedData.get("year");
-		            String gname = extractedData.get("gname");
-		            String accFre = extractedData.get("accFrequency");
-				// Extract accident frequency from accPoint
-		            int accFrequency = Integer.parseInt(accFre);
+	        for (JsonElement item : items) {
+	            JsonObject data = item.getAsJsonObject();
+	            String accPoint = getJsonElementAsString(data, "acc_risk_area_nm");
+	            String year = extractYearAndGname(accPoint).get("year");
+	            int accident = parseIntSafely(getJsonElementAsString(data, "tot_acc_cnt"));
+	            
+	            accidentDataByYear.computeIfAbsent(year, k -> new ArrayList<>()).add(accident);
+	        }
+
+	        // 2. 연도별로 5개의 백분위 구간 계산
+	        Map<String, List<Integer>> quantileRangesByYear = calculateQuantileRanges(accidentDataByYear);
+
+	        // 3. 데이터베이스에 저장
+	        for (JsonElement item : items) {
+	            JsonObject data = item.getAsJsonObject();
+	            Point point = new Point();
+	            String accPoint = getJsonElementAsString(data, "acc_risk_area_nm");
+	            Map<String, String> extractedData = extractYearAndGname(accPoint);
+	            String year = extractedData.get("year");
+	            String gname = extractedData.get("gname");
+	            int accident = parseIntSafely(getJsonElementAsString(data, "tot_acc_cnt"));
+
+	            // 백분위 그룹 계산
+	            int quantileGroup = findQuantileGroup(quantileRangesByYear.get(year), accident);
+
+	            point.setYear(year);
+	            point.setGname(gname);
+	            point.setAccFrequency(quantileGroup);  // 1~5 사이의 값으로 저장
 				point.setPid(getJsonElementAsString(data, "acc_risk_area_id"));
 				point.setAccPoint(accPoint);
 				point.setAccident(parseIntSafely(getJsonElementAsString(data, "tot_acc_cnt")));
@@ -177,7 +173,6 @@ public class PointServiceImpl implements PointService, PLog {
 				point.setLatitude(convertedCoord.y);
 				point.setYear(year);
 		        point.setGname(gname);
-		        point.setAccFrequency(accFrequency);
 				// Save the point data to the database
 				pointMapper.dataInsert(point);
 			}
@@ -197,6 +192,38 @@ public class PointServiceImpl implements PointService, PLog {
 		}
 	}
 
+	// 연도별로 5개의 백분위 구간을 계산하는 메소드
+	private Map<String, List<Integer>> calculateQuantileRanges(Map<String, List<Integer>> accidentDataByYear) {
+	    Map<String, List<Integer>> quantileRangesByYear = new HashMap<>();
+
+	    for (Map.Entry<String, List<Integer>> entry : accidentDataByYear.entrySet()) {
+	        String year = entry.getKey();
+	        List<Integer> accidents = entry.getValue();
+
+	        Collections.sort(accidents);
+	        List<Integer> quantiles = new ArrayList<>();
+
+	        int n = accidents.size();
+	        for (int i = 1; i <= 5; i++) {
+	            int index = (int) Math.ceil(i * n / 5.0) - 1; // 백분위 인덱스 계산
+	            quantiles.add(accidents.get(index));
+	        }
+	        quantileRangesByYear.put(year, quantiles);
+	    }
+	    return quantileRangesByYear;
+	}
+
+	// 사고 건수가 어느 백분위 구간에 속하는지 찾는 메소드
+	private int findQuantileGroup(List<Integer> quantiles, int accident) {
+	    for (int i = 0; i < quantiles.size(); i++) {
+	        if (accident <= quantiles.get(i)) {
+	            return i + 1; // 1~5 구간에 해당하는 값을 반환
+	        }
+	    }
+	    return 5; // 만약 사고 건수가 최대값 이상일 경우 마지막 구간에 해당
+	}
+
+	// 연도와 gname 추출 헬퍼 메소드
 	private Map<String, String> extractYearAndGname(String accPoint) {
 	    Map<String, String> result = new HashMap<>();
 
@@ -212,25 +239,10 @@ public class PointServiceImpl implements PointService, PLog {
 	        gname = null;
 	    }
 
-	    // Extract accident frequency
-	    String accFrequency = accPoint.replaceAll(".*사고(.*?)\\s*건 이상.*", "$1");
-	    if (accFrequency.isEmpty()) {
-	        accFrequency = null;
-	    }
-
 	    result.put("year", year);
 	    result.put("gname", gname);
-	    result.put("accFrequency", accFrequency);
 
 	    return result;
-	}
-	private int extractAccidentFrequency(String accPoint) {
-	    String accFrequencyStr = accPoint.replaceAll(".*(\\d+)\\s*건 이상.*", "$1");
-	    try {
-	        return Integer.parseInt(accFrequencyStr);
-	    } catch (NumberFormatException e) {
-	        return 0; // 기본값 0으로 설정
-	    }
 	}
 
 	public List<Point> fullTableScan() throws Exception {

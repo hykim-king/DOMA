@@ -102,19 +102,19 @@ function addMarkersToMap(data) {
 
         // accFrequency 값에 따른 이미지 경로 및 크기 설정
         switch (item.accFrequency) {
-            case 4:
+            case 1:
                 imageSrc = "/doma/resources/img/map/location_green.png";
                 break;
-            case 6:
+            case 2:
                 imageSrc = "/doma/resources/img/map/location_blue.png";
                 break;
-            case 8:
+            case 3:
                 imageSrc = "/doma/resources/img/map/location_orange.png";
                 break;
-            case 12:
+            case 4:
                 imageSrc = "/doma/resources/img/map/location_red.png";
                 break;
-            case 14:
+            case 5:
                 imageSrc = "/doma/resources/img/map/location_purple.png";
                 break;
         }
@@ -128,7 +128,9 @@ function addMarkersToMap(data) {
         });
 
         const infowindow = new kakao.maps.InfoWindow({
-            content: `<div style="padding:5px;">${item.accPoint}<br>사고: ${item.accident}<br>중상: ${item.seriously}<br>기타: ${item.ordinary}</div>`
+            content: '<div style="padding:5px;"><br>사고: ' + item.accident + 
+                     '<br>중상: ' + item.seriously + 
+                     '<br>경상: ' + item.ordinary + '</div>'
         });
 
         kakao.maps.event.addListener(marker, 'mouseover', function() {
@@ -169,36 +171,50 @@ function addMarkersToMap(data) {
                 </div>
 
                 <!-- 구 선택 드롭다운 -->
-                <div class="gu-selection" id="guSelection" style="text-align: center; margin-bottom: 20px; display: none;">
-                    <h3>구 선택</h3>
-                    <select id="guDropdown" multiple="multiple" style="width: 150px; height: 150px; font-weight: bold; text-align: center; border: 2px solid black;" onchange="updateGuSelection()">
-                        <option value="강남구">강남구</option>
-                        <option value="강동구">강동구</option>
-                        <option value="강북구">강북구</option>
-                        <option value="강서구">강서구</option>
-                        <option value="관악구">관악구</option>
-                        <option value="광진구">광진구</option>
-                        <option value="구로구">구로구</option>
-                        <option value="금천구">금천구</option>
-                        <option value="노원구">노원구</option>
-                        <option value="도봉구">도봉구</option>
-                        <option value="동대문구">동대문구</option>
-                        <option value="동작구">동작구</option>
-                        <option value="마포구">마포구</option>
-                        <option value="서대문구">서대문구</option>
-                        <option value="서초구">서초구</option>
-                        <option value="성동구">성동구</option>
-                        <option value="성북구">성북구</option>
-                        <option value="송파구">송파구</option>
-                        <option value="양천구">양천구</option>
-                        <option value="영등포구">영등포구</option>
-                        <option value="용산구">용산구</option>
-                        <option value="은평구">은평구</option>
-                        <option value="종로구">종로구</option>
-                        <option value="중구">중구</option>
-                        <option value="중랑구">중랑구</option>
-                    </select>
-                </div>
+				<div class="gu-selection" id="guSelection" style="text-align: center; margin-bottom: 20px; display: none;">
+				    <h3>구 선택</h3>
+				    <select id="guDropdown" multiple="multiple" style="width: 150px; height: 150px; font-weight: bold; text-align: center; border: 2px solid black;" onchange="updateGuSelection()">
+				        <option value="전체선택">전체 선택</option>
+				        <option value="강남구">강남구</option>
+				        <option value="강동구">강동구</option>
+				        <option value="강북구">강북구</option>
+				        <option value="강서구">강서구</option>
+				        <option value="관악구">관악구</option>
+				        <option value="광진구">광진구</option>
+				        <option value="구로구">구로구</option>
+				        <option value="금천구">금천구</option>
+				        <option value="노원구">노원구</option>
+				        <option value="도봉구">도봉구</option>
+				        <option value="동대문구">동대문구</option>
+				        <option value="동작구">동작구</option>
+				        <option value="마포구">마포구</option>
+				        <option value="서대문구">서대문구</option>
+				        <option value="서초구">서초구</option>
+				        <option value="성동구">성동구</option>
+				        <option value="성북구">성북구</option>
+				        <option value="송파구">송파구</option>
+				        <option value="양천구">양천구</option>
+				        <option value="영등포구">영등포구</option>
+				        <option value="용산구">용산구</option>
+				        <option value="은평구">은평구</option>
+				        <option value="종로구">종로구</option>
+				        <option value="중구">중구</option>
+				        <option value="중랑구">중랑구</option>
+				    </select>
+				</div>
+				
+				<!-- 사고 위험도 선택 -->
+				<div class="risk-selection" id="riskSelection" style="text-align: center; margin-bottom: 20px; display: none;">
+				    <h3>사고 위험도 선택</h3>
+				    <select id="riskDropdown" style="width: 150px; height: 35px; font-weight: bold; text-align: center; border: 2px solid black;">
+				        <option value="" disabled selected>위험도 선택</option>
+				        <option value="1">1 (낮음)</option>
+				        <option value="2">2</option>
+				        <option value="3">3</option>
+				        <option value="4">4</option>
+				        <option value="5">5 (높음)</option>
+				    </select>
+				</div>
 
                 <!-- 조회 버튼 -->
                 <div style="text-align: center; margin-bottom: 20px;">
