@@ -149,7 +149,9 @@ $(document).ready(function(){
     });
 });
 </script>
+user: ${user}
 <title>내 정보</title>
+ 
 <script src="${CP}/resources/js/mypage/mypageinfo.js"></script>
 </head>
 <body>

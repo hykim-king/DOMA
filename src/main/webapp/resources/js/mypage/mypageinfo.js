@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function(){
       console.log("mpGradeUp()");
           //필수 입력 처리
    
-  
+  			
           //비동기 통신
           let type= "POST";  
           let url = "/doma/mypage/mpGradeUp.do";
