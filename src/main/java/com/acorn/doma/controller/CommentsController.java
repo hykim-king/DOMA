@@ -23,6 +23,8 @@ import com.acorn.doma.domain.Comments;
 import com.acorn.doma.service.CodeService;
 import com.acorn.doma.service.CommentsService;
 import com.acorn.doma.service.MarkdownService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.GsonBuilder;
 
 @Controller
@@ -65,43 +67,25 @@ public class CommentsController implements PLog {
 	 * http://localhost:8080/doma/comments/doRetrieve.do
 	 */
 	@RequestMapping(value = "/doRetrieve.do"
-			   , method = RequestMethod.GET)
-	public String doRetrieve(Model model, HttpServletRequest req) throws SQLException{
+			   , method = RequestMethod.GET
+			   ,produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String doRetrieve(int seq) throws SQLException{
 		log.debug("┌──────────────────────────────────────────────┐");
 		log.debug("│ doRetrieve()                                 │");
 		log.debug("└──────────────────────────────────────────────┘");
 		
-		String viewName = "comments/board_main";
+	
 		
-		Search search = new Search();
-		
-		String div = StringUtil.nvl(req.getParameter("div"), "");
-		search.setDiv(div);
-		
-		String searchGu = StringUtil.nvl(req.getParameter("searchGu"), "");
-		search.setSearchGu(searchGu);
-		
-		//검색구분
-		//검색 null 처리 : null -> ""
-		String searchDiv = StringUtil.nvl(req.getParameter("searchDiv"), "");
-		String searchWord = StringUtil.nvl(req.getParameter("searchWord"), "");
-		
-		search.setSearchDiv(searchDiv);
-		search.setSearchWord(searchWord);
-		
-		//브라우저에서 숫자 : 문자로 들어 온다.
-		String pagsSize = StringUtil.nvl(req.getParameter("pageSize"), "10");
-		String pageNo = StringUtil.nvl(req.getParameter("pageNo"), "1");
-		
-		search.setPageSize(Integer.parseInt(pagsSize));
-		search.setPageNo(Integer.parseInt(pageNo));
-		
-		log.debug("1. search:" + search);
-		
-		List<Comments> list = this.commentsService.doRetrieve(search);
-		
-		
-		return viewName;
+		List<Comments> list = this.commentsService.commentsList(seq);
+		ObjectMapper objectMapper = new ObjectMapper();
+	    String jsonString = "";
+	    try {
+	        jsonString = objectMapper.writeValueAsString(list);
+	    } catch (JsonProcessingException e) {
+	        log.error("Error converting to JSON", e);
+	    }
+		return jsonString;
 	}
 	
 	/**

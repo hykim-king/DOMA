@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.WorkDiv; 
 import com.acorn.doma.domain.Comments;
 
@@ -16,6 +17,7 @@ public interface CommentsMapper extends WorkDiv<Comments> {
 	 * @return
 	 * @throws SQLException
 	 */
+	List<Comments> commentsList(int seq) throws SQLException;
 	int getSequence() throws SQLException;
 	
 	/**
