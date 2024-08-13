@@ -63,6 +63,7 @@ public class AdminController implements PLog {
         return viewName;
     }
 
+    //공지사항 노출
     @RequestMapping(value = "/doRetrieveNotices.do", method = RequestMethod.GET)
     public @ResponseBody Map<String, Object> doRetrieveNotices(
             @RequestParam Map<String, String> params) throws SQLException {
@@ -78,7 +79,7 @@ public class AdminController implements PLog {
         search.setSearchWord(searchWord);
 
         // 페이지 크기 및 페이지 번호 설정
-        String pageSize = StringUtil.nvl(params.get("pageSize"), "6");
+        String pageSize = StringUtil.nvl(params.get("pageSize"), "5");
         String pageNo = StringUtil.nvl(params.get("pageNo"), "1");
 
         search.setPageSize(Integer.parseInt(pageSize));
@@ -87,7 +88,7 @@ public class AdminController implements PLog {
         List<Admin> notices = adminService.getNotices(search);
         int totalCount = adminService.getNoticeCount(search);
 
-        // 로그 추가
+
         log.debug("Search Parameters: " + search);
         log.debug("Notices Retrieved: " + notices);
         log.debug("Total Count: " + totalCount);
@@ -101,18 +102,22 @@ public class AdminController implements PLog {
         return result;  // JSON 형식으로 반환
     }
 
+    
+    //게시글 상세 정보 조회
+    @RequestMapping(value = "/getNoticeById.do", method = RequestMethod.GET)
+    public @ResponseBody Admin getNoticeById(@RequestParam("seq") int seq) throws SQLException {
 
+        log.debug("┌──────────────────────────────────────────────┐");
+        log.debug("│ admin_getNoticeById()                      │");
+        log.debug("└──────────────────────────────────────────────┘");
 
+        // 게시글 상세 정보 조회
+        Admin notice = adminService.getNoticeById(seq);
 
+        log.debug("Notice Retrieved: " + notice);
 
-
-
-
-
-
-
-
-
+        return notice;  // JSON 형식으로 반환
+    }
 
 
     // 공지사항 등록

@@ -39,7 +39,6 @@
     ]]>
 </select>
 
-
     <!-- 마지막 시퀸스  -->
     <select id="getLastInsertedSeq" resultType="int">
         SELECT d_board_seq.CURRVAL FROM dual
@@ -89,8 +88,6 @@
     </if>
 </select>
 
-
-
 <!-- 게시판 단건 조회 (게시판과 유저 테이블 조인) -->
 <select id="getNoticeById" parameterType="Admin" resultType="Admin">
     SELECT 
@@ -111,7 +108,8 @@
         u.grade AS userGrade, 
         u.address AS userAddress, 
         u.detail_address AS userDetailAddress, 
-        u.reg_dt AS userRegDt
+        u.reg_dt AS userRegDt,
+        u.CEL_DT AS userCelDt
     FROM d_board b
     LEFT JOIN d_user u ON b.user_id = u.user_id
     WHERE b.seq = #{seq} AND b.div = '20'
@@ -131,9 +129,6 @@
     FROM d_user
     ORDER BY REG_DT DESC
 </select>
-
-
-
 
     <!-- 회원 수정 -->
 <update id="updateUser" parameterType="Admin">
