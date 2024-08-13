@@ -1,4 +1,4 @@
-package com.acorn.doma.dao;
+	package com.acorn.doma.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -81,18 +81,7 @@ public class BoardMapperTest implements PLog{
 		assertEquals(boardIn.getImgLink(), boardOut.getImgLink());
 		assertEquals(boardIn.getViews(), boardOut.getViews());
 	}
-	//안전정보페이지용 테스트
-	//@Ignore
-	@Test
-	public void save() throws Exception{
-		int flag = boardMapper.Save(safe01);
-		log.debug("flag : " + flag);
-		assertEquals(1, flag);
-		
-		flag = boardMapper.Save(safe02);
-		log.debug("flag : " + flag);
-		assertEquals(1, flag);
-	}
+	
 	
 	@Ignore
 	@Test
@@ -189,7 +178,7 @@ public class BoardMapperTest implements PLog{
 		
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void doRetrieve() throws SQLException {
 		
@@ -209,6 +198,45 @@ public class BoardMapperTest implements PLog{
 		log.debug("list:"+list);
 		assertEquals(5, list.size());
 
+	}
+	
+	//안전정보페이지용 테스트
+	@Ignore
+	@Test
+	public void save() throws Exception{
+		int flag = boardMapper.Save(safe01);
+		log.debug("flag : " + flag);
+		assertEquals(1, flag);
+		
+		flag = boardMapper.Save(safe02);
+		log.debug("flag : " + flag);
+		assertEquals(1, flag);
+	}
+	
+	@Test
+	public void Retrieve() throws Exception {
+		//div : 30
+		search.setDiv("30");
+		
+		search.setPageNo(1);
+		search.setPageSize(10);
+		
+		List<Board> retrieveList = boardMapper.Retrieve(search);
+		
+		log.debug("retrieveList:" + retrieveList);
+		assertEquals(4, retrieveList.size());
+		
+		//div : 40
+		search.setDiv("40");
+		
+		search.setPageNo(1);
+		search.setPageSize(10);
+		
+		List<Board> retrieveList02 = boardMapper.Retrieve(search);
+		
+		log.debug("retrieveList02:" + retrieveList02);
+		assertEquals(5, retrieveList.size());
+		
 	}
 	
 	@Ignore
