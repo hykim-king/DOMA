@@ -121,7 +121,7 @@ public class commentsControllerTest implements PLog {
 	}
 	
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void addAndGet() throws Exception {
 		

@@ -365,6 +365,7 @@ header, footer {
 		const modIdInput = document.querySelector("#modId");
 		
 		
+		
 
 //이벤트 처리=================================================================================================
 		
@@ -391,7 +392,7 @@ header, footer {
 		doSaveInput.addEventListener("click", function(event) {
 			console.log("doSaveInput click");
             event.stopPropagation();
-            commentSave();
+            CommentscheckSession();
 		});
 
 		
@@ -403,12 +404,33 @@ header, footer {
         
             // JSP에서 userId 값을 JavaScript 변수로 설정
             const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+            const modId = document.querySelector("#modId").textContent.trim();
+            
+            //userId와 modId 값 확인
+            console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId); 
+
+            // userId와 modId가 동일한 경우에만 수정 페이지로 이동
+            if (userId !== "" && userId === modId) {
+                moveToUp();
+            } else if (userId === "" || userId === " ") {
+                alert("로그인이 필요 합니다.");
+                window.location.href = "/doma/user/loginPage.do";
+            } else {
+                alert("작성자가 아닙니다.");
+            }
+        }
+        
+      //CommentscheckSession()
+        function CommentscheckSession() {
+        
+            // JSP에서 userId 값을 JavaScript 변수로 설정
+            const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
             
             //userId값 확인
             console.log("checkSessionAndMove: userId = " + userId); 
         
             if (userId !== "" && userId !== " ") {
-            	doSelectOne();
+            	commentSave();
             }else {
                 alert("작성자가 아닙니다.");
             }
@@ -474,16 +496,14 @@ header, footer {
                 return;
 
             //비동기 통신
-            let type = "GET";
-            let url = "/doma/comment/doUpdate.do";
+            let type = "POST";
+            let url = "/doma/comment/doSave.do";
             let async = "true";
             let dataType = "html";
 
             let params = {
-                "comseq" : comseqInput.value,
                 "seq" : seqInput.value,
                 "userId" : userIdInput.value,
-                "modId" : modIdInput.value,
                 "comments" : simplemde.value()
             };
 
@@ -529,10 +549,8 @@ header, footer {
 			let dataType = "html";
 
 			let params = {
-				"comseq" : comseqInput.value,
-				"seq" : seqInput.value,
+				"seq" : seq,
 				"userId" : userIdInput.value,
-				"modId" : modIdInput.value,
 				"comments" : simplemde.value()
 			};
 
@@ -620,7 +638,7 @@ board : ${board }
 		<article class="post">
 			<h2 name="title" id="title" class="post-title">${board.title}</h2>
 			<div class="post-meta">
-				<p name="modId" id="modId" class="post-author">작성자: ${board.modId}</p>
+				<p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
 				<p class="post-date">${board.regDt}</p>
 			</div>
 			<div class="row mb-2">
@@ -638,7 +656,7 @@ board : ${board }
 		<section class="comments">
 			<h3>댓글</h3>
 			<div class="comment-form">
-				<form action="board_main.jsp" method="post">
+				<form action="doSave.do" method="post">
 					<label for="comment">댓글을 입력하세요:</label>
 					<textarea id="comment" name="comment" rows="4" required></textarea>
 					<button type="submit" id="doSave" name="doSave">댓글 작성</button>

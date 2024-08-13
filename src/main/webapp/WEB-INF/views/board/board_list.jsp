@@ -416,9 +416,9 @@ user : ${user}
 		                    <td class="text-center" ><c:out value="${vo.no }"></c:out></td>
 		                    <td class="text-center" ><c:out value="${vo.gname }"></c:out></td>
 		                    <td class="text-left" >
-		                      <a href="/doma/main/boardInfo.do?seq=${vo.seq }&div=${vo.getDiv() }"><c:out value="${vo.title }"></c:out></a>
+		                      <a href="/doma/main/boardInfo.do?seq=${vo.seq }&div=${vo.getDiv() }"><c:out value="${vo.title}"></c:out></a>
 		                    </td>
-		                    <td class="text-center" ><c:out value="${vo.modId }"></c:out></td>
+		                    <td class="text-center" ><c:out value="${vo.userId}"></c:out></td>
 		                    <td class="text-center" ><c:out value="${vo.modDt }"></c:out></td>
 		                    <td class="text-end" ><c:out value="${vo.views }"></c:out></td>
 		                    <td class="text-center d-none" ><c:out value="${vo.seq }"></c:out></td>
