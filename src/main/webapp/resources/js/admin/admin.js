@@ -1,5 +1,3 @@
-//캐시확인용DDDD
-
 document.addEventListener('DOMContentLoaded', function() {
     loadNotices(1);
 });
