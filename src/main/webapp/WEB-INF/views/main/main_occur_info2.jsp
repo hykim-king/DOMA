@@ -12,8 +12,7 @@
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/main/main_occur_info.js"></script>
-<link rel = "stylesheet" href="${CP}/resources/css/main/main_occur_info.css">
-<!-- CSS 코드 (인라인 스타일로 포함) -->
+<link rel="stylesheet" href="${CP}/resources/css/main/main_occur_info.css">
 <style>
     select option {
         padding: 10px;
@@ -21,6 +20,53 @@
     .selected-option {
         background-color: lightblue !important;
         color: black !important;
+    }
+    .risk-button {
+        display: inline-block;
+        width: 50px;
+        height: 30px;
+        margin: 5px;
+        text-align: center;
+        line-height: 30px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .risk-button:hover {
+        background-color: #e0e0e0;
+    }
+    .selected {
+        background-color: #4caf50;
+        color: white;
+    }
+    .gu-selection {
+        text-align: center;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    #guDropdown {
+        display: none;
+        width: 150px;
+        height: 150px;
+        font-weight: bold;
+        text-align: center;
+        border: 2px solid black;
+    }
+    #showGuList {
+        cursor: pointer;
+        width: 150px;
+        height: 35px;
+        font-weight: bold;
+        text-align: center;
+        border: 2px solid black;
+        background-color: #f0f0f0;
+        margin: 0 auto;
+        line-height: 35px;
+    }
+    .risk-section {
+        display: none;
+        text-align: center;
+        margin-bottom: 20px;
     }
 </style>
 <script>
@@ -36,11 +82,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-    
-    // 마커 이미지의 이미지 주소입니다
-    var imageSrc = "/doma/resources/img/map/occur_warning.png";
+
+    // 기본적으로 사고 위험도 버튼들이 모두 선택된 상태로 설정
+    const riskButtons = document.querySelectorAll('.risk-button');
+    riskButtons.forEach(button => button.classList.add('selected'));
 });
+
 let selectedGuList = [];
+let isAllSelected = false; // 전체 선택 상태를 추적하는 변수
+let selectedRisk = [];
+
 // 년도 선택 시 구 선택 드롭다운을 보이도록 설정
 function selectYear(year) {
     if (year) {
@@ -49,32 +100,86 @@ function selectYear(year) {
     }
 }
 
-//구 선택 시 선택된 구 리스트의 스타일을 변경하고, guList 배열을 업데이트
+// 구 선택 시 선택된 구 리스트의 스타일을 변경하고, guList 배열을 업데이트
 function updateGuSelection() {
     const guDropdown = document.getElementById('guDropdown');
     const options = Array.from(guDropdown.options);
-    const guList = [];
+    selectedGuList = []; // 선택된 구 리스트 초기화
 
     options.forEach(option => {
         if (option.selected) {
-            // 이미 선택된 구는 색상 유지, 새로 선택된 구만 색상 변경
             if (!option.classList.contains('selected-option')) {
                 option.classList.add('selected-option');
-                selectedGuList.push(option.value);
             }
+            selectedGuList.push(option.value);
         } else {
-            // 선택 해제된 구는 색상 제거
             if (option.classList.contains('selected-option')) {
                 option.classList.remove('selected-option');
-                selectedGuList = selectedGuList.filter(value => value !== option.value);
             }
         }
     });
 
-    // 선택된 구 리스트를 콘솔에 출력
+    console.log('Selected Gu List:', selectedGuList);
+
+    // 구 선택 시 사고 위험도 섹션 보이기
+    if (selectedGuList.length > 0) {
+        document.querySelector('.risk-section').style.display = 'block';
+    } else {
+        document.querySelector('.risk-section').style.display = 'none';
+    }
+}
+
+//전체 선택 또는 전체 취소
+function toggleGuDropdown() {
+    const guDropdown = document.getElementById('guDropdown');
+    const showGuListButton = document.getElementById('showGuList');
+    
+    if (guDropdown.style.display === 'none') {
+        guDropdown.style.display = 'block';
+        selectAllGu(); // 드롭다운이 보일 때 전체 선택
+        showGuListButton.innerText = '전체 취소'; // 버튼 텍스트 변경
+    } else {
+        guDropdown.style.display = 'none';
+        showGuListButton.innerText = '전체 선택'; // 버튼 텍스트 변경
+        deselectAllGu(); // 드롭다운이 숨겨질 때 전체 취소
+    }
+}
+
+//전체 선택
+function selectAllGu() {
+    const guDropdown = document.getElementById('guDropdown');
+    const options = Array.from(guDropdown.options);
+
+    options.forEach(option => {
+        if (option.value !== '전체선택') {
+            option.selected = true;
+            if (!option.classList.contains('selected-option')) {
+                option.classList.add('selected-option');
+                selectedGuList.push(option.value);
+            }
+        }
+    });
+
+    isAllSelected = true; // 전체 선택 상태로 변경
     console.log('Selected Gu List:', selectedGuList);
 }
 
+//전체 취소
+function deselectAllGu() {
+    const guDropdown = document.getElementById('guDropdown');
+    const options = Array.from(guDropdown.options);
+
+    options.forEach(option => {
+        option.selected = false;
+        if (option.classList.contains('selected-option')) {
+            option.classList.remove('selected-option');
+        }
+    });
+
+    selectedGuList = []; // 선택된 구 리스트 초기화
+    isAllSelected = false; // 전체 선택 상태로 변경
+    console.log('Selected Gu List:', selectedGuList);
+}
 // 조회 버튼 클릭 시 데이터 로드
 function fetchData() {
     const selectedYear = document.getElementById('yearDropdown').value;
@@ -87,7 +192,8 @@ function fetchData() {
         console.warn('Please select a year and at least one Gu.');
     }
 }
-//기존의 모든 마커를 제거하는 함수 (선택 사항)
+
+// 기존의 모든 마커를 제거하는 함수 (선택 사항)
 let markers = [];
 function removeExistingMarkers() {
     markers.forEach(marker => marker.setMap(null));
@@ -147,8 +253,22 @@ function addMarkersToMap(data) {
     });
 }
 
+//사고 위험도 버튼 선택
+function selectRisk(riskLevel) {
+    const riskButton = document.getElementById(`risk${riskLevel}`);
+    
+    if (riskButton.classList.contains('selected')) {
+        riskButton.classList.remove('selected');
+        selectedRisk = selectedRisk.filter(level => level !== riskLevel);
+    } else {
+        riskButton.classList.add('selected');
+        selectedRisk.push(riskLevel);
+    }
+
+    console.log('Selected Risk Levels:', selectedRisk);
+}
 </script>
-<title>Insert title here</title>
+<title>구 선택 및 사고 위험도</title>
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -170,51 +290,50 @@ function addMarkersToMap(data) {
                     </select>
                 </div>
 
-                <!-- 구 선택 드롭다운 -->
-				<div class="gu-selection" id="guSelection" style="text-align: center; margin-bottom: 20px; display: none;">
-				    <h3>구 선택</h3>
-				    <select id="guDropdown" multiple="multiple" style="width: 150px; height: 150px; font-weight: bold; text-align: center; border: 2px solid black;" onchange="updateGuSelection()">
-				        <option value="전체선택">전체 선택</option>
-				        <option value="강남구">강남구</option>
-				        <option value="강동구">강동구</option>
-				        <option value="강북구">강북구</option>
-				        <option value="강서구">강서구</option>
-				        <option value="관악구">관악구</option>
-				        <option value="광진구">광진구</option>
-				        <option value="구로구">구로구</option>
-				        <option value="금천구">금천구</option>
-				        <option value="노원구">노원구</option>
-				        <option value="도봉구">도봉구</option>
-				        <option value="동대문구">동대문구</option>
-				        <option value="동작구">동작구</option>
-				        <option value="마포구">마포구</option>
-				        <option value="서대문구">서대문구</option>
-				        <option value="서초구">서초구</option>
-				        <option value="성동구">성동구</option>
-				        <option value="성북구">성북구</option>
-				        <option value="송파구">송파구</option>
-				        <option value="양천구">양천구</option>
-				        <option value="영등포구">영등포구</option>
-				        <option value="용산구">용산구</option>
-				        <option value="은평구">은평구</option>
-				        <option value="종로구">종로구</option>
-				        <option value="중구">중구</option>
-				        <option value="중랑구">중랑구</option>
-				    </select>
-				</div>
-				
-				<!-- 사고 위험도 선택 -->
-				<div class="risk-selection" id="riskSelection" style="text-align: center; margin-bottom: 20px; display: none;">
-				    <h3>사고 위험도 선택</h3>
-				    <select id="riskDropdown" style="width: 150px; height: 35px; font-weight: bold; text-align: center; border: 2px solid black;">
-				        <option value="" disabled selected>위험도 선택</option>
-				        <option value="1">1 (낮음)</option>
-				        <option value="2">2</option>
-				        <option value="3">3</option>
-				        <option value="4">4</option>
-				        <option value="5">5 (높음)</option>
-				    </select>
-				</div>
+                <!-- 전체 선택 버튼 및 구 선택 드롭다운 -->
+                <div class="gu-selection" id="guSelection" style="display: none;">
+                    <h3>구 선택</h3>
+                    <div id="showGuList" onclick="toggleGuDropdown()">전체 선택</div>
+                    <select id="guDropdown" multiple="multiple" onchange="updateGuSelection()">
+                        <option value="강남구">강남구</option>
+                        <option value="강동구">강동구</option>
+                        <option value="강북구">강북구</option>
+                        <option value="강서구">강서구</option>
+                        <option value="관악구">관악구</option>
+                        <option value="광진구">광진구</option>
+                        <option value="구로구">구로구</option>
+                        <option value="금천구">금천구</option>
+                        <option value="노원구">노원구</option>
+                        <option value="도봉구">도봉구</option>
+                        <option value="동대문구">동대문구</option>
+                        <option value="동작구">동작구</option>
+                        <option value="마포구">마포구</option>
+                        <option value="서대문구">서대문구</option>
+                        <option value="서초구">서초구</option>
+                        <option value="성동구">성동구</option>
+                        <option value="성북구">성북구</option>
+                        <option value="송파구">송파구</option>
+                        <option value="양천구">양천구</option>
+                        <option value="영등포구">영등포구</option>
+                        <option value="용산구">용산구</option>
+                        <option value="은평구">은평구</option>
+                        <option value="종로구">종로구</option>
+                        <option value="중구">중구</option>
+                        <option value="중랑구">중랑구</option>
+                    </select>
+                </div>
+
+                <!-- 사고 위험도 버튼 -->
+                <div class="risk-section">
+                    <h3>사고 위험도 선택</h3>
+                    <div id="riskButtons">
+                        <div id="risk1" class="risk-button" onclick="selectRisk(1)">1</div>
+                        <div id="risk2" class="risk-button" onclick="selectRisk(2)">2</div>
+                        <div id="risk3" class="risk-button" onclick="selectRisk(3)">3</div>
+                        <div id="risk4" class="risk-button" onclick="selectRisk(4)">4</div>
+                        <div id="risk5" class="risk-button" onclick="selectRisk(5)">5</div>
+                    </div>
+                </div>
 
                 <!-- 조회 버튼 -->
                 <div style="text-align: center; margin-bottom: 20px;">

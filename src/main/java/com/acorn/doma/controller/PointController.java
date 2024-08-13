@@ -84,11 +84,12 @@ public class PointController implements PLog{
 	@ResponseBody
 	public String getPointsByYearAndGu(
 	        @RequestParam("year") int year,
-	        @RequestParam("guList") String guList) {
+	        @RequestParam("guList") String guList,
+	        @RequestParam("accFrequencyList") String accFrequencyList) throws Exception{
 	    // 콤마로 구분된 구 리스트를 분리하여 리스트로 변환
 	    List<String> guListParsed = Arrays.asList(guList.split(","));
-	    
-	    List<Point> ygData = pointService.databyYearAndGu(year, guListParsed);
+	    List<String> accFqListParsed = Arrays.asList(accFrequencyList.split(","));
+	    List<Point> ygData = pointService.databyYearAndGu(year, guListParsed, accFqListParsed);
 	    String jsonString = "";
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    try {
