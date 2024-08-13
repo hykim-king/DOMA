@@ -11,8 +11,6 @@ public class DTO {
 	private int pageNo;// 페이지 번호
 
 	public DTO() {
-		pageSize = 10;
-		pageNo = 1;
 	}
 
 	public int getPageSize() {

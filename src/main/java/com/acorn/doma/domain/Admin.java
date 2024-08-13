@@ -20,7 +20,8 @@ public class Admin extends DTO {
     private String modDt; // MOD_DT
     private int views; // VIEWS
     private String gname; // GNAME
-
+    private int rn;
+    
     // User 관련 필드
     private String userName; // USER_NAME
     private String userPw; // USER_PW
@@ -29,18 +30,33 @@ public class Admin extends DTO {
     private String userAddress; // ADDRESS
     private String userDetailAddress; // DETAIL_ADDRESS
     private String userRegDt; // REG_DT
+    private String userCelDt; // CEL_DT 
 
     // 기본 생성자
     public Admin() {
         super();
     }
 
-    // 생성자
+
+    
+    // `rn` 필드를 포함한 생성자 (실제 사용)
     public Admin(int seq, String div, String title, String userId, String modId,
                  String content, String imgLink, String boardRegDt, String modDt,
                  int views, String gname, String userName, String userPw,
                  String userBirth, int userGrade, String userAddress,
-                 String userDetailAddress, String userRegDt) {
+                 String userDetailAddress, String userRegDt, String userCelDt, int rn) {
+        this(seq, div, title, userId, modId, content, imgLink, boardRegDt, modDt,
+             views, gname, userName, userPw, userBirth, userGrade, userAddress,
+             userDetailAddress, userRegDt, userCelDt);
+        this.rn = rn;  // `rn` 필드 초기화
+    }
+
+    // `rn` 필드를 제외한 생성자 (테스트용)
+    public Admin(int seq, String div, String title, String userId, String modId,
+                 String content, String imgLink, String boardRegDt, String modDt,
+                 int views, String gname, String userName, String userPw,
+                 String userBirth, int userGrade, String userAddress,
+                 String userDetailAddress, String userRegDt, String userCelDt) {
         super();
         this.seq = seq;
         this.div = div;
@@ -60,14 +76,26 @@ public class Admin extends DTO {
         this.userAddress = userAddress;
         this.userDetailAddress = userDetailAddress;
         this.userRegDt = userRegDt;
+        this.userCelDt = userCelDt;
     }
 
     // Getter and Setter Methods
+    
+    
+    
     public int getSeq() {
         return seq;
     }
 
-    public void setSeq(int seq) {
+    public int getRn() {
+		return rn;
+	}
+
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
+
+	public void setSeq(int seq) {
         this.seq = seq;
     }
 
@@ -206,15 +234,23 @@ public class Admin extends DTO {
     public void setUserRegDt(String userRegDt) {
         this.userRegDt = userRegDt;
     }
+    
+    public String getUserCelDt() {
+        return userCelDt;
+    }
+
+    public void setUserCelDt(String userCelDt) {
+        this.userCelDt = userCelDt;
+    }
 
     @Override
     public String toString() {
-        return "Admin [seq=" + seq + ", div=" + div + ", title=" + title +
+        return "Admin [seq=" + seq + ", rn=" + rn + ", div=" + div + ", title=" + title +
                ", userId=" + userId + ", modId=" + modId + ", content=" + content +
                ", imgLink=" + imgLink + ", boardRegDt=" + boardRegDt + ", modDt=" + modDt +
                ", views=" + views + ", gname=" + gname + ", userName=" + userName + 
                ", userPw=" + userPw + 
                ", userBirth=" + userBirth + ", userGrade=" + userGrade + ", userAddress=" + userAddress +
-               ", userDetailAddress=" + userDetailAddress + ", userRegDt=" + userRegDt + "]";
+               ", userDetailAddress=" + userDetailAddress + ", userRegDt=" + userRegDt + ", userCelDt=" + userCelDt + "]";
     }
 }

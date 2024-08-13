@@ -78,7 +78,7 @@ public class AdminController implements PLog {
         search.setSearchWord(searchWord);
 
         // 페이지 크기 및 페이지 번호 설정
-        String pageSize = StringUtil.nvl(params.get("pageSize"), "10");
+        String pageSize = StringUtil.nvl(params.get("pageSize"), "6");
         String pageNo = StringUtil.nvl(params.get("pageNo"), "1");
 
         search.setPageSize(Integer.parseInt(pageSize));

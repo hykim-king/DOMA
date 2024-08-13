@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +6,6 @@
     <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
-    <script src="<%=request.getContextPath()%>/resources/js/script.js"></script>
     <script src="<%=request.getContextPath()%>/resources/js/admin/admin.js"></script>
     <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/pcon.png">
 </head>
@@ -25,8 +23,8 @@
                 <h2>공지사항 목록</h2>
                 <div class="search-container">
                     <input type="text" id="searchWord" class="search-input" placeholder="공지사항 검색">
-                    <input type="hidden" id="pageSize" value="10">
-                    <button class="search-button" onclick="loadNotices(1)">검색</button>
+                    <input type="hidden" id="pageSize" value="6">
+                    <button class="search-button" onclick="handleSearch()">검색</button>
                 </div>
                 <table class="member-table">
                     <thead>
@@ -42,17 +40,10 @@
                         <!-- 공지사항 항목이 이곳에 추가됩니다. -->
                     </tbody>
                 </table>
-                
-                    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            loadNotices(1);  // 페이지가 로드될 때 첫 페이지의 공지사항을 로드합니다.
-        });
-    </script>
+
                 <!-- 페이징 섹션 -->
-                <div class="pagination">
-                    <button class="page-button" data-page="prev">이전</button>
-                    <!-- 페이지 번호는 JavaScript에서 동적으로 생성 -->
-                    <button class="page-button" data-page="next">다음</button>
+                <div class="pagination" id="pagination-container">
+                    <!-- 페이지 버튼은 JavaScript에서 동적으로 생성됩니다. -->
                 </div>
             </div>
             <div class="box member-info">

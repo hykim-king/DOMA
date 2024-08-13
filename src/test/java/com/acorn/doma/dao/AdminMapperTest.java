@@ -2,9 +2,7 @@ package com.acorn.doma.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,7 +10,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -68,27 +65,26 @@ public class AdminMapperTest implements PLog {
             1, "20", "제목_01", "admin01", "admin01", "내용_01", "img_link_01", 
             currentDateString, currentDateString, 0, "구_01", 
             "admin01", "password", "1990-01-01", 
-            0, "서울 서대문구", "101호", "2024-01-01"
+            0, "서울 서대문구", "101호", currentDateString, null  // 탈퇴하지 않은 회원으로 CEL_DT 필드 null
         );
 
         admin02 = new Admin(
             2, "20", "제목_02", "admin02", "admin02", "내용_02", "img_link_02", 
             currentDateString, currentDateString, 0, "구_02", 
             "admin02", "password", "1992-02-02", 
-            0, "서울 서대문구", "102호", "2024-02-02"
+            0, "서울 서대문구", "102호", currentDateString, "2025-02-02"  // 탈퇴 회원으로 CEL_DT 필드 설정
         );
 
         admin03 = new Admin(
             3, "20", "제목_03", "admin03", "admin03", "내용_03", "img_link_03", 
             currentDateString, currentDateString, 0, "구_03", 
             "admin03", "password", "1994-03-03", 
-            0, "서울 서대문구", "103호", "2024-03-03"
+            0, "서울 서대문구", "103호", currentDateString, null  // 탈퇴하지 않은 회원으로 CEL_DT 필드 null
         );
         
         search = new Search();
         boardMapper.deleteAll();
         userMapper.deleteAll();
-        
     }
 
     @After
@@ -114,6 +110,7 @@ public class AdminMapperTest implements PLog {
     }
 
     private void isSameAdmin(Admin expected, Admin actual) {
+        // 비교를 위해 날짜 필드를 LocalDate로 변환
         LocalDate expectedBoardRegDate = parseDateString(expected.getBoardRegDt().split(" ")[0]);
         LocalDate actualBoardRegDate = parseDateString(actual.getBoardRegDt().split(" ")[0]);
         assertEquals(expectedBoardRegDate, actualBoardRegDate);
@@ -126,7 +123,12 @@ public class AdminMapperTest implements PLog {
         LocalDate actualUserRegDate = parseDateString(actual.getUserRegDt().split(" ")[0]);
         assertEquals(expectedUserRegDate, actualUserRegDate);
 
+        // CEL_DT 필드 비교 추가 (null 처리 포함)
+        LocalDate expectedCelDt = parseDateString(expected.getUserCelDt());
+        LocalDate actualCelDt = parseDateString(actual.getUserCelDt());
+        assertEquals(expectedCelDt, actualCelDt);
         
+        // 기타 필드 비교
         assertEquals(expected.getSeq(), actual.getSeq());
         assertEquals(expected.getDiv(), actual.getDiv());
         assertEquals(expected.getTitle(), actual.getTitle());
@@ -271,8 +273,8 @@ public class AdminMapperTest implements PLog {
         log.debug("Initial Notice Count: " + initialCount);
 
         // 공지사항 추가
-        adminMapper.insertUser(admin01);
-        adminMapper.insertNotice(admin01);
+        adminMapper.insertUser(admin03);
+        adminMapper.insertNotice(admin03);
 
         // 공지사항 추가 후 수 조회
         int updatedCount = adminMapper.getNoticeCount(search);

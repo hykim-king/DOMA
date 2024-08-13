@@ -13,7 +13,7 @@ public class Search extends DTO {
 	private String div; //공지사항, 자유게시판
 	private String searchGu; //구이름
 	private int seq;
-
+	
 	public Search() {
 
 	}
@@ -57,6 +57,7 @@ public class Search extends DTO {
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
+
 
 	@Override
 	public String toString() {

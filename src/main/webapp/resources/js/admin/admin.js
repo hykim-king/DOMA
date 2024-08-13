@@ -1,4 +1,4 @@
-//캐시확인용
+//캐시확인용DDDD
 
 document.addEventListener('DOMContentLoaded', function() {
     loadNotices(1);
@@ -8,7 +8,7 @@ function loadNotices(pageNo) {
     console.log("Loading notices for page:", pageNo);
 
     const searchWord = document.querySelector("#searchWord").value;
-    const pageSize = 10;  // 페이지 크기 설정
+    const pageSize = 6;  // 페이지 크기 설정
 
     const params = new URLSearchParams({
         pageNo: pageNo,
@@ -40,11 +40,13 @@ function displayNotices(notices) {
     listContainer.innerHTML = ''; // 이전 공지사항 제거
 
     console.log('Received notices:', notices);
+
+
     
     notices.forEach(notice => {
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td>${notice.seq}</td>
+            <td>${notice.rn}</td>
             <td>${notice.title}</td>
             <td>${notice.content}</td>
             <td>${notice.userId}</td>
