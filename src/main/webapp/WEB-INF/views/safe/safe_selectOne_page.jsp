@@ -159,9 +159,9 @@ info : ${info }
 				<p class="post-date">${info.regDt}</p>
 			</div>
 			<div class="row mb-2">
-		        <label for="searchDiv" class="col-sm-2 col-form-label">지역</label>
+		        <label for="searchDiv" class="col-sm-2 col-form-label">이미지 공사중</label>
 		        <div class="col-sm-2">
-		            <input type="text" value="<c:out value='${info.userId}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
+		            <input type="text" value="<c:out value='${info.imgLink}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
 		        </div>
 		    </div>
 			<hr>
