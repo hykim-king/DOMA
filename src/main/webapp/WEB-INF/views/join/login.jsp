@@ -4,6 +4,7 @@
 	<c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <head>
 <meta charset="UTF-8">
     <link rel="stylesheet" href="${CP}/resources/css/user/loginPage.css">
@@ -13,7 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+	 
 	<div>
 		<form>
 			<h1 id="litheader">DOMA</h1>

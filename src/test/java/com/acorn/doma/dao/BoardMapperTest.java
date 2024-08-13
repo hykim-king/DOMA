@@ -188,7 +188,7 @@ public class BoardMapperTest implements PLog{
 		
 	}
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void doRetrieve() throws SQLException {
 		

@@ -29,7 +29,7 @@
 	                    <a style="width:200px;" aria-current="page" href="${CP}/board/doDelete.do">데이터 시각화</a>
 	                </td>
 	                <td class="dropdown">
-	                    <a style="width:200px;" aria-current="page" href="${CP }/template/list.do">공지사항</a>
+	                    <a style="width:200px;" aria-current="page" href="${CP }/board/doRetrieve.do?div=20">공지사항</a>
 	                </td>
 	                <td class="dropdown">
 	                    <a style="width:200px;" aria-current="page" href="${CP}/board/doRetrieve.do?div=10">커뮤니티</a>
