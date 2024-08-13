@@ -67,16 +67,19 @@ public class SafeController implements PLog {
 	
 	@RequestMapping(value = "/selectOne.do"
 			   , method = RequestMethod.GET)
-	public String selectOne(Board inVO) throws SQLException {
+	public String selectOne(Model model, Board inVO) throws SQLException {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController : selectOne()             │");
 		log.debug("└──────────────────────────────────────────┘");
 		
 		log.debug("1. inVO : " + inVO);
 		
-		String viewName = "";
+		String viewName = "/safe/safe_selectOne_page";
 		
 		Board outVO = boardService.selectOne(inVO);
+		log.debug("2. outVO : " + outVO);
+		
+		model.addAttribute("info", outVO);
 		return viewName;
 	}
 	

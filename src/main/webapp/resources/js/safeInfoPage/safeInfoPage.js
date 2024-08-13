@@ -1,30 +1,38 @@
 /**
  * 
- */
+ */	
+	const situationBtn = document.querySelectorAll("ul.ui_section");
+	const actingBtn = document.querySelectorAll("ul.ui_section");
 
-const situationBtn = document.querySelector("#situation_seq");
-const actingBtn = document.querySelector("#acting_seq");
-
-situationBtn.addEventListener("click",function(event){
-	console.log("situationBtn is ", situationBtn);
-});
-
-actingBtn.addEventListener("click",function(event){
-	console.log("actingBtn is ",actingBtn);
-});
-
-function selectOne(input) {
-  	console.log("loadData()");
-  	
-    window.location.href = "/doma/safe/selectOne.do";
-}
-
-function saveBtn() {
-    console.log("saveBtn()");
+    situationBtn.forEach(function(button) {
+        button.addEventListener("click", function(event) {
+            const situationSeq = event.currentTarget.querySelector("li[data-value]").getAttribute("data-value");
+            console.log("situationSeq is ", situationSeq);
+            selectOne(situationSeq);
+        });
+    });
 	
-	window.location.href = "/doma/safe/savePage.do";
-}
-
-function deleteBtn() {
-    console.log("deleteBtn()");
-}
+	actingBtn.forEach(function(button) {
+        button.addEventListener("click", function(event) {
+            const actingSeq = event.currentTarget.querySelector("li[data-value]").getAttribute("data-value");
+            console.log("actingSeq is ", actingSeq);
+            selectOne(actingSeq);
+        });
+    });
+	
+	function selectOne(input) {
+	  	console.log("selectOne()");
+	  	console.log("input : " + input);
+	  	
+	    window.location.href = "/doma/safe/selectOne.do?seq="+ input;
+	}
+	
+	function saveBtn() {
+	    console.log("saveBtn()");
+		
+		window.location.href = "/doma/safe/savePage.do";
+	}
+	
+	function deleteBtn() {
+	    console.log("deleteBtn()");
+	}

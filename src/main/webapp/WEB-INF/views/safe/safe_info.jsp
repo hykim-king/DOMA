@@ -55,16 +55,13 @@ button {
 .title_section{
 	height: 30px;
 	border-radius : 0px 0px 20px 20px;
-	text-align : center;
+	text-align : c
 }
 li{
 	border : 2px solid #495057;
 	margin: 0px;
 	padding : 0px;
 	overflow : hidden;
-}
-li.hover{
-
 }
 </style>
 <body>
