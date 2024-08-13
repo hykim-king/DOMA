@@ -1,4 +1,4 @@
-//ㅠㅠㅠㅠㅋㅋㅋfff
+//캐시확인용
 
 document.addEventListener('DOMContentLoaded', function() {
     loadNotices(1);
