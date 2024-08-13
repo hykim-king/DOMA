@@ -63,4 +63,5 @@ public interface BoardMapper extends WorkDiv<Board>{
 	//안전정보페이지에서 사용할 메서드
 	int Save(Board inVO)throws SQLException;
 	
+	List<Board> Retrieve(Search search) throws SQLException;
 }

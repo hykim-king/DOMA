@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.cmn.Search;
 import com.acorn.doma.domain.Board;
 import com.acorn.doma.mapper.BoardMapper;
 
@@ -110,7 +111,7 @@ public class BoardServiceImpl implements BoardService, PLog {
 		return outVO;
 	}
 	 
-
+	/* 안전정보페이지 메서드 */
 	@Override
 	public int save(Board inVO) throws SQLException {
 		log.debug("1. inVO : " + inVO);
@@ -121,7 +122,13 @@ public class BoardServiceImpl implements BoardService, PLog {
 		return flag;
 	}
 
- 
+	@Override
+	public List<Board> retrieve(Search search) throws SQLException {
+		
+		List<Board> list = boardMapper.Retrieve(search);
+		
+		return list;
+	}
 		 
 
 }

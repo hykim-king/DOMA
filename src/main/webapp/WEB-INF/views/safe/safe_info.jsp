@@ -69,6 +69,8 @@ button {
 	</c:choose>
  </div>
  user : ${user}
+ list30 : ${list30 }
+ list40 : ${list40 }
  <div style="display:flex">
  	 <jsp:include page="/WEB-INF/views/safe/info_by_situation.jsp"></jsp:include>
  	 <jsp:include page="/WEB-INF/views/safe/acting_by_situation.jsp"></jsp:include>
