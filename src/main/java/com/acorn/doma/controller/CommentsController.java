@@ -47,8 +47,8 @@ public class CommentsController implements PLog {
 		
 	}
 	
-	//http://localhost:8080/doma/comments/board_main.do
-	@GetMapping("/board_main.do")
+	//http://localhost:8080/doma/comments/comments.do
+	@GetMapping("/comments.do")
 	public String boardList(Model model) throws Exception {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ boardList()               │");

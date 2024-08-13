@@ -1,3 +1,19 @@
+<%--
+/**
+	Class Name: board_list.jsp
+	Description:
+	Author: acorn
+	Modification information
+	
+	수정일     수정자      수정내용
+    -----   -----  -------------------------------------------
+    2024. 8. 2        최초작성 
+    
+    DOMA 개발팀
+    since 2020.11.23
+    Copyright (C) by KandJang All right reserved.
+*/
+ --%>
 <%@page import="com.acorn.doma.domain.User"%>
 <%@ page import="com.acorn.doma.cmn.StringUtil"%>
 <%@ page import="com.acorn.doma.cmn.Search"%>
@@ -168,11 +184,22 @@ header, footer {
 }
 </style>
 <script>
-	document.addEventListener("DOMContentLoaded", function() {
-		console.log("DOMContentLoaded");
+document.addEventListener("DOMContentLoaded", function() {
+      	console.log("DOMContentLoaded");
+	    const urlParams = new URLSearchParams(window.location.search);
+        const seq = urlParams.get('seq');
+        const comSeq = urlParams.get('comSeq');
+        const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+        const modId = document.getElementById("modId").value;
+        console.log("seq: "+seq);
+        console.log("comSeq: "+comSeq);
+        console.log("userId: "+userId);
+        console.log("modId: "+modId);
+		
 //객체 생성=================================================================================================    
 		//moveToList : 목록으로 이동
 		const moveToListBtn = document.querySelector("#moveToList");
+		
 
 		//doDelete : 삭제
 		const doDeleteBtn = document.querySelector("#doDelete");
@@ -193,22 +220,25 @@ header, footer {
 		const gnameInput = document.querySelector("#gname");
 
 		//제목
-		const titleInput = document.querySelector("#title");
+		const titleInput = document.getElementById("#title");
 
 		//이미지
 		const imgLinkInput = document.querySelector("#imgLink");
 
 		//내용
-		const contentsTextArea = document.querySelector("#content");
+		const contentsTextArea = document.getElementById("comment");
 
 		//구분
 		const searchDivSelect = document.querySelector("#searchDiv");
 		
 		//코멘트 저장
-		const doSaveInput = document.querySelector("#doSave");
+		const doSaveBtn = document.querySelector("#doSave");
 
 		const modIdInput = document.querySelector("#modId");
 		
+		//doRetrieve();
+		
+		ajaxGetComments();
 		
 		
 
@@ -233,8 +263,8 @@ header, footer {
             checkSessionAndMove();
         });
 		
-		//doSave : 저장
-		doSaveInput.addEventListener("click", function(event) {
+		//doSave : 댓글 저장
+		doSaveBtn.addEventListener("click", function(event) {
 			console.log("doSaveInput click");
             event.stopPropagation();
             CommentscheckSession();
@@ -244,227 +274,374 @@ header, footer {
 
 //함수=================================================================================================
 		
-	    //checkSessionAndMove()
-        function checkSessionAndMove() {
-        
-            // JSP에서 userId 값을 JavaScript 변수로 설정
-            const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
-            const modId = document.querySelector("#modId").textContent.trim();
-            
-            //userId와 modId 값 확인
-            console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId); 
+		//checkSessionAndMove()
+		function checkSessionAndMove() {
+		
+		    // JSP에서 userId 값을 JavaScript 변수로 설정
+		    const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+    // 'modId'를 hidden input에서 가져오기
+    const modId = document.getElementById("modId").value;
+    
+    //userId와 modId 값 확인
+    console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId);
 
-            // userId와 modId가 동일한 경우에만 수정 페이지로 이동
-            if (userId !== "" && userId === modId) {
-                moveToUp();
-            } else if (userId === "" || userId === " ") {
-                alert("로그인이 필요 합니다.");
-                window.location.href = "/doma/user/loginPage.do";
-            } else {
-                alert("작성자가 아닙니다.");
-            }
-        }
-        
+    // userId와 modId가 동일한 경우에만 수정 페이지로 이동
+    if (userId !== "" && userId === modId) {
+    	moveToUp();
+    } else if (userId === "" || userId === " ") {
+        alert("로그인이 필요 합니다.");
+        window.location.href = "/doma/user/loginPage.do";
+    } else {
+        alert("작성자가 아닙니다.");
+    }
+}
+      
       //CommentscheckSession()
-        function CommentscheckSession() {
-        
-            // JSP에서 userId 값을 JavaScript 변수로 설정
-            const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
-            
-            //userId값 확인
-            console.log("checkSessionAndMove: userId = " + userId); 
-        
-            if (userId !== "" && userId !== " ") {
-            	commentSave();
-            }else {
-                alert("작성자가 아닙니다.");
-            }
-        }
-	
-	
-	    function moveToList() {
-	    	window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-        }
-        
-        function moveToUp() {
-        	//비동기 통신
-            let type = "GET";
-            let url = "/doma/board/moveToUp.do";
-            let async = "true";
-            let dataType = "html";
+      function CommentscheckSession() {
+      
+          // JSP에서 userId 값을 JavaScript 변수로 설정
+          const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+           
+           //userId값 확인
+           console.log("checkSessionAndMove: userId = " + userId); 
+       
+           if (userId !== "" && userId !== " ") {
+           	commentSave();
+           }else {
+               alert("로그인이 필요 합니다.");
+               window.location.href = "/doma/user/loginPage.do";
+           }
+       }
 
-            let params = {
-                "seq" : seqInput.value,
-                "div" : divInput.value,
-                "gname" : searchDivSelect.value,
-                "title" : titleInput.value,
-                "content"  : contentsTextArea.value
-                
-            };
-            
-        	window.location.href = "/doma/main/moveToUp.do?seq="+seqInput.value+"&div="+divInput.value+"&gname="+searchDivSelect.value+"&title"+titleInput.value+"&content="+contentsTextArea.value;
-        }
-        
-        //doSelectOne()
-        function doSelectOne(seq){
-            console.log("doSelectOne seq:"+seq);
-            //div
-            //seq
-            //등록자 정보
-            
-            //비동기 통신
-            let type = "GET";
-            let url = "/doma/main/moveToUp.do";
-            let async = "true";
-            let dataType = "html";
 
-            let params = {
-                "div" : divInput.value
-            };
-            
-            
-            window.location.href = "/doma/main/moveToUp.do?seq="+seq+"&div="+div;
+    function moveToList() {
+    	window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+       }
+       
+       function moveToUp() {
+       	//비동기 통신
+           let type = "GET";
+           let url = "/doma/board/moveToUp.do";
+           let async = "true";
+           let dataType = "html";
+
+           let params = {
+               "seq" : seq,
+               "div" : div,
+               "gname" : searchDivSelect.value,
+               "title" : titleInput.value,
+               "content"  : contentsTextArea.value
                
-        }
-        
-        
-        //doSave : 저장
-        function commentSave() {
-            console.log("commentSave()");
+           };
+           
+       	window.location.href = "/doma/main/moveToUp.do?seq="+seq+"&div="+divInput.value+"&gname="+searchDivSelect.value+"&title"+titleInput.value+"&content="+contentsTextArea.value;
+       }
+       
+       //doSelectOne()
+       function doSelectOne(seq){
+           console.log("doSelectOne seq:"+seq);
+           //div
+           //seq
+           //등록자 정보
+           
+           const frm = document.querySelector("#boardForm");
+           let div = frm.div.value();
+           
+           window.location.href = "/doma/board/doSelectOne.do?seq="+seq+"&div="+div;
+              
+       }
+       
+       
+     //doSave : 저장
+       function commentSave() {
+           console.log("commentSave()");
+           
+           if (!confirm('등록 하시겠습니까?')) {
+               alert("취소하였습니다.");
+               return;
+           }
 
-            if (isEmpty(contentsTextArea.value) == true) {
-                alert('내용을 입력 하세요.')
-                return;
-            }
+           //비동기 통신
+           let type = "POST";
+           let url = "/doma/comments/doSave.do";
+           let async = "true";
+           let dataType = "html";
 
-            if (confirm("저장 하시겠습니까?") === false)
-                return;
+           let params = {
+               "seq" : seq,
+               "userId" : userId,
+               "modId" : modId,
+               "comments" : contentsTextArea.value
+           };
 
-            //비동기 통신
-            let type = "POST";
-            let url = "/doma/comment/doSave.do";
-            let async = "true";
-            let dataType = "html";
+           PClass.pAjax(url, params, dataType, type, async, function(data) {
+               if (data) {
+                   try {
+                       //JSON문자열을 JSON Object로 변환
+                       const message = JSON.parse(data)
+                       if (isEmpty(message) === false
+                               && 1 === message.messageId) {
+                           alert(message.messageContents);
+                           location.reload();
+                           
+                       } else {
+                           alert(message.messageContents);
+                       }
 
-            let params = {
-                "seq" : seqInput.value,
-                "userId" : userIdInput.value,
-                "comments" : simplemde.value()
-            };
+                   } catch (e) {
+                       alert("data를 확인 하세요");
+                   }
+               }
+           });
+       }
 
-            PClass.pAjax(url, params, dataType, type, async, function(data) {
-                if (data) {
-                    try {
-                        //JSON문자열을 JSON Object로 변환
-                        const message = JSON.parse(data)
-                        if (isEmpty(message) === false
-                                && 1 === message.messageId) {
-                            alert(message.messageContents);
-                            window.location.href = "/http://localhost:8080/doma/main/boardInfo.do?seq=1&div=" + divInput.value;
-                            
-                        } else {
-                            alert(message.messageContents);
+       //doUpdate : 수정
+	function doUpdate() {
+		console.log("doUpdate()");
+
+		//marker : simplemde.value()
+		if (isEmpty(simplemde.value()) == true) {
+			alert('내용을 입력 하세요.')
+			contentsTextArea.focus();
+			return;
+		}
+
+		if (confirm("수정 하시겠습니까?") === false)
+			return;
+
+		//비동기 통신
+		let type = "POST";
+		let url = "/doma/board/doUpdate.do";
+		let async = "true";
+		let dataType = "html";
+
+		let params = {
+			"seq" : seq,
+			"userId" : userIdInput.value,
+			"comments" : simplemde.value()
+		};
+
+		PClass.pAjax(url, params, dataType, type, async, function(data) {
+			if (data) {
+				try {
+					//JSON문자열을 JSON Object로 변환
+					const message = JSON.parse(data)
+					if (isEmpty(message) === false
+							&& 1 === message.messageId) {
+						alert(message.messageContents);
+						window.location.href = "/http://localhost:8080/doma/main/boardInfo.do?seq=1&div=" + divInput.value;
+						
+					} else {
+						alert(message.messageContents);
+					}
+
+				} catch (e) {
+					alert("data를 확인 하세요");
+				}
+			}
+		});
+	}
+       
+	function doRetrieve() {
+           console.log("doRetrieve 댓글 리스트")
+       
+           $.ajax({
+               url:"/doma/comments/doRetrieve.do",
+               type:'GET',
+               dataType:"json",
+               data:{seq:seq},
+               success:function(response){
+                   console.log(response);
+               },
+               error: function (error) {
+                   console.error("Error", error);
+               }
+          });
+       }
+	
+	//코멘트 삭제 
+	function commentsDelete(){
+	    console.log("commentsDelete()");
+		if (isEmpty(seqInput.value) == true) {
+	              alert('seq를 확인 하세요.')
+	              seqInput.focus();
+	              return;
+	          }
+	
+	          if (confirm("삭제 하시겠습니까?") === false)
+	              return;
+	
+	          //비동기 통신
+	          let type = "GET";
+	          let url = "/doma/board/doDelete.do";
+	          let async = "true";
+	          let dataType = "html";
+	
+	          let params = {
+	              "seq" : seqInput.value
+	          };
+	
+	          PClass.pAjax(url, params, dataType, type, async, function(data) {
+	              if (data) {
+	                  try {
+	                      //JSON문자열을 JSON Object로 변환
+	                      const message = JSON.parse(data)
+	                      if (isEmpty(message) === false
+	                              && 1 === message.messageId) {
+	                          alert(message.messageContents);
+	                          //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+	                          moveToList();
+	                      } else {
+	                          alert(message.messageContents);
+	                      }
+	
+	                  } catch (e) {
+	                      alert("data를 확인 하세요");
+	                  }
+	              }
+	          });
+    }
+		
+
+	//doDelete : 삭제
+	function doDelete() {
+		console.log("doDelete()");
+
+		if (isEmpty(seqInput.value) == true) {
+			alert('seq를 확인 하세요.')
+			seqInput.focus();
+			return;
+		}
+
+		if (confirm("삭제 하시겠습니까?") === false)
+			return;
+
+		//비동기 통신
+		let type = "GET";
+		let url = "/doma/board/doDelete.do";
+		let async = "true";
+		let dataType = "html";
+
+		let params = {
+			"seq" : seqInput.value
+		};
+
+		PClass.pAjax(url, params, dataType, type, async, function(data) {
+			if (data) {
+				try {
+					//JSON문자열을 JSON Object로 변환
+					const message = JSON.parse(data)
+					if (isEmpty(message) === false
+							&& 1 === message.messageId) {
+						alert(message.messageContents);
+						//window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+						moveToList();
+					} else {
+						alert(message.messageContents);
+					}
+
+				} catch (e) {
+					alert("data를 확인 하세요");
+				}
+			}
+		});
+	}
+       
+	function ajaxGetComments() {
+        $.ajax({
+            type: "GET",
+            url: "/doma/comments/doRetrieve.do",
+            dataType: "json",
+            data: {
+                "seq": seq,
+                "ajax": true
+            },
+            success: function(response) {
+                console.log("Success response", response);
+                var replyList = $("#reply-list");
+                replyList.empty(); // Clear previous comments
+
+                if (response.length > 0) {
+                    response.forEach(function(reply) {
+                        var replyRow = $("<li></li>").addClass("reply-row");
+
+                        var replyWriter = $("<p></p>").addClass("reply-writer").text(reply.userId);
+                        var replyComments = $("<p></p>").addClass("reply-comments").text(reply.comments);
+                        var replyDate = $("<p></p>").addClass("reply-date")
+                            .text((reply.modDt ? "수정일 " : "") + (reply.modDt ? reply.modDt : reply.regDt));
+
+                        replyRow.append(replyWriter).append(replyComments).append(replyDate);
+                        
+                        //Add update and delete buttons
+                        if (reply.userId === userId) {
+                            var updateButton = $("<button></button>").text("수정").addClass("btn btn-primary update-comment");
+                            var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-danger delete-comment");
+
+                            updateButton.on("click", function() {
+                                var newComments = prompt("수정할 내용을 입력하세요:", reply.comments);
+                                if (newComments !== null) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/doma/comment/doRetrieve.do",
+                                        data: {
+                                            "seq": seq,
+                                            "coments": newComments,
+                                            "ajax": true
+                                        },
+                                        success: function(response) {
+                                            alert('수정하였습니다.');
+                                            ajaxGetComments(); // Refresh comments
+                                        },
+                                        error: function(error) {
+                                            console.log("Error:", error);
+                                        }
+                                    });
+                                }
+                            });
+
+                            deleteButton.on("click", function() {
+                                if (confirm("삭제하시겠습니까?")) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/doma/comment/doDelete.do",
+                                        dataType: "text",
+                                        data: {
+                                            "work_div": "deleteComment",
+                                            "comSeq": reply.comSeq,
+                                            "userId": userId,
+                                            "aboardSeq": seq,
+                                            "ajax": true
+                                        },
+                                        success: function(response) {
+                                            alert('삭제하였습니다.');
+                                            ajaxGetComments(); // Refresh comments
+                                        },
+                                        error: function(error) {
+                                            console.log("Error:", error);
+                                            alert("댓글 삭제에 실패했습니다.");
+                                        }
+                                    });
+                                }
+                            });
+
+                            replyRow.append(updateButton).append(deleteButton);
                         }
-
-                    } catch (e) {
-                        alert("data를 확인 하세요");
-                    }
+                        
+                        replyList.append(replyRow);
+                    });
+                } else {
+                    replyList.append("<p>댓글이 없습니다. 첫 번째 댓글을 달아보세요!</p>");
                 }
-            });
-        }
-	
-        //doUpdate : 수정
-		function doUpdate() {
-			console.log("doUpdate()");
+            },
+            error: function(error) {
+                console.log("Error:", error);
+            }
+        });
+    }
 
-			//marker : simplemde.value()
-			if (isEmpty(simplemde.value()) == true) {
-				alert('내용을 입력 하세요.')
-				contentsTextArea.focus();
-				return;
-			}
-
-			if (confirm("수정 하시겠습니까?") === false)
-				return;
-
-			//비동기 통신
-			let type = "POST";
-			let url = "/doma/board/doUpdate.do";
-			let async = "true";
-			let dataType = "html";
-
-			let params = {
-				"seq" : seq,
-				"userId" : userIdInput.value,
-				"comments" : simplemde.value()
-			};
-
-			PClass.pAjax(url, params, dataType, type, async, function(data) {
-				if (data) {
-					try {
-						//JSON문자열을 JSON Object로 변환
-						const message = JSON.parse(data)
-						if (isEmpty(message) === false
-								&& 1 === message.messageId) {
-							alert(message.messageContents);
-							window.location.href = "/http://localhost:8080/doma/main/boardInfo.do?seq=1&div=" + divInput.value;
-							
-						} else {
-							alert(message.messageContents);
-						}
-
-					} catch (e) {
-						alert("data를 확인 하세요");
-					}
-				}
-			});
-		}
-
-		//doDelete : 삭제
-		function doDelete() {
-			console.log("doDelete()");
-
-			if (isEmpty(seqInput.value) == true) {
-				alert('seq를 확인 하세요.')
-				seqInput.focus();
-				return;
-			}
-
-			if (confirm("삭제 하시겠습니까?") === false)
-				return;
-
-			//비동기 통신
-			let type = "GET";
-			let url = "/doma/board/doDelete.do";
-			let async = "true";
-			let dataType = "html";
-
-			let params = {
-				"seq" : seqInput.value
-			};
-
-			PClass.pAjax(url, params, dataType, type, async, function(data) {
-				if (data) {
-					try {
-						//JSON문자열을 JSON Object로 변환
-						const message = JSON.parse(data)
-						if (isEmpty(message) === false
-								&& 1 === message.messageId) {
-							alert(message.messageContents);
-							//window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-							moveToList();
-						} else {
-							alert(message.messageContents);
-						}
-
-					} catch (e) {
-						alert("data를 확인 하세요");
-					}
-				}
-			});
-		}
-	});
-	
+    // Call the function to load comments
+    ajaxGetComments();
+});
 	
 </script>
 
@@ -477,13 +654,16 @@ board : ${board }
 	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
+    <input type="hidden" name="modId"  id="modId" value="${board.modId}">
+    <input type="hidden" name="comSeq" id="comSeq" value="${comments.comSeq}">
 	<div class="container">
 		<button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
 		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
+		<button type="button" value="삭제" id="doDelete" class="btn btn-outline-warning">삭제하기</button>
 		<article class="post">
 			<h2 name="title" id="title" class="post-title">${board.title}</h2>
 			<div class="post-meta">
-				<p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
+				<p name="userId" id="userId" class="post-author">작성자: ${board.modId}</p>
 				<p class="post-date">${board.regDt}</p>
 			</div>
 			<div class="row mb-2">
@@ -501,10 +681,10 @@ board : ${board }
 		<section class="comments">
 			<h3>댓글</h3>
 			<div class="comment-form">
-				<form action="doSave.do" method="post">
+				<form action="board_main.jsp" method="post" onsubmit="commentSave(event)">
 					<label for="comment">댓글을 입력하세요:</label>
 					<textarea id="comment" name="comment" rows="4" required></textarea>
-					<button type="submit" id="doSave" name="doSave">댓글 작성</button>
+					<button type="button" value="댓글 쓰기" id="doSave" name="doSave" class="btn btn-primary mt-2">댓글 쓰기</button>
 				</form>
 			</div>
 			<div class="comment-list">
@@ -514,6 +694,10 @@ board : ${board }
 					</p>
 				</div>
 				<!-- 추가 댓글은 여기에 나열됩니다 -->
+                <ul id="reply-list" class="list-unstyled">
+                <!-- AJAX를 통해 동적으로 댓글이 추가될 영역 -->
+                
+                </ul>
 			</div>
 		</section>
 	</div>
