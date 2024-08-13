@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function(){
     
 
 //이벤트 처리=================================================================================================
-    //moveToListBtn
+    //moveToMainBtn
     moveToMainBtn.addEventListener("click",function(event){
         console.log("moveToMainBtn click");
         event.stopPropagation();
@@ -224,12 +224,6 @@ document.addEventListener("DOMContentLoaded", function(){
         doUpdate();
     });
     
-    //doDelete : 삭제
-    doDeleteBtn.addEventListener("click",function(event){
-        console.log("doDeleteBtn click");
-        event.stopPropagation();
-        doDelete();
-    });
     
 //함수=================================================================================================
     //doUpdate : 수정
@@ -286,50 +280,9 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     
     function moveToMain() {
-        window.location.href = "/doma/main/boardInfo.do?seq=" + seqInput.value +"&div=" + divInput.value;
+        window.location.href = "/doma/board/boardInfo.do?seq=" + seqInput.value +"&div=" + divInput.value;
     }
     
-    //doDelete : 삭제
-    function doDelete() {
-        console.log("doDelete()");
-        
-        if(isEmpty(seqInput.value) == true){
-            alert('seq를 확인 하세요.')
-            seqInput.focus();
-            return;
-        }
-        
-        if(confirm("삭제 하시겠습니까?") === false)return;
-        
-        //비동기 통신
-        let type = "GET";
-        let url = "/doma/board/doDelete.do";
-        let async = "true";
-        let dataType = "html";
-        
-        let params = {
-            "seq"    : seqInput.value
-        };
-
-        PClass.pAjax(url, params, dataType, type, async, function(data){
-            if(data){
-                try{
-                    //JSON문자열을 JSON Object로 변환
-                    const message = JSON.parse(data)
-                    if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
-                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-                        moveToList();
-                    }else{
-                        alert(message.messageContents);
-                    }
-                    
-                }catch(e){
-                    alert("data를 확인 하세요");
-                }
-            }
-        });
-    }
 });    
 </script>
 </head>
@@ -393,18 +346,17 @@ board : ${board }
 	    </div>
 	</div>
     <div class="row mb-2">
-        <label for="title" class="col-sm-2 col-form-label">제목</label>
-        <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.title}'/>" class="form-control" name="title" id="title"  maxlength="75" required="required">
-        </div>
-    </div>
-    <div class="row mb-2"">
-        <label for="content" class="col-sm-2 col-form-label">내용</label>
-        <div class="col-sm-10">
-         <textarea style="height: 200px"  class="form-control" id="content" name="content"><c:out value='${board.content}'></c:out>
-         </textarea>
-        </div>
-    </div>
+    <label for="title" class="col-sm-2 col-form-label">제목</label>
+	    <div class="col-sm-10">
+	        <input type="text" value="<c:out value='${board.title}'/>" class="form-control" name="title" id="title" maxlength="75" required="required">
+	    </div>
+	</div>
+	<div class="row mb-2">
+	    <label for="content" class="col-sm-2 col-form-label">내용</label>
+	    <div class="col-sm-10">
+	        <textarea style="height: 200px" class="form-control" id="content" name="content"><c:out value='${board.content}'></c:out></textarea>
+	    </div>
+	</div>
   </form>
   <!--// form end -->
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

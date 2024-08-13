@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function(){
     // Update Board function
     function updateComment(seq) {  
     	//http://localhost:8080/doma/main/boardInfo.do?seq=1&div=10
-    	const url = "/doma/main/boardInfo.do?seq=" + seq +"&div=10"; 
+    	const url = "/doma/board/boardInfo.do?seq=" + seq +"&div=10"; 
     	popupWindow = window.open(url, "popupWindow", "width=800,height=600,scrollbars=yes,resizable=yes");
     }
     

@@ -46,9 +46,9 @@ public class CommentMapperTest implements PLog {
 	public void setUp() throws Exception {
 		log.debug("======setUp=========");
 		
-		comment01 = new Comments(1, 1, "등록자01", "", "내용", "사용안함", "사용안함");
-		comment02 = new Comments(2, 1, "등록자02", "수정자02", "내용", "사용안함", "사용안함");
-		comment03 = new Comments(3, 1, "등록자03", "수정자03", "내용", "사용안함", "사용안함");
+		comment01 = new Comments(1, 1, "등록자01", "수정자01", "내용01", "사용안함", "사용안함");
+		comment02 = new Comments(2, 1, "등록자02", "수정자02", "내용02", "사용안함", "사용안함");
+		comment03 = new Comments(3, 1, "등록자03", "수정자03", "내용03", "사용안함", "사용안함");
 		
 		commentMapper.deleteAll();
 		
@@ -70,7 +70,6 @@ public class CommentMapperTest implements PLog {
 		List<Comments> outVO = 	commentMapper.commentsList(1);
 		assertNotNull(outVO);
        
-        
     }
 	
 	@Ignore

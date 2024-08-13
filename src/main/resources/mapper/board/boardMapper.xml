@@ -74,7 +74,7 @@
 	                </when>
 	                <!-- 제목 + 내용 검색 -->
 	                <when test="searchDiv == '30'">
-	                    AND (modId LIKE '%' || #{searchWord} || '%'
+	                    AND (title LIKE '%' || #{searchWord} || '%'
 	                    OR content LIKE '%' || #{searchWord} || '%')
 	                </when>
 	            </choose>
@@ -157,7 +157,6 @@
     <delete id="doDelete" parameterType="Board">
         DELETE FROM d_board
          WHERE seq = #{seq}
-           AND user_id = #{userId}
     </delete>
     
     <update id="doUpdateUser" parameterType="Board">

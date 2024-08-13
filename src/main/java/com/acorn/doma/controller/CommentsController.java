@@ -184,10 +184,10 @@ public class CommentsController implements PLog {
 		String message = "";
 		int flag = 0;
 		if(null != outVO) {
-			message = outVO.getUserId() + "이 조회 되었습니다.";
+			message = outVO.getComSeq() + "이 조회 되었습니다.";
 			flag = 1;
 		}else {
-			message = outVO.getUserId() + "조회 실패 했습니다.";
+			message = outVO.getComSeq() + "조회 실패 했습니다.";
 		}
 		
 		Message messageObj = new Message(flag, message);

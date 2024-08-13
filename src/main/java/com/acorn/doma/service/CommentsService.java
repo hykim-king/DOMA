@@ -15,5 +15,6 @@ public interface CommentsService extends WorkDiv<Comments>{
 	public int mpCommentUp(Comments inVO) throws Exception; 
 	
 	public Comments mpCommentSelectOne(Comments inVO) throws Exception; 
+	
 	List<Comments> commentsList(int seq) throws SQLException;
 }

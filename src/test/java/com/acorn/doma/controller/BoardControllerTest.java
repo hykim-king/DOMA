@@ -216,7 +216,6 @@ public class BoardControllerTest implements PLog {
 		MockHttpServletRequestBuilder requestBuilder 
 				= MockMvcRequestBuilders.get("/board/doDelete.do")
 				.param("seq", board01.getSeq()+"")
-				.param("userId", board01.getUserId())
 				;
 		
 		//호출 및 결과
@@ -263,7 +262,6 @@ public class BoardControllerTest implements PLog {
 		MockHttpServletRequestBuilder requestBuilder 
 				= MockMvcRequestBuilders.get("/board/doSelectOne.do")
 				.param("seq", board01.getSeq()+"")
-				.param("userId", board01.getUserId())
 				;
 
 		//호출 및 결과 
