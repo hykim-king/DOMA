@@ -82,6 +82,7 @@ public class BoardMapperTest implements PLog{
 		assertEquals(boardIn.getViews(), boardOut.getViews());
 	}
 	//안전정보페이지용 테스트
+	//@Ignore
 	@Test
 	public void save() throws Exception{
 		int flag = boardMapper.Save(safe01);

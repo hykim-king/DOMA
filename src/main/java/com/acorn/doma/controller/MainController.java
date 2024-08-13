@@ -157,7 +157,58 @@ public class MainController implements PLog {
 		return viewName;
 	}
 	
-	
+	/**
+	 * 수정페이지 이동
+	 * @param inVO
+	 * @param model
+	 * @return
+	 * @throws SQLException
+	 * http://localhost:8080/doma/board/moveToReg.do
+	 */
+	@RequestMapping(value = "/moveToUp.do"
+			   , method = RequestMethod.GET)
+	public String moveToUp(HttpSession session,Model model,Board inVO) throws SQLException {
+		String viewName = "board/board_mng";
+		
+		//TODO : SESSION처리
+		inVO.setUserId(StringUtil.nvl(inVO.getUserId(), ""));
+		
+		Board outVO = boardService.doSelectOne(inVO);
+		
+		log.debug("1.param inVO:" + inVO);
+		model.addAttribute("board", inVO);
+		
+		//reg 구선택--------------------------------------------------------
+		Search search = new Search();
+		
+		List<Board> list = this.boardService.doRetrieve(search);
+		
+		//2.화면 전송 데이터
+		//조회 데이터
+		model.addAttribute("list", list);
+		
+		//검색 조건
+		model.addAttribute("search", search);
+		
+		//페이징 : totalCnt
+		int totalCnt = 0;
+		if(null != list && list.size() > 0) {
+			Board firstVO = list.get(0);
+			totalCnt = firstVO.getTotalCnt();
+		}
+		//검색 조건
+		model.addAttribute("totalCnt", totalCnt);
+		
+		//----------------------------------------------------------------------
+		Code code = new Code();
+		//GNAME : 구이름
+		code.setMstCode("GNAME");
+		List<Code> gname = this.codeService.doRetrieve(code);
+		model.addAttribute("GNAME", gname); //구이름
+		//----------------------------------------------------------------------
+		
+		return viewName;
+	}
 	
 
 }

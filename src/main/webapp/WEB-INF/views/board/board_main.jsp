@@ -359,7 +359,7 @@ header, footer {
 		//구분
 		const searchDivSelect = document.querySelector("#searchDiv");
 		
-		//저장
+		//코멘트 저장
 		const doSaveInput = document.querySelector("#doSave");
 
 		const modIdInput = document.querySelector("#modId");
@@ -391,7 +391,7 @@ header, footer {
 		doSaveInput.addEventListener("click", function(event) {
 			console.log("doSaveInput click");
             event.stopPropagation();
-            doSave();
+            commentSave();
 		});
 
 		
@@ -408,7 +408,7 @@ header, footer {
             console.log("checkSessionAndMove: userId = " + userId); 
         
             if (userId !== "" && userId !== " ") {
-            	moveToUp();
+            	doSelectOne();
             }else {
                 alert("작성자가 아닙니다.");
             }
@@ -438,14 +438,35 @@ header, footer {
         	window.location.href = "/doma/main/moveToUp.do?seq="+seqInput.value+"&div="+divInput.value+"&gname="+searchDivSelect.value+"&title"+titleInput.value+"&content="+contentsTextArea.value;
         }
         
-        //doSave : 저장
-        function doSave() {
-            console.log("doSave()");
+        //doSelectOne()
+        function doSelectOne(seq){
+            console.log("doSelectOne seq:"+seq);
+            //div
+            //seq
+            //등록자 정보
+            
+            //비동기 통신
+            let type = "GET";
+            let url = "/doma/main/moveToUp.do";
+            let async = "true";
+            let dataType = "html";
 
-            //marker : simplemde.value()
-            if (isEmpty(simplemde.value()) == true) {
+            let params = {
+                "div" : divInput.value
+            };
+            
+            
+            window.location.href = "/doma/main/moveToUp.do?seq="+seq+"&div="+div;
+               
+        }
+        
+        
+        //doSave : 저장
+        function commentSave() {
+            console.log("commentSave()");
+
+            if (isEmpty(contentsTextArea.value) == true) {
                 alert('내용을 입력 하세요.')
-                contentsTextArea.focus();
                 return;
             }
 
@@ -453,8 +474,8 @@ header, footer {
                 return;
 
             //비동기 통신
-            let type = "POST";
-            let url = "/doma/board/doUpdate.do";
+            let type = "GET";
+            let url = "/doma/comment/doUpdate.do";
             let async = "true";
             let dataType = "html";
 
@@ -617,7 +638,7 @@ board : ${board }
 		<section class="comments">
 			<h3>댓글</h3>
 			<div class="comment-form">
-				<form action="submitComment.jsp" method="post">
+				<form action="board_main.jsp" method="post">
 					<label for="comment">댓글을 입력하세요:</label>
 					<textarea id="comment" name="comment" rows="4" required></textarea>
 					<button type="submit" id="doSave" name="doSave">댓글 작성</button>

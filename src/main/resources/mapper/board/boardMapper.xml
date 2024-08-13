@@ -74,7 +74,7 @@
 	                </when>
 	                <!-- 제목 + 내용 검색 -->
 	                <when test="searchDiv == '30'">
-	                    AND (modId LIKE '%' || #{searchWord} || '%'
+	                    AND (title LIKE '%' || #{searchWord} || '%'
 	                    OR content LIKE '%' || #{searchWord} || '%')
 	                </when>
 	            </choose>
@@ -116,7 +116,7 @@
                tt1.div,
                tt1.gname,
                tt1.title,
-               tt1.mod_id as modId,
+               tt1.user_id as userId,
                DECODE( TO_CHAR(tt1.mod_dt,'YYYYMMDD'),TO_CHAR(SYSDATE,'YYYYMMDD'),
                        TO_CHAR(tt1.mod_dt,'HH24:MI'),TO_CHAR(tt1.mod_dt,'YYYY/MM/DD')
                ) as modDt,

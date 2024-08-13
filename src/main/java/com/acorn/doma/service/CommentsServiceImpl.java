@@ -20,32 +20,33 @@ public class CommentsServiceImpl implements CommentsService, PLog{
 
 	@Override
 	public List<Comments> doRetrieve(DTO search) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		log.debug("1. param :"+search);
+		return this.commentMapper.doRetrieve(search);
 	}
 
 	@Override
 	public int doUpdate(Comments inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		log.debug("1. param :"+inVO);
+		return commentMapper.doUpdate(inVO);
 	}
 
 	@Override
 	public int doDelete(Comments inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		log.debug("1. param :"+inVO);
+		return this.commentMapper.doDelete(inVO);
 	}
 
 	@Override
 	public int doSave(Comments inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		log.debug("1. param :"+inVO);
+		return commentMapper.doSave(inVO);
 	}
 
 	@Override
 	public Comments doSelectOne(Comments inVO) throws SQLException, NullPointerException {
-		// TODO Auto-generated method stub
-		return null;
+		Comments outVO = commentMapper.doSelectOne(inVO);
+		
+		return outVO;
 	}
 
 	
