@@ -241,34 +241,7 @@
     
     
     <!-- 안전정보페이지 -->
-    
     <insert id="Save" parameterType="Board">
-     INSERT INTO D_BOARD(
-        seq,
-        div,
-        title,
-        user_id,
-        mod_id,
-        content,
-        img_link,
-        reg_dt,
-        mod_dt,
-        views       
-     )VALUES(
-      doma_board_seq.NEXTVAL,
-      #{div},
-      #{title},
-      #{userId},
-      #{userId},
-      #{content},
-      #{imgLink},
-      SYSDATE,
-      SYSDATE,
-      0
-     )
-    </insert>
-    
-     <insert id="Save" parameterType="Board">
      INSERT INTO D_BOARD(
         seq,
         div,
