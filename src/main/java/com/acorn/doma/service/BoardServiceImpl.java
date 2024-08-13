@@ -116,7 +116,7 @@ public class BoardServiceImpl implements BoardService, PLog {
 	public int save(Board inVO) throws SQLException {
 		log.debug("1. inVO : " + inVO);
 		
-		int flag = boardMapper.Save(inVO);
+		int flag = boardMapper.save(inVO);
 		log.debug("2. flag : " + flag);
 		
 		return flag;
@@ -125,9 +125,17 @@ public class BoardServiceImpl implements BoardService, PLog {
 	@Override
 	public List<Board> retrieve(Search search) throws SQLException {
 		
-		List<Board> list = boardMapper.Retrieve(search);
+		List<Board> list = boardMapper.retrieve(search);
 		
 		return list;
+	}
+
+	@Override
+	public Board selectOne(Board inVO) throws SQLException {
+		
+		Board outVO = boardMapper.selectOne(inVO);
+		
+		return outVO;
 	}
 		 
 

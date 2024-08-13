@@ -37,6 +37,7 @@ public class SafeController implements PLog {
 		log.debug("└──────────────────────────────────────────┘");	
 	};
 	
+	
 	@RequestMapping(value = "/save.do"
 			   , method = RequestMethod.POST
 			   ,produces = "text/plain;charset=UTF-8")
@@ -62,6 +63,21 @@ public class SafeController implements PLog {
 		log.debug("2. jsonString:" + jsonString);
 		
 		return jsonString;
+	}
+	
+	@RequestMapping(value = "/selectOne.do"
+			   , method = RequestMethod.GET)
+	public String selectOne(Board inVO) throws SQLException {
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ safeController : selectOne()             │");
+		log.debug("└──────────────────────────────────────────┘");
+		
+		log.debug("1. inVO : " + inVO);
+		
+		String viewName = "";
+		
+		Board outVO = boardService.selectOne(inVO);
+		return viewName;
 	}
 	
 	@RequestMapping(value = "/savePage.do"

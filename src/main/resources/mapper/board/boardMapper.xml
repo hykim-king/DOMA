@@ -241,7 +241,7 @@
     
     
     <!-- 안전정보페이지 -->
-    <insert id="Save" parameterType="Board">
+    <insert id="save" parameterType="Board">
      INSERT INTO D_BOARD(
         seq,
         div,
@@ -267,7 +267,7 @@
      )
     </insert>
     
-     <select id="Retrieve" parameterType="Search" resultType="Board">
+     <select id="retrieve" parameterType="Search" resultType="Board">
 	    SELECT tt1.no,
 	       tt1.seq,
 	       tt1.div,
@@ -285,6 +285,23 @@
 	    			WHERE rownum  <![CDATA[ <= ( #{pageSize} * (#{pageNo} -1) + #{pageSize} )]]>
         		)TT1
        			 WHERE tt1.no <![CDATA[ >= ( #{pageSize} * (#{pageNo} -1) + 1 )]]>
+    </select>
+    
+    <select id="selectOne" parameterType="Board" resultType="Board">
+        SELECT
+		    seq,
+		    div,
+		    title,
+		    user_id as userId,
+		    mod_id as modId,
+		    content,
+		    img_link as imgLink,
+		    TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+		    TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt,
+		    views
+		FROM
+		    d_board
+		WHERE seq = #{seq}    
     </select>
     
 </mapper>

@@ -21,4 +21,6 @@ public interface BoardService extends WorkDiv<Board> {
 	
 	public List<Board> retrieve(Search search) throws SQLException;
 	
+	public Board selectOne(Board inVO) throws SQLException;
+	
 }

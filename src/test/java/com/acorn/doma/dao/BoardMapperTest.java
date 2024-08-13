@@ -204,11 +204,11 @@ public class BoardMapperTest implements PLog{
 	@Ignore
 	@Test
 	public void save() throws Exception{
-		int flag = boardMapper.Save(safe01);
+		int flag = boardMapper.save(safe01);
 		log.debug("flag : " + flag);
 		assertEquals(1, flag);
 		
-		flag = boardMapper.Save(safe02);
+		flag = boardMapper.save(safe02);
 		log.debug("flag : " + flag);
 		assertEquals(1, flag);
 	}
@@ -221,7 +221,7 @@ public class BoardMapperTest implements PLog{
 		search.setPageNo(1);
 		search.setPageSize(10);
 		
-		List<Board> retrieveList = boardMapper.Retrieve(search);
+		List<Board> retrieveList = boardMapper.retrieve(search);
 		
 		log.debug("retrieveList:" + retrieveList);
 		assertEquals(4, retrieveList.size());
@@ -232,7 +232,7 @@ public class BoardMapperTest implements PLog{
 		search.setPageNo(1);
 		search.setPageSize(10);
 		
-		List<Board> retrieveList02 = boardMapper.Retrieve(search);
+		List<Board> retrieveList02 = boardMapper.retrieve(search);
 		
 		log.debug("retrieveList02:" + retrieveList02);
 		assertEquals(5, retrieveList.size());
