@@ -11,8 +11,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const userNameInput = document.querySelector("#userName");
      
     const userPwInput = document.querySelector("#userPw");
-     
-    const userEmailInput = document.querySelector("#userEmail");
+      
     const gradeInput = document.querySelector("#grade");
     const birthInput = document.querySelector("#birth");
     const addressInput = document.querySelector("#address");
@@ -23,8 +22,19 @@ document.addEventListener("DOMContentLoaded", function(){
     const gnameInput = document.querySelector("#gname");
     const viewsInput = document.querySelector("#views");
 
-
-
+	//----비번
+	const passwordCheckInput = document.querySelector("#passwordCheck");
+	const passwordCheckBtn =  document.querySelector("#passwordDuplicateCheck");
+	console.log("passwordCheckBtn", passwordCheckBtn);
+	
+	//비밀번호 확인 버튼
+	let idCheckCount = 0;
+	let passwordCheckCount = 0;
+	 
+	
+	
+	
+	
     const detailAddressInput = document.querySelector("#detailAddress");
     
     const doUpdateBtn = document.querySelector("#updateInfo");
@@ -49,8 +59,13 @@ document.addEventListener("DOMContentLoaded", function(){
       
       MoveBoard();
     });
-
-
+	
+	//----비번
+	passwordCheckBtn.addEventListener("click",function(event){
+		console.log("passwordCheckBtn click");
+		
+		passwordCheck();
+	});
 
 
 
@@ -65,8 +80,50 @@ document.addEventListener("DOMContentLoaded", function(){
 		
 		deleteInfo();
 	});
+	
+	
+	//----비번
+	function passwordCheck() {
+		console.log("passwordCheck()");
+		console.log("userPwInput.value : " + userPwInput.value);
+		//패스워드 인풋
+		const pw = userPwInput.value;
+		//패스워드 체크 인풋
+		const pwc = passwordCheckInput.value;
 
+		console.log("pw : " + pw);
+		console.log("pwc : " + pwc);
 
+		if(pw.indexOf(" ") !== -1 || pwc.indexOf(" ") !== -1){
+			alert("비밀번호와 비밀번호 확인에 공백 문자가 있습니다.");
+			userPwInput.focus();
+			return false;
+		}
+
+		if(passwordValidation(pw) === false){
+			alert("숫자,특수문자나 대소문자를 포함한 8~20자 이내의 비밀번호를 사용하세요.(ex.@$!%*#?&)"); 
+			return;
+		}
+
+		 // 길이 체크 (8자리 ~ 20자리)
+		 if (userPw.length < 8 || userPw.length > 20) {
+			alert("비밀번호는 8자리에서 20자리 사이여야 합니다.");
+			userPwInput.focus();
+			return;
+		}
+
+		if(userPwInput.value === passwordCheckInput.value){	
+			passwordCheckCount = 1;
+			alert("비밀번호가 일치합니다.");
+		}else{
+			alert("비밀번호가 일치하지 않습니다.");
+			return;
+		}
+		
+	}
+  function passwordValidation(input) {
+		return /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/.test(input);
+	}
 
   function MoveComment(userId){ 
         //frm.pageNo.value = 1; 
@@ -103,12 +160,17 @@ document.addEventListener("DOMContentLoaded", function(){
             alert("비밀번호를 입력 하세요.");
             userPwInput.focus();
             return;
-        }      
-        if(isEmpty(userEmailInput.value) == true){
-            alert("이메일을 입력 하세요.");
-            userEmailInput.focus();
-            return;
-        }        
+        } 
+        
+         
+        
+        if(passwordCheckCount != 1){
+			console.log("passwordCheckCount : " + passwordCheckCount);
+			alert("비밀번호가 일치하는지 확인하세요.");
+			return;
+		}
+             
+               
         if(isEmpty(birthInput.value) == true){
           alert("생년월일을 입력 하세요.");
           birthInput.focus();
@@ -137,8 +199,7 @@ document.addEventListener("DOMContentLoaded", function(){
         let params = { 
             "userId"   :userIdInput.value,
             "userName"     :userNameInput.value,
-            "userPw" :userPwInput.value,
-            "userEmail" :userEmailInput.value,
+            "userPw" :userPwInput.value, 
             "birth"    :birthInput.value,
             "address"    :addressInput.value ,
             "detailAddress":detailAddressInput.value
@@ -186,8 +247,7 @@ document.addEventListener("DOMContentLoaded", function(){
           let params = { 
               "userId"   :userIdInput.value,
               "userName"     :userNameInput.value,
-              "userPw" :userPwInput.value,
-              "userEmail" :userEmailInput.value,
+              "userPw" :userPwInput.value, 
               "birth"    :birthInput.value, 
               "address"    :addressInput.value ,
               "detailAddress":detailAddressInput.value
