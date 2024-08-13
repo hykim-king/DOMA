@@ -6,8 +6,10 @@
 	<div class="pageDiv">
  		<h2 class="pageH2">위급상황 대처방법</h2>
  		<hr>
- 		<ul style="border : 2px solid black">
-			<li>이미지</li>
-			<li>제목</li>
-		</ul>
+ 		<c:forEach var="acting" items="${list40}">
+	 		<ul class="ui_section">
+				<li class="img_section">이미지 공사중</li>
+				<li class="title_section">${acting.title }</li>
+			</ul>
+ 		</c:forEach>
  	</div>
