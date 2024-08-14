@@ -26,7 +26,7 @@
 	                    <a style="width:200px;" aria-current="page" href="${CP}/safe/safePage.do">상황별 안전 정보</a>
 	                </td>
 	                <td class="dropdown">
-	                    <a style="width:200px;" aria-current="page" href="${CP}/board/doDelete.do">데이터 시각화</a>
+	                    <a style="width:200px;" aria-current="page" href="${CP}/chart/chart.do">데이터 시각화</a>
 	                </td>
 	                <td class="dropdown">
 	                    <a style="width:200px;" aria-current="page" href="${CP }/board/doRetrieve.do?div=20">공지사항</a>
