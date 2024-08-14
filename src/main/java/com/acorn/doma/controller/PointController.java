@@ -39,11 +39,7 @@ public class PointController implements PLog{
 		log.debug("│ PointController : point()    │");
 		log.debug("└──────────────────────────────┘");
 		
-		String viewName = "main/main_occur_info2";
-		List<Point> listPoint = pointService.fullTableScan();
-		
-		model.addAttribute("pointData", listPoint);
-		
+		String viewName = "main/main_occur_info";				
 		return viewName;
 	}
 	
