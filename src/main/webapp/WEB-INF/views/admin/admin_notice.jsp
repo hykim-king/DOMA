@@ -58,7 +58,7 @@
                         <textarea id="content" name="content" placeholder=""></textarea>
                     </div>
                     <div class="form-buttons">
-                        <button type="submit" class="member-action-button" data-action="create">등록</button>
+                        <button type="button" class="member-action-button" data-action="create" onclick="submitNotice()">등록</button>
                         <button type="submit" class="member-action-button" data-action="update">수정</button>
                         <button type="submit" class="member-action-button" data-action="delete">삭제</button>
                     </div>

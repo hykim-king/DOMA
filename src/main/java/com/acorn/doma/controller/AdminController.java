@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,12 +68,12 @@ public class AdminController implements PLog {
     //공지사항 노출
     @RequestMapping(value = "/doRetrieveNotices.do", method = RequestMethod.GET)
     public @ResponseBody Map<String, Object> doRetrieveNotices(
-            @RequestParam Map<String, String> params) throws SQLException {
+            @RequestParam Map<String, String> params, HttpSession httpSession ) throws SQLException {
 
         log.debug("┌──────────────────────────────────────────────┐");
         log.debug("│ admin_doRetrieveNotices()                    │");
         log.debug("└──────────────────────────────────────────────┘");
-
+        
         Search search = new Search();
 
         // 검색 조건 처리
@@ -119,21 +121,39 @@ public class AdminController implements PLog {
         return notice;  // JSON 형식으로 반환
     }
 
-
     // 공지사항 등록
-    @PostMapping("/doInsertNotice.do")
-    @ResponseBody
-    public String doInsertNotice(Admin admin) throws SQLException {
-        log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doInsertNotice()                       │");
-        log.debug("└──────────────────────────────────────────────┘");
+    @PostMapping("/addNotice.do")
+    public @ResponseBody Map<String, Object> addNotice(@RequestBody Admin notice, HttpServletRequest request) {
+        Map<String, Object> response = new HashMap<>();
+        HttpSession session = request.getSession();
+        try {
+            // 세션에서 userId 가져오기, 없으면 기본값 'admin' 설정
+            String userId = (String) session.getAttribute("userId");
+            userId = StringUtil.nvl(userId, "admin");
 
-        int result = adminService.insertNotice(admin);
-        String message = result == 1 ? "공지사항이 등록되었습니다." : "공지사항 등록에 실패했습니다.";
+            // notice 객체에 userId 설정
+            notice.setUserId(userId);
 
-        Message messageObj = new Message(result, message);
-        return new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+            // 공지사항 등록
+            int result = adminService.insertNotice(notice);
+            if (result > 0) {
+                response.put("status", "success");
+                response.put("message", "Notice added successfully.");
+            } else {
+                response.put("status", "error");
+                response.put("message", "Failed to add notice.");
+            }
+        } catch (Exception e) {
+            log.error("Error adding notice", e);
+            response.put("status", "error");
+            response.put("message", "Failed to add notice.");
+        }
+        return response;
     }
+    
+    
+    
+
 
     // 공지사항 수정
     @PostMapping("/doUpdateNotice.do")
@@ -167,40 +187,43 @@ public class AdminController implements PLog {
         return new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
     }
 
-    // 회원 목록 조회
+    //공지사항 끝, 회원시작-----------------------------------------------------------
+    
+    
+    
+    //회원 목록 노출
     @RequestMapping(value = "/doRetrieveUsers.do", method = RequestMethod.GET)
-    public String doRetrieveUsers(Model model, HttpServletRequest req) throws SQLException {
-        log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doRetrieveUsers()                      │");
-        log.debug("└──────────────────────────────────────────────┘");
+    public @ResponseBody Map<String, Object> doRetrieveUsers(
+            @RequestParam Map<String, String> params, HttpSession httpSession) throws SQLException {
 
-        String viewName = "admin/admin_user";
+        log.debug("┌──────────────────────────────────────────────┐");
+        log.debug("│ admin_doRetrieveUsers()                    │");
+        log.debug("└──────────────────────────────────────────────┘");
+        
         Search search = new Search();
 
-        // 검색 조건 처리
-        String searchDiv = StringUtil.nvl(req.getParameter("searchDiv"), "");
-        String searchWord = StringUtil.nvl(req.getParameter("searchWord"), "");
-
-        search.setSearchDiv(searchDiv);
-        search.setSearchWord(searchWord);
-
-        // 페이지 크기 및 페이지 번호 설정
-        String pageSize = StringUtil.nvl(req.getParameter("pageSize"), "10");
-        String pageNo = StringUtil.nvl(req.getParameter("pageNo"), "1");
+        // 페이지 크기 및 페이지 번호 설정 (기본값 사용)
+        String pageSize = StringUtil.nvl(params.get("pageSize"), "5");
+        String pageNo = StringUtil.nvl(params.get("pageNo"), "1");
 
         search.setPageSize(Integer.parseInt(pageSize));
         search.setPageNo(Integer.parseInt(pageNo));
 
         List<Admin> users = adminService.getUsers(search);
-        model.addAttribute("users", users);
-        model.addAttribute("search", search);
 
-        // 총 개수 처리
-        int totalCnt = users.size() > 0 ? users.get(0).getTotalCnt() : 0;
-        model.addAttribute("totalCnt", totalCnt);
+        log.debug("Search Parameters: " + search);
+        log.debug("Users Retrieved: " + users);
 
-        return viewName;
+        Map<String, Object> result = new HashMap<>();
+        result.put("users", users);
+        result.put("pageSize", search.getPageSize());
+        result.put("pageNo", search.getPageNo());
+
+        return result;  // JSON 형식으로 반환
     }
+
+
+
 
     // 회원 등록
     @PostMapping("/doInsertUser.do")

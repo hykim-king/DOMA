@@ -142,3 +142,53 @@ function fillForm(notice) {
     document.querySelector('#title').value = notice.title;
     document.querySelector('#content').value = notice.content;
 }
+
+//등록
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.member-action-button').addEventListener('click', function() {
+        submitNotice();
+    });
+});
+
+function submitNotice() {
+    // 폼 요소 가져오기
+    var title = document.getElementById('title').value.trim();
+    var content = document.getElementById('content').value.trim();
+
+    // 유효성 검사
+    if (!title || !content) {
+        alert('제목과 내용을 입력하세요.');
+        return;
+    }
+
+    // 공지사항 데이터 객체 생성
+    var noticeData = {
+        title: title,
+        content: content
+        // 추가적인 필드가 필요하다면 여기에 추가하세요
+    };
+
+    // AJAX 요청
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/doma/admin/addNotice.do', true);
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
+                    alert(response.message);
+                    // 성공 시 페이지를 새로고침하거나, 다른 페이지로 리다이렉트할 수 있습니다.
+                    window.location.reload();
+                } else {
+                    alert(response.message);
+                }
+            } else {
+                alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify(noticeData));
+}

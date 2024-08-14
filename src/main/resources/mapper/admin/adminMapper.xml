@@ -125,7 +125,8 @@
         BIRTH AS userBirth, 
         ADDRESS AS userAddress, 
         DETAIL_ADDRESS AS userDetailAddress, 
-        REG_DT AS userRegDt
+        REG_DT AS userRegDt,
+        CEL_DT AS userCelDt
     FROM d_user
     ORDER BY REG_DT DESC
 </select>
@@ -161,7 +162,8 @@
         BIRTH AS userBirth, 
         ADDRESS AS userAddress, 
         DETAIL_ADDRESS AS DETAIL_ADDRESS, 
-        REG_DT AS userRegDt
+        REG_DT AS userRegDt,
+        CEL_DT AS userCelDt
     FROM d_user
     WHERE USER_ID = #{userId}
 </select>

@@ -6,6 +6,7 @@
     <title>DOMA</title>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
+    <script src="<%=request.getContextPath()%>/resources/js/admin/admin_user.js"></script>
     <script src="<%=request.getContextPath()%>/resources/js/script.js"></script>
 </head>
 <body>
@@ -30,48 +31,12 @@
                         <tr>
                             <th>회원 ID</th>
                             <th>이름</th>
-                            <th>이메일</th>
                             <th>가입일</th>
-                            <th>등급</th>
+                            <th>상태</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- 빈 행 5개 추가 -->
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <tbody id="user-container">
+                        <!-- 회원 목록이 이곳에 추가됩니다. -->
                     </tbody>
                 </table>
                 <!-- 페이징 섹션 -->
