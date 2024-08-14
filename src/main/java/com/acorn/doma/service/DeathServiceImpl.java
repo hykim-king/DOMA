@@ -8,11 +8,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.Board;
 import com.acorn.doma.domain.Death;
 import com.acorn.doma.mapper.DeathMapper;
 import com.google.gson.JsonArray;
@@ -153,5 +156,13 @@ public class DeathServiceImpl implements DeathService, PLog{
         case "2": return "야간";
         default: return "알수없음";
     }
+	}
+
+	/* 시각화페이지 */
+	@Override
+	public List<Map<String, Object>> MonthDead(Death inVO) throws SQLException {
+		List<Map<String, Object>> list = deathMapper.MonthDead(inVO); 
+		return list;
+		 
 	}
 }

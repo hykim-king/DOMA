@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.acorn.doma.mapper.ChartMapper">
-
-
+<mapper namespace="com.acorn.doma.mapper.DeathMapper">
+	<select id="MonthDead" parameterType="String"  resultType="map">
+	SELECT
+	SUBSTR(occr_date, 5, 2) AS month,  
+	SUM(dead) AS total_deaths
+	FROM
+	d_death
+	GROUP BY
+	SUBSTR(occr_date, 5, 2)  
+	ORDER BY
+	month ASC                                      
+    </select> 
 
 </mapper>

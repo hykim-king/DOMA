@@ -24,9 +24,11 @@ import com.acorn.doma.domain.Comments;
 import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.BoardMapper;
 import com.acorn.doma.mapper.CommentsMapper;
+import com.acorn.doma.mapper.DeathMapper;
 import com.acorn.doma.mapper.UserMapper;
 import com.acorn.doma.service.BoardService;
 import com.acorn.doma.service.CommentsService;
+import com.acorn.doma.service.DeathService;
 import com.acorn.doma.service.MarkdownService;
 import com.acorn.doma.service.UserService;
 import com.google.gson.Gson;
@@ -47,6 +49,8 @@ public class MyPageController implements PLog {
 	@Autowired 
 	CommentsService commentService;
 	
+	@Autowired
+	DeathService deathService;
 	
 	//─────────────────────────────────매퍼
 	@Autowired
@@ -62,7 +66,8 @@ public class MyPageController implements PLog {
 	@Autowired
 	MarkdownService markdownService;
 	 
-	
+	@Autowired
+	DeathMapper deathMapper;
 	
 	
 	

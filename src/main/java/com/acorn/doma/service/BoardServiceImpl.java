@@ -137,6 +137,9 @@ public class BoardServiceImpl implements BoardService, PLog {
 		
 		return outVO;
 	}
+	
+	
+ 
 		 
 
 }
