@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-  //doDelete : 삭제
+    //doDelete : 삭제
     function doDelete() {
         console.log("doDelete()");
         
@@ -449,7 +449,37 @@ document.addEventListener("DOMContentLoaded", function() {
                         replyRow.append(replyWriter).append(replyComments).append(replyDate);
 
                         // grade에 따른 수정/삭제 버튼 추가 조건
-                        if (userId && (grade === 0 || reply.userId === userId)) {
+                        if (grade === 0) {
+                            // grade가 0일 때 삭제 버튼만 추가
+                            var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-warning");
+
+                            // 삭제 버튼 클릭 이벤트
+                            deleteButton.on("click", function() {
+                                if (confirm("삭제하시겠습니까?")) {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "/doma/comments/commentsDelete.do",
+                                        dataType: "text",
+                                        data: {
+                                            "comSeq": reply.comSeq,
+                                            "ajax": true
+                                        },
+                                        success: function(response) {
+                                            alert('삭제하였습니다.');
+                                            ajaxGetComments();
+                                        },
+                                        error: function(error) {
+                                            console.log("Error:", error);
+                                            alert("댓글 삭제에 실패했습니다.");
+                                        }
+                                    });
+                                }
+                            });
+
+                            replyRow.append(deleteButton);
+
+                        } else if (grade === 1 && userId === reply.userId) {
+                            // grade가 1이고 userId가 댓글 작성자와 같을 때 수정/삭제 버튼 추가
                             var updateButton = $("<button></button>").text("수정").addClass("btn btn-outline-warning");
                             var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-warning");
 
@@ -484,12 +514,10 @@ document.addEventListener("DOMContentLoaded", function() {
                                 if (confirm("삭제하시겠습니까?")) {
                                     $.ajax({
                                         type: "GET",
-                                        url: "/doma/comments/doDelete.do",
+                                        url: "/doma/comments/commentsDelete.do",
                                         dataType: "text",
                                         data: {
                                             "comSeq": reply.comSeq,
-                                            "userId": userId,
-                                            "seq": seq,
                                             "ajax": true
                                         },
                                         success: function(response) {

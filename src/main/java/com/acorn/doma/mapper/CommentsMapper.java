@@ -12,6 +12,8 @@ import com.acorn.doma.domain.Comments;
 @Mapper
 public interface CommentsMapper extends WorkDiv<Comments> {
 
+	int commentsDelete(Comments inVO) throws SQLException;
+	
 	/**
 	 * 최신 sequence 조회
 	 * @return

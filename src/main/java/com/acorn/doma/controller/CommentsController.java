@@ -235,5 +235,40 @@ public class CommentsController implements PLog {
 		return jsonString;
 	}
 	
+	/**
+	 * 코멘트 단건 삭제
+	 * @param inVO
+	 * @return
+	 * @throws SQLException
+	 * http://localhost:8080/doma/comments/commentsDelete.do
+	 */
+	@RequestMapping(value = "/commentsDelete.do"
+	    	, method = RequestMethod.GET
+	        , produces = "text/plain;charset=UTF-8"
+	        ) //produces : 화면으로 전송 encoding)
+	@ResponseBody
+	public String commentsDelete(Comments inVO) throws SQLException {
+		String jsonString = "";
+		log.debug("1.param:" + inVO);
+		
+		int flag = commentsService.commentsDelete(inVO);
+		
+		log.debug("1.flag:" + flag);
+		String message = "";
+		
+		if(1 == flag) {
+			message = inVO.getComSeq() + "이 삭제 되었습니다.";
+		}else {
+			message = inVO.getComSeq() + "삭제 실패 되었습니다.";
+		}
+		
+		Message messageObj = new Message(flag, message);
+		jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+		log.debug("3.jsonString:" + jsonString);
+		
+		return jsonString;
+		
+	}
+	
 
 }

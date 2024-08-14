@@ -1,6 +1,8 @@
 package com.acorn.doma.dao;
 
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,7 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.acorn.doma.cmn.Message;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.domain.Admin;
@@ -24,6 +31,7 @@ import com.acorn.doma.domain.Board;
 import com.acorn.doma.domain.Code;
 import com.acorn.doma.domain.Comments;
 import com.acorn.doma.mapper.CommentsMapper;
+import com.google.gson.Gson;
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
 
@@ -60,7 +68,7 @@ public class CommentMapperTest implements PLog {
 		log.debug("=======tearDown=========");
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test
     public void doRetrieve() throws Exception {
 		// 저장
@@ -106,6 +114,27 @@ public class CommentMapperTest implements PLog {
 	    isSameComments(outVO01Update, outVO01);
 	}
 	
+	@Test
+	public void commentsDelete() throws Exception {
+		
+		int flag = commentMapper.doSave(comment01);
+	    log.debug("flag : " + flag);
+	    assertEquals(1, flag);
+
+	    //등록 seq조회
+	    int comSeq = commentMapper.getSequence();
+	    log.debug("comSeq : " + comSeq);
+	    comment01.setComSeq(comSeq);
+
+	    //단건 조회
+	    Comments outVO01 = commentMapper.doSelectOne(comment01);
+	    log.debug("outVO01 : " + outVO01);
+	    assertNotNull(outVO01);
+	    
+	    // 단건 삭제
+ 		flag = commentMapper.commentsDelete(outVO01);
+ 		assertEquals(1, flag);
+	}
 	
 	@Ignore
 	@Test

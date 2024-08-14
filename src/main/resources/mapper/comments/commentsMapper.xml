@@ -24,6 +24,11 @@
 		   AND seq = #{seq}
 		   AND user_id = #{userId}
     </update>
+    
+    <delete id="commentsDelete" parameterType="Comments">
+       DELETE FROM D_COMMENT
+        WHERE comseq = #{comSeq}
+    </delete>
 
 	<delete id="doDelete" parameterType="Comments">
 	   DELETE FROM D_COMMENT

@@ -90,6 +90,12 @@ public class CommentsServiceImpl implements CommentsService, PLog{
 		return outVO;
 	}
 
+	@Override
+	public int commentsDelete(Comments inVO) throws SQLException {
+		int flag = commentMapper.commentsDelete(inVO);
+		return flag;
+	}
+
 	 
 
 }

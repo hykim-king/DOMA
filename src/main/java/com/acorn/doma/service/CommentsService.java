@@ -8,6 +8,8 @@ import com.acorn.doma.domain.Comments;
 
 public interface CommentsService extends WorkDiv<Comments>{
 
+	int commentsDelete(Comments inVO) throws SQLException;
+	
 	List<Comments> mpCommentSelect(Comments inVO) throws SQLException;
 	
 	List<Comments> mpCommentSelect(String userId) throws SQLException;

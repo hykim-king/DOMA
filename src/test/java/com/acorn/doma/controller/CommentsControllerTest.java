@@ -200,6 +200,52 @@ public class CommentsControllerTest implements PLog {
 		isSameComments(comments, comments01);
 	}
 	
+	//@Ignore
+	@Test
+	public void commentsDelete() throws Exception {
+		log.debug("┌───────────────────────────┐");
+		log.debug("│ *commentsDelete()*        │");
+		log.debug("└───────────────────────────┘");
+		
+		//한건 등록
+		int flag = commentsMapper.doSave(comments01);
+		log.debug("flag:" + flag);
+		assertEquals(1, flag);
+		
+		int comSeq = commentsMapper.getSequence();
+		log.debug("comSeq:" + comSeq);
+		comments01.setComSeq(comSeq);
+		
+		//삭제
+		MockHttpServletRequestBuilder requestBuilder 
+				= MockMvcRequestBuilders.get("/board/commentsDelete.do")
+				.param("comSeq", comments01.getComSeq()+"")
+				;
+		
+		//호출 및 결과
+		ResultActions resultActions = mockMvc.perform(requestBuilder)
+		.andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=UTF-8"))
+		.andExpect(status().is2xxSuccessful());
+		
+		//3.JSON -> Message
+		String jsonResult = resultActions.andDo(print())
+							.andReturn()
+							.getResponse().getContentAsString()
+							;
+		
+		log.debug("┌──────────────────────────────┐");
+		log.debug("│ jsonResult:" + jsonResult      );
+		log.debug("└──────────────────────────────┘");
+		
+		//json 문자열을 message로 변환
+		Message resultMessage = new Gson().fromJson(jsonResult, Message.class);
+		
+		//비교
+		assertEquals(1, resultMessage.getMessageId());
+		assertEquals(comments01.getComSeq() + "이 삭제 되었습니다.", resultMessage.getMessageContents());
+		
+	}
+	
 	@Ignore
 	@Test
 	public void doDelete() throws Exception {
