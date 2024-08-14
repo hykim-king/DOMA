@@ -73,9 +73,44 @@ public class ChartMapperTest implements PLog {
 	@Test
 	public void MonthDead() throws SQLException { 
 		Death inVO = new Death(); 
-	    List<Map<String, Object>> list = deathMapper.MonthDead(inVO);
-
-	    // Log the results
+	    List<Map<String, Object>> list = deathMapper.MonthDead(inVO); 
+	    log.debug("list : " + list);
+	}
+	@Test
+	public void WeekDead() throws SQLException { 
+		Death inVO = new Death(); 
+	    List<Map<String, Object>> list = deathMapper.WeekDead(inVO); 
+	    log.debug("list : " + list);
+	}
+	@Test
+	public void HourDead() throws SQLException { 
+		Death inVO = new Death(); 
+	    List<Map<String, Object>> list = deathMapper.HourDead(inVO); 
+	    log.debug("list : " + list);
+	}
+	
+	@Test
+	public void NightDead() throws SQLException { 
+		Death inVO = new Death(); 
+	    List<Map<String, Object>> list = deathMapper.NightDead(inVO); 
+	    log.debug("list : " + list);
+	}
+	@Test
+	public void MajorDead() throws SQLException { 
+		Death inVO = new Death(); 
+	    List<Map<String, Object>> list = deathMapper.MajorDead(inVO); 
+	    log.debug("list : " + list);
+	}
+	@Test
+	public void MediumDead() throws SQLException { 
+		Death inVO = new Death(); 
+	    List<Map<String, Object>> list = deathMapper.MediumDead(inVO); 
+	    log.debug("list : " + list);
+	}
+	@Test
+	public void GnameDead() throws SQLException { 
+		Death inVO = new Death(); 
+	    List<Map<String, Object>> list = deathMapper.GnameDead(inVO); 
 	    log.debug("list : " + list);
 	}
 

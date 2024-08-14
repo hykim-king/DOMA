@@ -144,7 +144,7 @@
 	GROUP BY
 	TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 -- 2시간 단위로 그룹화
 	ORDER BY
-	start_hour; -- 그룹화 시작 시간으로 정렬  
+	start_hour  -- 그룹화 시작 시간으로 정렬  
     </select>
     
     <!--───────────────────────────────────────────────────────────────────────────  -->
@@ -163,7 +163,7 @@
 	CASE
 	WHEN day_night = '주간' THEN 1
 	WHEN day_night = '야간' THEN 2
-	END;
+	END 
     </select>
     
     <select id="NightCasualties" parameterType="String"  resultType="map">
@@ -180,7 +180,7 @@
 	CASE
 	WHEN day_night = '주간' THEN 1
 	WHEN day_night = '야간' THEN 2
-	END;
+	END 
     </select>
     
     <select id="NightSeriously" parameterType="String"  resultType="map">
