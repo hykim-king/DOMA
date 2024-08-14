@@ -263,10 +263,10 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("로그인이 필요합니다.");
             window.location.href = "/doma/user/loginPage.do";
         } else if (userId !== "" && userId === modId) {
-            moveToUp();    
+        	doDelete();    
         } else if (userId === userId) {
             if (grade === 0) {
-                moveToUp();
+            	doDelete();
             } else if (grade === 1) {
                 alert("작성자가 아닙니다.");
             }
