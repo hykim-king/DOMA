@@ -20,6 +20,7 @@ import com.acorn.doma.domain.Board;
 import com.acorn.doma.service.BoardService;
 import com.acorn.doma.service.CodeService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 @RequestMapping("safe")
@@ -37,6 +38,60 @@ public class SafeController implements PLog {
 		log.debug("└──────────────────────────────────────────┘");	
 	};
 	
+	@RequestMapping(value = "/doUpdate.do"
+			   , method = RequestMethod.POST
+			   , produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String doUpdate(Board inVO) throws SQLException {
+		
+		String jsonString = "";
+		log.debug("1.param:" + inVO);
+		
+		int flag = boardService.doUpdate(inVO);
+		log.debug("2.flag:" + flag);
+		String message = "";
+		if(1 == flag) {
+			message = inVO.getTitle() + "이 수정 되었습니다.";
+		}else {
+			message = "게시물 수정에 실패했습니다.";
+		}
+		
+		Message messageObj = new Message(flag, message);
+		jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+		log.debug("3.jsonString:" + jsonString);
+		
+		return jsonString;
+		
+	}
+	
+	@RequestMapping(value = "/doDelete.do"
+	    	, method = RequestMethod.GET
+	        , produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String doDelete(Board inVO) throws SQLException {
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ safeController : doDelete()              │");
+		log.debug("└──────────────────────────────────────────┘");
+		String jsonString = "";
+		log.debug("1.param:" + inVO);
+		
+		int flag = boardService.doDelete(inVO);
+		
+		log.debug("1.flag:" + flag);
+		String message = "";
+		
+		if(1 == flag) {
+			message = inVO.getTitle() + "이 삭제 되었습니다.";
+		}else {
+			message = "게시글 삭제에 실패했습니다.";
+		}
+		
+		jsonString = new Gson().toJson(new Message(flag, message));	
+		log.debug("2. jsonString:" + jsonString);
+		
+		return jsonString;
+		
+	}
 	
 	@RequestMapping(value = "/save.do"
 			   , method = RequestMethod.POST

@@ -27,6 +27,7 @@
 	    window.location.href = "/doma/safe/selectOne.do?seq="+ input;
 	}
 	
+	
 	function saveBtn() {
 	    console.log("saveBtn()");
 		

@@ -149,7 +149,8 @@ info : ${info }
 	    <h2 class="mb-0"></h2>
 	    <div class="d-flex" style="margin-bottom : 10px;">
 	        <input type="button" value="목록" id="moveToList" class="btn btn-secondary me-2">
-	        <input type="button" value="수정" id="update" class="btn btn-dark">
+	        <input type="button" value="수정" id="doUpdate" class="btn btn-dark me-2">
+	        <input type="button" value="삭제" id="doDelete" class="btn btn-dark me-2">
 	    </div>
 	</div>
 		<article class="post">
@@ -171,5 +172,6 @@ info : ${info }
 		</article>
 	</div>
 </body>
+<script src="${CP }/resources/js/safeInfoPage/safe_selectOne_page.js"></script>
 </html>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
