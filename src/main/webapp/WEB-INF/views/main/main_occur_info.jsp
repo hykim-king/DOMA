@@ -70,7 +70,24 @@
     }
 </style>
 <script>
+let selectedRisk=[];
 document.addEventListener("DOMContentLoaded", function () {
+
+	 window.selectRisk = function(riskLevel) {
+         const riskButton = document.getElementById(riskLevel.toString());
+
+         if (riskButton.classList.contains('selected')) {
+             riskButton.classList.remove('selected');
+             // 배열에서 선택된 위험도 제거
+             selectedRisk = selectedRisk.filter(level => level !== riskLevel);
+         } else {
+             riskButton.classList.add('selected');
+             // 배열에 선택된 위험도 추가
+             selectedRisk.push(riskLevel);
+         }
+
+         console.log('Selected Risk Levels:', selectedRisk);
+     }
     var container = document.getElementById('map');
     var options = {
         center: new kakao.maps.LatLng(37.564214, 127.001699),
@@ -85,12 +102,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 기본적으로 사고 위험도 버튼들이 모두 선택된 상태로 설정
     const riskButtons = document.querySelectorAll('.risk-button');
-    riskButtons.forEach(button => button.classList.add('selected'));
+    riskButtons.forEach(button => {
+        button.classList.add('selected');
+        selectedRisk.push(parseInt(button.id)); // 선택된 위험도를 배열에 추가
+    });
+    console.log('Initial Selected Risk Levels:', selectedRisk); // 초기 선택된 위험도 로그
+ // 기본적으로 구 선택과 연도 선택 초기화
+    document.getElementById('yearDropdown').value = ''; // 기본값 설정
+    document.getElementById('guDropdown').selectedIndex = -1; // 기본값 설정
+    document.querySelector('.risk-section').style.display = 'none'; // 기본적으로 숨김
 });
 
 let selectedGuList = [];
 let isAllSelected = false; // 전체 선택 상태를 추적하는 변수
-let selectedRisk = [];
 
 // 년도 선택 시 구 선택 드롭다운을 보이도록 설정
 function selectYear(year) {
@@ -143,9 +167,15 @@ function toggleGuDropdown() {
         showGuListButton.innerText = '전체 선택'; // 버튼 텍스트 변경
         deselectAllGu(); // 드롭다운이 숨겨질 때 전체 취소
     }
+
+    // 전체 선택 후 사고 위험도 섹션 보이기
+    if (selectedGuList.length > 0) {
+        document.querySelector('.risk-section').style.display = 'block';
+    } else {
+        document.querySelector('.risk-section').style.display = 'none';
+    }
 }
 
-//전체 선택
 function selectAllGu() {
     const guDropdown = document.getElementById('guDropdown');
     const options = Array.from(guDropdown.options);
@@ -162,6 +192,10 @@ function selectAllGu() {
 
     isAllSelected = true; // 전체 선택 상태로 변경
     console.log('Selected Gu List:', selectedGuList);
+
+    
+
+    console.log('Selected Risk Levels:', selectedRisk);
 }
 
 //전체 취소
@@ -182,14 +216,17 @@ function deselectAllGu() {
 }
 // 조회 버튼 클릭 시 데이터 로드
 function fetchData() {
+	let localRiskLevels = [...selectedRisk];
     const selectedYear = document.getElementById('yearDropdown').value;
     const guDropdown = document.getElementById('guDropdown');
     const selectedGu = Array.from(guDropdown.selectedOptions).map(option => option.value);
-
-    if (selectedYear && selectedGu.length > 0) {
-        loadYearGuMarkers(selectedYear, selectedGu);
+    console.log('Selected Year:', selectedYear);
+    console.log('Selected Gu List:', selectedGu);
+    console.log('Selected Risk Levels:', localRiskLevels);
+    if (selectedYear && selectedGu.length > 0 && localRiskLevels.length > 0) { // selectedRisk가 있는지 확인
+        loadYearGuMarkers(selectedYear, selectedGu, localRiskLevels);
     } else {
-        console.warn('Please select a year and at least one Gu.');
+        console.warn('Please select a year, at least one Gu, and a risk level.');
     }
 }
 
@@ -253,22 +290,9 @@ function addMarkersToMap(data) {
     });
 }
 
-//사고 위험도 버튼 선택
-function selectRisk(riskLevel) {
-    const riskButton = document.getElementById(`risk${riskLevel}`);
-    
-    if (riskButton.classList.contains('selected')) {
-        riskButton.classList.remove('selected');
-        selectedRisk = selectedRisk.filter(level => level !== riskLevel);
-    } else {
-        riskButton.classList.add('selected');
-        selectedRisk.push(riskLevel);
-    }
 
-    console.log('Selected Risk Levels:', selectedRisk);
-}
 </script>
-<title>구 선택 및 사고 위험도</title>
+<title>DOMA</title>
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -327,14 +351,14 @@ function selectRisk(riskLevel) {
                 <div class="risk-section">
                     <h3>사고 위험도 선택</h3>
                     <div id="riskButtons">
-                        <div id="risk1" class="risk-button" onclick="selectRisk(1)">1</div>
-                        <div id="risk2" class="risk-button" onclick="selectRisk(2)">2</div>
-                        <div id="risk3" class="risk-button" onclick="selectRisk(3)">3</div>
-                        <div id="risk4" class="risk-button" onclick="selectRisk(4)">4</div>
-                        <div id="risk5" class="risk-button" onclick="selectRisk(5)">5</div>
+                        <div id="1" class="risk-button" onclick="selectRisk(1)">1</div>
+                        <div id="2" class="risk-button" onclick="selectRisk(2)">2</div>
+                        <div id="3" class="risk-button" onclick="selectRisk(3)">3</div>
+                        <div id="4" class="risk-button" onclick="selectRisk(4)">4</div>
+                        <div id="5" class="risk-button" onclick="selectRisk(5)">5</div>
                     </div>
                 </div>
-
+                    
                 <!-- 조회 버튼 -->
                 <div style="text-align: center; margin-bottom: 20px;">
                     <button onclick="fetchData()" style="width: 150px; height: 35px; font-weight: bold; text-align: center; border: 2px solid black;">조회</button>
@@ -352,6 +376,7 @@ function selectRisk(riskLevel) {
     </div>
 
     <!-- 스크립트 -->
+>
     <script src="${CP}/resources/js/main/main_occur_detail.js"></script>
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
 

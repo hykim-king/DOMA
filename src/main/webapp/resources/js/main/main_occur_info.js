@@ -1,9 +1,10 @@
-function loadYearGuMarkers(year, guList) {
+function loadYearGuMarkers(year, guList, riskLevels) {
     // 배열을 쿼리 매개변수로 변환
     const guParams = guList.map(gu => `guList=${encodeURIComponent(gu)}`).join('&');
-    const fqParams = accFrequencyList.map(fq => `accFrequencyList=${encodeURIComponent(fq)}`).join('&');
+    const fqParams = riskLevels.map(fq => `accFrequencyList=${encodeURIComponent(fq)}`).join('&');                
+    
     $.ajax({
-        url: `/doma/point/yearguSelect.do?year=${encodeURIComponent(year)}&${guParams}&{fqParams}`,
+        url: `/doma/point/yearguSelect.do?year=${encodeURIComponent(year)}&${guParams}&${fqParams}`,
         type: 'GET',
         dataType: 'json',
         success: function(response) {
