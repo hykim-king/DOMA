@@ -40,16 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
         map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
         infowindow = new kakao.maps.InfoWindow({
-            removable: true,
-            zIndex: 1,
-            // infowindow 스타일 지정
-            content: '<div style="background: black; color: white; padding: 10px; border-radius: 5px;"></div>'
+            removable: false,
+            zIndex: 1,            
         });
 
         customOverlay = new kakao.maps.CustomOverlay({
             zIndex: 2,
-            clickable: true,
-            content: '<div class="custom-overlay" style="background: rgba(0, 0, 0, 0.7); color: white; padding: 5px; border-radius: 5px; font-size: 12px;"></div>'
+            clickable: false,            
         });
 
         if (document.getElementById('showAllCheckbox').checked) {
@@ -96,7 +93,7 @@ function loadAllPolygons() {
                         strokeOpacity: 0.8,
                         strokeStyle: 'longdash',
                         fillColor: color,
-                        fillOpacity: 0.7
+                        fillOpacity: 0.4
                     });
 
                     polygon.setMap(map);
@@ -104,9 +101,12 @@ function loadAllPolygons() {
                     polygons[freezing.year].push(polygon);
 
                     kakao.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
-                        customOverlay.setContent('<div style="padding:5px; font-size:12px; color:white; background-color:black;">' + freezing.accPoint + '</div>');
-                        customOverlay.setPosition(mouseEvent.latLng);
-                        customOverlay.setMap(map);
+                        var position = mouseEvent.latLng;
+                        var offset = new kakao.maps.LatLng(position.getLat() + 0.003, position.getLng());
+
+                        infowindow.setPosition(offset);
+                        infowindow.setContent('<div style="background: black; color: white; padding: 10px; border-radius: 5px;">' + freezing.accPoint + '</div>');
+                        infowindow.open(map);
                     });
 
                     kakao.maps.event.addListener(polygon, 'mousemove', function (mouseEvent) {
@@ -114,12 +114,12 @@ function loadAllPolygons() {
                     });
 
                     kakao.maps.event.addListener(polygon, 'mouseout', function () {
+                        infowindow.close();
                         customOverlay.setMap(null);
                     });
 
                     kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
-                        onPolygonClick(freezing.fid, mouseEvent);
-                        infowindow.close(); // 클릭 시 인포윈도우 닫기
+                    	infowindow.close(); // Click 시 infowindow 닫기
                     });
                 }
             });
@@ -199,9 +199,12 @@ function polyData(year) {
                             polygons[year].push(polygon);
 
                             kakao.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
-                                customOverlay.setContent('<div style="padding:5px; font-size:12px; color:white; background-color:black;">' + freezing.accPoint + '</div>');
-                                customOverlay.setPosition(mouseEvent.latLng);
-                                customOverlay.setMap(map);
+                                var position = mouseEvent.latLng;
+                                var offset = new kakao.maps.LatLng(position.getLat() + 0.003, position.getLng());
+
+                                infowindow.setPosition(offset);
+                                infowindow.setContent('<div style="background: black; color: white; padding: 10px; border-radius: 5px;">' + freezing.accPoint + '</div>');
+                                infowindow.open(map);
                             });
 
                             kakao.maps.event.addListener(polygon, 'mousemove', function (mouseEvent) {
@@ -209,12 +212,14 @@ function polyData(year) {
                             });
 
                             kakao.maps.event.addListener(polygon, 'mouseout', function () {
+                                infowindow.close();
                                 customOverlay.setMap(null);
                             });
 
                             kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
                                 onPolygonClick(freezing.fid, mouseEvent);
-                                infowindow.close(); // 클릭 시 인포윈도우 닫기
+                                infowindow.close();
+                                customOverlay.setMap(null);
                             });
 
                         } catch (e) {
