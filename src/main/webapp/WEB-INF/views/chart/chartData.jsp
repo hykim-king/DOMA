@@ -1,35 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>월별 사망자 수 차트</title>
+    <title>ìë³ ì¬ë§ì ì ì°¨í¸</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>월별 총 사망자 수</h1>
+    <h1>ìë³ ì´ ì¬ë§ì ì</h1>
     <canvas id="myChart" width="800" height="400"></canvas>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('http://localhost:8080/doma/chart/chartData.do') // 데이터 엔드포인트 URL
+            fetch('http://localhost:8080/doma/chart/chartData.do') // ë°ì´í° ìëí¬ì¸í¸ URL
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('네트워크 응답이 올바르지 않습니다');
+                        throw new Error('ë¤í¸ìí¬ ìëµì´ ì¬ë°ë¥´ì§ ììµëë¤');
                     }
                     return response.json();
                 })
                 .then(data => {
-                    // JSON 데이터 확인
-                    console.log(data);
+                    // JSON ë°ì´í° íì¸
+                    
 
-                    // Chart.js 차트 데이터 포맷 준비
-                    const labels = data.map(item => item.MONTH);
-                    const values = data.map(item => item.TOTAL_DEATHS);
+                    const convertedData = data.map(item => [item.MONTH, item.TOTAL_DEATHS]);
 
-                    // 차트 데이터 및 옵션 설정
+	                 // 차트 레이블과 값 추출
+	                 const labels = convertedData.map(item => item[0]);
+	                 const values = convertedData.map(item => item[1]);
+	                 console.log(labels);
+	                 console.log(values);
+                    // ì°¨í¸ ë°ì´í° ë° ìµì ì¤ì 
                     const chartData = {
                         labels: labels,
                         datasets: [{
-                            label: '총 사망자 수',
+                            label: 'ì´ ì¬ë§ì ì',
                             data: values,
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
@@ -44,26 +49,26 @@
                                 beginAtZero: true,
                                 title: {
                                     display: true,
-                                    text: '총 사망자 수'
+                                    text: 'ì´ ì¬ë§ì ì'
                                 }
                             },
                             x: {
                                 title: {
                                     display: true,
-                                    text: '월'
+                                    text: 'ì'
                                 }
                             }
                         }
                     };
 
-                    // Chart.js 차트 인스턴스 생성 및 렌더링
+                    // Chart.js ì°¨í¸ ì¸ì¤í´ì¤ ìì± ë° ë ëë§
                     new Chart(document.getElementById('myChart').getContext('2d'), {
                         type: 'bar',
                         data: chartData,
                         options: chartOptions
                     });
                 })
-                .catch(error => console.error('차트 데이터 가져오기 오류:', error));
+                .catch(error => console.error('ì°¨í¸ ë°ì´í° ê°ì ¸ì¤ê¸° ì¤ë¥:', error));
         });
     </script>
 </body>

@@ -140,7 +140,7 @@ function initKakaoMap() {
                 image: markerImage
             });
             var infowindow = new kakao.maps.InfoWindow({
-                content: '<div style="padding:5px; font-size:12px; color:white; background-color:black;">' + pos.info + '</div>'
+                content: '<div style="padding:10px; font-size:12px; color:white; background-color:black; width: 200px; white-space: normal; word-break: break-word;">' + pos.info + '</div>'
             });
 
          // 마커에 마우스오버 이벤트를 등록합니다

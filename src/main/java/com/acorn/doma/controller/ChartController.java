@@ -10,21 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Death;
 import com.acorn.doma.mapper.DeathMapper;
 
 @Controller
 @RequestMapping("chart")
-public class ChartController {
+public class ChartController implements PLog{
 
     @Autowired
     private DeathMapper deathMapper;
 
-    @GetMapping("/chart")
+    @GetMapping("/chart.do")
     public String showChartPage() {
-        return "chartData"; // Returns the chartData.jsp view
+    	String viewName = "/chart/chartData";
+    	log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName:"+viewName);                                 
+        log.debug("└──────────────────────────────────────────┘");
+        
+        return viewName;
     }
-
+    
     @GetMapping("/chartData.do")
     @ResponseBody
     public List<Map<String, Object>> getChartData() throws SQLException {
