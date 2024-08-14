@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.DeathMapper">
 	
+	<!--월별-->
 	<select id="MonthDead" parameterType="String"  resultType="map">
 	SELECT
 	SUBSTR(occr_date, 5, 2) AS month,  
@@ -12,6 +13,326 @@
 	SUBSTR(occr_date, 5, 2)  
 	ORDER BY
 	month ASC                                      
+    </select>
+    
+    <select id="MonthCasualties" parameterType="String"  resultType="map">
+	SELECT
+	SUBSTR(occr_date, 5, 2) AS month, -- 월을 추출 (MM 형식)
+	SUM(casualties) AS total_casualties
+	FROM
+	d_death
+	GROUP BY
+	SUBSTR(occr_date, 5, 2) -- 월로 그룹화
+	ORDER BY
+	month ASC  --casualties 기준                                      
     </select> 
+    
+    <select id="MonthSeriously" parameterType="String"  resultType="map">
+	SELECT
+	SUBSTR(occr_date, 5, 2) AS month, -- 월을 추출 (MM 형식)
+	SUM(seriously) AS total_seriously -- seriously의 총합을 계산
+	FROM
+	d_death
+	GROUP BY
+	SUBSTR(occr_date, 5, 2) -- 월로 그룹화
+	ORDER BY
+	month ASC  -- seriously 기준으로 내림차순 정렬                                      
+    </select> 
+    
+    <!--───────────────────────────────────────────────────────────────────────────  -->
+    <!--요일별-->
+     <select id="WeekDead" parameterType="String"  resultType="map">
+	SELECT
+	day_week, -- 요일
+	SUM(dead) AS total_deaths -- 사망자 수의 총합
+	FROM
+	d_death
+	GROUP BY
+	day_week -- 요일별로 그룹화
+	ORDER BY
+	CASE day_week
+	WHEN '월' THEN 1 -- 월요일
+	WHEN '화' THEN 2 -- 화요일
+	WHEN '수' THEN 3 -- 수요일
+	WHEN '목' THEN 4 -- 목요일
+	WHEN '금' THEN 5 -- 금요일
+	WHEN '토' THEN 6 -- 토요일
+	WHEN '일' THEN 7 -- 일요일
+	ELSE 8 -- 예외 처리
+	END  -- 월요일부터 일요일까지 정렬                                     
+    </select>
+    
+    <select id="WeekCasualties" parameterType="String"  resultType="map">
+	SELECT
+	day_week, -- 요일
+	SUM(casualties) AS total_casualties
+	FROM
+	d_death
+	GROUP BY
+	day_week -- 요일별로 그룹화
+	ORDER BY
+	CASE day_week
+	WHEN '월' THEN 1 -- 월요일
+	WHEN '화' THEN 2 -- 화요일
+	WHEN '수' THEN 3 -- 수요일
+	WHEN '목' THEN 4 -- 목요일
+	WHEN '금' THEN 5 -- 금요일
+	WHEN '토' THEN 6 -- 토요일
+	WHEN '일' THEN 7 -- 일요일
+	ELSE 8 -- 예외 처리
+	END  -- 월요일부터 일요일까지 정렬                                     
+    </select>
+    
+    <select id="WeekSeriously" parameterType="String"  resultType="map">
+	SELECT
+	day_week, -- 요일
+	SUM(seriously) AS total_seriously
+	FROM
+	d_death
+	GROUP BY
+	day_week -- 요일별로 그룹화
+	ORDER BY
+	CASE day_week
+	WHEN '월' THEN 1 -- 월요일
+	WHEN '화' THEN 2 -- 화요일
+	WHEN '수' THEN 3 -- 수요일
+	WHEN '목' THEN 4 -- 목요일
+	WHEN '금' THEN 5 -- 금요일
+	WHEN '토' THEN 6 -- 토요일
+	WHEN '일' THEN 7 -- 일요일
+	ELSE 8 -- 예외 처리
+	END  -- 월요일부터 일요일까지 정렬                                      
+    </select>
+    
+    <!--───────────────────────────────────────────────────────────────────────────  -->
+    <!--시간대별--> 
+    
+     <select id="HourDead" parameterType="String"  resultType="map">
+	SELECT
+	TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 AS start_hour, -- 2시간 단위로 그룹화 시작 시간
+	(TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 + 1) AS end_hour, -- 2시간 단위로 그룹화 종료 시간
+	SUM(dead) AS total_deaths -- 사망자의 총합
+	FROM
+	d_death
+	GROUP BY
+	TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 -- 2시간 단위로 그룹화
+	ORDER BY
+	start_hour -- 그룹화 시작 시간으로 정렬
+                                      
+    </select>
+    
+    <select id="HourCasualties" parameterType="String"  resultType="map">
+	SELECT
+	TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 AS start_hour, -- 2시간 단위로 그룹화 시작 시간
+	(TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 + 1) AS end_hour, -- 2시간 단위로 그룹화 종료 시간
+	SUM(casualties) AS total_casualties -- 사상자의 총합
+	FROM
+	d_death
+	GROUP BY
+	TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 -- 2시간 단위로 그룹화
+	ORDER BY
+	start_hour  -- 그룹화 시작 시간으로 정렬  
+    </select>
+    
+     <select id="HourSeriously" parameterType="String"  resultType="map">
+	SELECT
+	TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 AS start_hour, -- 2시간 단위로 그룹화 시작 시간
+	(TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 + 1) AS end_hour, -- 2시간 단위로 그룹화 종료 시간
+	SUM(seriously) AS total_seriously -- 자의 총합
+	FROM
+	d_death
+	GROUP BY
+	TRUNC(SUBSTR(occr_date, 9, 2) / 2) * 2 -- 2시간 단위로 그룹화
+	ORDER BY
+	start_hour; -- 그룹화 시작 시간으로 정렬  
+    </select>
+    
+    <!--───────────────────────────────────────────────────────────────────────────  -->
+    <!--주야별--> 
+     <select id="NightDead" parameterType="String"  resultType="map">
+	SELECT
+	day_night,
+	SUM(dead) AS total_deaths
+	FROM
+	d_death
+	WHERE
+	day_night IN ('주간', '야간')
+	GROUP BY
+	day_night
+	ORDER BY
+	CASE
+	WHEN day_night = '주간' THEN 1
+	WHEN day_night = '야간' THEN 2
+	END;
+    </select>
+    
+    <select id="NightCasualties" parameterType="String"  resultType="map">
+	SELECT
+	day_night,
+	SUM(casualties) AS total_casualties
+	FROM
+	d_death
+	WHERE
+	day_night IN ('주간', '야간')
+	GROUP BY
+	day_night
+	ORDER BY
+	CASE
+	WHEN day_night = '주간' THEN 1
+	WHEN day_night = '야간' THEN 2
+	END;
+    </select>
+    
+    <select id="NightSeriously" parameterType="String"  resultType="map">
+	SELECT
+	day_night,
+	SUM(seriously) AS total_seriously
+	FROM
+	d_death
+	WHERE
+	day_night IN ('주간', '야간')
+	GROUP BY
+	day_night
+	ORDER BY
+	CASE
+	WHEN day_night = '주간' THEN 1
+	WHEN day_night = '야간' THEN 2
+	END  
+    </select>
+    
+    <!--───────────────────────────────────────────────────────────────────────────  -->
+    <!--사고유형별-->
+    
+    <select id="MajorDead" parameterType="String"  resultType="map">
+	SELECT
+	dm.major_name,
+	COUNT(*) AS accident_count,
+	SUM(dd.dead) AS total_deaths
+	FROM
+	d_death dd
+	JOIN
+	d_death_major dm ON dd.acc_major = dm.acc_major
+	GROUP BY
+	dm.major_name
+	ORDER BY
+	major_name  
+    </select>
+    
+    <select id="MajorCasualties" parameterType="String"  resultType="map">
+	SELECT
+	dm.major_name AS accident_type,
+	SUM(dd.casualties) AS total_casualties
+	FROM
+	d_death dd
+	JOIN
+	d_death_major dm ON dd.acc_major = dm.acc_major
+	GROUP BY
+	dm.major_name
+	ORDER BY
+	dm.major_name  
+    </select>
+    
+    <select id="MajorSeriously" parameterType="String"  resultType="map">
+	SELECT
+	dm.major_name AS accident_type,
+	SUM(dd.seriously) AS total_seriously
+	FROM
+	d_death dd
+	JOIN
+	d_death_major dm ON dd.acc_major = dm.acc_major
+	GROUP BY
+	dm.major_name
+	ORDER BY
+	dm.major_name 
+    </select>
+    
+    <!--───────────────────────────────────────────────────────────────────────────  -->
+    <!--사고종류별-->
+     <select id="MediumDead" parameterType="String"  resultType="map">
+	SELECT
+	dm.medium_name AS accident_type,
+	SUM(dd.dead) AS total_deaths
+	FROM
+	d_death dd
+	JOIN
+	d_death_medium dm ON dd.acc_medium = dm.acc_medium
+	GROUP BY
+	dm.medium_name
+	ORDER BY
+	total_deaths DESC   
+    </select>
+    
+      <select id="MediumCasualties" parameterType="String"  resultType="map">
+	SELECT
+	dm.medium_name AS accident_type,
+	SUM(dd.casualties) AS total_casualties
+	FROM
+	d_death dd
+	JOIN
+	d_death_medium dm ON dd.acc_medium = dm.acc_medium
+	GROUP BY
+	dm.medium_name
+	ORDER BY
+	total_casualties DESC   
+    </select>
+    
+      <select id="MediumSeriously" parameterType="String"  resultType="map">
+	SELECT
+	dm.medium_name AS accident_type,
+	SUM(dd.seriously) AS total_seriously
+	FROM
+	d_death dd
+	JOIN
+	d_death_medium dm ON dd.acc_medium = dm.acc_medium
+	GROUP BY
+	dm.medium_name
+	ORDER BY
+	total_seriously DESC    
+    </select>
+    
+    <!--───────────────────────────────────────────────────────────────────────────  -->
+    <!--사고종류별-->
+      <select id="GnameDead" parameterType="String"  resultType="map">
+	SELECT
+	ds.gname AS region_name,
+	SUM(dd.dead) AS total_deaths
+	FROM
+	d_death dd
+	JOIN
+	d_death_sido ds ON dd.gcode = ds.gcode
+	GROUP BY
+	ds.gname
+	ORDER BY
+	ds.gname  
+    </select>
+    
+     <select id="GnameCasualties" parameterType="String"  resultType="map">
+	SELECT
+	ds.gname AS region_name,
+	SUM(dd.casualties) AS total_casualties
+	FROM
+	d_death dd
+	JOIN
+	d_death_sido ds ON dd.gcode = ds.gcode
+	GROUP BY
+	ds.gname
+	ORDER BY
+	ds.gname;
+   
+    </select>
+    
+     <select id="GnameSeriously" parameterType="String"  resultType="map">
+	SELECT
+	ds.gname AS region_name,
+	SUM(dd.seriously) AS total_seriously
+	FROM
+	d_death dd
+	JOIN
+	d_death_sido ds ON dd.gcode = ds.gcode
+	GROUP BY
+	ds.gname
+	ORDER BY
+	ds.gname; 
+    </select>
 
 </mapper>

@@ -85,8 +85,9 @@ document.addEventListener("DOMContentLoaded", function(){
     const searchDivSelect = document.querySelector("#searchDiv");
     
     const userId = document.querySelector("userId");
-    const modIdInput = document.querySelector("#modId");
     
+    const modIdInput = document.querySelector("#modId");
+    const userIdInput = document.querySelector("#userId");
 
 //이벤트 처리=================================================================================================
   
@@ -152,6 +153,7 @@ document.addEventListener("DOMContentLoaded", function(){
         		"div"      : divInput.value,
         		"gname"    : searchDivSelect.value,
                 "title"    : titleInput.value,
+                "userId"    : userIdInput.value,
                 "modId"    : modIdInput.value,
                 "content"  : simplemde.value()
             };
@@ -234,7 +236,7 @@ seq : ${seqInput }
     <div class="row mb-2">
         <label for="modId" class="col-sm-2 col-form-label">등록자</label>
         <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.userId}'/>" class="form-control readonly-input" readonly="readonly" name="modId" id="modId"  maxlength="20" required="required">
+          <input type="text" value="<c:out value='${board.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
         </div>
     </div> 
     <div class="row mb-2">
