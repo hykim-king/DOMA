@@ -14,7 +14,6 @@ public interface BoardService extends WorkDiv<Board> {
 	public int mpBoardUp(Board inVO) throws SQLException; 
 	
 	public Board mpBoardSelectOne(Board inVO) throws SQLException, NullPointerException; 
-	 
 	
 	
 	/* 안전정보페이지 */
@@ -23,6 +22,8 @@ public interface BoardService extends WorkDiv<Board> {
 	public List<Board> retrieve(Search search) throws SQLException;
 	
 	public Board selectOne(Board inVO) throws SQLException;
+	
+	Board moveUpdate(Board inVO) throws SQLException, NullPointerException;
 	
 	
 }

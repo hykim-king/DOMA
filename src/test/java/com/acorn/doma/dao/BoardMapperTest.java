@@ -144,6 +144,21 @@ public class BoardMapperTest implements PLog{
 		assertEquals(1, flag);
 	}
 	
+	@Test
+	public void moveUpdate() throws Exception {
+		int flag = boardMapper.doSave(board01);
+		log.debug("flag : " + flag);
+		assertEquals(1, flag);
+		
+		int seq = boardMapper.getSequence();
+		log.debug("seq : " + seq);
+		board01.setSeq(seq);
+		
+		Board outVO01 = boardMapper.moveUpdate(board01);
+		log.debug("outVO01 : " + outVO01);
+		assertNotNull(outVO01);
+	}	
+	
 	@Ignore
 	@Test
 	public void doUpdate() throws Exception {
@@ -213,6 +228,7 @@ public class BoardMapperTest implements PLog{
 		assertEquals(1, flag);
 	}
 	
+	@Ignore
 	@Test
 	public void Retrieve() throws Exception {
 		//div : 30

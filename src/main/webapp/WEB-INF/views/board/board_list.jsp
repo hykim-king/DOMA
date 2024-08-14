@@ -241,7 +241,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 	//checkSessionAndMove()
 	function checkSessionAndMove() {
-	
 		// JSP에서 userId 값을 JavaScript 변수로 설정
 	    const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
 	    
@@ -395,7 +394,7 @@ user : ${user}
         <!-- //검색 --------------------------------------------------------------------->
         
         <div class="d-flex m-2">
-            <!-- table -->
+              <!-- table -->
 		      <table  class="boardTable">
 		      <thead >
 		        <tr  >

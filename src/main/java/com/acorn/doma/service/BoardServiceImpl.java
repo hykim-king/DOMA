@@ -137,9 +137,12 @@ public class BoardServiceImpl implements BoardService, PLog {
 		
 		return outVO;
 	}
-	
-	
- 
+
+	@Override
+	public Board moveUpdate(Board inVO) throws SQLException, NullPointerException {
+		Board outVO01 = boardMapper.moveUpdate(inVO);
+		return outVO01;
+	}
 		 
 
 }

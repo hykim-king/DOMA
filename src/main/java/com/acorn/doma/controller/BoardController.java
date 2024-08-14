@@ -457,10 +457,12 @@ public class BoardController implements PLog {
 		//TODO : SESSION처리
 		inVO.setUserId(StringUtil.nvl(inVO.getUserId(), ""));
 		
-		Board outVO = boardService.doSelectOne(inVO);
+		Board moveUp = boardService.moveUpdate(inVO);
+		model.addAttribute("moveUp", moveUp);
 		
-		log.debug("1.param inVO:" + inVO);
-		model.addAttribute("board", inVO);
+		Board outVO = boardService.doSelectOne(inVO);
+		log.debug("1.param outVO:" + outVO);
+		model.addAttribute("board", outVO);
 		
 		//reg 구선택--------------------------------------------------------
 		Search search = new Search();

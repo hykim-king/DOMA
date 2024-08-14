@@ -170,7 +170,7 @@ user : ${user }
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
-  <div class="page-header">
+  <div class="page-header mb-4">
       <h2>
         <c:choose>
             <c:when test="${ '10' == board.getDiv() }">커뮤니티-등록</c:when>

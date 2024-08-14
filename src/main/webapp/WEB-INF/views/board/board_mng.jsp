@@ -175,37 +175,25 @@ document.addEventListener("DOMContentLoaded", function(){
 //객체 생성=================================================================================================    
     //moveToMainBtn : 뒤로 이동
     const moveToMainBtn = document.querySelector("#moveToMain");
-    
-    //doDelete : 삭제
-    const doDeleteBtn = document.querySelector("#doDelete");
-    console.log("doDeleteBtn", doDeleteBtn);
-    
     //doUpdate : 수정
     const doUpdateBtn = document.querySelector("#doUpdate");
-    
     //seq
     const seqInput = document.querySelector("#seq");
-    
     //div
     const divInput = document.querySelector("#div");
-    
     //구이름
     const gnameInput = document.querySelector("#gname");
-    
     //제목
     const titleInput = document.querySelector("#title");
-    
     //이미지
     const imgLinkInput = document.querySelector("#imgLink");
-    
     //내용
     const contentsTextArea = document.querySelector("#content");
-    
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
-    
     const modIdInput = document.querySelector("#modId");
+    const userIdInput = document.querySelector("#userId");
     
 
 //이벤트 처리=================================================================================================
@@ -255,6 +243,8 @@ document.addEventListener("DOMContentLoaded", function(){
         		"seq"      : seqInput.value,
         		"div"      : divInput.value,
         		"gname"    : searchDivSelect.value,
+        		"userId"   : userIdInput.value,
+        		"modId"   : modIdInput.value,
                 "title"    : titleInput.value,
                 "content"  : simplemde.value()
             };
@@ -266,8 +256,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
                         alert(message.messageContents);
-                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-                        moveToList();
+                        moveToMain();
                     }else{
                         alert(message.messageContents);
                     }
@@ -315,28 +304,12 @@ board : ${board }
   <form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="mngForm" id="mngForm" action="${CP}/file/fileUpload.do" method="post" enctype="multipart/form-data">
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
-    <div class="row mb-2">
-        <label for="seq" class="col-sm-2 col-form-label">seq</label>
-        <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.seq}'/>" class="form-control readonly-input" readonly="readonly" name="seq" id="seq"  maxlength="20" required="required">
-        </div>
-    </div>
-    <div class="row mb-2">
-        <label for="div" class="col-sm-2 col-form-label">div</label>
-        <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.getDiv()}'/>" class="form-control readonly-input" readonly="readonly" name="div" id="div"  maxlength="20" required="required">
-        </div>
-    </div>
-    <div class="row mb-2">
-        <label for="views" class="col-sm-2 col-form-label">조회수</label>
-        <div class="col-sm-10">
-          <input type="text" value="<c:out value='${board.views}'/>" class="form-control readonly-input" readonly="readonly" name="views" id="views">
-        </div>
-    </div>
+    <input type="hidden" name="modId"    id="modId" value="${board.modId}">
+    
     <div class="row mb-2">
 	    <label for="searchDiv" class="col-sm-2 col-form-label">구 이름</label>
 	    <div class="col-sm-10">
-	        <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">
+	        <input type="text" value="<c:out value='${moveUp.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">
 	        <select name="searchDiv" class="form-select" id="selectDiv" onchange="document.getElementById('searchDiv').value=this.options[this.selectedIndex].text">
 	            <option value="">구 선택</option>
 	            <c:forEach var="item" items="${GNAME}">
@@ -345,16 +318,22 @@ board : ${board }
 	        </select>
 	    </div>
 	</div>
+	<div class="row mb-2">
+        <label for="userId" class="col-sm-2 col-form-label">등록자</label>
+        <div class="col-sm-10">
+          <input type="text" value="<c:out value='${moveUp.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
+        </div>
+    </div>
     <div class="row mb-2">
     <label for="title" class="col-sm-2 col-form-label">제목</label>
 	    <div class="col-sm-10">
-	        <input type="text" value="<c:out value='${board.title}'/>" class="form-control" name="title" id="title" maxlength="75" required="required">
+	        <input type="text" value="<c:out value='${moveUp.title}'/>" class="form-control" name="title" id="title" maxlength="75" required="required">
 	    </div>
 	</div>
 	<div class="row mb-2">
 	    <label for="content" class="col-sm-2 col-form-label">내용</label>
 	    <div class="col-sm-10">
-	        <textarea style="height: 200px" class="form-control" id="content" name="content"><c:out value='${board.content}'></c:out></textarea>
+	        <textarea style="height: 200px" class="form-control" id="content" name="content"><c:out value='${moveUp.content}'></c:out></textarea>
 	    </div>
 	</div>
   </form>

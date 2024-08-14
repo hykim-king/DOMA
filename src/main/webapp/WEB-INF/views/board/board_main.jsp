@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("userId: " + userId);
     console.log("modId: " + modId);
     console.log("grade: " + grade);
-
+    
     // 객체 생성=================================================================================================
     const moveToListBtn = document.querySelector("#moveToList");
     const doDeleteBtn = document.querySelector("#doDelete");
@@ -253,33 +253,47 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //삭제 세션 여부    
     function deleteSession() {
-        const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+    	const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
         const modId = document.getElementById("modId").value;
+        const grade = <%= grade %>; // grade 값 가져오기
 
-        console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId);
+        console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId + ", grade = " + grade);
 
-        if (userId !== "" && userId === modId) {
-        	doDelete();
-        } else if (userId === "" || userId === " ") {
+        if (userId === "" || userId === " ") {
             alert("로그인이 필요합니다.");
             window.location.href = "/doma/user/loginPage.do";
+        } else if (userId !== "" && userId === modId) {
+            moveToUp();    
+        } else if (userId === userId) {
+            if (grade === 0) {
+                moveToUp();
+            } else if (grade === 1) {
+                alert("작성자가 아닙니다.");
+            }
         } else {
             alert("작성자가 아닙니다.");
         }
     }	
     	
-    //수정하기 세션 여부	
+    //수정하기 세션 여부    
     function moveToUpSession() {
         const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
         const modId = document.getElementById("modId").value;
+        const grade = <%= grade %>; // grade 값 가져오기
 
-        console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId);
+        console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId + ", grade = " + grade);
 
-        if (userId !== "" && userId === modId) {
-        	moveToUp();
-        } else if (userId === "" || userId === " ") {
+        if (userId === "" || userId === " ") {
             alert("로그인이 필요합니다.");
             window.location.href = "/doma/user/loginPage.do";
+        } else if (userId !== "" && userId === modId) {
+            moveToUp();    
+        } else if (userId === userId) {
+            if (grade === 0) {
+                moveToUp();
+            } else if (grade === 1) {
+                alert("작성자가 아닙니다.");
+            }
         } else {
             alert("작성자가 아닙니다.");
         }
@@ -306,13 +320,10 @@ document.addEventListener("DOMContentLoaded", function() {
     function moveToUp() {
         let params = {
             "seq": seq,
-            "div": divInput.value,
-            "gname": searchDivSelect.value,
-            "title": titleInput.value,
-            "content": contentInput.value
+            "div": divInput.value
         };
 
-        window.location.href = "/doma/board/moveToUp.do?seq=" + seq + "&div=" + divInput.value + "&gname=" + searchDivSelect.value + "&title=" + encodeURIComponent(titleInput.value) + "&content=" + encodeURIComponent(contentInput.value);
+        window.location.href = "/doma/board/moveToUp.do?seq=" + seq + "&div=" + divInput.value;
     }
 
     function commentSave() {
@@ -437,10 +448,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         replyRow.append(replyWriter).append(replyComments).append(replyDate);
 
-                        if (reply.userId === userId) {
+                        // grade에 따른 수정/삭제 버튼 추가 조건
+                        if (userId && (grade === 0 || reply.userId === userId)) {
                             var updateButton = $("<button></button>").text("수정").addClass("btn btn-outline-warning");
                             var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-warning");
 
+                            // 수정 버튼 클릭 이벤트
                             updateButton.on("click", function() {
                                 var newComments = prompt("수정할 내용을 입력하세요:", reply.comments);
                                 if (newComments !== null) {
@@ -466,6 +479,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 }
                             });
 
+                            // 삭제 버튼 클릭 이벤트
                             deleteButton.on("click", function() {
                                 if (confirm("삭제하시겠습니까?")) {
                                     $.ajax({
@@ -518,6 +532,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <body>
 user : ${user } 
 board : ${board }
+
 	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">

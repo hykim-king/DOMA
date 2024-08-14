@@ -98,7 +98,6 @@ public class BoardControllerTest implements PLog {
 		log.debug("│ *doUpdate()*              │");
 		log.debug("└───────────────────────────┘");
 		
-		//한건 등록 : 단독으로 돌게 하기 위해서 등록한다
 		int flag = boardMapper.doSave(board01);
 		log.debug("flag:" + flag);
 		assertEquals(1, flag);
@@ -106,6 +105,7 @@ public class BoardControllerTest implements PLog {
 		int seq = boardMapper.getSequence();
 		log.debug("seq:" + seq);
 		board01.setSeq(seq);
+		
 		
 		Board selectOneVO = boardMapper.doSelectOne(board01);
 		
@@ -117,8 +117,6 @@ public class BoardControllerTest implements PLog {
 		.param("userId", selectOneVO.getUserId())
 		.param("modId", selectOneVO.getModId())
 		.param("content", selectOneVO.getContent()+"_U")
-		.param("imgLink", selectOneVO.getImgLink())
-		.param("views", selectOneVO.getViews()+"")
 		.param("gname", selectOneVO.getGname())
 		;
 		

@@ -201,6 +201,24 @@
 		WHERE seq = #{seq}    
     </select>
     
+    <select id="moveUpdate" parameterType="Board" resultType="Board">
+        SELECT
+            seq,
+            div,
+            gname,
+            user_id as userId,
+            title,
+            content,
+            img_link as imgLink,
+            TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+            TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt,
+            views
+        FROM
+            d_board
+        WHERE seq = #{seq} 
+         AND  div = #{div}   
+    </select>
+    
     <delete id="deleteAll">
         DELETE FROM d_board
     </delete>
