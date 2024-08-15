@@ -143,6 +143,15 @@ public class BoardServiceImpl implements BoardService, PLog {
 		Board outVO01 = boardMapper.moveUpdate(inVO);
 		return outVO01;
 	}
+
+	@Override
+	public int update(Board inVO) throws SQLException {
+		
+		int flag = boardMapper.update(inVO);
+		log.debug("1. flag : " + flag);
+		
+		return flag;
+	}
 		 
 
 }

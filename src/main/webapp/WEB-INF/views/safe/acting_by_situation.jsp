@@ -9,7 +9,9 @@
  		<c:forEach var="acting" items="${list40}">
 	 		<ul class="ui_section">
 	 			<li id="acting_seq_${acting.seq}" style="display: hidden; border : 0px;" data-value="${acting.seq}"></li>
-				<li class="img_section">이미지 공사중</li>
+				<li class="img_section">
+					<img src="${acting.imgLink}"  style="width:100%; height:100%;">
+				</li>
 				<li class="title_section">${acting.title }</li>
 			</ul>
  		</c:forEach>

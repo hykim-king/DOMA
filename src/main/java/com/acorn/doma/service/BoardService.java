@@ -25,5 +25,5 @@ public interface BoardService extends WorkDiv<Board> {
 	
 	Board moveUpdate(Board inVO) throws SQLException, NullPointerException;
 	
-	
+	int update(Board inVO) throws SQLException;
 }

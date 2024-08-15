@@ -45,16 +45,9 @@ public class SafeController implements PLog {
 		String jsonString = "";
 		log.debug("1.param:" + inVO);
 		
-		Board outVO = new Board();
-		
-		outVO.setDiv(inVO.getDiv());
-		outVO.setTitle(inVO.getTitle());
-		outVO.setContent(inVO.getContent());
-		outVO.setRegDt(inVO.getRegDt());
-		outVO.setImgLink(inVO.getImgLink());
-		
-		int flag = boardService.doUpdate(outVO);
+		int flag = boardService.update(inVO);
 		log.debug("2.flag:" + flag);
+		
 		String message = "";
 		if(1 == flag) {
 			message = inVO.getTitle() + "이 수정 되었습니다.";

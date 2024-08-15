@@ -46,7 +46,7 @@ header, footer {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    height: 350px;
+    height : auto;
 }
 
 .post-title {
@@ -172,20 +172,15 @@ info : ${info }
 	</c:choose>
 	</div>
 		<article class="post">
-			<h2 name="title" id="title" class="post-title">${info.title}</h2>
+			<h2 id="title" class="post-title">${info.title}</h2>
 			<div class="post-meta">
-				<p name="userId" id="userId" class="post-author">작성자: ${info.userId}</p>
+				<p id="userId" class="post-author">작성자: ${info.userId}</p>
 				<p class="post-date">${info.regDt}</p>
 			</div>
-			<div class="row mb-2">
-		        <label for="searchDiv" class="col-sm-2 col-form-label">이미지 공사중</label>
-		        <div class="col-sm-2">
-		            <input type="text" value="<c:out value='${info.imgLink}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
-		        </div>
-		    </div>
 			<hr>
-			<div name="content" id="content" class="post-content">
+			<div id="content" class="post-content">
 				<p>${info.content}</p>
+				<img src="${info.imgLink }">
 			</div>
 		</article>
 	</div>

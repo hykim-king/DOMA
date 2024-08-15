@@ -40,7 +40,7 @@ target : ${target }
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
 	<form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="regForm" id="regForm" method="post" enctype="multipart/form-data">
-  		<div id="seq" style="display : hidden" value="${target.seq }"></div>
+  		<input type="hidden" id="seq" value="${target.seq }">
   		<div class="row mb-2"> 
   			<label for="boardDiv" class="col-sm-2 col-form-label">게시판 구분</label>
 	  		<div class="col-sm-1">

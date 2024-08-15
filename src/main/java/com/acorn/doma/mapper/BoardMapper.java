@@ -66,4 +66,6 @@ public interface BoardMapper extends WorkDiv<Board>{
 	List<Board> retrieve(Search search) throws SQLException;
 	
 	Board selectOne(Board inVO) throws SQLException;
+	
+	int update(Board inVO) throws SQLException;
 }

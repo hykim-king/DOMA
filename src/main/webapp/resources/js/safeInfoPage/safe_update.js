@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
 
-	const seqInput = document.querySelector("seq");
+	const seqInput = document.querySelector("#seq");
     const divInput = document.querySelector("#boardDiv");
     const titleInput = document.querySelector("#title");
     const userIdInput = document.querySelector("#userId");
@@ -25,12 +25,14 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 	    
     
-    function moveToList() {
+    function moveToList() { 
         window.location.href = "/doma/safe/safePage.do";
     }
 	
 	function doUpdate(){
         console.log("doUpdate()");
+        console.log("seqInput : " + seqInput);
+        console.log("seqInput : " + seqInput.value);
         console.log("divInput : " + divInput.value);
         console.log("titleInput : " + titleInput.value);
         console.log("userIdInput : " + userIdInput.value);

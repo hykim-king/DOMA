@@ -289,7 +289,7 @@
 	       tt1.seq,
 	       tt1.div,
 	       tt1.title,
-	       tt1.IMG_LINK
+	       tt1.img_link as imgLink
 		  FROM (
 	    		SELECT ROWNUM as no, T1.*
 			      FROM (
@@ -321,4 +321,14 @@
 		WHERE seq = #{seq}    
     </select>
     
+    <update id="update" parameterType="Board">
+        UPDATE d_board
+         SET div     = #{div},
+             title   = #{title},
+             mod_id  = #{userId},
+             content = #{content},
+             mod_dt  = SYSDATE
+          WHERE seq = #{seq} 
+            AND user_id = #{userId}
+    </update>
 </mapper>
