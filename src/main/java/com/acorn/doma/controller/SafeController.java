@@ -3,11 +3,10 @@ package com.acorn.doma.controller;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.acorn.doma.cmn.Message;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
-import com.acorn.doma.cmn.StringUtil;
 import com.acorn.doma.domain.Board;
 import com.acorn.doma.service.BoardService;
 import com.acorn.doma.service.CodeService;
@@ -47,7 +45,15 @@ public class SafeController implements PLog {
 		String jsonString = "";
 		log.debug("1.param:" + inVO);
 		
-		int flag = boardService.doUpdate(inVO);
+		Board outVO = new Board();
+		
+		outVO.setDiv(inVO.getDiv());
+		outVO.setTitle(inVO.getTitle());
+		outVO.setContent(inVO.getContent());
+		outVO.setRegDt(inVO.getRegDt());
+		outVO.setImgLink(inVO.getImgLink());
+		
+		int flag = boardService.doUpdate(outVO);
 		log.debug("2.flag:" + flag);
 		String message = "";
 		if(1 == flag) {
@@ -120,8 +126,7 @@ public class SafeController implements PLog {
 		return jsonString;
 	}
 	
-	@RequestMapping(value = "/selectOne.do"
-			   , method = RequestMethod.GET)
+	@GetMapping("/selectOne.do")
 	public String selectOne(Model model, Board inVO) throws SQLException {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController : selectOne()             │");
@@ -138,9 +143,24 @@ public class SafeController implements PLog {
 		return viewName;
 	}
 	
-	@RequestMapping(value = "/savePage.do"
-			   , method = RequestMethod.GET
-			   ,produces = "text/plain;charset=UTF-8")
+	@GetMapping("/updatePage.do")
+	public String updatePage(Model model, Board inVO) throws SQLException {
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ safeController : updatePage()            │");
+		log.debug("└──────────────────────────────────────────┘");
+		log.debug("inVO : " + inVO);
+		
+		String viewName = "/safe/safe_update_page";
+		
+		Board outVO = boardService.selectOne(inVO);
+		log.debug("outVO : " + outVO);
+
+		model.addAttribute("target", outVO);
+		
+		return viewName;
+	}
+	
+	@GetMapping("/savePage.do")
 	public String savePage() throws SQLException {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController : savePage()              │");
@@ -150,9 +170,7 @@ public class SafeController implements PLog {
 		return viewName;
 	}
 	
-	@RequestMapping(value = "/safePage.do"
-					,method = RequestMethod.GET
-					,produces = "text/plain;charset=UTF-8")
+	@GetMapping("/safePage.do")
 	public String safePage(Model model) throws SQLException {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController : safePage()              │");

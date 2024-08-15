@@ -147,11 +147,29 @@ info : ${info }
 	<div class="container">
 		<div class="d-flex align-items-center justify-content-between">
 	    <h2 class="mb-0"></h2>
-	    <div class="d-flex" style="margin-bottom : 10px;">
-	        <input type="button" value="목록" id="moveToList" class="btn btn-secondary me-2">
-	        <input type="button" value="수정" id="doUpdate" class="btn btn-dark me-2">
-	        <input type="button" value="삭제" id="doDelete" class="btn btn-dark me-2">
-	    </div>
+	    <c:choose>
+		<c:when test="${user ne null}">
+			<c:choose>
+				<c:when test="${user.grade == 0}">
+				<div class="d-flex" style="margin-bottom : 10px;">
+			        <input type="button" value="목록" onclick="moveToList()" class="btn btn-secondary me-2">
+			        <input type="button" value="수정" onclick="updatePage()" class="btn btn-dark me-2">
+			        <input type="button" value="삭제" onclick="doDelete()" class="btn btn-dark me-2">
+			    </div>
+				</c:when>
+				<c:when test="${user.grade == 1}">
+				<div class="d-flex" style="margin-bottom : 10px;">
+			        <input type="button" value="목록"onclick="moveToList()" class="btn btn-secondary me-2">
+			    </div>
+				</c:when>
+			</c:choose>
+		</c:when>
+		<c:otherwise>
+			<div class="d-flex" style="margin-bottom : 10px;">
+		       <input type="button" value="목록" onclick="moveToList()" class="btn btn-secondary me-2">
+		    </div>
+		</c:otherwise>
+	</c:choose>
 	</div>
 		<article class="post">
 			<h2 name="title" id="title" class="post-title">${info.title}</h2>

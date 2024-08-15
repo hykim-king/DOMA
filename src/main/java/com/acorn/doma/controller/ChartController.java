@@ -31,7 +31,7 @@ public class ChartController implements PLog{
         return viewName;
     }
     
-    @GetMapping("/chartData.do")
+    @GetMapping(value="/chartData.do")
     @ResponseBody
     public List<Map<String, Object>> getChartData() throws SQLException {
         Death inVO = new Death();
