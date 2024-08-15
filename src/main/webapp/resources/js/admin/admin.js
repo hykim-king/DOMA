@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadNotices(1);
 });
-
+let btnflg = 0; //0일때 비활성화, 1일때 저장
 let currentPage = 1;
 let pageSize = 5; // 페이지 크기
 let totalPages = 1; // 총 페이지 수
@@ -145,9 +145,15 @@ function fillForm(notice) {
 
 //등록
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('.member-action-button').addEventListener('click', function() {
-        submitNotice();
-    });
+    var button = document.querySelector('.member-action-button');
+    if (button) {
+        button.addEventListener('click', function() {
+            button.disabled = true; // 버튼 비활성화
+            if (btnflg==1) {
+                submitNotice();
+            }
+        });
+    }
 });
 
 function submitNotice() {
@@ -165,21 +171,19 @@ function submitNotice() {
     var noticeData = {
         title: title,
         content: content
-        // 추가적인 필드가 필요하다면 여기에 추가하세요
     };
 
     // AJAX 요청
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/doma/admin/addNotice.do', true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
+    btnflg=0;
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
                 if (response.status === 'success') {
                     alert(response.message);
-                    // 성공 시 페이지를 새로고침하거나, 다른 페이지로 리다이렉트할 수 있습니다.
                     window.location.reload();
                 } else {
                     alert(response.message);
@@ -187,6 +191,8 @@ function submitNotice() {
             } else {
                 alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
             }
+            // 버튼을 다시 활성화
+            document.querySelector('.member-action-button').disabled = false;
         }
     };
 

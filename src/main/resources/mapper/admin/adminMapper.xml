@@ -4,7 +4,6 @@
 
 <!-- 공지사항 목록 조회 -->
 <select id="getNotices" parameterType="Search" resultType="Admin">
-    <![CDATA[
     SELECT 
         SEQ as seq,
         DIV as div,
@@ -34,10 +33,14 @@
             ROW_NUMBER() OVER (ORDER BY REG_DT DESC) AS rn
         FROM d_board
         WHERE DIV = '20'
+        <if test="searchWord != null and searchWord != ''">
+            AND (TITLE LIKE '%' || #{searchWord} || '%'
+                 OR USER_ID LIKE '%' || #{searchWord} || '%')
+        </if>
     )
-    WHERE rn > #{pageSize} * (#{pageNo} - 1) AND rn <= #{pageSize} * #{pageNo}
-    ]]>
+    WHERE rn <![CDATA[>]]> #{pageSize} * (#{pageNo} - 1) AND rn <![CDATA[<=]]> #{pageSize} * #{pageNo}
 </select>
+
 
     <!-- 마지막 시퀸스  -->
     <select id="getLastInsertedSeq" resultType="int">
@@ -47,7 +50,7 @@
     <!-- 공지사항 등록 -->
     <insert id="insertNotice" parameterType="Admin">
         INSERT INTO d_board (seq, div, title, user_id, mod_id, content, img_link, reg_dt, mod_dt, views, gname)
-        VALUES (d_board_seq.NEXTVAL, '20', #{title}, #{userId}, #{modId}, #{content}, #{imgLink}, SYSDATE, SYSDATE, #{views}, #{gname})
+        VALUES (d_board_seq.NEXTVAL, '20', #{title}, #{userId}, #{modId}, #{content}, NULL, SYSDATE, SYSDATE, #{views}, NULL)
     </insert>
 
     <!-- 공지사항 수정 -->
@@ -116,8 +119,8 @@
 </select>
 
     <!-- 회원 목록 조회 -->
-<select id="getUsers" resultType="Admin">
-    SELECT 
+<select id="getUsers" parameterType="Search" resultType="Admin">
+SELECT 
         USER_ID AS userId, 
         GRADE AS userGrade, 
         USER_NAME AS userName, 
@@ -126,9 +129,54 @@
         ADDRESS AS userAddress, 
         DETAIL_ADDRESS AS userDetailAddress, 
         REG_DT AS userRegDt,
-        CEL_DT AS userCelDt
+        CEL_DT AS userCelDt,
+        ROWNUM AS rn
+    FROM (
+        SELECT 
+        USER_ID 
+        ,  GRADE
+        , USER_NAME
+        , USER_PW 
+        , BIRTH 
+        , ADDRESS 
+        , DETAIL_ADDRESS 
+        , REG_DT 
+        , CEL_DT
+        , ROW_NUMBER() OVER (ORDER BY REG_DT DESC) AS rn
     FROM d_user
-    ORDER BY REG_DT DESC
+    WHERE 1 = 1
+        <if test="searchWord != null and searchWord != ''">
+            AND (USER_NAME LIKE '%'  || #{searchWord} || '%'
+                 OR USER_ID LIKE '%' ||  #{searchWord} || '%')
+        </if>
+     )
+
+     WHERE rn <![CDATA[>]]> #{pageSize} * (#{pageNo} - 1) AND rn <![CDATA[<=]]> #{pageSize} * #{pageNo}
+</select>
+
+<!-- 회원목록 총 개수 조회 쿼리 -->
+<select id="getUsersCount" parameterType="search" resultType="int">
+SELECT 
+       count(*)
+    FROM(
+        SELECT 
+            USER_ID 
+            ,  GRADE
+            , USER_NAME
+            , USER_PW 
+            , BIRTH 
+            , ADDRESS 
+            , DETAIL_ADDRESS 
+            , REG_DT 
+            , CEL_DT
+        FROM d_user
+
+    WHERE 1 = 1
+        <if test="searchWord != null and searchWord != ''">
+            AND (USER_NAME LIKE '%'   #{searchWord}  '%'
+                 OR USER_ID LIKE '%'   #{searchWord}  '%')
+        </if>
+        )
 </select>
 
     <!-- 회원 수정 -->

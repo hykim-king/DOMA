@@ -64,6 +64,11 @@ public class AdminServiceImpl implements AdminService, PLog {
     }
 
     @Override
+    public int getUsersCount(Search search) throws SQLException {
+        return adminMapper.getUsersCount(search);
+    }
+
+    @Override
     public int updateUser(Admin admin) throws SQLException {
         log.debug("1. param :" + admin);
         return adminMapper.updateUser(admin);

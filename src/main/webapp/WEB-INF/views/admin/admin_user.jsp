@@ -23,8 +23,9 @@
             <div class="box member-list">
                 <h2>회원목록</h2>
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="회원 정보 검색">
-                    <button class="search-button">검색</button>
+                    <input type="text" id="searchWord" class="search-input" placeholder="회원 검색">
+                    <input type="hidden" id="pageSize" value="5">
+                    <button class="search-button" onclick="handleSearch()">검색</button>
                 </div>
                 <table class="member-table">
                     <thead>
@@ -40,12 +41,8 @@
                     </tbody>
                 </table>
                 <!-- 페이징 섹션 -->
-                <div class="pagination">
-                    <button class="page-button" data-page="prev">이전</button>
-                    <button class="page-button" data-page="1">1</button>
-                    <button class="page-button" data-page="2">2</button>
-                    <button class="page-button" data-page="3">3</button>
-                    <button class="page-button" data-page="next">다음</button>
+                <div class="pagination" id="pagination-container">
+                    <!-- 페이지 버튼은 JavaScript에서 동적으로 생성됩니다. -->
                 </div>
             </div>
             <div class="box member-info">

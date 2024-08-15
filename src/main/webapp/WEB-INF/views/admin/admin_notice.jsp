@@ -23,7 +23,7 @@
                 <h2>공지사항 목록</h2>
                 <div class="search-container">
                     <input type="text" id="searchWord" class="search-input" placeholder="공지사항 검색">
-                    <input type="hidden" id="pageSize" value="6">
+                    <input type="hidden" id="pageSize" value="5">
                     <button class="search-button" onclick="handleSearch()">검색</button>
                 </div>
                 <table class="member-table">

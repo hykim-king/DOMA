@@ -23,6 +23,7 @@ import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.StringUtil;
 import com.acorn.doma.domain.Admin;
+import com.acorn.doma.domain.User;
 import com.acorn.doma.service.AdminService;
 import com.google.gson.GsonBuilder;
 import com.acorn.doma.cmn.Message;
@@ -127,12 +128,15 @@ public class AdminController implements PLog {
         Map<String, Object> response = new HashMap<>();
         HttpSession session = request.getSession();
         try {
-            // 세션에서 userId 가져오기, 없으면 기본값 'admin' 설정
-            String userId = (String) session.getAttribute("userId");
-            userId = StringUtil.nvl(userId, "admin");
+            // 세션에서 userId 가져오기
+            User user = (User) session.getAttribute("user");
+            String userId = user.getUserId();
+            notice.setUserId(userId);
+            notice.setModId(userId);
+            //userId = StringUtil.nvl(userId, "admin");
 
             // notice 객체에 userId 설정
-            notice.setUserId(userId);
+            //notice.setUserId(userId);
 
             // 공지사항 등록
             int result = adminService.insertNotice(notice);
@@ -197,7 +201,7 @@ public class AdminController implements PLog {
             @RequestParam Map<String, String> params, HttpSession httpSession) throws SQLException {
 
         log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doRetrieveUsers()                    │");
+        log.debug("│ admin_doRetrieveUsers()                      │");
         log.debug("└──────────────────────────────────────────────┘");
         
         Search search = new Search();
@@ -208,14 +212,16 @@ public class AdminController implements PLog {
 
         search.setPageSize(Integer.parseInt(pageSize));
         search.setPageNo(Integer.parseInt(pageNo));
-
+        String searchWord = (String) params.get("searchWord");
+        search.setSearchWord(searchWord);
         List<Admin> users = adminService.getUsers(search);
-
+        int totalCount = adminService.getUsersCount(search);
         log.debug("Search Parameters: " + search);
         log.debug("Users Retrieved: " + users);
 
         Map<String, Object> result = new HashMap<>();
         result.put("users", users);
+        result.put("totalCount", totalCount);
         result.put("pageSize", search.getPageSize());
         result.put("pageNo", search.getPageNo());
 

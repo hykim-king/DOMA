@@ -61,7 +61,8 @@ public interface AdminMapper {
      * @throws SQLException
      */
     List<Admin> getUsers(Search search) throws SQLException;
-
+    
+    int getUsersCount(Search search) throws SQLException;
     /**
      * 회원 수정
      * @param admin 회원 객체
