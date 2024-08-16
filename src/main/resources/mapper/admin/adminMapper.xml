@@ -42,32 +42,32 @@
 </select>
 
 
-    <!-- 마지막 시퀸스  -->
+<!-- 마지막 시퀸스  -->
     <select id="getLastInsertedSeq" resultType="int">
         SELECT d_board_seq.CURRVAL FROM dual
     </select>
    
-    <!-- 공지사항 등록 -->
+<!-- 공지사항 등록 -->
     <insert id="insertNotice" parameterType="Admin">
         INSERT INTO d_board (seq, div, title, user_id, mod_id, content, img_link, reg_dt, mod_dt, views, gname)
         VALUES (d_board_seq.NEXTVAL, '20', #{title}, #{userId}, #{modId}, #{content}, NULL, SYSDATE, SYSDATE, #{views}, NULL)
     </insert>
 
-    <!-- 공지사항 수정 -->
-    <update id="updateNotice" parameterType="Admin">
-        UPDATE d_board
-        SET title = #{title},
-            user_id = #{userId},
-            mod_id = #{modId},
-            content = #{content},
-            img_link = #{imgLink},
-            mod_dt = SYSDATE,
-            views = #{views},
-            gname = #{gname}
-        WHERE seq = #{seq} AND div = '20'
-    </update>
+<!-- 공지사항 수정 -->
+<update id="updateNotice" parameterType="Admin">
+    UPDATE d_board
+    <set>
+        <if test="title != null">title = #{title},</if>
+        <if test="modId != null">mod_id = #{modId},</if>
+        <if test="content != null">content = #{content},</if>
+        <if test="modDt != null">mod_dt = SYSDATE,</if>
+    </set>
+    WHERE seq = #{seq} AND div = '20'
+</update>
 
-        <!-- 공지사항 삭제 -->
+
+
+<!-- 공지사항 삭제 -->
     <delete id="deleteNotice" parameterType="Admin">
         DELETE FROM d_board
         WHERE seq = #{seq} AND div = '20'
@@ -118,7 +118,7 @@
     WHERE b.seq = #{seq} AND b.div = '20'
 </select>
 
-    <!-- 회원 목록 조회 -->
+<!-- 회원 목록 조회 -->
 <select id="getUsers" parameterType="Search" resultType="Admin">
 SELECT 
         USER_ID AS userId, 

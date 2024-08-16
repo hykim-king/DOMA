@@ -142,10 +142,10 @@ public class AdminController implements PLog {
             int result = adminService.insertNotice(notice);
             if (result > 0) {
                 response.put("status", "success");
-                response.put("message", "Notice added successfully.");
+                response.put("message", "공지사항을 등록에 성공했습니다.");
             } else {
                 response.put("status", "error");
-                response.put("message", "Failed to add notice.");
+                response.put("message", "공지사항 등록에 실패했습니다.");
             }
         } catch (Exception e) {
             log.error("Error adding notice", e);
@@ -156,11 +156,60 @@ public class AdminController implements PLog {
     }
       
 
-
     // 공지사항 수정
+    @PostMapping("/updateNotice.do")
+    public @ResponseBody Map<String, Object> updateNotice(@RequestBody Admin notice, HttpServletRequest request) {
+        Map<String, Object> response = new HashMap<>();
+        HttpSession session = request.getSession();
+        
+        try {
+            // 세션에서 modId 가져오기
+            User user = (User) session.getAttribute("user");
+            String modId = user.getUserId();
+            notice.setModId(modId);
 
+            // 공지사항 수정
+            int result = adminService.updateNotice(notice);
+            if (result > 0) {
+                response.put("status", "success");
+                response.put("message", "공지사항이 성공적으로 수정되었습니다.");
+            } else {
+                response.put("status", "error");
+                response.put("message", "공지사항 수정에 실패했습니다.");
+            }
+        } catch (Exception e) {
+            log.error("Error updating notice", e);
+            response.put("status", "error");
+            response.put("message", "공지사항 수정 중 오류가 발생했습니다.");
+        }
+        return response;
+    }
 
     // 공지사항 삭제
+    @RequestMapping(value = "/deleteNotice.do", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Map<String, Object> deleteNotice(@RequestParam("seq") int seq) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Admin admin = new Admin();
+            admin.setSeq(seq);
+
+            int result = adminService.deleteNotice(admin);
+            if (result > 0) {
+                response.put("status", "success");
+                response.put("message", "공지사항이 성공적으로 삭제되었습니다.");
+            } else {
+                response.put("status", "error");
+                response.put("message", "공지사항 삭제에 실패했습니다.");
+            }
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", "공지사항 삭제 중 오류가 발생했습니다.");
+        }
+        return response;
+    }
+
+
 
 
     //공지사항 끝, 회원시작-----------------------------------------------------------

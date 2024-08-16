@@ -49,13 +49,16 @@ function displayNotices(notices) {
     console.log('Received notices:', notices);
 
     notices.forEach(notice => {
+        // 날짜만 추출 
+        const boardRegDateOnly = notice.boardRegDt.split(' ')[0];
+
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${notice.rn}</td>
             <td><a href="#" class="notice-title" data-id="${notice.seq}">${notice.title}</a></td>
             <td>${notice.content}</td>
             <td>${notice.userId}</td>
-            <td>${notice.boardRegDt}</td>
+            <td>${boardRegDateOnly}</td>
         `;
         listContainer.appendChild(row);
     });
@@ -69,6 +72,7 @@ function displayNotices(notices) {
         });
     });
 }
+
 
 function renderPagination() {
     const paginationContainer = document.getElementById("pagination-container");
@@ -197,4 +201,146 @@ function submitNotice() {
     };
 
     xhr.send(JSON.stringify(noticeData));
+}
+
+
+//수정
+let originalTitle = '';
+let originalContent = '';
+
+// 게시글 상세 정보를 로드할 때 원래 제목과 내용 저장
+function loadNoticeById(seq) {
+    fetch(`/doma/admin/getNoticeById.do?seq=${seq}`)
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // JSON으로 응답을 변환
+            } else {
+                return response.text().then(text => {
+                    throw new Error(`Server responded with status ${response.status}: ${text}`);
+                });
+            }
+        })
+        .then(data => {
+            console.log('Notice details:', data);
+            fillForm(data); 
+            originalTitle = data.title;
+            originalContent = data.content;
+        })
+        .catch(error => {
+            console.error('Error fetching notice details:', error);
+        });
+}
+
+function fillForm(notice) {
+    document.querySelector('#title').value = notice.title;
+    document.querySelector('#content').value = notice.content;
+}
+
+function handleUpdate() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    const seq = document.querySelector('.notice-title').getAttribute('data-id'); // 제목 링크의 data-id 속성에서 seq 값을 가져오기
+
+    if (!title || !content || !seq) {
+        console.error("One or more fields are missing.");
+        return;
+    }
+
+    // 제목과 내용이 변경되었는지 확인
+    if (title === originalTitle && content === originalContent) {
+        alert('수정사항을 입력해주세요.');
+        return;
+    }
+
+    // AJAX 요청을 통해 서버에 수정 요청을 보냅니다.
+    fetch('/doma/admin/updateNotice.do', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: title,
+            content: content,
+            seq: seq
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            location.reload();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('AJAX Error:', error);
+        alert('공지사항 수정에 실패했습니다.');
+    });
+}
+
+
+//삭제
+// 전역 변수로 seq 값 저장
+let currentSeq = null;
+
+// 게시글 상세 정보를 로드할 때 seq 값을 설정
+function loadNoticeById(seq) {
+    fetch(`/doma/admin/getNoticeById.do?seq=${seq}`)
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // JSON으로 응답을 변환
+            } else {
+                return response.text().then(text => {
+                    throw new Error(`Server responded with status ${response.status}: ${text}`);
+                });
+            }
+        })
+        .then(data => {
+            console.log('Notice details:', data);
+            fillForm(data);
+            originalTitle = data.title;
+            originalContent = data.content;
+            currentSeq = data.seq; // seq 값을 전역 변수에 저장
+        })
+        .catch(error => {
+            console.error('Error fetching notice details:', error);
+        });
+}
+
+function fillForm(notice) {
+    document.querySelector('#title').value = notice.title;
+    document.querySelector('#content').value = notice.content;
+}
+
+function handleDelete() {
+    if (currentSeq === null) {
+        console.error("Seq is not defined.");
+        return;
+    }
+
+    // 삭제 확인 대화상자 표시
+    const confirmation = confirm("정말로 삭제하시겠습니까?");
+    if (!confirmation) {
+        // 사용자가 삭제를 취소한 경우
+        return;
+    }
+
+    // 삭제 요청을 보내는 AJAX 호출
+    fetch(`/doma/admin/deleteNotice.do?seq=${currentSeq}`, {
+        method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            location.reload(); // 페이지 새로 고침
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('AJAX Error:', error);
+        alert('공지사항 삭제에 실패했습니다.');
+    });
 }

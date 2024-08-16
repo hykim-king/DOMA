@@ -93,7 +93,7 @@ function displayUserDetails(user) {
     document.getElementById('joinDate').value = user.userRegDt.split(' ')[0];
     
     // userCelDt가 null인 경우 '활성'으로, 그렇지 않으면 '비활성 : userCelDt'로 설정
-    const celdtValue = user.userCelDt ? `비활성 : ${user.userCelDt}` : '활성';
+    const celdtValue = user.userCelDt ? `탈퇴일 : ${user.userCelDt}` : '활성';
     document.getElementById('celdt').value = celdtValue;
 }
 

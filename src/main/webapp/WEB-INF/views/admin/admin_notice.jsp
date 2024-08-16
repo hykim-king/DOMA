@@ -59,8 +59,8 @@
                     </div>
                     <div class="form-buttons">
                         <button type="button" class="member-action-button" data-action="create" onclick="submitNotice()">등록</button>
-                        <button type="submit" class="member-action-button" data-action="update">수정</button>
-                        <button type="submit" class="member-action-button" data-action="delete">삭제</button>
+                        <button type="button" class="member-action-button" data-action="update" onclick="handleUpdate()">수정</button>
+                        <button type="button" class="member-action-button" data-action="delete" onclick="handleDelete()">삭제</button>
                     </div>
                 </form>
             </div>
