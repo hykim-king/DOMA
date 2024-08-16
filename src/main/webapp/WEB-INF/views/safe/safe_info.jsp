@@ -34,7 +34,7 @@ button {
 }
 .pageDiv{
 	width : 750px;
-	height : 500px;
+	height : auto;
 	margin : 0px 0px 2% 7%;
 }
 .pageH2{
@@ -51,17 +51,50 @@ button {
 .img_section{
 	height: 150px;
 	border-radius : 20px 20px 0px 0px;
-}
-.title_section{
-	height: 30px;
-	border-radius : 0px 0px 20px 20px;
-	text-align : c
-}
-li{
 	border : 2px solid #495057;
 	margin: 0px;
 	padding : 0px;
 	overflow : hidden;
+}
+.title_section{
+	height: 30px;
+	border-radius : 0px 0px 20px 20px;
+	border : 2px solid #495057;
+	margin: 0px;
+	padding : 0px;
+	overflow : hidden;
+}
+.token-link {
+    position: relative;
+    display: inline-block;
+    color: #2c3e50;
+    border-radius: 24px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 8px 16px 10px;
+    margin-left:10px;
+    margin-right:10px;
+}
+.token-link:hover {
+  z-index: 2;
+  border-radius: 24px;
+  color: white;
+  text-decoration: none;
+  background-color: #2c3e50;
+  border-color: #dee2e6;
+}
+.token.active .token-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #2c3e50;
+}
+.token:first-child .token-link {
+  
+}
+
+.token:last-child .token-link {
+  
 }
 </style>
 <body>
@@ -94,6 +127,45 @@ li{
  	 <jsp:include page="/WEB-INF/views/safe/info_by_situation.jsp"></jsp:include>
  	 <jsp:include page="/WEB-INF/views/safe/acting_by_situation.jsp"></jsp:include>
  </div>
+  <!-- 페이지네이션 -->
+  <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <c:set var="maxPages" value="${totalPages30 > totalPages40 ? totalPages30 : totalPages40}" />
+    <c:set var="currentPageNo" value="${pageNo30}" />
+    <c:choose>
+      <c:when test="${currentPageNo > 1}">
+        <li class="token">
+          <a class="token-link" href="${CP}/safe/safePage.do?pageNo=${currentPageNo - 1}">Previous</a>
+        </li>
+      </c:when>
+      <c:otherwise>
+        <li class="token">
+          <span class="token-link">Previous</span>
+        </li>
+      </c:otherwise>
+    </c:choose>
+
+    <c:forEach var="i" begin="1" end="${maxPages}">
+      <li class="token <c:if test="${i == currentPageNo}">active</c:if>">
+        <a class="token-link" href="${CP}/safe/safePage.do?pageNo=${i}">${i}</a>
+      </li>
+    </c:forEach>
+
+    <c:choose>
+      <c:when test="${currentPageNo < maxPages}">
+        <li class="token">
+          <a class="token-link" href="${CP}/safe/safePage.do?pageNo=${currentPageNo + 1}">Next</a>
+        </li>
+      </c:when>
+      <c:otherwise>
+        <li class="token">
+          <span class="token-link">Next</span>
+        </li>
+      </c:otherwise>
+    </c:choose>
+  </ul>
+</nav>
+
  </body>
  <script src="${CP}/resources/js/safeInfoPage/safeInfoPage.js"></script>
  <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

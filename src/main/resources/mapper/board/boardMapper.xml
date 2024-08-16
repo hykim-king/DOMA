@@ -271,7 +271,7 @@
         mod_dt,
         views       
      )VALUES(
-      doma_board_seq.NEXTVAL,
+      d_board_seq.NEXTVAL,
       #{div},
       #{title},
       #{userId},
@@ -289,7 +289,8 @@
 	       tt1.seq,
 	       tt1.div,
 	       tt1.title,
-	       tt1.img_link as imgLink
+	       tt1.img_link as imgLink,
+	       (SELECT COUNT(*) FROM d_board WHERE div = #{div}) AS totalCnt
 		  FROM (
 	    		SELECT ROWNUM as no, T1.*
 			      FROM (
@@ -302,6 +303,7 @@
 	    			WHERE rownum  <![CDATA[ <= ( #{pageSize} * (#{pageNo} -1) + #{pageSize} )]]>
         		)TT1
        			 WHERE tt1.no <![CDATA[ >= ( #{pageSize} * (#{pageNo} -1) + 1 )]]>
+       			 
     </select>
     
     <select id="selectOne" parameterType="Board" resultType="Board">

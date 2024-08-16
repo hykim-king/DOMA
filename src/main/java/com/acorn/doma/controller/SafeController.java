@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.Message;
@@ -164,33 +165,43 @@ public class SafeController implements PLog {
 	}
 	
 	@GetMapping("/safePage.do")
-	public String safePage(Model model) throws SQLException {
-		log.debug("┌──────────────────────────────────────────┐");
-		log.debug("│ safeController : safePage()              │");
-		log.debug("└──────────────────────────────────────────┘");	
-		String viewName = "/safe/safe_info";
-		
-		Search search = new Search();
-		search.setDiv("30");
-		search.setPageNo(1);
-		search.setPageSize(6);
-		log.debug("1. search:" + search);
-		
-		List<Board> list30 = this.boardService.retrieve(search);
-		log.debug("list:" + list30);
-		model.addAttribute("list30", list30);
-		
-		search.setDiv("40");
-		search.setPageNo(1);
-		search.setPageSize(6);
-		log.debug("1. search:" + search);
-		
-		List<Board> list40 = this.boardService.retrieve(search);
-		log.debug("list40:" + list40);
-		model.addAttribute("list40", list40);
-		
-		return viewName;
+	public String safePage(Model model,
+	                        @RequestParam(defaultValue = "1") int pageNo) throws SQLException {
+	    log.debug("┌──────────────────────────────────────────┐");
+	    log.debug("│ safeController : safePage()              │");
+	    log.debug("└──────────────────────────────────────────┘");
+	    String viewName = "/safe/safe_info";
+
+	    // 첫 번째 리스트 처리 (div: 30)
+	    Search search30 = new Search();
+	    search30.setDiv("30");
+	    search30.setPageNo(pageNo);
+	    search30.setPageSize(6);
+
+	    List<Board> list30 = this.boardService.retrieve(search30);
+	    int totalCnt30 = list30.isEmpty() ? 0 : list30.get(0).getTotalCnt(); // 총 레코드 수
+	    int totalPages30 = (int) Math.ceil((double) totalCnt30 / search30.getPageSize());
+
+	    model.addAttribute("list30", list30);
+	    model.addAttribute("totalPages30", totalPages30);
+	    model.addAttribute("pageNo30", pageNo); // 페이지 번호 추가
+
+	    // 두 번째 리스트 처리 (div: 40)
+	    Search search40 = new Search();
+	    search40.setDiv("40");
+	    search40.setPageNo(pageNo);
+	    search40.setPageSize(6);
+
+	    List<Board> list40 = this.boardService.retrieve(search40);
+	    int totalCnt40 = list40.isEmpty() ? 0 : list40.get(0).getTotalCnt(); // 총 레코드 수
+	    int totalPages40 = (int) Math.ceil((double) totalCnt40 / search40.getPageSize());
+
+	    model.addAttribute("list40", list40);
+	    model.addAttribute("totalPages40", totalPages40);
+	    model.addAttribute("pageNo40", pageNo); // 페이지 번호 추가
+
+	    return viewName;
 	}
-	
+
 	
 }
