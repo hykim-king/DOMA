@@ -147,7 +147,9 @@ SELECT
     WHERE 1 = 1
         <if test="searchWord != null and searchWord != ''">
             AND (USER_NAME LIKE '%'  || #{searchWord} || '%'
-                 OR USER_ID LIKE '%' ||  #{searchWord} || '%')
+                 OR USER_ID LIKE '%' ||  #{searchWord} || '%'
+                 OR (CEL_DT IS NULL AND #{searchWord} = '활성')
+                 OR (CEL_DT IS NOT NULL AND #{searchWord} = '비활성'))
         </if>
      )
 
@@ -173,8 +175,10 @@ SELECT
 
     WHERE 1 = 1
         <if test="searchWord != null and searchWord != ''">
-            AND (USER_NAME LIKE '%'   #{searchWord}  '%'
-                 OR USER_ID LIKE '%'   #{searchWord}  '%')
+            AND (USER_NAME LIKE '%' ||  #{searchWord} || '%'
+                 OR USER_ID LIKE '%' ||  #{searchWord} || '%'
+                 OR (CEL_DT IS NULL AND #{searchWord} = '활성')
+                 OR (CEL_DT IS NOT NULL AND #{searchWord} = '비활성'))
         </if>
         )
 </select>

@@ -57,10 +57,6 @@
                         <input type="text" id="name" name="name" placeholder="이름">
                     </div>
                     <div class="form-group">
-                        <label for="email"></label>
-                        <input type="email" id="email" name="email" placeholder="e-mail">
-                    </div>
-                    <div class="form-group">
                         <label for="address"></label>
                         <input type="text" id="address" name="address" placeholder="주소">
                     </div>
@@ -75,6 +71,10 @@
                     <div class="form-group">
                         <label for="joinDate"></label>
                         <input type="text" id="joinDate" name="joinDate" placeholder="가입일">
+                    </div>
+                    <div class="form-group">
+                        <label for="email"></label>
+                        <input type="email" id="celdt" name="celdt" placeholder="상태">
                     </div>
                     <div class="form-buttons">
                         <button type="submit" class="member-action-button" data-action="update">수정</button>

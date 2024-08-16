@@ -106,16 +106,22 @@ function displayUsers(users) {
     userContainer.innerHTML = ''; // 이전 사용자 목록 제거
 
     users.forEach(user => {
+        // 날짜만 추출
+        const userRegDateOnly = user.userRegDt.split(' ')[0];
+
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${user.userId}</td>
             <td>${user.userName}</td>
-            <td>${user.userRegDt}</td>
-            <td>${user.userCelDt ? user.userCelDt : '활성'}</td>
+            <td>${userRegDateOnly}</td>
+            <td>${user.userCelDt ? '비활성' : '활성'}</td>
         `;
         userContainer.appendChild(row);
     });
 }
+
+
+
 
 function renderPagination() {
     const paginationContainer = document.getElementById("pagination-container");
