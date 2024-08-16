@@ -21,9 +21,9 @@ public class ChartController implements PLog{
     @Autowired
     private DeathMapper deathMapper;
 
-    @GetMapping("/chart.do")
+    @GetMapping("/chartMonth.do")
     public String showChartPage() {
-    	String viewName = "/chart/chartData";
+    	String viewName = "/chart/chartMonth";
     	log.debug("┌──────────────────────────────────────────┐");
         log.debug("│ viewName:"+viewName);                                 
         log.debug("└──────────────────────────────────────────┘");
@@ -31,9 +31,10 @@ public class ChartController implements PLog{
         return viewName;
     }
     
-    @GetMapping(value="/chartData.do")
+    @GetMapping(value="/chartData1.do")
     @ResponseBody
     public List<Map<String, Object>> getChartData() throws SQLException {
+    	
         Death inVO = new Death();
         List<Map<String, Object>> deathData = deathMapper.MonthDead(inVO);
         List<Map<String, Object>> casualtiesData = deathMapper.MonthCasualties(inVO);
