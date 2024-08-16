@@ -39,4 +39,15 @@ public class BootStrapController implements PLog {
       
       return viewName;
    }
+   
+   @GetMapping("doma.do")
+   public String doma() {
+      String viewName = "template/doma";
+      
+      log.debug("┌──────────────────────────────────────────┐");
+      log.debug("│ viewName:"+viewName);                                 
+      log.debug("└──────────────────────────────────────────┘");
+      
+      return viewName;
+   }
 }
