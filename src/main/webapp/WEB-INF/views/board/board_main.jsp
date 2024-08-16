@@ -448,91 +448,95 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         replyRow.append(replyWriter).append(replyComments).append(replyDate);
 
-                        // grade에 따른 수정/삭제 버튼 추가 조건
-                        if (grade === 0) {
-                            // grade가 0일 때 삭제 버튼만 추가
-                            var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-warning");
+                        // 로그인 여부 확인 및 grade에 따른 수정/삭제 버튼 추가 조건
+                        if (userId) {  // 로그인 여부 확인
+                            if (grade === 0) {
+                                // grade가 0일 때 삭제 버튼만 추가
+                                var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-warning");
 
-                            // 삭제 버튼 클릭 이벤트
-                            deleteButton.on("click", function() {
-                                if (confirm("삭제하시겠습니까?")) {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "/doma/comments/commentsDelete.do",
-                                        dataType: "text",
-                                        data: {
-                                            "comSeq": reply.comSeq,
-                                            "ajax": true
-                                        },
-                                        success: function(response) {
-                                            alert('삭제하였습니다.');
-                                            ajaxGetComments();
-                                        },
-                                        error: function(error) {
-                                            console.log("Error:", error);
-                                            alert("댓글 삭제에 실패했습니다.");
-                                        }
-                                    });
-                                }
-                            });
+                                // 삭제 버튼 클릭 이벤트
+                                deleteButton.on("click", function() {
+                                    if (confirm("삭제하시겠습니까?")) {
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "/doma/comments/doDelete.do",
+                                            dataType: "text",
+                                            data: {
+                                                "comSeq": reply.comSeq,
+                                                "userId": userId,
+                                                "ajax": true
+                                            },
+                                            success: function(response) {
+                                                alert('삭제하였습니다.');
+                                                ajaxGetComments();
+                                            },
+                                            error: function(error) {
+                                                console.log("Error:", error);
+                                                alert("댓글 삭제에 실패했습니다.");
+                                            }
+                                        });
+                                    }
+                                });
 
-                            replyRow.append(deleteButton);
+                                replyRow.append(deleteButton);
 
-                        } else if (grade === 1 && userId === reply.userId) {
-                            // grade가 1이고 userId가 댓글 작성자와 같을 때 수정/삭제 버튼 추가
-                            var updateButton = $("<button></button>").text("수정").addClass("btn btn-outline-warning");
-                            var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-warning");
+                            } else if (grade === 1 && userId === reply.userId) {
+                                // grade가 1이고 userId가 댓글 작성자와 같을 때 수정/삭제 버튼 추가
+                                var updateButton = $("<button></button>").text("수정").addClass("btn btn-outline-warning");
+                                var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-warning");
 
-                            // 수정 버튼 클릭 이벤트
-                            updateButton.on("click", function() {
-                                var newComments = prompt("수정할 내용을 입력하세요:", reply.comments);
-                                if (newComments !== null) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "/doma/comments/doUpdate.do",
-                                        data: {
-                                            "comSeq": reply.comSeq,
-                                            "seq": seq,
-                                            "userId": userId,
-                                            "modId": modId,
-                                            "comments": newComments,
-                                            "ajax": true
-                                        },
-                                        success: function(response) {
-                                            alert('수정하였습니다.');
-                                            ajaxGetComments();
-                                        },
-                                        error: function(error) {
-                                            console.log("Error:", error);
-                                        }
-                                    });
-                                }
-                            });
+                                // 수정 버튼 클릭 이벤트
+                                updateButton.on("click", function() {
+                                    var newComments = prompt("수정할 내용을 입력하세요:", reply.comments);
+                                    if (newComments !== null) {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/doma/comments/doUpdate.do",
+                                            data: {
+                                                "comSeq": reply.comSeq,
+                                                "seq": seq,
+                                                "userId": userId,
+                                                "modId": modId,
+                                                "comments": newComments,
+                                                "ajax": true
+                                            },
+                                            success: function(response) {
+                                                alert('수정하였습니다.');
+                                                ajaxGetComments();
+                                            },
+                                            error: function(error) {
+                                                console.log("Error:", error);
+                                            }
+                                        });
+                                    }
+                                });
 
-                            // 삭제 버튼 클릭 이벤트
-                            deleteButton.on("click", function() {
-                                if (confirm("삭제하시겠습니까?")) {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "/doma/comments/commentsDelete.do",
-                                        dataType: "text",
-                                        data: {
-                                            "comSeq": reply.comSeq,
-                                            "ajax": true
-                                        },
-                                        success: function(response) {
-                                            alert('삭제하였습니다.');
-                                            ajaxGetComments();
-                                        },
-                                        error: function(error) {
-                                            console.log("Error:", error);
-                                            alert("댓글 삭제에 실패했습니다.");
-                                        }
-                                    });
-                                }
-                            });
+                                // 삭제 버튼 클릭 이벤트
+                                deleteButton.on("click", function() {
+                                    if (confirm("삭제하시겠습니까?")) {
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "/doma/comments/doDelete.do",
+                                            dataType: "text",
+                                            data: {
+                                                "comSeq": reply.comSeq,
+                                                "userId": userId,
+                                                "ajax": true
+                                            },
+                                            success: function(response) {
+                                                alert('삭제하였습니다.');
+                                                ajaxGetComments();
+                                            },
+                                            error: function(error) {
+                                                console.log("Error:", error);
+                                                alert("댓글 삭제에 실패했습니다.");
+                                            }
+                                        });
+                                    }
+                                });
 
-                            replyRow.append(updateButton).append(deleteButton);
+                                replyRow.append(updateButton).append(deleteButton);
+                            }
                         }
 
                         replyList.append(replyRow);
