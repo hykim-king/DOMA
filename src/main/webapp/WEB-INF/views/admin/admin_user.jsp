@@ -70,15 +70,15 @@
                     </div>
                     <div class="form-group">
                         <label for="joinDate"></label>
-                        <input type="text" id="joinDate" name="joinDate" placeholder="가입일">
+                        <input type="text" id="joinDate" name="joinDate" placeholder="가입일" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="email"></label>
-                        <input type="email" id="celdt" name="celdt" placeholder="상태">
+                        <label for="celdt"></label>
+                        <input type="text" id="celdt" name="celdt" placeholder="상태" readonly>
                     </div>
                     <div class="form-buttons">
-                        <button type="submit" class="member-action-button" data-action="update">수정</button>
-                        <button type="submit" class="member-action-button" data-action="delete">삭제</button>
+                        <button type="button" class="member-action-button" data-action="update" onclick="updateUser()">수정</button>
+                        <button type="button" class="member-action-button" data-action="delete" onclick="deleteUser()">삭제</button>
                     </div>
                 </form>
             </div>

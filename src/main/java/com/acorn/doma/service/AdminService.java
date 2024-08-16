@@ -29,8 +29,6 @@ public interface AdminService extends WorkDiv<Admin>{
 
     int updateUser(Admin admin) throws SQLException;
 
-    int deleteUser(Admin admin) throws SQLException;
-
     Admin getUser(String userId) throws SQLException;
 
     int insertUser(Admin admin) throws SQLException;
@@ -38,4 +36,6 @@ public interface AdminService extends WorkDiv<Admin>{
     Integer getLastInsertedSeq() throws SQLException;
 
 	int getUsersCount(Search search) throws SQLException;
+
+	int deleteUser(Admin admin) throws SQLException;
 }

@@ -183,28 +183,29 @@ SELECT
         )
 </select>
 
-    <!-- 회원 수정 -->
+
+<!-- 회원 수정 -->
 <update id="updateUser" parameterType="Admin">
     UPDATE d_user
     <set>
-        <if test="userName != null">user_name = #{userName},</if>
-        <if test="userPw != null">user_pw = #{userPw},</if>
-        <if test="userBirth != null">birth = #{userBirth},</if>
-        <if test="userGrade != null">grade = #{userGrade},</if>
-        <if test="userAddress != null">address = #{userAddress},</if>
-        <if test="userDetailAddress != null">DETAIL_ADDRESS = #{userDetailAddress},</if>
+        <if test="userName != null">USER_NAME = #{userName},</if>
+        <if test="userBirth != null">BIRTH = #{userBirth},</if>
+        <if test="userAddress != null">ADDRESS = #{userAddress},</if>
+        <if test="userDetailAddress != null">DETAIL_ADDRESS = #{userDetailAddress}</if>
     </set>
-    WHERE user_id = #{userId}
+    WHERE USER_ID = #{userId}
 </update>
 
 
-    <!-- 회원 삭제 -->
-    <delete id="deleteUser" parameterType="Admin">
-        DELETE FROM d_user
-        WHERE user_id = #{userId}
-    </delete>
 
-    <!-- 회원 단건 조회 -->
+<!-- 회원 삭제 -->
+<delete id="deleteUser" parameterType="Admin">
+    DELETE FROM d_user
+    WHERE USER_ID = #{userId}
+</delete>
+
+
+<!-- 회원 단건 조회 -->
 <select id="getUser" parameterType="String" resultType="Admin">
     SELECT 
         USER_ID AS userId, 
@@ -213,7 +214,7 @@ SELECT
         USER_PW AS userPw, 
         BIRTH AS userBirth, 
         ADDRESS AS userAddress, 
-        DETAIL_ADDRESS AS DETAIL_ADDRESS, 
+        DETAIL_ADDRESS AS userDetailAddress, 
         REG_DT AS userRegDt,
         CEL_DT AS userCelDt
     FROM d_user

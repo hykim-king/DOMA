@@ -76,9 +76,10 @@ public class AdminServiceImpl implements AdminService, PLog {
 
     @Override
     public int deleteUser(Admin admin) throws SQLException {
-        log.debug("1. param :" + admin);
+        log.debug("Deleting user with details: " + admin);
         return adminMapper.deleteUser(admin);
     }
+
 
     @Override
     public Admin getUser(String userId) throws SQLException {

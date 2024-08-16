@@ -154,42 +154,14 @@ public class AdminController implements PLog {
         }
         return response;
     }
-    
-    
-    
+      
 
 
     // 공지사항 수정
-    @PostMapping("/doUpdateNotice.do")
-    @ResponseBody
-    public String doUpdateNotice(Admin admin) throws SQLException {
-        log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doUpdateNotice()                       │");
-        log.debug("└──────────────────────────────────────────────┘");
 
-        int result = adminService.updateNotice(admin);
-        String message = result == 1 ? "공지사항이 수정되었습니다." : "공지사항 수정에 실패했습니다.";
-
-        Message messageObj = new Message(result, message);
-        return new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
-    }
 
     // 공지사항 삭제
-    @PostMapping("/doDeleteNotice.do")
-    @ResponseBody
-    public String doDeleteNotice(@RequestParam("seq") int seq) throws SQLException {
-        log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doDeleteNotice()                       │");
-        log.debug("└──────────────────────────────────────────────┘");
 
-        Admin admin = new Admin();
-        admin.setSeq(seq);
-        int result = adminService.deleteNotice(admin);
-        String message = result == 1 ? "공지사항이 삭제되었습니다." : "공지사항 삭제에 실패했습니다.";
-
-        Message messageObj = new Message(result, message);
-        return new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
-    }
 
     //공지사항 끝, 회원시작-----------------------------------------------------------
     
@@ -227,80 +199,105 @@ public class AdminController implements PLog {
 
         return result;  // JSON 형식으로 반환
     }
-
-
-
-
-    // 회원 등록
-    @PostMapping("/doInsertUser.do")
-    @ResponseBody
-    public String doInsertUser(Admin admin) throws SQLException {
+    
+    //회원 상세 정보 조회
+    @RequestMapping(value = "/doSelectUser.do", method = RequestMethod.GET)
+    public @ResponseBody Admin getUser(@RequestParam("userId") String userId) throws SQLException {
         log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doInsertUser()                         │");
+        log.debug("│ admin_getUser()                            │");
         log.debug("└──────────────────────────────────────────────┘");
 
-        int result = adminService.insertUser(admin);
-        String message = result == 1 ? "회원이 등록되었습니다." : "회원 등록에 실패했습니다.";
+        // 회원 상세 정보 조회
+        Admin user = adminService.getUser(userId);
 
-        Message messageObj = new Message(result, message);
-        return new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+        log.debug("User Retrieved: " + user);
+
+        return user;  // JSON 형식으로 반환
     }
 
-    // 회원 수정
-    @PostMapping("/doUpdateUser.do")
-    @ResponseBody
-    public String doUpdateUser(Admin admin) throws SQLException {
-        log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doUpdateUser()                         │");
-        log.debug("└──────────────────────────────────────────────┘");
 
-        int result = adminService.updateUser(admin);
-        String message = result == 1 ? "회원이 수정되었습니다." : "회원 수정에 실패했습니다.";
+    //회원 수정
+    @RequestMapping(value = "/updateUser.do", method = RequestMethod.POST)
+    public @ResponseBody Map<String, Object> updateUser(@RequestBody Admin user) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            // 현재 데이터베이스의 값을 가져옵니다.
+            Admin existingUser = adminService.getUser(user.getUserId());
 
-        Message messageObj = new Message(result, message);
-        return new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+            // 데이터베이스의 기존 값과 비교하여 수정된 사항이 있는지 확인
+            boolean isUpdated = false;
+            if (user.getUserName() != null && !user.getUserName().equals(existingUser.getUserName())) {
+                isUpdated = true;
+            }
+            if (user.getUserBirth() != null && !user.getUserBirth().equals(existingUser.getUserBirth())) {
+                isUpdated = true;
+            }
+            if (user.getUserAddress() != null && !user.getUserAddress().equals(existingUser.getUserAddress())) {
+                isUpdated = true;
+            }
+            if (user.getUserDetailAddress() != null && !user.getUserDetailAddress().equals(existingUser.getUserDetailAddress())) {
+                isUpdated = true;
+            }
+
+            if (!isUpdated) {
+                response.put("status", "error");
+                response.put("message", "업데이트 실패 : 수정사항을 입력해주세요.");
+                return response;
+            }
+
+            // 사용자의 정보를 업데이트합니다.
+            int result = adminService.updateUser(user);
+            if (result > 0) {
+                response.put("status", "success");
+                response.put("message", "회원 정보가 업데이트되었습니다.");
+            } else {
+                response.put("status", "error");
+                response.put("message", "회원 정보 업데이트에 실패했습니다.");
+            }
+        } catch (SQLException e) {
+            log.error("Error updating user information", e);
+            response.put("status", "error");
+            response.put("message", "Database error occurred while updating user information.");
+        } catch (Exception e) {
+            log.error("Unexpected error", e);
+            response.put("status", "error");
+            response.put("message", "An unexpected error occurred while updating user information.");
+        }
+        return response;
     }
 
-    // 회원 삭제
-    @PostMapping("/doDeleteUser.do")
-    @ResponseBody
-    public String doDeleteUser(@RequestParam("userId") String userId) throws SQLException {
-        log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doDeleteUser()                         │");
-        log.debug("└──────────────────────────────────────────────┘");
 
-        Admin admin = new Admin();
-        admin.setUserId(userId);
-        int result = adminService.deleteUser(admin);
-        String message = result == 1 ? "회원이 삭제되었습니다." : "회원 삭제에 실패했습니다.";
+    //회원 삭제
+    @RequestMapping(value = "/deleteUser.do", method = RequestMethod.POST)
+    public @ResponseBody Map<String, Object> deleteUser(@RequestParam("userId") String userId) {
+        log.debug("Received userId for deletion: " + userId); // userId 디버깅용 로그 추가
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            Admin admin = new Admin();
+            admin.setUserId(userId);
 
-        Message messageObj = new Message(result, message);
-        return new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+            int result = adminService.deleteUser(admin);
+            if (result > 0) {
+                response.put("status", "success");
+                response.put("message", "User deleted successfully.");
+            } else {
+                response.put("status", "error");
+                response.put("message", "Failed to delete user.");
+            }
+        } catch (Exception e) {
+            log.error("Error deleting user", e);
+            response.put("status", "error");
+            response.put("message", "Error deleting user.");
+        }
+        
+        return response;
     }
 
-    // 단건 조회 (회원 또는 공지사항)
-    @GetMapping("/doSelectNotice.do")
-    public String doSelectNotice(@RequestParam("seq") int seq, Model model) throws SQLException {
-        log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doSelectNotice()                       │");
-        log.debug("└──────────────────────────────────────────────┘");
 
-        Admin admin = adminService.getNoticeById(seq);
-        model.addAttribute("admin", admin);
 
-        return "admin/admin_notice_detail";
-    }
 
-    @GetMapping("/doSelectUser.do")
-    public String doSelectUser(@RequestParam("userId") String userId, Model model) throws SQLException {
-        log.debug("┌──────────────────────────────────────────────┐");
-        log.debug("│ admin_doSelectUser()                         │");
-        log.debug("└──────────────────────────────────────────────┘");
 
-        Admin admin = adminService.getUser(userId);
-        model.addAttribute("admin", admin);
-
-        return "admin/admin_user_detail"; //수정예정
-    }
 
 }
