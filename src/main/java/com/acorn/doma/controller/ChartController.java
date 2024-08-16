@@ -35,6 +35,17 @@ public class ChartController implements PLog{
     @ResponseBody
     public List<Map<String, Object>> getChartData() throws SQLException {
         Death inVO = new Death();
-        return deathMapper.MonthDead(inVO);
+        List<Map<String, Object>> deathData = deathMapper.MonthDead(inVO);
+        List<Map<String, Object>> casualtiesData = deathMapper.MonthCasualties(inVO);
+        List<Map<String, Object>> seriouslyData = deathMapper.MonthSeriously(inVO);
+
+        
+        for (int i = 0; i < deathData.size(); i++) {
+            deathData.get(i).put("TOTAL_CASUALTIES", casualtiesData.get(i).get("TOTAL_CASUALTIES"));
+            deathData.get(i).put("TOTAL_SERIOUSLY", seriouslyData.get(i).get("TOTAL_SERIOUSLY"));
+        }
+        
+        return deathData;
     }
+
 }

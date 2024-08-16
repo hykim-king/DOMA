@@ -3,73 +3,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ìë³ ì¬ë§ì ì ì°¨í¸</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <h1>ìë³ ì´ ì¬ë§ì ì</h1>
-    <canvas id="myChart" width="800" height="400"></canvas>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('http://localhost:8080/doma/chart/chartData.do') // ë°ì´í° ìëí¬ì¸í¸ URL
+    <title>월별 사망자 수 및 부상자 수 차트</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            fetch('http://localhost:8080/doma/chart/chartData.do')
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('ë¤í¸ìí¬ ìëµì´ ì¬ë°ë¥´ì§ ììµëë¤');
+                        throw new Error('네트워크 오류');
                     }
                     return response.json();
                 })
                 .then(data => {
-                    // JSON ë°ì´í° íì¸
+                    const deathData = data.map(item => [item.MONTH, item.TOTAL_DEATHS]);
+                    const casualtiesData = data.map(item => [item.MONTH, item.TOTAL_CASUALTIES]);
+                    const seriouslyData = data.map(item => [item.MONTH, item.TOTAL_SERIOUSLY]);
                     
+                    // DataTable 생성 - 사망자 수
+                    const deathDataTable = new google.visualization.DataTable();
+                    deathDataTable.addColumn('string', '월');
+                    deathDataTable.addColumn('number', '총 사망자 수');
+                    deathDataTable.addRows(deathData);
 
-                    const convertedData = data.map(item => [item.MONTH, item.TOTAL_DEATHS]);
+                    // DataTable 생성 - 부상자 수
+                    const casualtiesDataTable = new google.visualization.DataTable();
+                    casualtiesDataTable.addColumn('string', '월');
+                    casualtiesDataTable.addColumn('number', '총 부상자 수');
+                    casualtiesDataTable.addRows(casualtiesData);
+                    
+                    const seriouslyDataTable = new google.visualization.DataTable();
+                    seriouslyDataTable.addColumn('string', '월');
+                    seriouslyDataTable.addColumn('number', '총 중상자 수');
+                    seriouslyDataTable.addRows(seriouslyData);
 
-	                 // 차트 레이블과 값 추출
-	                 const labels = convertedData.map(item => item[0]);
-	                 const values = convertedData.map(item => item[1]);
-	                 console.log(labels);
-	                 console.log(values);
-                    // ì°¨í¸ ë°ì´í° ë° ìµì ì¤ì 
-                    const chartData = {
-                        labels: labels,
-                        datasets: [{
-                            label: 'ì´ ì¬ë§ì ì',
-                            data: values,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    };
-
-                    const chartOptions = {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'ì´ ì¬ë§ì ì'
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'ì'
-                                }
-                            }
+                    // 차트 옵션 설정 - 사망자 수
+                    const deathOptions = {
+                        title: '월별 총 사망자 수',
+                        hAxis: {
+                            title: '월',
+                            titleTextStyle: {color: '#333'}
+                        },
+                        vAxis: {
+                            title: '총 사망자 수',
+                            minValue: 0
+                        },
+                        chartArea: {width: '70%', height: '70%'},
+                        bars: 'vertical',
+                        animation: {
+                            startup: true,
+                            duration: 1000,
+                            easing: 'out'
                         }
                     };
 
-                    // Chart.js ì°¨í¸ ì¸ì¤í´ì¤ ìì± ë° ë ëë§
-                    new Chart(document.getElementById('myChart').getContext('2d'), {
-                        type: 'bar',
-                        data: chartData,
-                        options: chartOptions
-                    });
+                    // 차트 옵션 설정 - 부상자 수
+                    const casualtiesOptions = {
+                        title: '월별 총 부상자 수',
+                        hAxis: {
+                            title: '월',
+                            titleTextStyle: {color: '#333'}
+                        },
+                        vAxis: {
+                            title: '총 부상자 수',
+                            minValue: 0
+                        },
+                        chartArea: {width: '70%', height: '70%'},
+                        bars: 'vertical',
+                        animation: {
+                            startup: true,
+                            duration: 1000,
+                            easing: 'out'
+                        }
+                    };
+                    
+                    const seriouslyOptions = {
+                            title: '월별 총 중상자 수',
+                            hAxis: {
+                                title: '월',
+                                titleTextStyle: {color: '#333'}
+                            },
+                            vAxis: {
+                                title: '총 중상자 수',
+                                minValue: 0
+                            },
+                            chartArea: {width: '70%', height: '70%'},
+                            bars: 'vertical',
+                            animation: {
+                                startup: true,
+                                duration: 1000,
+                                easing: 'out'
+                            }
+                        };
+
+                    // 차트 렌더링 - 사망자 수
+                    const deathChart = new google.visualization.BarChart(document.getElementById('deathChart'));
+                    deathChart.draw(deathDataTable, deathOptions);
+
+                    // 차트 렌더링 - 부상자 수
+                    const casualtiesChart = new google.visualization.BarChart(document.getElementById('casualtiesChart'));
+                    casualtiesChart.draw(casualtiesDataTable, casualtiesOptions);
+                    
+                    const seriouslyChart = new google.visualization.BarChart(document.getElementById('seriouslyChart'));
+                    seriouslyChart.draw(seriouslyDataTable, seriouslyOptions);
                 })
-                .catch(error => console.error('ì°¨í¸ ë°ì´í° ê°ì ¸ì¤ê¸° ì¤ë¥:', error));
-        });
+                .catch(error => console.error('차트 데이터 가져오기 오류:', error));
+        }
     </script>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .chart-box {
+            width: 33%;
+        }
+    </style>
+</head>
+<body>
+    <h1>월별 총 사망자 수 및 부상자 수</h1>
+    
+    <div class="chart-container">
+        <!-- 사망자 수 차트 -->
+        <div id="deathChart" class="chart-box" style="height: 400px;"></div>
+        
+        <!-- 부상자 수 차트 -->
+        <div id="casualtiesChart" class="chart-box" style="height: 400px;"></div>
+        
+        <!-- 중상자 수 차트 -->
+        <div id="seriouslyChart" class="chart-box" style="height: 400px;"></div>
+    </div>
 </body>
 </html>
