@@ -4,6 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,8 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -495,6 +501,31 @@ public class BoardController implements PLog {
 		
 		return viewName;
 	}
+	
+	@PostMapping("/board/fileUpload.do")
+	public String handleFileUpload(@RequestParam("imgLink") MultipartFile file, Model model) {
+	    if (!file.isEmpty()) {
+	        try {
+	            // 파일 저장 경로 설정
+	            String uploadDir = "/uploads/";
+	            String fileName = file.getOriginalFilename();
+	            Path path = Paths.get(uploadDir + fileName);
+	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+	            // 파일 경로를 모델에 추가
+	            model.addAttribute("filePath", uploadDir + fileName);
+	            
+	            // 필요한 경우 파일 경로를 데이터베이스에 저장
+	            // yourService.saveFilePathToDatabase(uploadDir + fileName);
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return "redirect:/error"; // 오류 페이지로 리다이렉트
+	        }
+	    }
+	    return "redirect:/board/doRetrieve.do"; // 파일 업로드 후 리다이렉트할 페이지
+	}
+
 	
 	
 }

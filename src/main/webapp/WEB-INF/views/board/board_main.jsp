@@ -587,6 +587,10 @@ board : ${board }
 		        </div>
 		    </div>
 			<hr>
+			<c:if test="${not empty filePath}">
+			    <img src="${CP}${filePath}" alt="Uploaded Image">
+			</c:if>
+			<hr>
 			<div name="content" id="content" class="post-content">
 				<p>${board.content}</p>
 			</div>

@@ -8,6 +8,17 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+     
+    <!-- fileupload
+        multipartResolver : ID 이름 변경하면 안됨!
+        maxUploadSize : byte, (default = -1 제한없음) 5 * 1024 * 1024 -> 5M
+        maxInMemorySize : 디스크에 임시 파일을 생성하기 전 메모리에 보관할 수 있느 최대 크기(byte) : default : 10240byte
+     --> 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="5242880"/>
+        <property name="maxInMemorySize" value="20480"/>
+    </bean>  
         
     <!-- mapper interface 설정  scanner 매퍼 읽을 위치 정하기-->   
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
