@@ -220,7 +220,7 @@
     
     <select id="MajorCasualties" parameterType="String"  resultType="map">
 	SELECT
-	dm.major_name AS accident_type,
+	dm.major_name,
 	SUM(dd.casualties) AS total_casualties
 	FROM
 	d_death dd
@@ -234,7 +234,7 @@
     
     <select id="MajorSeriously" parameterType="String"  resultType="map">
 	SELECT
-	dm.major_name AS accident_type,
+	dm.major_name,
 	SUM(dd.seriously) AS total_seriously
 	FROM
 	d_death dd

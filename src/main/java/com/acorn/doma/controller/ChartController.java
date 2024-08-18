@@ -1,6 +1,9 @@
 package com.acorn.doma.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
@@ -20,7 +24,8 @@ public class ChartController implements PLog{
 
     @Autowired
     private DeathMapper deathMapper;
-
+    
+    //월별
     @GetMapping("/chartMonth.do")
     public String showChartPage() {
     	String viewName = "/chart/chartMonth";
@@ -48,5 +53,194 @@ public class ChartController implements PLog{
         
         return deathData;
     }
+    
+    
+    //요일별
+    @GetMapping("/chartWeek.do")
+    public String showChartPage1() {
+    	String viewName = "/chart/chartWeek";
+    	log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName:"+viewName);                                 
+        log.debug("└──────────────────────────────────────────┘");
+        
+        return viewName;
+    }
+    
+    @GetMapping(value="/chartData2.do")
+    @ResponseBody
+    public List<Map<String, Object>> chartWeek() throws SQLException {
+        Death inVO = new Death();
+        
+        // 데이터 조회
+        List<Map<String, Object>> deathData = deathMapper.WeekDead(inVO);
+        List<Map<String, Object>> casualtiesData = deathMapper.WeekCasualties(inVO);
+        List<Map<String, Object>> seriouslyData = deathMapper.WeekSeriously(inVO);
+
+        // 요일별 데이터를 매핑하기 위한 맵 생성
+        Map<String, Map<String, Object>> dataMap = new LinkedHashMap<>();
+
+        // 사망자 데이터를 데이터 맵에 추가
+        for (Map<String, Object> item : deathData) {
+            String dayWeek = (String) item.get("DAY_WEEK");
+            Map<String, Object> dayData = dataMap.computeIfAbsent(dayWeek, k -> new HashMap<>());
+            dayData.put("TOTAL_DEATHS", item.get("TOTAL_DEATHS"));
+        }
+
+        // 부상자 데이터를 데이터 맵에 추가
+        for (Map<String, Object> item : casualtiesData) {
+            String dayWeek = (String) item.get("DAY_WEEK");
+            Map<String, Object> dayData = dataMap.computeIfAbsent(dayWeek, k -> new HashMap<>());
+            dayData.put("TOTAL_CASUALTIES", item.get("TOTAL_CASUALTIES"));
+        }
+
+        // 중상자 데이터를 데이터 맵에 추가
+        for (Map<String, Object> item : seriouslyData) {
+            String dayWeek = (String) item.get("DAY_WEEK");
+            Map<String, Object> dayData = dataMap.computeIfAbsent(dayWeek, k -> new HashMap<>());
+            dayData.put("TOTAL_SERIOUSLY", item.get("TOTAL_SERIOUSLY"));
+        }
+
+        // 결과 리스트 생성
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Map<String, Object>> entry : dataMap.entrySet()) {
+            Map<String, Object> dayData = new HashMap<>();
+            dayData.put("DAY_WEEK", entry.getKey());
+            dayData.putAll(entry.getValue());
+            result.add(dayData);
+        }
+
+        return result;
+    }
+    
+    
+    //시간대별
+    @GetMapping("/chartHour.do")
+    public String showHourChartPage() {
+        String viewName = "/chart/chartHour"; // JSP 페이지의 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);
+        log.debug("└──────────────────────────────────────────┘");
+
+        return viewName;
+    }
+
+    @GetMapping(value="/chartData3.do")
+    @ResponseBody
+    public List<Map<String, Object>> chartHour() throws SQLException {
+        Death inVO = new Death();
+        List<Map<String, Object>> deathData = deathMapper.HourDead(inVO);
+        List<Map<String, Object>> casualtiesData = deathMapper.HourCasualties(inVO);
+        List<Map<String, Object>> seriouslyData = deathMapper.HourSeriously(inVO);
+
+        // 시간별 데이터 매핑을 위한 맵 생성
+        Map<String, Map<String, Object>> dataMap = new LinkedHashMap<>();
+
+        // 사망자 데이터를 데이터 맵에 추가
+        for (Map<String, Object> item : deathData) {
+            String startHour = item.get("START_HOUR").toString();
+            String endHour = item.get("END_HOUR").toString();
+            String hourRange = startHour + " - " + endHour;
+            Map<String, Object> hourData = dataMap.computeIfAbsent(hourRange, k -> new HashMap<>());
+            hourData.put("TOTAL_DEATHS", item.get("TOTAL_DEATHS"));
+        }
+
+        // 부상자 데이터를 데이터 맵에 추가
+        for (Map<String, Object> item : casualtiesData) {
+            String startHour = item.get("START_HOUR").toString();
+            String endHour = item.get("END_HOUR").toString();
+            String hourRange = startHour + " - " + endHour;
+            Map<String, Object> hourData = dataMap.computeIfAbsent(hourRange, k -> new HashMap<>());
+            hourData.put("TOTAL_CASUALTIES", item.get("TOTAL_CASUALTIES"));
+        }
+
+        // 중상자 데이터를 데이터 맵에 추가
+        for (Map<String, Object> item : seriouslyData) {
+            String startHour = item.get("START_HOUR").toString();
+            String endHour = item.get("END_HOUR").toString();
+            String hourRange = startHour + " - " + endHour;
+            Map<String, Object> hourData = dataMap.computeIfAbsent(hourRange, k -> new HashMap<>());
+            hourData.put("TOTAL_SERIOUSLY", item.get("TOTAL_SERIOUSLY"));
+        }
+
+        // 결과 리스트 생성
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Map<String, Object>> entry : dataMap.entrySet()) {
+            Map<String, Object> hourData = new HashMap<>();
+            hourData.put("HOUR_RANGE", entry.getKey());
+            hourData.putAll(entry.getValue());
+            result.add(hourData);
+        }
+
+        return result;
+    }
+    
+    //주야별
+    @GetMapping("/chartNight.do")
+    public String showNightChartPage() {
+        String viewName = "/chart/chartNight";  // JSP 페이지 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);                                
+        log.debug("└──────────────────────────────────────────┘");
+        return viewName;
+    }
+
+    // 주간 및 야간 데이터 제공 메소드
+    @GetMapping("/chartData4.do")
+    @ResponseBody
+    public Map<String, List<Map<String, Object>>> getNightChartData() throws SQLException {
+        Death inVO = new Death();
+
+        // 주간 및 야간 데이터 조회
+        List<Map<String, Object>> nightDeadData = deathMapper.NightDead(inVO);
+        List<Map<String, Object>> nightCasualtiesData = deathMapper.NightCasualties(inVO);
+        List<Map<String, Object>> nightSeriouslyData = deathMapper.NightSeriously(inVO);
+
+        // 로그 추가
+        log.debug("Night Dead Data: " + nightDeadData);
+        log.debug("Night Casualties Data: " + nightCasualtiesData);
+        log.debug("Night Seriously Data: " + nightSeriouslyData);
+
+        // 데이터 조합
+        Map<String, List<Map<String, Object>>> response = new HashMap<>();
+        response.put("nightDead", nightDeadData);
+        response.put("nightCasualties", nightCasualtiesData);
+        response.put("nightSeriously", nightSeriouslyData);
+
+        return response;
+    }
+
+    //사고유형별
+    @GetMapping("/chartMajor.do")
+    public String showMajorChartPage() {
+        String viewName = "/chart/chartMajor";  // JSP 페이지 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);                                
+        log.debug("└──────────────────────────────────────────┘");
+        return viewName;
+    }
+
+    // 사고 유형별 데이터 제공 메소드
+    @GetMapping("/chartDataMajor.do")
+    @ResponseBody
+    public Map<String, List<Map<String, Object>>> getMajorChartData() throws SQLException {
+        Death inVO = new Death();
+
+        // 사고 유형별 데이터 조회
+        List<Map<String, Object>> majorDeadData = deathMapper.MajorDead(inVO);
+        List<Map<String, Object>> majorCasualtiesData = deathMapper.MajorCasualties(inVO);
+        List<Map<String, Object>> majorSeriouslyData = deathMapper.MajorSeriously(inVO);
+
+        // 데이터 조합
+        Map<String, List<Map<String, Object>>> response = new HashMap<>();
+        response.put("majorDead", majorDeadData);
+        response.put("majorCasualties", majorCasualtiesData);
+        response.put("majorSeriously", majorSeriouslyData);
+
+        return response;
+    }
+    
+
+    
+    
 
 }
