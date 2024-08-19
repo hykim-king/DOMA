@@ -9,6 +9,7 @@
 <title>시간별 사망자 수 및 부상자 수 차트</title>
 <%-- bootstrap css --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
+<link rel="stylesheet" href="${CP}/resources/css/chart/chart.css"> 
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/chart/chart.js"></script>
@@ -62,23 +63,6 @@
             .catch(error => console.error('차트 데이터 가져오기 오류:', error));
     }
 </script>
-<style>
-    .center-content {
-        text-align: center;
-        margin: 20px 0;
-    }
-    .button-container {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin: 20px 0;
-    }
-    .showChartsButton {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/header.jsp" %>

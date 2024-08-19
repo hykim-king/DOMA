@@ -8,6 +8,7 @@
 <title>사고 유형별 사망자 수 및 부상자 수 차트</title>
 <!-- bootstrap css -->
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
+<link rel="stylesheet" href="${CP}/resources/css/chart/chart.css"> 
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/chart/chart.js"></script>

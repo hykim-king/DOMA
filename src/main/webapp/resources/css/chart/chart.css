@@ -1,0 +1,31 @@
+@charset "UTF-8";
+    .center-content {
+        text-align: center;
+        margin: 20px 0;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 20px 0;
+    }
+    .showChartsButton {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    .chart-container {
+            display: none; /* 처음에는 차트를 숨김 */
+            justify-content: space-between;
+            flex-wrap: nowrap; /* 가로로 배열 */
+            margin: 20px; /* 컨테이너에 마진 추가 */
+    }
+   .chart-box {
+       width: 30%; /* 차트의 너비를 설정 */
+       margin: 10px; /* 차트 사이의 여백 */
+   }
+   .center-content {
+       text-align: center;
+       margin: 20px 0;
+   }
+   
