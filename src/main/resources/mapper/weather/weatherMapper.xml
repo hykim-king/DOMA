@@ -1,4 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acorn.doma.mapper.WeatherMapper">
+
+    <!-- 연도에 따른 날씨 데이터 조회 쿼리 -->
+    <select id="getWeatherDataByYear" parameterType="int" resultType="map">
+        SELECT
+            GNAME AS region,
+            WEATHER_CONDITION AS condition,
+            DEAD AS deadCount,
+            INJURY AS injuryCount
+        FROM d_weather
+        WHERE YEAR = #{year}
+    </select>
+
+    <!-- 날씨 조건별 발생 빈도 (연도별) -->
+    <select id="weatherFreqByYear" parameterType="int" resultType="map">
+        SELECT 
+            YEAR,
+            WEATHER_CONDITION, 
+            COUNT(*) AS COUNT
+        FROM 
+            d_weather
+        WHERE 
+            YEAR = #{year}
+        GROUP BY 
+            YEAR, WEATHER_CONDITION
+        ORDER BY 
+            COUNT(*) DESC
+    </select>
+
+   
+
+    
+
+    
+
+    <!-- 연도별 상위 5개 구에서 부상자의 합산이 가장 많은 구 조회 -->
+    <select id="top5InjuryByRegion" parameterType="int" resultType="map">
+        SELECT 
+            GNAME,
+            WEATHER_CONDITION,
+            SUM(INJURY) AS TOTAL_INJURY
+        FROM 
+            d_weather
+        WHERE 
+            YEAR = #{year}
+        GROUP BY 
+            GNAME, WEATHER_CONDITION
+        ORDER BY 
+            TOTAL_INJURY DESC
+        FETCH FIRST 5 ROWS ONLY
+    </select>
+
+    <!-- 선택된 구에서 기상 상태별 부상자 수 조회 -->
+    <select id="injuryByWeatherConditionForGnames" parameterType="map" resultType="map">
+        SELECT 
+            GNAME,
+            WEATHER_CONDITION,
+            SUM(INJURY) AS TOTAL_INJURY
+        FROM 
+            d_weather
+        WHERE 
+            GNAME IN 
+            <foreach item="gname" collection="gname" open="(" separator="," close=")">
+                #{gname}
+            </foreach>
+        GROUP BY 
+            GNAME, WEATHER_CONDITION
+    </select>
+
 </mapper>

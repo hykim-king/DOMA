@@ -6,14 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>월별 사망자 수 및 부상자 수 차트</title>
 <%-- bootstrap css --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
-<script src="${CP }/resources/js/common.js"></script>
-<script src="${CP }/resources/js/jquery_3_7_1.js"></script>
+<script src="${CP}/resources/js/common.js"></script>
+<script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 
 <head>
-
     <title>월별 사망자 수 및 부상자 수 차트</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -21,32 +20,24 @@
         google.charts.setOnLoadCallback(drawCharts);
 
         function drawCharts() {
-            fetch('http://localhost:8080/doma/chart/chartData1.do')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('네트워크 오류');
-                    }
-                    return response.json();
-                })
+            fetch('${CP}/chart/chartData1.do')
+                .then(response => response.json())
                 .then(data => {
-                    // 차트 생성 함수
-                    function createChart(containerId, chartData, options) {
-                        const dataTable = new google.visualization.DataTable();
-                        dataTable.addColumn('string', '월');
-                        dataTable.addColumn('number', options.title);
-                        dataTable.addRows(chartData);
+                    const dataTable = new google.visualization.DataTable();
+                    dataTable.addColumn('string', '월');
+                    dataTable.addColumn('number', '총 사망자 수');
+                    dataTable.addColumn('number', '총 부상자 수');
+                    dataTable.addColumn('number', '총 중상자 수');
 
-                        const chart = new google.visualization.BarChart(document.getElementById(containerId));
-                        chart.draw(dataTable, options);
-                    }
+                    data.forEach(item => {
+                        dataTable.addRow([item.MONTH, item.TOTAL_DEATHS, item.TOTAL_CASUALTIES, item.TOTAL_SERIOUSLY]);
+                    });
 
-                    // 차트 데이터 준비
-                    const deathData = data.map(item => [item.MONTH, item.TOTAL_DEATHS]);
-                    const casualtiesData = data.map(item => [item.MONTH, item.TOTAL_CASUALTIES]);
-                    const seriouslyData = data.map(item => [item.MONTH, item.TOTAL_SERIOUSLY]);
-
-                    // 차트 옵션 설정
-                    const commonOptions = {
+                    const options = {
+                        title: '월별 총 사망자 수 및 부상자 수',
+                        curveType: 'function',
+                        legend: { position: 'bottom' },
+                        colors: ['#FF0000', '#FFFF00', '#FFA500'], // 사망자: 빨강, 부상자: 노랑, 중상자: 주황
                         hAxis: {
                             title: '월',
                             titleTextStyle: {color: '#333'}
@@ -55,7 +46,6 @@
                             minValue: 0
                         },
                         chartArea: {width: '70%', height: '70%'},
-                        bars: 'vertical' , 
                         animation: {
                             startup: true,
                             duration: 1000,
@@ -63,65 +53,34 @@
                         }
                     };
 
-                    // 차트 생성
-                    createChart('deathChart', deathData, { ...commonOptions, title: '총 사망자 수' });
-                    createChart('casualtiesChart', casualtiesData, { ...commonOptions, title: '총 부상자 수' });
-                    createChart('seriouslyChart', seriouslyData, { ...commonOptions, title: '총 중상자 수' });
-
-                    // 차트 표시
-                    document.getElementById('chartsContainer').style.display = 'flex';
+                    const chart = new google.visualization.LineChart(document.getElementById('chartContainer'));
+                    chart.draw(dataTable, options);
                 })
                 .catch(error => console.error('차트 데이터 가져오기 오류:', error));
         }
     </script>
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.showChartsButton').forEach((button, index) => {
-            button.addEventListener('click', () => {
-                switch (index) {
-                    case 0:
-                        window.location.href = '${CP}/chart/chartMonth.do';
-                        break;
-                    case 1:
-                        window.location.href = '${CP}/chart/chartWeek.do';
-                        break;
-                    case 2:
-                        window.location.href = '${CP}/chart/chartHour.do';
-                        break;
-                    case 3:
-                        window.location.href = '${CP}/chart/chartNight.do'; // 예시 URL
-                        break;
-                    case 4:
-                        window.location.href = '${CP}/chart/chartMajor.do'; // 예시 URL
-                        break;
-                    case 5:
-                        window.location.href = '${CP}/chart/chartMedium.do'; // 예시 URL
-                        break;
-                    case 6:
-                        window.location.href = '${CP}/chart/chartGname.do'; // 예시 URL
-                        break;
-                    case 7:
-                        window.location.href = '${CP}/chart/chartSummary.do'; // 예시 URL
-                        break;
-                }
+    
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.showChartsButton').forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    const urls = [
+                        '${CP}/chart/chartMonth.do',
+                        '${CP}/chart/chartWeek.do',
+                        '${CP}/chart/chartHour.do',
+                        '${CP}/chart/chartNight.do',
+                        '${CP}/chart/chartMajor.do',
+                        '${CP}/chart/chartMedium.do',
+                        '${CP}/chart/chartGname.do',
+                        '${CP}/chart/chartSummary.do'
+                    ];
+                    window.location.href = urls[index];
+                });
             });
         });
-    });
-</script>
-
+    </script>
 
     <style>
-        .chart-container {
-            display: none; /* 처음에는 차트를 숨김 */
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: nowrap; /* 가로로 배열 */
-            margin: 20px; /* 컨테이너에 마진 추가 */
-        }
-        .chart-box {
-            width: 30%; /* 차트의 너비를 설정 */
-            margin: 10px; /* 차트 사이의 여백 */
-        }
         .center-content {
             text-align: center;
             margin: 20px 0;
@@ -137,38 +96,35 @@
             padding: 10px 20px;
             font-size: 14px;
         }
+        #chartContainer {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/header.jsp" %>
 
-    <div class="center-content">
-        <h1>월별 총 사망자 수 및 부상자 수</h1>
-    </div>
-     
-       <!-- 버튼 컨테이너 -->
-      <div class="button-container">
-        <button class="showChartsButton">월별 교통사고</button>
-        <button class="showChartsButton">요일별 교통사고</button>
-        <button class="showChartsButton">시간대별 교통사고</button>
-        <button class="showChartsButton">주야별 교통사고</button>
-        <button class="showChartsButton">사고유형별 교통사고</button>
-        <button class="showChartsButton">사고종류별 교통사고</button>
-        <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">이건 걍만든버튼</button>
-    </div>
-    
-    <!-- 차트 컨테이너 -->
-    <div id="chartsContainer" class="chart-container">
-        <!-- 사망자 수 차트 -->
-        <div id="deathChart" class="chart-box" style="height: 400px;"></div>
-        
-        <!-- 부상자 수 차트 -->
-        <div id="casualtiesChart" class="chart-box" style="height: 400px;"></div>
-        
-        <!-- 중상자 수 차트 -->
-        <div id="seriouslyChart" class="chart-box" style="height: 400px;"></div>
-    </div>
+<div class="center-content">
+    <h1>월별 총 사망자 수 및 부상자 수</h1>
+</div>
+
+<!-- 버튼 컨테이너 -->
+<div class="button-container">
+    <button class="showChartsButton">월별 교통사고</button>
+    <button class="showChartsButton">요일별 교통사고</button>
+    <button class="showChartsButton">시간대별 교통사고</button>
+    <button class="showChartsButton">주야별 교통사고</button>
+    <button class="showChartsButton">사고유형별 교통사고</button>
+    <button class="showChartsButton">사고종류별 교통사고</button>
+    <button class="showChartsButton">시군구별 교통사고</button>
+    <button class="showChartsButton">이건 걍만든버튼</button>
+</div>
+
+<!-- 차트 컨테이너 -->
+<div id="chartContainer"></div>
+
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 
 </html>

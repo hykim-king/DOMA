@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="CP" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -7,25 +6,41 @@
 <head>
 <meta charset="UTF-8">
 <title>주간 및 야간 사망자 수 및 부상자 수 차트</title>
-<%-- bootstrap css --%>
+<!-- bootstrap css -->
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
-<%-- Chart.js 라이브러리 --%>
+<!-- Chart.js 라이브러리 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', () => {
-    	drawCharts();
-	});
+    document.addEventListener('DOMContentLoaded', () => {
+        drawCharts();
+    });
+
     function drawCharts() {
         fetch('${CP}/chart/chartData4.do')
             .then(response => response.json())
             .then(data => {
-                const nightDeadData = data.nightDead.map(item => item.TOTAL_DEATHS);
-                const nightCasualtiesData = data.nightCasualties.map(item => item.TOTAL_CASUALTIES);
-                const nightSeriouslyData = data.nightSeriously.map(item => item.TOTAL_SERIOUSLY);
-                const labels = data.nightDead.map(item => item.DAY_NIGHT);
+                // 데이터 정리
+                const nightSeriouslyData = data.nightSeriously;
+                const nightDeadData = data.nightDead;
+                const nightCasualtiesData = data.nightCasualties;
+
+                // 주간 및 야간 데이터 분리
+                const daySeriously = nightSeriouslyData.find(item => item.DAY_NIGHT === '주간').TOTAL_SERIOUSLY;
+                const nightSeriously = nightSeriouslyData.find(item => item.DAY_NIGHT === '야간').TOTAL_SERIOUSLY;
+
+                const dayDead = nightDeadData.find(item => item.DAY_NIGHT === '주간').TOTAL_DEATHS;
+                const nightDead = nightDeadData.find(item => item.DAY_NIGHT === '야간').TOTAL_DEATHS;
+
+                const dayCasualties = nightCasualtiesData.find(item => item.DAY_NIGHT === '주간').TOTAL_CASUALTIES;
+                const nightCasualties = nightCasualtiesData.find(item => item.DAY_NIGHT === '야간').TOTAL_CASUALTIES;
+
+                // 차트 데이터 준비
+                const dayChartData = [dayDead, dayCasualties, daySeriously];
+                const nightChartData = [nightDead, nightCasualties, nightSeriously];
+                const labels = ['사망자 수', '부상자 수', '중상자 수'];
 
                 function createPieChart(ctx, chartData, title) {
                     new Chart(ctx, {
@@ -34,8 +49,8 @@
                             labels: labels,
                             datasets: [{
                                 data: chartData,
-                                backgroundColor: ['#F4D72F', '#36A2EB'],
-                                hoverBackgroundColor: ['#F4D72F', '#36A2EB']
+                                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
                             }]
                         },
                         options: {
@@ -57,19 +72,16 @@
                     });
                 }
 
-                const deathCtx = document.getElementById('deathChart').getContext('2d');
-                createPieChart(deathCtx, nightDeadData, '총 사망자 수');
+                // 주간 파이 차트
+                const dayCtx = document.getElementById('dayChart').getContext('2d');
+                createPieChart(dayCtx, dayChartData, '주간 총 사망자 수 및 부상자 수');
 
-                const casualtiesCtx = document.getElementById('casualtiesChart').getContext('2d');
-                createPieChart(casualtiesCtx, nightCasualtiesData, '총 부상자 수');
-
-                const seriouslyCtx = document.getElementById('seriouslyChart').getContext('2d');
-                createPieChart(seriouslyCtx, nightSeriouslyData, '총 중상자 수');
+                // 야간 파이 차트
+                const nightCtx = document.getElementById('nightChart').getContext('2d');
+                createPieChart(nightCtx, nightChartData, '야간 총 사망자 수 및 부상자 수');
             })
             .catch(error => console.error('차트 데이터 가져오기 오류:', error));
     }
-
-   
 </script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
@@ -105,7 +117,6 @@
         });
     });
 </script>
-</script>
 <style>
     .chart-container {
         display: flex;
@@ -114,9 +125,8 @@
         margin: 20px;
     }
     .chart-box {
-        width: 30%; /* 차트의 너비를 설정 */
+        width: 45%; /* 차트의 너비를 설정 */
         margin: 10px; /* 차트 사이의 여백 */
-        position: relative;
     }
     .center-content {
         text-align: center;
@@ -142,8 +152,8 @@
         <h1>주간 및 야간 총 사망자 수 및 부상자 수</h1>
     </div>
     
-        <!-- 버튼 컨테이너 -->
-      <div class="button-container">
+    <!-- 버튼 컨테이너 -->
+    <div class="button-container">
         <button class="showChartsButton">월별 교통사고</button>
         <button class="showChartsButton">요일별 교통사고</button>
         <button class="showChartsButton">시간대별 교통사고</button>
@@ -156,19 +166,14 @@
     
     <!-- 차트 컨테이너 -->
     <div id="chartsContainer" class="chart-container">
-        <!-- 사망자 수 차트 -->
+        <!-- 주간 차트 -->
         <div class="chart-box">
-            <canvas id="deathChart"></canvas>
+            <canvas id="dayChart"></canvas>
         </div>
         
-        <!-- 사상자 수 차트 -->
+        <!-- 야간 차트 -->
         <div class="chart-box">
-            <canvas id="casualtiesChart"></canvas>
-        </div>
-        
-        <!-- 중상자 수 차트 -->
-        <div class="chart-box">
-            <canvas id="seriouslyChart"></canvas>
+            <canvas id="nightChart"></canvas>
         </div>
     </div>
 </body>

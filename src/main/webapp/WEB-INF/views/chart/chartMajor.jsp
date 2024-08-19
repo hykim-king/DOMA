@@ -14,61 +14,62 @@
 
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawCharts);
+    google.charts.setOnLoadCallback(drawChart);
 
-    function drawCharts() {
+    function drawChart() {
         fetch('${CP}/chart/chartDataMajor.do')
             .then(response => response.json())
             .then(data => {
-                const majorDeadData = [['Accident Type', 'Total Deaths']].concat(
-                    data.majorDead.map(item => [item.MAJOR_NAME, item.TOTAL_DEATHS])
-                );
-                const majorCasualtiesData = [['Accident Type', 'Total Casualties']].concat(
-                    data.majorCasualties.map(item => [item.MAJOR_NAME, item.TOTAL_CASUALTIES])
-                );
-                const majorSeriouslyData = [['Accident Type', 'Total Seriously Injured']].concat(
-                    data.majorSeriously.map(item => [item.MAJOR_NAME, item.TOTAL_SERIOUSLY])
-                );
+                const dataTable = new google.visualization.DataTable();
+                dataTable.addColumn('string', '사고 유형');
+                dataTable.addColumn('number', '사망자 수');
+                dataTable.addColumn('number', '부상자 수');
+                dataTable.addColumn('number', '중상자 수');
 
-                function createColumnChart(containerId, chartData, title) {
-                    const dataTable = google.visualization.arrayToDataTable(chartData);
-                    const options = {
-                        title: title,
-                        chartArea: {width: '70%', height: '70%'},
-                        hAxis: {
-                            title: '사고 유형',
-                            titleTextStyle: {color: '#333'}
-                        },
-                        vAxis: {
-                            minValue: 0
-                        },
-                        animation: {
-                            startup: true,
-                            duration: 1000,
-                            easing: 'out'
-                        },
-                        tooltip: { isHtml: true },
-                        legend: { position: 'none' }
-                    };
-                    const chart = new google.visualization.ColumnChart(document.getElementById(containerId));
-                    chart.draw(dataTable, options);
+                data.majorDead.forEach((item, index) => {
+                    const accidentType = item.MAJOR_NAME;
+                    const deaths = item.TOTAL_DEATHS;
+                    const casualties = data.majorCasualties[index].TOTAL_CASUALTIES;
+                    const seriously = data.majorSeriously[index].TOTAL_SERIOUSLY;
+                    dataTable.addRow([accidentType, deaths, casualties, seriously]);
+                });
 
-                    // 추가: 차트 클릭 이벤트 핸들러
-                    google.visualization.events.addListener(chart, 'select', function() {
-                        const selectedItem = chart.getSelection()[0];
-                        if (selectedItem) {
-                            const accidentType = dataTable.getValue(selectedItem.row, 0);
-                            alert(accidentType + '이 선택되었습니다.');
-                        }
-                    });
-                }
+                const options = {
+                    title: '사고 유형별 사망자 수, 부상자 수 및 중상자 수',
+                    chartArea: {width: '70%', height: '70%'},
+                    hAxis: {
+                        title: '사고 유형',
+                        titleTextStyle: {color: '#333'}
+                    },
+                    vAxis: {
+                        minValue: 0
+                    },
+                    seriesType: 'bars',
+                    series: {
+                        0: {type: 'bars', color: '#FF0000'},  // 사망자 수 - 빨간색 막대
+                        1: {type: 'bars', color: '#FFFF00'},  // 부상자 수 - 노란색 막대
+                        2: {type: 'line', color: '#0000FF'}   // 중상자 수 - 파란색 선
+                    },
+                    animation: {
+                        startup: true,
+                        duration: 1000,
+                        easing: 'out'
+                    },
+                    tooltip: {isHtml: true},
+                    legend: {position: 'bottom'}
+                };
 
-                createColumnChart('deathChart', majorDeadData, '사고 유형별 총 사망자 수');
-                createColumnChart('casualtiesChart', majorCasualtiesData, '사고 유형별 총 부상자 수');
-                createColumnChart('seriouslyChart', majorSeriouslyData, '사고 유형별 총 중상자 수');
+                const chart = new google.visualization.ComboChart(document.getElementById('comboChart'));
+                chart.draw(dataTable, options);
 
-                // 차트 컨테이너 표시
-                document.getElementById('chartsContainer').style.display = 'flex';
+                // 차트 클릭 이벤트 핸들러
+                google.visualization.events.addListener(chart, 'select', function() {
+                    const selectedItem = chart.getSelection()[0];
+                    if (selectedItem) {
+                        const accidentType = dataTable.getValue(selectedItem.row, 0);
+                        alert(accidentType + '이 선택되었습니다.');
+                    }
+                });
             })
             .catch(error => console.error('차트 데이터 가져오기 오류:', error));
     }
@@ -108,16 +109,6 @@
     });
 </script>
 <style>
-    .chart-container {
-        display: none; /* 처음에는 차트를 숨김 */
-        justify-content: space-between;
-        flex-wrap: nowrap; /* 가로로 배열 */
-        margin: 20px; /* 컨테이너에 마진 추가 */
-    }
-    .chart-box {
-        width: 30%; /* 차트의 너비를 설정 */
-        margin: 10px; /* 차트 사이의 여백 */
-    }
     .center-content {
         text-align: center;
         margin: 20px 0;
@@ -139,11 +130,11 @@
 <%@ include file="/WEB-INF/views/template/header.jsp" %>
 
     <div class="center-content">
-        <h1>사고 유형별 총 사망자 수 및 부상자 수</h1>
+        <h1>사고 유형별 사망자 수 및 부상자 수</h1>
     </div>
     
-       <!-- 버튼 컨테이너 -->
-      <div class="button-container">
+    <!-- 버튼 컨테이너 -->
+    <div class="button-container">
         <button class="showChartsButton">월별 교통사고</button>
         <button class="showChartsButton">요일별 교통사고</button>
         <button class="showChartsButton">시간대별 교통사고</button>
@@ -154,17 +145,9 @@
         <button class="showChartsButton">이건 걍만든버튼</button>
     </div>
     
-    <!-- 차트 컨테이너 -->
-    <div id="chartsContainer" class="chart-container">
-        <!-- 사망자 수 차트 -->
-        <div id="deathChart" class="chart-box" style="height: 400px;"></div>
-        
-        <!-- 부상자 수 차트 -->
-        <div id="casualtiesChart" class="chart-box" style="height: 400px;"></div>
-        
-        <!-- 중상자 수 차트 -->
-        <div id="seriouslyChart" class="chart-box" style="height: 400px;"></div>
-    </div>
+    <!-- 콤보 차트 컨테이너 -->
+    <div id="comboChart" style="width: 100%; height: 500px; margin: 0 auto;"></div>
+
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 
 </html>

@@ -15,10 +15,10 @@
 
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawCharts);
+    google.charts.setOnLoadCallback(drawChart);
 
-    function drawCharts() {
-        fetch('http://localhost:8080/doma/chart/chartData2.do')
+    function drawChart() {
+        fetch('${CP}/chart/chartData2.do')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('네트워크 오류');
@@ -28,48 +28,43 @@
             .then(data => {
                 console.log('Fetched data:', data); // 데이터 구조 확인
 
-                const deathData = data.map(item => [item.DAY_WEEK, item.TOTAL_DEATHS]);
-                const casualtiesData = data.map(item => [item.DAY_WEEK, item.TOTAL_CASUALTIES]);
-                const seriouslyData = data.map(item => [item.DAY_WEEK, item.TOTAL_SERIOUSLY]);
+                const dataTable = new google.visualization.DataTable();
+                dataTable.addColumn('string', '요일');
+                dataTable.addColumn('number', '사망자 수');
+                dataTable.addColumn('number', '부상자 수');
+                dataTable.addColumn('number', '중상자 수');
 
-                function createChart(containerId, chartData, title) {
-                    const dataTable = new google.visualization.DataTable();
-                    dataTable.addColumn('string', '요일');
-                    dataTable.addColumn('number', title);
-                    dataTable.addRows(chartData);
+                data.forEach(item => {
+                    dataTable.addRow([item.DAY_WEEK, item.TOTAL_DEATHS, item.TOTAL_CASUALTIES, item.TOTAL_SERIOUSLY]);
+                });
 
-                    const options = {
-                        title: title,
-                        hAxis: {
-                            title: '요일',
-                            titleTextStyle: {color: '#333'}
-                        },
-                        vAxis: {
-                            minValue: 0
-                        },
-                        chartArea: {width: '70%', height: '70%'},
-                        bars: 'vertical',
-                        animation: {
-                            startup: true,
-                            duration: 1000,
-                            easing: 'out'
-                        }
-                    };
+                const options = {
+                    title: '요일별 사망자 수, 부상자 수 및 중상자 수',
+                    hAxis: {
+                        title: '요일',
+                        titleTextStyle: { color: '#333' }
+                    },
+                    vAxis: {
+                        minValue: 0
+                    },
+                    chartArea: { width: '70%', height: '70%' },
+                    colors: ['#FF0000', '#FFFF00', '#FFA500'],
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    animation: {
+                        startup: true,
+                        duration: 1000,
+                        easing: 'out'
+                    }
+                };
 
-                    const chart = new google.visualization.BarChart(document.getElementById(containerId));
-                    chart.draw(dataTable, options);
-                }
-
-                createChart('deathChart', deathData, '총 사망자 수');
-                createChart('casualtiesChart', casualtiesData, '총 부상자 수');
-                createChart('seriouslyChart', seriouslyData, '총 중상자 수');
-
-                document.getElementById('chartsContainer').style.display = 'flex';
+                const chart = new google.visualization.LineChart(document.getElementById('chartContainer'));
+                chart.draw(dataTable, options);
             })
             .catch(error => console.error('차트 데이터 가져오기 오류:', error)); 
-
     }
 </script>
+
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.showChartsButton').forEach((button, index) => {
@@ -104,17 +99,11 @@
         });
     });
 </script>
+
 <style>
     .chart-container {
-        display: none; /* 처음에는 차트를 숨김 */
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: nowrap; /* 가로로 배열 */
-        margin: 20px; /* 컨테이너에 마진 추가 */
-    }
-    .chart-box {
-        width: 30%; /* 차트의 너비를 설정 */
-        margin: 10px; /* 차트 사이의 여백 */
+        margin: 20px;
+        text-align: center;
     }
     .center-content {
         text-align: center;
@@ -137,33 +126,23 @@
 <%@ include file="/WEB-INF/views/template/header.jsp" %>
 
 <div class="center-content">
-    <h1>요일별 총 사망자 수 및 부상자 수</h1>
+    <h1>요일별 사망자 수 및 부상자 수</h1>
 </div>
 
- <!-- 버튼 컨테이너 -->
-        <!-- 버튼 컨테이너 -->
-      <div class="button-container">
-        <button class="showChartsButton">월별 교통사고</button>
-        <button class="showChartsButton">요일별 교통사고</button>
-        <button class="showChartsButton">시간대별 교통사고</button>
-        <button class="showChartsButton">주야별 교통사고</button>
-        <button class="showChartsButton">사고유형별 교통사고</button>
-        <button class="showChartsButton">사고종류별 교통사고</button>
-        <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">이건 걍만든버튼</button>
-    </div>
+<!-- 버튼 컨테이너 -->
+<div class="button-container">
+    <button class="showChartsButton">월별 교통사고</button>
+    <button class="showChartsButton">요일별 교통사고</button>
+    <button class="showChartsButton">시간대별 교통사고</button>
+    <button class="showChartsButton">주야별 교통사고</button>
+    <button class="showChartsButton">사고유형별 교통사고</button>
+    <button class="showChartsButton">사고종류별 교통사고</button>
+    <button class="showChartsButton">시군구별 교통사고</button>
+    <button class="showChartsButton">이건 걍만든버튼</button>
+</div>
 
 <!-- 차트 컨테이너 -->
-<div id="chartsContainer" class="chart-container">
-    <!-- 사망자 수 차트 -->
-    <div id="deathChart" class="chart-box" style="height: 400px;"></div>
-
-    <!-- 부상자 수 차트 -->
-    <div id="casualtiesChart" class="chart-box" style="height: 400px;"></div>
-
-    <!-- 중상자 수 차트 -->
-    <div id="seriouslyChart" class="chart-box" style="height: 400px;"></div>
-</div>
+<div id="chartContainer" class="chart-container" style="height: 500px;"></div>
 
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 
 </body>
