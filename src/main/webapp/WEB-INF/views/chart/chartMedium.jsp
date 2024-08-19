@@ -6,7 +6,12 @@
 <head>
     <meta charset="UTF-8">
     <title>사고 종류별 사망자 수 및 부상자 수 차트</title>
+    <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
+	<script src="${CP}/resources/js/common.js"></script>
+	<script src="${CP}/resources/js/jquery_3_7_1.js"></script>
+	<script src="${CP}/resources/js/chart/chart.js"></script>
     <!-- Chart.js Library -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
@@ -62,42 +67,7 @@
                 })
                 .catch(error => console.error('차트 데이터 가져오기 오류:', error));
         });
-    </script>
-    
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.showChartsButton').forEach((button, index) => {
-                button.addEventListener('click', () => {
-                    switch (index) {
-                        case 0:
-                            window.location.href = '${CP}/chart/chartMonth.do';
-                            break;
-                        case 1:
-                            window.location.href = '${CP}/chart/chartWeek.do';
-                            break;
-                        case 2:
-                            window.location.href = '${CP}/chart/chartHour.do';
-                            break;
-                        case 3:
-                            window.location.href = '${CP}/chart/chartNight.do'; // 예시 URL
-                            break;
-                        case 4:
-                            window.location.href = '${CP}/chart/chartMajor.do'; // 예시 URL
-                            break;
-                        case 5:
-                            window.location.href = '${CP}/chart/chartMedium.do'; // 예시 URL
-                            break;
-                        case 6:
-                            window.location.href = '${CP}/chart/chartGname.do'; // 예시 URL
-                            break;
-                        case 7:
-                            window.location.href = '${CP}/chart/chartSummary.do'; // 예시 URL
-                            break;
-                    }
-                });
-            });
-        });
-    </script>
+    </script>    
     <style>
         .chart-container {
             display: none; /* 처음에는 차트를 숨김 */
@@ -133,7 +103,7 @@
         <h1>사고 종류별 총 사망자 수 및 부상자 수</h1>
     </div>
 
-    <!-- 버튼 컨테이너 -->
+   <!-- 버튼 컨테이너 -->
     <div class="button-container">
         <button class="showChartsButton">월별 교통사고</button>
         <button class="showChartsButton">요일별 교통사고</button>
@@ -142,7 +112,10 @@
         <button class="showChartsButton">사고유형별 교통사고</button>
         <button class="showChartsButton">사고종류별 교통사고</button>
         <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">이건 걍만든버튼</button>
+        <button class="showChartsButton">연도별 기상사고</button>
+        <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
+        <button class="showChartsButton">연도별 부상자 상위 5개 구</button>
+        <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
     </div>
 
     <!-- 차트 컨테이너 -->

@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>지역별 사망자 수 및 부상자 수 차트</title>
     <!-- Chart.js Library -->
+    <script src="${CP}/resources/js/chart/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
@@ -137,7 +138,7 @@
         <h1>지역별 총 사망자 수 및 부상자 수</h1>
     </div>
 
-    <!-- Button container -->
+    <!-- 버튼 컨테이너 -->
     <div class="button-container">
         <button class="showChartsButton">월별 교통사고</button>
         <button class="showChartsButton">요일별 교통사고</button>
@@ -146,9 +147,11 @@
         <button class="showChartsButton">사고유형별 교통사고</button>
         <button class="showChartsButton">사고종류별 교통사고</button>
         <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">이건 걍만든버튼</button>
+        <button class="showChartsButton">연도별 기상사고</button>
+        <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
+        <button class="showChartsButton">연도별 부상자 상위 5개 구</button>
+        <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
     </div>
-
     <!-- Chart container -->
     <div id="chartsContainer" class="chart-container">
         <!-- Deaths chart -->

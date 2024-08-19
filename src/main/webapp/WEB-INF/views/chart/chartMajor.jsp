@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
+<script src="${CP}/resources/js/chart/chart.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
@@ -142,7 +143,10 @@
         <button class="showChartsButton">사고유형별 교통사고</button>
         <button class="showChartsButton">사고종류별 교통사고</button>
         <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">이건 걍만든버튼</button>
+        <button class="showChartsButton">연도별 기상사고</button>
+        <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
+        <button class="showChartsButton">연도별 부상자 상위 5개 구</button>
+        <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
     </div>
     
     <!-- 콤보 차트 컨테이너 -->
