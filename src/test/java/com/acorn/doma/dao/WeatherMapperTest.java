@@ -43,7 +43,7 @@ public class WeatherMapperTest implements PLog{
 	}
 
 	@Test
-    public void testAll() {
+    public void testAll() throws Exception{
         int year = 2012;
 
         // Test `getWeatherDataByYear`

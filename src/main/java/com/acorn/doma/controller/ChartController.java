@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Death;
 import com.acorn.doma.mapper.DeathMapper;
+import com.acorn.doma.mapper.WeatherMapper;
 
 @Controller
 @RequestMapping("chart")
@@ -24,7 +25,8 @@ public class ChartController implements PLog{
 
     @Autowired
     private DeathMapper deathMapper;
-    
+    @Autowired
+    private WeatherMapper weatherMapper;
     //월별
     @GetMapping("/chartMonth.do")
     public String showChartPage() {
@@ -239,6 +241,61 @@ public class ChartController implements PLog{
         return response;
     }
     
+    @GetMapping("/chartWeatherYear.do")
+    public String showWeather1() {
+        String viewName = "/chart/weatherYear";  // JSP 페이지 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);                                
+        log.debug("└──────────────────────────────────────────┘");
+        return viewName;
+    }
+    @GetMapping("/getWeatherDataByYear.do")
+    @ResponseBody
+    public List<Map<String, Object>> getWeatherDataByYear(@RequestParam("year") int year) throws SQLException {
+        return weatherMapper.getWeatherDataByYear(year);
+    }
+    
+    @GetMapping("/chartWeatherFreq.do")
+    public String showWeather2() {
+        String viewName = "/chart/weatherFreq";  // JSP 페이지 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);                                
+        log.debug("└──────────────────────────────────────────┘");
+        return viewName;
+    }
+    @GetMapping("/freqByYear.do")
+    @ResponseBody
+    public List<Map<String, Object>> getWeatherFreqByYear(@RequestParam("year") int year) throws SQLException {
+        return weatherMapper.weatherFreqByYear(year);
+    }
+  
+    @GetMapping("/chartWeatherTop5.do")
+    public String showWeather3() {
+        String viewName = "/chart/weatherTop5";  // JSP 페이지 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);                                
+        log.debug("└──────────────────────────────────────────┘");
+        return viewName;
+    }
+    @GetMapping("/top5Region.do")
+    @ResponseBody
+    public List<Map<String, Object>> getTop5InjuryByRegion(@RequestParam("year") int year) throws SQLException {
+        return weatherMapper.top5InjuryByRegion(year);
+    }
+  
+    @GetMapping("/chartWeatherGuSelect.do")
+    public String showWeather4() {
+        String viewName = "/chart/weatherGu";  // JSP 페이지 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);                                
+        log.debug("└──────────────────────────────────────────┘");
+        return viewName;
+    }
+    @GetMapping("/weatherConditionForGnames.do")
+    @ResponseBody
+    public List<Map<String, Object>> getInjuryByWeatherConditionForGnames(@RequestParam("gname") List<String> gname) throws SQLException {
+        return weatherMapper.injuryByWeatherConditionForGnames(gname);
+    }
 
     
     
