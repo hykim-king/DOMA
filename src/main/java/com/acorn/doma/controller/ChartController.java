@@ -241,14 +241,21 @@ public class ChartController implements PLog{
         return response;
     }
     
+<<<<<<< HEAD
     @GetMapping("/chartWeatherYear.do")
     public String showWeather1() {
         String viewName = "/chart/weatherYear";  // JSP 페이지 경로
+=======
+    @GetMapping("/chartMedium.do")
+    public String showMediumChartPage() {
+        String viewName = "/chart/chartMedium";  // JSP 페이지 경로
+>>>>>>> d327c0902ded54db9a99bdba0f67fc625fead6dc
         log.debug("┌──────────────────────────────────────────┐");
         log.debug("│ viewName: " + viewName);                                
         log.debug("└──────────────────────────────────────────┘");
         return viewName;
     }
+<<<<<<< HEAD
     @GetMapping("/getWeatherDataByYear.do")
     @ResponseBody
     public List<Map<String, Object>> getWeatherDataByYear(@RequestParam("year") int year) throws SQLException {
@@ -258,11 +265,34 @@ public class ChartController implements PLog{
     @GetMapping("/chartWeatherFreq.do")
     public String showWeather2() {
         String viewName = "/chart/weatherFreq";  // JSP 페이지 경로
+=======
+
+    @GetMapping("/chartDataMedium.do")
+    @ResponseBody
+    public Map<String, List<Map<String, Object>>> getChartDataMedium() throws SQLException {
+        Death inVO = new Death(); // 필요한 필드 설정
+        List<Map<String, Object>> mediumDead = deathMapper.MediumDead(inVO);
+        List<Map<String, Object>> mediumCasualties = deathMapper.MediumCasualties(inVO);
+        List<Map<String, Object>> mediumSeriously = deathMapper.MediumSeriously(inVO);
+
+        Map<String, List<Map<String, Object>>> response = new HashMap<>();
+        response.put("mediumDead", mediumDead);
+        response.put("mediumCasualties", mediumCasualties);
+        response.put("mediumSeriously", mediumSeriously);
+        return response;
+    }
+
+
+    @GetMapping("/chartGname.do")
+    public String showGnameChartPage() {
+        String viewName = "/chart/chartGname";  // JSP 페이지 경로
+>>>>>>> d327c0902ded54db9a99bdba0f67fc625fead6dc
         log.debug("┌──────────────────────────────────────────┐");
         log.debug("│ viewName: " + viewName);                                
         log.debug("└──────────────────────────────────────────┘");
         return viewName;
     }
+<<<<<<< HEAD
     @GetMapping("/freqByYear.do")
     @ResponseBody
     public List<Map<String, Object>> getWeatherFreqByYear(@RequestParam("year") int year) throws SQLException {
@@ -295,9 +325,23 @@ public class ChartController implements PLog{
     @ResponseBody
     public List<Map<String, Object>> getInjuryByWeatherConditionForGnames(@RequestParam("gname") List<String> gname) throws SQLException {
         return weatherMapper.injuryByWeatherConditionForGnames(gname);
+=======
+
+    @GetMapping("/chartDataGname.do")
+    @ResponseBody
+    public Map<String, List<Map<String, Object>>> getChartDataGname() throws SQLException {
+        Death inVO = new Death(); // 필요한 필드 설정
+        List<Map<String, Object>> gnameDead = deathMapper.GnameDead(inVO);
+        List<Map<String, Object>> gnameCasualties = deathMapper.GnameCasualties(inVO);
+        List<Map<String, Object>> gnameSeriously = deathMapper.GnameSeriously(inVO);
+
+        Map<String, List<Map<String, Object>>> response = new HashMap<>();
+        response.put("gnameDead", gnameDead);
+        response.put("gnameCasualties", gnameCasualties);
+        response.put("gnameSeriously", gnameSeriously);
+        return response;
+>>>>>>> d327c0902ded54db9a99bdba0f67fc625fead6dc
     }
 
-    
-    
 
 }
