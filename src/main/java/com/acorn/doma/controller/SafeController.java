@@ -1,5 +1,9 @@
 package com.acorn.doma.controller;
 
+
+
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -7,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.acorn.doma.cmn.Message;
 import com.acorn.doma.cmn.PLog;
@@ -95,32 +101,59 @@ public class SafeController implements PLog {
 		
 	}
 	
-	@RequestMapping(value = "/save.do"
-			   , method = RequestMethod.POST
-			   ,produces = "text/plain;charset=UTF-8")
-	@ResponseBody
-	public String doSave(Board inVO) throws SQLException {
-		log.debug("┌──────────────────────────────────────────┐");
-		log.debug("│ safeController : doSave()                │");
-		log.debug("└──────────────────────────────────────────┘");
-		
-		log.debug("1. inVO : " + inVO);
-		
-		String jsonString = "";
-		String message = "";
-		
-		int flag = boardService.save(inVO);
-		if(flag == 1) {
-			message = inVO.getTitle() + "이 저장되었습니다.";
-		}else {
-			message = "게시물 저장에 실패했습니다.";
-		}
-		
-		jsonString = new Gson().toJson(new Message(flag, message));	
-		log.debug("2. jsonString:" + jsonString);
-		
-		return jsonString;
-	}
+
+	 // 실제 파일이 저장될 경로 (서버의 절대 경로)
+    private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/";
+
+    @PostMapping(value = "/save.do", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String doSave(Board inVO,
+                         @RequestParam(value = "fileName", required = false) MultipartFile file) throws SQLException {
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ safeController : doSave()                │");
+        log.debug("└──────────────────────────────────────────┘");
+
+        // 파일 처리
+        if (file != null && !file.isEmpty()) {
+            try {
+                // 서버의 특정 경로에 파일 저장
+                String originalFileName = file.getOriginalFilename();
+                String filePath = UPLOAD_DIR + originalFileName;
+                File uploadFile = new File(filePath);
+
+                // 파일 저장
+                file.transferTo(uploadFile);
+
+                // 파일 경로를 웹 애플리케이션의 접근 가능한 경로로 설정
+                String relativeFilePath = "/resources/img/board_img/" + originalFileName;
+                inVO.setImgLink(relativeFilePath);
+
+            } catch (IOException e) {
+                log.error("File upload error: ", e);
+                return new Gson().toJson(new Message(0, "파일 업로드에 실패했습니다."));
+            }
+        } else {
+            log.warn("No file uploaded");
+        }
+
+        log.debug("1. inVO : " + inVO);
+
+        String jsonString;
+        String message;
+
+        // 데이터베이스에 저장
+        int flag = boardService.save(inVO);
+        if (flag == 1) {
+            message = inVO.getTitle() + "이 저장되었습니다.";
+        } else {
+            message = "게시물 저장에 실패했습니다.";
+        }
+
+        jsonString = new Gson().toJson(new Message(flag, message));
+        log.debug("2. jsonString : " + jsonString);
+
+        return jsonString;
+    }
 	
 	@GetMapping("/selectOne.do")
 	public String selectOne(Model model, Board inVO) throws SQLException {

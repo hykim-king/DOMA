@@ -38,7 +38,7 @@ user : ${user}
 	<hr>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
-	<form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="regForm" id="regForm" method="post" enctype="multipart/form-data">
+	<form action="${CP}/safe/save.do" class="form-horizontal"  name="regForm" id="regForm" method="post" enctype="multipart/form-data">
   		<div class="row mb-2"> 
   			<label for="boardDiv" class="col-sm-2 col-form-label">게시판 구분</label>
 	  		<div class="col-sm-1">
@@ -58,13 +58,13 @@ user : ${user}
 	    <div class="row mb-2">
 	        <label for="userId" class="col-sm-2 col-form-label">작성자</label>
 	        <div class="col-sm-2">
-	        <input type="text" value="${user.userId}" class="form-control" disabled="false" name="userId" id="userId"  maxlength="20" required="required">
+	        <input type="text" value="${user.userId}" class="form-control" disabled=false name="userId" id="userId"  maxlength="20" required="required">
 	        </div>
 	    </div>
 	    <div class="row mb-2">
 	        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
 	        <div class="col-sm-10">
-	          <input type="file" multiple class="form-control" name="imgLink" id="imgLink">        
+	          <input type="file" multiple class="form-control" name="fileName" id="imgLink">        
 	        </div>        
 	    </div>
 	    <div class="row mb-2">
