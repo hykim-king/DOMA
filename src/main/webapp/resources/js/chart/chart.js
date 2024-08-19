@@ -31,9 +31,6 @@
                         window.location.href = '/doma/chart/chartWeatherFreq.do'; // 예시 URL
                         break;
                     case 9:
-                        window.location.href = '/doma/chart/chartWeatherTop5.do'; // 예시 URL
-                        break;
-                    case 10:
                         window.location.href = '/doma/chart/chartWeatherGuSelect.do'; // 예시 URL
                         break;
                 }

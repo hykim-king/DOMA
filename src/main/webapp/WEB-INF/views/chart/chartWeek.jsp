@@ -104,7 +104,6 @@
         <button class="showChartsButton">시군구별 교통사고</button>
         <button class="showChartsButton">연도별 기상사고</button>
         <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
-        <button class="showChartsButton">연도별 부상자 상위 5개 구</button>
         <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
     </div>
 <!-- 차트 컨테이너 -->

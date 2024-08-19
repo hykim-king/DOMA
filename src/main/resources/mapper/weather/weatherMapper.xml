@@ -14,21 +14,20 @@
     </select>
 
     <!-- 날씨 조건별 발생 빈도 (연도별) -->
-    <select id="weatherFreqByYear" parameterType="int" resultType="map">
+    <select id="weatherFreqByYear" resultType="map">
         SELECT 
             YEAR,
-            WEATHER_CONDITION, 
-            COUNT(*) AS COUNT
+            WEATHER_CONDITION as condition, 
+            sum(injury) as injury 
         FROM 
             d_weather
-        WHERE 
-            YEAR = #{year}
+        WHERE WEATHER_CONDITION not like '기타/불명'
         GROUP BY 
             YEAR, WEATHER_CONDITION
         ORDER BY 
-            COUNT(*) DESC
+            year
     </select>
-
+    <select id=""></select>
    
 
     
@@ -37,19 +36,33 @@
 
     <!-- 연도별 상위 5개 구에서 부상자의 합산이 가장 많은 구 조회 -->
     <select id="top5InjuryByRegion" parameterType="int" resultType="map">
+        <![CDATA[
+        WITH RankedInjuries AS (
+            SELECT 
+                GNAME AS region,
+                WEATHER_CONDITION AS weather_condition,
+                SUM(INJURY) AS total_injury,
+                YEAR AS year,
+                ROW_NUMBER() OVER (PARTITION BY YEAR ORDER BY SUM(INJURY) DESC) AS rank
+            FROM 
+                d_weather
+            WHERE 
+                WEATHER_CONDITION NOT IN ('기타/불명')  -- '기타/불명' 제외
+            GROUP BY 
+                GNAME, WEATHER_CONDITION, YEAR
+        )
         SELECT 
-            GNAME,
-            WEATHER_CONDITION,
-            SUM(INJURY) AS TOTAL_INJURY
+            region,
+            weather_condition,
+            total_injury,
+            year
         FROM 
-            d_weather
+            RankedInjuries
         WHERE 
-            YEAR = #{year}
-        GROUP BY 
-            GNAME, WEATHER_CONDITION
+            rank <= 5
         ORDER BY 
-            TOTAL_INJURY DESC
-        FETCH FIRST 5 ROWS ONLY
+            year, rank
+        ]]>
     </select>
 
     <!-- 선택된 구에서 기상 상태별 부상자 수 조회 -->

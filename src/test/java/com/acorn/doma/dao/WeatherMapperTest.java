@@ -18,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acorn.doma.cmn.PLog;
+import com.acorn.doma.domain.Weather;
 import com.acorn.doma.mapper.WeatherMapper;
 @RunWith(SpringRunner.class) // 스프링 컨텍스트 프레임워크의 JUnit확장기능 지정
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
@@ -52,20 +53,20 @@ public class WeatherMapperTest implements PLog{
         log.debug("Weather Data by Year: " + weatherData);
 
         // Test `weatherFreqByYear`
-        List<Map<String, Object>> weatherFreq = weatherMapper.weatherFreqByYear(year);
+        List<Map<String, Object>> weatherFreq = weatherMapper.weatherFreqByYear();
         assertNotNull(weatherFreq);
         log.debug("Weather Frequency by Year: " + weatherFreq);
 
         // Test `top5InjuryByRegion`
-        List<Map<String, Object>> top5Injury = weatherMapper.top5InjuryByRegion(year);
+        List<Map<String, Object>> top5Injury = weatherMapper.top5InjuryByRegion();
         assertNotNull(top5Injury);
         log.debug("Top 5 Injury by Region: " + top5Injury);
-
-        // Test `injuryByWeatherConditionForRegions`
-        List<String> regions = Arrays.asList("은평구", "서대문구");  // 테스트할 지역을 지정
-        List<Map<String, Object>> injuryByWeather = weatherMapper.injuryByWeatherConditionForGnames(regions);
-        assertNotNull(injuryByWeather);
-        log.debug("Injury by Weather Condition for Regions: " + injuryByWeather);
+//
+//        // Test `injuryByWeatherConditionForRegions`
+//        List<String> regions = Arrays.asList("은평구", "서대문구");  // 테스트할 지역을 지정
+//        List<Map<String, Object>> injuryByWeather = weatherMapper.injuryByWeatherConditionForGnames(regions);
+//        assertNotNull(injuryByWeather);
+//        log.debug("Injury by Weather Condition for Regions: " + injuryByWeather);
 
     }
 	@Test

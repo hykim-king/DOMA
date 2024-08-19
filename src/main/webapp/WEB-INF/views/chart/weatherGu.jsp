@@ -54,6 +54,28 @@
     
     <!-- 차트 컨테이너 -->
     <div id="chartContainer" style="height: 500px; margin: 0 auto;"></div>
+    <script>
+$(document).ready(function() {
+    loadChartData();
+
+    function loadChartData() {
+        $.ajax({
+            url: '${CP}/chart/chartWeatherGuSelect.do', // 데이터 요청 URL
+            method: 'GET',
+            data:{},
+            success: function(response) {
+                console.log(response); // 데이터 확인용
+               
+            },
+            error: function() {
+                alert('데이터를 가져오는 데 실패했습니다.');
+            }
+        });
+    }
+
+    
+});
+</script>
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 
 </html>

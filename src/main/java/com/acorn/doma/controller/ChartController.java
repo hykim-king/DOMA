@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Death;
+import com.acorn.doma.domain.Weather;
 import com.acorn.doma.mapper.DeathMapper;
 import com.acorn.doma.mapper.WeatherMapper;
 
@@ -310,24 +311,11 @@ public class ChartController implements PLog {
 	}
 	@GetMapping("/freqByYear.do")
 	@ResponseBody
-	public List<Map<String, Object>> getWeatherFreqByYear(@RequestParam("year") int year) throws SQLException {
-		return weatherMapper.weatherFreqByYear(year);
+	public List<Map<String, Object>> getWeatherFreqByYear() throws SQLException {
+		return weatherMapper.weatherFreqByYear();
 	}
 
-	@GetMapping("/chartWeatherTop5.do")
-	public String showWeather3() {
-		String viewName = "/chart/weatherTop5"; // JSP 페이지 경로
-		log.debug("┌──────────────────────────────────────────┐");
-		log.debug("│ viewName: " + viewName);
-		log.debug("└──────────────────────────────────────────┘");
-		return viewName;
-	}
-
-	@GetMapping("/top5Region.do")
-	@ResponseBody
-	public List<Map<String, Object>> getTop5InjuryByRegion(@RequestParam("year") int year) throws SQLException {
-		return weatherMapper.top5InjuryByRegion(year);
-	}
+	
 
 	@GetMapping("/chartWeatherGuSelect.do")
 	public String showWeather4() {
