@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
+    checkUserPermission(); // 페이지 로드 시 권한 확인
+});
+
+function checkUserPermission() {
+    fetch('/doma/admin/checkUserPermission.do')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'error') {
+                alert(data.message); // 오류 메시지 표시
+                window.location.href = '/doma/main/main.do'; // 메인 페이지로 리다이렉트
+            } else {
+                loadNotices(1); // 권한이 있으면 공지사항 로드
+            }
+        })
+        .catch(error => {
+            console.error('Error checking user permission:', error);
+            alert('권한 확인 중 오류가 발생했습니다.');
+            window.location.href = '/doma/main/main.do'; // 메인 페이지로 리다이렉트
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
     loadNotices(1);
 });
 let btnflg = 0; //0일때 비활성화, 1일때 저장

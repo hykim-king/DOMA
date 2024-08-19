@@ -65,6 +65,30 @@ public class AdminController implements PLog {
 
         return viewName;
     }
+    
+    @RequestMapping(value = "/checkUserPermission.do", method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> checkUserPermission(HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            User user = (User) session.getAttribute("user");
+            if (user == null) {
+                response.put("status", "error");
+                response.put("message", "사용자가 로그인되지 않았습니다.");
+                return response;
+            }
+            
+            if (user.getGrade() != 0) {  // 권한 체크: GRADE가 0이 아니면 권한 없음
+                response.put("status", "error");
+                response.put("message", "권한이 없습니다.");
+            } else {
+                response.put("status", "success");
+            }
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", "권한 확인 중 오류가 발생했습니다.");
+        }
+        return response;
+    }
 
     //공지사항 노출
     @RequestMapping(value = "/doRetrieveNotices.do", method = RequestMethod.GET)
