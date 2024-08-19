@@ -9,6 +9,16 @@ import com.acorn.doma.cmn.WorkDiv;
 import com.acorn.doma.domain.Board;
 
 public interface BoardService extends WorkDiv<Board> {
+	
+	int anUpdate(Board inVO) throws SQLException;
+	
+	Board anMoveUpdate(Board inVO) throws SQLException, NullPointerException;
+	
+	Board moveUpdate(Board inVO) throws SQLException, NullPointerException;
+	
+	Board anSelectOne(Board inVO) throws SQLException, NullPointerException;
+	
+	int anSave(Board inVO) throws SQLException;
      
 	List<Board> doRetrieveAn(DTO search) throws SQLException;
 	
@@ -25,8 +35,6 @@ public interface BoardService extends WorkDiv<Board> {
 	public List<Board> retrieve(Search search) throws SQLException;
 	
 	public Board selectOne(Board inVO) throws SQLException;
-	
-	Board moveUpdate(Board inVO) throws SQLException, NullPointerException;
 	
 	int update(Board inVO) throws SQLException;
 	

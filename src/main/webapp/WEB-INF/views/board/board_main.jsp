@@ -412,7 +412,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     //JSON문자열을 JSON Object로 변환
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
                         moveToList();
                     }else{
                         alert(message.messageContents);

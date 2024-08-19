@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.WorkDiv;
 import com.acorn.doma.domain.Code;
 
@@ -18,5 +19,7 @@ public interface CodeMapper extends WorkDiv<Code> {
 	 * @throws SQLException
 	 */
 	List<Code> doRetrieveIn(List search) throws SQLException;
+	
+	List<Code> doRetrieveAn(DTO search) throws SQLException;
 
 }

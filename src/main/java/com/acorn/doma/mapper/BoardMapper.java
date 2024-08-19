@@ -14,7 +14,16 @@ import com.acorn.doma.domain.User;
 
 @Mapper
 public interface BoardMapper extends WorkDiv<Board>{
+	
+	int anUpdate(Board inVO) throws SQLException;
+	
+	Board anSelectOne(Board inVO) throws SQLException, NullPointerException;
 
+	int anSave(Board inVO) throws SQLException;
+	
+	List<Board> doRetrieveAn(DTO search) throws SQLException;
+	
+	Board anMoveUpdate(Board inVO) throws SQLException, NullPointerException;
 	
 	Board moveUpdate(Board inVO) throws SQLException, NullPointerException;
 	/**

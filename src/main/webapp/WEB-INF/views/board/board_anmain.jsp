@@ -271,10 +271,10 @@ document.addEventListener("DOMContentLoaded", function() {
             if (grade === 0) {
                 doDelete();
             } else if (grade === 1) {
-                alert("작성자가 아닙니다.");
+                alert("관리자가 아닙니다.");
             }
         } else {
-            alert("작성자가 아닙니다.");
+            alert("관리자가 아닙니다.");
         }
     }   
         
@@ -295,10 +295,10 @@ document.addEventListener("DOMContentLoaded", function() {
         } else if (grade === 0) {
             return true; // 작성자가 아니지만 grade가 0인 경우
         } else if (grade === 1) {
-            alert("작성자가 아닙니다.");
+            alert("관리자가 아닙니다.");
             return false;
         } else {
-            alert("작성자가 아닙니다.");
+            alert("관리자가 아닙니다.");
             return false;
         }
     }
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function moveToList() {
-        window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+        window.location.href = "/doma/board/doRetrieveAn.do?div=" + divInput.value;
     }
 
     function moveToUp() {
@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "div": divInput.value
         };
 
-        window.location.href = "/doma/board/moveToUp.do?seq=" + seq + "&div=" + divInput.value;
+        window.location.href = "/doma/board/anMoveToUp.do?seq=" + seq + "&div=" + divInput.value;
     }
 
     function commentSave() {
@@ -412,7 +412,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     //JSON문자열을 JSON Object로 변환
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
                         moveToList();
                     }else{
                         alert(message.messageContents);
@@ -582,12 +581,6 @@ board : ${board }
                 <p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
                 <p class="post-date">${board.regDt}</p>
                 <p class="text-end">조회수: ${board.views}</p>
-            </div>
-            <div class="row mb-2">
-                <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
-                <div class="col-sm-2">
-                    <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
-                </div>
             </div>
             <hr>
             <div id="imgLink" class="post-content">

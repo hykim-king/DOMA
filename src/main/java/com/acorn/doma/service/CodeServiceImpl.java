@@ -40,7 +40,7 @@ public class CodeServiceImpl implements CodeService, PLog {
 		Code inVO = (Code) search;
 		
 		log.debug("1.param" + inVO);
-		List<Code> list = codeMapper.doRetrieve(inVO);
+		List<Code> list = codeMapper.doRetrieveAn(inVO);
 		for(Code vo :list) {
 			log.debug(vo);
 		}

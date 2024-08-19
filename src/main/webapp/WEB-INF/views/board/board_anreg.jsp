@@ -166,7 +166,7 @@ header, footer {
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
 //객체 생성=================================================================================================    
-    const doSaveBtn = document.querySelector("#doSave");
+    const anSaveBtn = document.querySelector("#anSave");
     const moveToListBtn = document.querySelector("#moveToList");
     const titleInput = document.querySelector("#title");
     const userIdInput = document.querySelector("#userId");
@@ -180,14 +180,6 @@ document.addEventListener("DOMContentLoaded", function(){
     
 //이벤트 처리=================================================================================================    
     
-	//구분
-    searchDivSelect.addEventListener("change",function(event){
-        if("" === searchDivSelect.value){
-            searchWordInput.value = "";//검색어
-            pageSizeSelect.value  = 10;//페이지 사이즈
-        }
-    });
-	
 	//moveToListBtn
     moveToListBtn.addEventListener("click", function(event){
 	    console.log("moveToListBtn click");
@@ -202,9 +194,9 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 	
 	//등록
-    doSaveBtn.addEventListener("click", function(event){
+    anSaveBtn.addEventListener("click", function(event){
         console.log("doSaveBtn click");     
-        doSave();
+        anSave();
     });
 	
     
@@ -213,28 +205,20 @@ document.addEventListener("DOMContentLoaded", function(){
     
 	//moveToList()
     function moveToList() {
-        window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+        window.location.href = "/doma/board/doRetrieveAn.do?div=" + divInput.value;
+    }
+    
+    function moveToMain() {
+        window.location.href = "/doma/board/anSelectOne.do?seq=" + seqInput.value + "div=" + divInput.value;
     }
 	
 	//doSave()
-	function doSave(){
-        console.log("doSave()");
-        
-        if(isEmpty(searchDivSelect.value) == true){
-            alert('구를 선택 하세요.')
-            searchDivSelect.focus();
-            return;
-        }
+	function anSave(){
+        console.log("AnSave()");
         
         if(isEmpty(titleInput.value) == true){
             alert('제목을 입력 하세요.')
             titleInput.focus();
-            return;
-        }
-        
-        if(isEmpty(userIdInput.value) == true){
-            alert('등록자 아이디를 입력 하세요.')
-            userIdInput.focus();
             return;
         }
         
@@ -249,13 +233,12 @@ document.addEventListener("DOMContentLoaded", function(){
         
         //비동기 통신
         let type = "POST";
-        let url = "/doma/board/doSave.do";
+        let url = "/doma/board/anSave.do";
         let async = "true";
         let dataType = "html";
         
         let params = {
         	"seq" : seqInput.value,
-       		"gname"   : searchDivSelect.value,
             "title"    : titleInput.value,
             "userId"    : userIdInput.value,
             "content" : simplemde.value(),
@@ -309,24 +292,13 @@ user : ${user }
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
       <input type="button" value="목록" id="moveToList" class="btn btn-outline-warning">
-      <input type="button" value="등록"  id="doSave" class="btn btn-outline-warning">
+      <input type="button" value="등록"  id="anSave" class="btn btn-outline-warning">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
   <form action="${CP}/board/fileUpload.do" method="post" enctype="multipart/form-data" class="form-horizontal">
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
-    <div class="row mb-2">
-	    <label for="gname" class="col-sm-2 col-form-label">구이름</label>
-	    <div class="col-sm-3">
-	        <select name="searchDiv" class="form-select" id=searchDiv>
-	            <option value="">구 선택</option>
-	            <c:forEach var="item" items="${GNAME}">
-	               <option value="${item.detNm}"  <c:if test="${item.detNm == search.searchDiv }">selected</c:if>    >${ item.detNm}</option>
-	            </c:forEach>
-	        </select>
-	    </div>
-    </div>
     <div class="row mb-2">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
         <div class="col-sm-10">

@@ -1,21 +1,24 @@
 <%--
 /**
-    Class Name: reg.jsp
-    Description: 부트스트랩 template
+    Class Name: 
+    Description:
     Author: acorn
     Modification information
     
-    수정일                    수정자      수정내용
-    -----        -----  -------------------------------------------
-    2024. 7. 18         최초작성
-    author eclass 개발팀
+    수정일     수정자      수정내용
+    -----   -----  -------------------------------------------
+    2024. 7. 30        최초작성 
+    
+    DOMA 개발팀
     since 2020.11.23
     Copyright (C) by KandJang All right reserved.
 */
  --%>
+<%@page import="com.acorn.doma.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <c:set var="CP"  value="${pageContext.request.contextPath}"  />
 <!DOCTYPE html>
 <html>
@@ -42,7 +45,11 @@
 
 <!-- simplemde -->
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
+
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
+
+ 
 <style>
 body {
     font-family: 'Nanum Gothic', sans-serif;
@@ -161,70 +168,55 @@ header, footer {
 }
 </style>
 
-<title>오늘 사람 프로그램</title>
+<title>acorn</title>
 <script>
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
 //객체 생성=================================================================================================    
-    const doSaveBtn = document.querySelector("#doSave");
-    const moveToListBtn = document.querySelector("#moveToList");
-    const titleInput = document.querySelector("#title");
-    const userIdInput = document.querySelector("#userId");
-    const contentsTextArea = document.querySelector("#content");
-    const divInput = document.querySelector("#div");
-    const imgLinkInput = document.querySelector("#imgLink");
+    //moveToMainBtn : 뒤로 이동
+    const moveToMainBtn = document.querySelector("#moveToMain");
+    //anUpdate : 수정
+    const anUpdateBtn = document.querySelector("#anUpdate");
+    //seq
     const seqInput = document.querySelector("#seq");
+    //div
+    const divInput = document.querySelector("#div");
+    //구이름
+    const gnameInput = document.querySelector("#gname");
+    //제목
+    const titleInput = document.querySelector("#title");
+    //이미지
+    const imgLinkInput = document.querySelector("#imgLink");
+    //내용
+    const contentsTextArea = document.querySelector("#content");
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
+    const modIdInput = document.querySelector("#modId");
+    const userIdInput = document.querySelector("#userId");
     
-//이벤트 처리=================================================================================================    
-    
-	//구분
-    searchDivSelect.addEventListener("change",function(event){
-        if("" === searchDivSelect.value){
-            searchWordInput.value = "";//검색어
-            pageSizeSelect.value  = 10;//페이지 사이즈
-        }
+
+//이벤트 처리=================================================================================================
+    //moveToMainBtn
+    moveToMainBtn.addEventListener("click",function(event){
+        console.log("moveToMainBtn click");
+        event.stopPropagation();
+        if(confirm("뒤로 이동 하시겠습니까?") === false)return;
+        moveToMain();
     });
-	
-	//moveToListBtn
-    moveToListBtn.addEventListener("click", function(event){
-	    console.log("moveToListBtn click");
-	    event.stopPropagation();
-	
-	    // 글쓰기를 취소하시겠습니까? 알림을 추가
-	    if (confirm("글쓰기를 취소하시겠습니까?") === false) {
-	        return;
-	    }
-	    
-	    moveToList();
-	});
-	
-	//등록
-    doSaveBtn.addEventListener("click", function(event){
-        console.log("doSaveBtn click");     
-        doSave();
+    
+    //doUpdate : 수정
+    anUpdateBtn.addEventListener("click",function(event){
+        console.log("doUpdateBtn click");
+        event.stopPropagation();
+        anUpdate();
     });
-	
     
     
-//함수=================================================================================================    
-    
-	//moveToList()
-    function moveToList() {
-        window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
-    }
-	
-	//doSave()
-	function doSave(){
-        console.log("doSave()");
-        
-        if(isEmpty(searchDivSelect.value) == true){
-            alert('구를 선택 하세요.')
-            searchDivSelect.focus();
-            return;
-        }
+//함수=================================================================================================
+    //doUpdate : 수정
+    function anUpdate() {
+        console.log("anUpdate()");
         
         if(isEmpty(titleInput.value) == true){
             alert('제목을 입력 하세요.')
@@ -232,36 +224,29 @@ document.addEventListener("DOMContentLoaded", function(){
             return;
         }
         
-        if(isEmpty(userIdInput.value) == true){
-            alert('등록자 아이디를 입력 하세요.')
-            userIdInput.focus();
-            return;
-        }
-        
+        //marker : simplemde.value()
         if(isEmpty(simplemde.value()) == true){
             alert('내용을 입력 하세요.')
             contentsTextArea.focus();
             return;
         }
         
-        console.log("simplemde", simplemde.value());
-        if(confirm("등록 하시겠습니까?") === false)return;
+        if(confirm("수정 하시겠습니까?") === false)return;
         
         //비동기 통신
         let type = "POST";
-        let url = "/doma/board/doSave.do";
+        let url = "/doma/board/anUpdate.do";
         let async = "true";
         let dataType = "html";
         
         let params = {
-        	"seq" : seqInput.value,
-       		"gname"   : searchDivSelect.value,
-            "title"    : titleInput.value,
-            "userId"    : userIdInput.value,
-            "content" : simplemde.value(),
-            "imgLink" : imgLinkInput.value,
-            "div"      : divInput.value
-        };
+        		"seq"      : seqInput.value,
+        		"div"      : divInput.value,
+        		"userId"   : userIdInput.value,
+        		"modId"   : modIdInput.value,
+                "title"    : titleInput.value,
+                "content"  : simplemde.value()
+            };
 
         PClass.pAjax(url, params, dataType, type, async, function(data){
             if(data){
@@ -269,9 +254,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     //JSON문자열을 JSON Object로 변환
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
-                        //window.location.href = "/doma/board/boardInfo.do?seq=" + seqInput.value + "&div=" + divInput.value;
-                        moveToList();
+                        moveToMain();
                     }else{
                         alert(message.messageContents);
                     }
@@ -282,78 +265,65 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         });
     }
-	
-	
     
-});
+    function moveToMain() {
+        window.location.href = "/doma/board/anSelectOne.do?seq=" + seqInput.value +"&div=" + divInput.value;
+    }
+    
+});    
 </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-user : ${user }
+board : ${board }
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
-  <div class="page-header mb-4">
-      <h2>
+  <div class="page-header  mb-4">
+    <h2>
         <c:choose>
-            <c:when test="${ '10' == board.getDiv() }">커뮤니티-등록</c:when>
-            <c:when test="${ '20' == board.getDiv() }">공지사항-등록</c:when>
-            <c:otherwise>
-                                 공지사항/자유게시판
-            </c:otherwise>
-        </c:choose>
-      </h2>
-  </div>
+           <c:when test="${ '10'== board.getDiv() }">커뮤니티</c:when>
+           <c:when test="${ '20'== board.getDiv() }">공지사항</c:when>
+           <c:otherwise>
+                                공지사항/자유게시판
+           </c:otherwise>
+       </c:choose>
+    </h2>
+  </div> 
   <!--// 제목 end ------------------------------------------------------------->
+  
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
-      <input type="button" value="목록" id="moveToList" class="btn btn-outline-warning">
-      <input type="button" value="등록"  id="doSave" class="btn btn-outline-warning">
+      <input type="button" value="뒤로가기"  id="moveToMain" class="btn btn-outline-warning">
+      <input type="button" value="수정"  id="anUpdate" class="btn btn-outline-warning">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
-  <form action="${CP}/board/fileUpload.do" method="post" enctype="multipart/form-data" class="form-horizontal">
+  <form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="mngForm" id="mngForm" action="${CP}/file/fileUpload.do" method="post" enctype="multipart/form-data">
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
-    <input type="hidden" name="div" id="div" value="${board.getDiv() }">
-    <div class="row mb-2">
-	    <label for="gname" class="col-sm-2 col-form-label">구이름</label>
-	    <div class="col-sm-3">
-	        <select name="searchDiv" class="form-select" id=searchDiv>
-	            <option value="">구 선택</option>
-	            <c:forEach var="item" items="${GNAME}">
-	               <option value="${item.detNm}"  <c:if test="${item.detNm == search.searchDiv }">selected</c:if>    >${ item.detNm}</option>
-	            </c:forEach>
-	        </select>
-	    </div>
-    </div>
-    <div class="row mb-2">
-        <label for="title" class="col-sm-2 col-form-label">제목</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="title" id="title"  maxlength="75" required="required">
-        </div>
-    </div>
-    <div class="row mb-2">
+    <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
+    <input type="hidden" name="modId"    id="modId" value="${board.modId}">
+    
+	<div class="row mb-2">
         <label for="userId" class="col-sm-2 col-form-label">등록자</label>
         <div class="col-sm-10">
-          <input type="text" value="<c:out value='${user.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
+          <input type="text" value="<c:out value='${moveUp.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
         </div>
     </div>
     <div class="row mb-2">
-        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
-        <div class="col-sm-10">
-          <input type="file" class="form-control" name="imgLink" id="imgLink">        
-        </div>        
-    </div>
-    <div class="row mb-2">
-        <label for="content" class="col-sm-2 col-form-label">내용</label>
-        <div class="col-sm-10">
-         <textarea style="height: 200px"  class="form-control" id="content" name="content"></textarea>
-        </div>
-    </div>
+    <label for="title" class="col-sm-2 col-form-label">제목</label>
+	    <div class="col-sm-10">
+	        <input type="text" value="<c:out value='${moveUp.title}'/>" class="form-control" name="title" id="title" maxlength="75" required="required">
+	    </div>
+	</div>
+	<div class="row mb-2">
+	    <label for="content" class="col-sm-2 col-form-label">내용</label>
+	    <div class="col-sm-10">
+	        <textarea style="height: 200px" class="form-control" id="content" name="content"><c:out value='${moveUp.content}'></c:out></textarea>
+	    </div>
+	</div>
   </form>
   <!--// form end -->
-  fileList:${fileList }
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->
@@ -362,6 +332,6 @@ user : ${user }
 </script>
 
 <%-- bootstrap js --%>
-<script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>
+<script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script> 
 </body>
 </html>

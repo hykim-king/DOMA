@@ -54,7 +54,7 @@
 	
 	<select id="notice" resultType="Board" >
         <![CDATA[select * 
-				from (select * from d_board where div=10 order by div desc) 
+				from (select * from d_board where div=20 order by div desc) 
 				where ROWNUM <=2 
 				order by div desc
 		]]>
@@ -215,6 +215,17 @@
             AND user_id = #{userId}
     </update>
     
+    <update id="anUpdate" parameterType="Board">
+        UPDATE d_board
+         SET div     = #{div},
+             title   = #{title},
+             mod_id  = #{modId},
+             content = #{content},
+             mod_dt  = SYSDATE
+          WHERE seq = #{seq} 
+            AND user_id = #{userId}
+    </update>
+    
     <update id="doUpdate" parameterType="Board">
         UPDATE d_board
          SET div     = #{div},
@@ -226,6 +237,23 @@
           WHERE seq = #{seq} 
             AND user_id = #{userId}
     </update>
+    
+    <select id="anSelectOne" parameterType="Board" resultType="Board">
+        SELECT
+            seq,
+            div,
+            title,
+            user_id as userId,
+            mod_id as modId,
+            content,
+            img_link as imgLink,
+            TO_CHAR(reg_dt,'YYYY/MM/DD HH24:MI:SS') as regDt,
+            TO_CHAR(mod_dt,'YYYY/MM/DD HH24:MI:SS') as modDt,
+            views
+        FROM
+            d_board
+        WHERE seq = #{seq}    
+    </select>
     
     <select id="doSelectOne" parameterType="Board" resultType="Board">
         SELECT
@@ -271,6 +299,32 @@
         SELECT MAX(SEQ) seq
           FROM d_board
     </select>
+    
+    <insert id="anSave" parameterType="Board">
+     INSERT INTO D_BOARD(
+        seq,
+        div,
+        title,
+        user_id,
+        mod_id,
+        content,
+        img_link,
+        reg_dt,
+        mod_dt,
+        views       
+     )VALUES(
+      doma_board_seq.NEXTVAL,
+      #{div},
+      #{title},
+      #{userId},
+      #{userId},
+      #{content},
+      #{imgLink},
+      SYSDATE,
+      SYSDATE,
+      0
+     )
+    </insert>
     
     <insert id="doSave" parameterType="Board">
      INSERT INTO D_BOARD(

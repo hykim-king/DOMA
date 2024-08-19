@@ -162,8 +162,8 @@ document.addEventListener("DOMContentLoaded", function(){
     const doRetrieveAnBtn = document.querySelector("#doRetrieveAn");
     console.log("doRetrieveAnBtn:", doRetrieveAnBtn);
     //등록
-    const moveToRegBtn = document.querySelector("#moveToReg");
-    console.log("moveToRegBtn:", moveToRegBtn);
+    const anMoveToRegBtn = document.querySelector("#anMoveToReg");
+    console.log("anMoveToRegBtn:", anMoveToRegBtn);
     //등록시 파일업로드로
     const fileUploadgBtn = document.querySelector("#fileUpload");
     //검색어
@@ -175,19 +175,12 @@ document.addEventListener("DOMContentLoaded", function(){
     
     const div = document.querySelector("#div");
     
-    // 구 선택 드롭다운
-    const searchGuSelect = document.querySelector("#searchGu");
-    
-    // 구 버튼들
-    const guButtons = document.querySelectorAll("input[type='button'][name='gu']");
-    
-    const resetBtn = document.querySelector("#reset");
     
 //이벤트 처리=================================================================================================  
     
     //등록 이동 버튼
-    moveToRegBtn.addEventListener("click",function(event){
-        console.log("moveToRegBtn click");
+    anMoveToRegBtn.addEventListener("click",function(event){
+        console.log("anMoveToRegBtn click");
         checkSessionAndMove();
     });;
     
@@ -204,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function(){
         console.log("searchWordInput keydown");
         if(event.key === 'Enter' && event.keyCode === 13){
             event.stopPropagation();
-            doRetrieve(1);
+            doRetrieveAn(1);
         }
     });
     
@@ -231,8 +224,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	    if (userId !== "" && userId !== " ") {
 	        if (grade === 0) {
 	            // 글쓰기 버튼 활성화
-	            document.getElementById("moveToReg").disabled = false;
-	            moveToReg();
+	            document.getElementById("anMoveToReg").disabled = false;
+	            anMoveToReg();
 	        } else {
 	            alert("글쓰기 권한이 없습니다.");
 	        }
@@ -242,16 +235,16 @@ document.addEventListener("DOMContentLoaded", function(){
 	    }
 	}
     
-    //moveToReg()
-    function moveToReg(){
+    //AnMoveToReg()
+    function anMoveToReg(){
         const frm = document.querySelector("#boardForm");
         //frm.pageNo.value = 1;
-        frm.action = "/doma/board/moveToReg.do";
+        frm.action = "/doma/board/anMoveToReg.do";
         frm.submit();
     }
     
     //doSelectOne()
-    function doSelectOne(seq){
+    function anSelectOne(seq){
         console.log("doSelectOne seq:"+seq);
         //div
         //seq
@@ -260,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function(){
         const frm = document.querySelector("#boardForm");
         let div = frm.div.value;
         
-        window.location.href = "/doma/board/doSelectOne.do?seq="+seq+"&div="+div;
+        window.location.href = "/doma/board/anSelectOne.do?seq="+seq+"&div="+div;
            
     }
     
@@ -330,7 +323,7 @@ user : ${user}
         <!--// 제목 end ------------------------------------------------------------->
         <!-- 버튼 -->
         <div class="form-buttons" style="margin : 20px 0px 10px 30px" >
-            <input type="button" value="글쓰기" id="moveToReg" class="btn btn-dark">
+            <input type="button" value="글쓰기" id="anMoveToReg" class="btn btn-dark">
             <input type="button" value="조회" id="doRetrieveAn" class="btn btn-dark" >
         </div>
         <!-- //버튼 -------------------------------------------------------------------->
@@ -386,7 +379,7 @@ user : ${user}
 		            <tr>
 		              <td class="text-center"><c:out value="${vo.no }"></c:out></td>
 		              <td class="text-left">
-		                <a href="/doma/board/boardInfo.do?seq=${vo.seq }&div=${vo.getDiv() }"><c:out value="${vo.title}"></c:out></a>
+		                <a href="/doma/board/anSelectOne.do?seq=${vo.seq }&div=${vo.getDiv() }"><c:out value="${vo.title}"></c:out></a>
 		              </td>
 		              <td class="text-center"><c:out value="${vo.modId}"></c:out></td>
 		              <td class="text-center"><c:out value="${vo.modDt }"></c:out></td>

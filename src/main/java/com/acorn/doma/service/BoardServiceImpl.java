@@ -156,7 +156,45 @@ public class BoardServiceImpl implements BoardService, PLog {
 	@Override
 	public List<Board> doRetrieveAn(DTO search) throws SQLException {
 		log.debug("1. param :"+search);
-		return this.boardMapper.doRetrieve(search);
+		return this.boardMapper.doRetrieveAn(search);
+	}
+
+	@Override
+	public int anSave(Board inVO) throws SQLException {
+		log.debug("1. param :"+inVO);
+		return boardMapper.anSave(inVO);
+	}
+
+	@Override
+	public Board anSelectOne(Board inVO) throws SQLException, NullPointerException {
+		//단건 조회
+		log.debug("1. param :"+inVO);
+		Board outVO = boardMapper.anSelectOne(inVO);
+		log.debug("2. outVO :"+outVO);
+		
+		int flag = 0;
+		//조회 count증가
+		if(null != outVO) {
+			flag = boardMapper.readCntUpdate(inVO);
+			log.debug("3. 조회 count증가 :"+flag);
+			
+			if(1==flag) {
+				outVO.setViews(outVO.getViews()+1);
+			}
+		}
+		return outVO;
+	}
+
+	@Override
+	public Board anMoveUpdate(Board inVO) throws SQLException, NullPointerException {
+		Board outVO01 = boardMapper.anMoveUpdate(inVO);
+		return outVO01;
+	}
+
+	@Override
+	public int anUpdate(Board inVO) throws SQLException {
+		log.debug("1. param :"+inVO);
+		return boardMapper.anUpdate(inVO);
 	}
 
 		 
