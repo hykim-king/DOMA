@@ -1,11 +1,11 @@
 <%--
 /**
-	Class Name: board_list.jsp
-	Description:
-	Author: acorn
-	Modification information
-	
-	수정일     수정자      수정내용
+    Class Name: board_list.jsp
+    Description:
+    Author: acorn
+    Modification information
+    
+    수정일     수정자      수정내용
     -----   -----  -------------------------------------------
     2024. 8. 2        최초작성 
     
@@ -18,7 +18,7 @@
 <%@ page import="com.acorn.doma.cmn.StringUtil"%>
 <%@ page import="com.acorn.doma.cmn.Search"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
@@ -38,15 +38,15 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
+    href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%-- favicon  --%>
 <link rel="shortcut icon" href="${CP}/resources/img/favicon.ico"
-	type="image/x-icon">
+    type="image/x-icon">
 
 <%-- bootstrap css --%>
 <link rel="stylesheet"
-	href="${CP}/resources/css/bootstrap/bootstrap.css">
+    href="${CP}/resources/css/bootstrap/bootstrap.css">
 
 <%-- jquery --%>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
@@ -56,20 +56,20 @@
 
 <%-- google Nanum+Gothic --%>
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
 
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- simplemde -->
 <link rel="stylesheet"
-	href="${CP }/resources/css/bootstrap/simplemde.min.css">
+    href="${CP }/resources/css/bootstrap/simplemde.min.css">
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
 body {
     font-family: 'Nanum Gothic', sans-serif;
@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //삭제 세션 여부    
     function deleteSession() {
-    	const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+        const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
         const modId = document.getElementById("modId").value;
         const grade = <%= grade %>; // grade 값 가져오기
 
@@ -266,42 +266,42 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("로그인이 필요합니다.");
             window.location.href = "/doma/user/loginPage.do";
         } else if (userId !== "" && userId === modId) {
-        	doDelete();    
+            doDelete();    
         } else if (userId === userId) {
             if (grade === 0) {
-            	doDelete();
+                doDelete();
             } else if (grade === 1) {
                 alert("작성자가 아닙니다.");
             }
         } else {
             alert("작성자가 아닙니다.");
         }
-    }	
-    	
+    }   
+        
     //수정하기 세션 여부    
     function moveToUpSession() {
-	    const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
-	    const modId = document.getElementById("modId").value;
-	    const grade = <%= grade %>; // grade 값 가져오기
-	
-	    console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId + ", grade = " + grade);
-	
-	    if (userId === "" || userId === " ") {
-	        alert("로그인이 필요합니다.");
-	        window.location.href = "/doma/user/loginPage.do";
-	        return false;
-	    } else if (userId === modId) {
-	        return true; // 작성자와 userId가 일치하는 경우
-	    } else if (grade === 0) {
-	        return true; // 작성자가 아니지만 grade가 0인 경우
-	    } else if (grade === 1) {
-	        alert("작성자가 아닙니다.");
-	        return false;
-	    } else {
-	        alert("작성자가 아닙니다.");
-	        return false;
-	    }
-	}
+        const userId = "<%= (userId != null && !userId.isEmpty()) ? userId : "" %>";
+        const modId = document.getElementById("modId").value;
+        const grade = <%= grade %>; // grade 값 가져오기
+    
+        console.log("checkSessionAndMove: userId = " + userId + ", modId = " + modId + ", grade = " + grade);
+    
+        if (userId === "" || userId === " ") {
+            alert("로그인이 필요합니다.");
+            window.location.href = "/doma/user/loginPage.do";
+            return false;
+        } else if (userId === modId) {
+            return true; // 작성자와 userId가 일치하는 경우
+        } else if (grade === 0) {
+            return true; // 작성자가 아니지만 grade가 0인 경우
+        } else if (grade === 1) {
+            alert("작성자가 아닙니다.");
+            return false;
+        } else {
+            alert("작성자가 아닙니다.");
+            return false;
+        }
+    }
     
     //코멘트 저장 세션 여부
     function commentsSession() {
@@ -557,7 +557,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-	
+    
 </script>
 
 
@@ -567,61 +567,61 @@ document.addEventListener("DOMContentLoaded", function() {
 user : ${user } 
 board : ${board }
 
-	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
+    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+    <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
     <input type="hidden" name="modId"  id="modId" value="${board.modId}">
     <input type="hidden" name="comSeq" id="comSeq" value="${comments.comSeq}">
-	<div class="container">
-		<button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
-		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
-		<button type="button" value="삭제" id="doDelete" class="btn btn-outline-warning">삭제하기</button>
-		<article class="post">
-			<h2 name="title" id="title" class="post-title">${board.title}</h2>
-			<div class="post-meta">
-				<p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
-				<p class="post-date">${board.regDt}</p>
-				<p class="text-end">조회수: ${board.views}</p>
-			</div>
-			<div class="row mb-2">
-		        <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
-		        <div class="col-sm-2">
-		            <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
-		        </div>
-		    </div>
-			<hr>
-			<div id="imgLink" class="post-content">
+    <div class="container">
+        <button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
+        <button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
+        <button type="button" value="삭제" id="doDelete" class="btn btn-outline-warning">삭제하기</button>
+        <article class="post">
+            <h2 name="title" id="title" class="post-title">${board.title}</h2>
+            <div class="post-meta">
+                <p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
+                <p class="post-date">${board.regDt}</p>
+                <p class="text-end">조회수: ${board.views}</p>
+            </div>
+            <div class="row mb-2">
+                <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
+                <div class="col-sm-2">
+                    <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
+                </div>
+            </div>
+            <hr>
+            <div id="imgLink" class="post-content">
                 <img src="${info.imgLink }">
             </div>
-			<hr>
-			<div name="content" id="content" class="post-content">
-				<p>${board.content}</p>
-			</div>
-		</article>
+            <hr>
+            <div name="content" id="content" class="post-content">
+                <p>${board.content}</p>
+            </div>
+        </article>
 
-		<section class="comments">
-			<h3>댓글</h3>
-			<div class="comment-form">
-				<form action="board_main.jsp" method="post" onsubmit="commentSave(event)">
-					<label for="comment">댓글을 입력하세요:</label>
-					<textarea id="comment" name="comment" rows="4" required></textarea>
-					<button type="button" value="댓글 쓰기" id="doSave" name="doSave" class="btn btn-primary mt-2">댓글 쓰기</button>
-				</form>
-			</div>
-			<div class="comment-list">
-				<div class="comment">
-					<p>
-						<strong>작성자:</strong> 댓글 내용이 여기에 표시됩니다.
-					</p>
-				</div>
-				<!-- 추가 댓글은 여기에 나열됩니다 -->
+        <section class="comments">
+            <h3>댓글</h3>
+            <div class="comment-form">
+                <form action="board_main.jsp" method="post" onsubmit="commentSave(event)">
+                    <label for="comment">댓글을 입력하세요:</label>
+                    <textarea id="comment" name="comment" rows="4" required></textarea>
+                    <button type="button" value="댓글 쓰기" id="doSave" name="doSave" class="btn btn-primary mt-2">댓글 쓰기</button>
+                </form>
+            </div>
+            <div class="comment-list">
+                <div class="comment">
+                    <p>
+                        <strong>작성자:</strong> 댓글 내용이 여기에 표시됩니다.
+                    </p>
+                </div>
+                <!-- 추가 댓글은 여기에 나열됩니다 -->
                 <ul id="reply-list" class="list-unstyled">
                 <!-- AJAX를 통해 동적으로 댓글이 추가될 영역 -->
                 
                 </ul>
-			</div>
-		</section>
-	</div>
+            </div>
+        </section>
+    </div>
 
 </body>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

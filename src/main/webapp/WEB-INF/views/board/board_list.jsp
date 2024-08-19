@@ -362,15 +362,15 @@ user : ${user}
 	        </div>
 	        <div class="col-sm-2 text-end g-2">
 	        </div>
-	        <div class="col-sm-1">
+	        <div class="col-sm-2">
                 <select name="searchDiv" class="form-select" id="searchDiv">
-                    <option value="">전체</option>
+                    <option value="">구 전체</option>
                     <c:forEach var="item" items="${BOARD_SEARCH}">
                        <option value="${item.detCode}"  <c:if test="${item.detCode == search.searchDiv }">selected</c:if>    >${ item.detNm}</option>
                     </c:forEach>
                 </select>
             </div>
-	        <div class="col-sm-1">
+	        <div class="col-sm-2">
 	        <select name="searchGu" class="form-select" id="searchGu">
 	            <option value="">구 선택</option>
 	            <c:forEach var="item" items="${GNAME}">
@@ -378,7 +378,7 @@ user : ${user}
 	            </c:forEach>
 	        </select>
 	        </div>
-	        <div class="col-sm-4">
+	        <div class="col-sm-2">
 	            <input type="search" name="searchWord" class="form-control" id="searchWord"
 	             value="${search.searchWord }"
 	             placeholder="검색어">
@@ -436,7 +436,7 @@ user : ${user}
                     <table class="boardTable">
                         <tr>
                             <td class="p-2 g-col-8">
-                                <input type="button" value="전체" id="reset" name="reset" class="btn btn-outline-secondary">
+                                <input type="button" value="초기화" id="reset" name="reset" class="btn btn-outline-secondary">
                             </td>
                             <td class="p-2 g-col-8">
 							    <input type="button" value="강남구" id="gu" name="gu" class="btn btn-outline-secondary" data-gname="강남구">

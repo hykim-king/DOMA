@@ -3,12 +3,15 @@ package com.acorn.doma.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.WorkDiv;
 import com.acorn.doma.domain.Board;
 
 public interface BoardService extends WorkDiv<Board> {
      
+	List<Board> doRetrieveAn(DTO search) throws SQLException;
+	
 	List<Board> mpSelect(String userId) throws SQLException;
 	
 	public int mpBoardUp(Board inVO) throws SQLException; 
@@ -26,4 +29,5 @@ public interface BoardService extends WorkDiv<Board> {
 	Board moveUpdate(Board inVO) throws SQLException, NullPointerException;
 	
 	int update(Board inVO) throws SQLException;
+	
 }

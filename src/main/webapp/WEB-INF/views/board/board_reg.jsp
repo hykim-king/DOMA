@@ -43,6 +43,123 @@
 <!-- simplemde -->
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
+<style>
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header, footer {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    height: 350px;
+}
+
+.post-title {
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+    margin-top: 5px;
+}
+
+.post-content {
+    font-size: 16px;
+    color: #555;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-author {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.post-date {
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+}
+
+.comments {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-form {
+    margin-bottom: 20px;
+}
+
+.comment-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.comment-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+.comment-list {
+    margin-top: 20px;
+}
+
+.comment {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.comment strong {
+    color: #007bff;
+}
+</style>
 
 <title>오늘 사람 프로그램</title>
 <script>
@@ -56,6 +173,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const contentsTextArea = document.querySelector("#content");
     const divInput = document.querySelector("#div");
     const imgLinkInput = document.querySelector("#imgLink");
+    const seqInput = document.querySelector("#seq");
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
@@ -71,12 +189,17 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 	
 	//moveToListBtn
-    moveToListBtn.addEventListener("click",function(event){
-        console.log("moveToListBtn click");
-        event.stopPropagation();
-        if(confirm("목록 으로 이동 하시겠습니까?") === false)return;
-        moveToList();
-    });
+    moveToListBtn.addEventListener("click", function(event){
+	    console.log("moveToListBtn click");
+	    event.stopPropagation();
+	
+	    // 글쓰기를 취소하시겠습니까? 알림을 추가
+	    if (confirm("글쓰기를 취소하시겠습니까?") === false) {
+	        return;
+	    }
+	    
+	    moveToList();
+	});
 	
 	//등록
     doSaveBtn.addEventListener("click", function(event){
@@ -131,6 +254,7 @@ document.addEventListener("DOMContentLoaded", function(){
         let dataType = "html";
         
         let params = {
+        	"seq" : seqInput.value,
        		"gname"   : searchDivSelect.value,
             "title"    : titleInput.value,
             "userId"    : userIdInput.value,
@@ -146,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
                         alert(message.messageContents);
-                        //window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
+                        //window.location.href = "/doma/board/boardInfo.do?seq=" + seqInput.value + "&div=" + divInput.value;
                         moveToList();
                     }else{
                         alert(message.messageContents);
@@ -184,12 +308,13 @@ user : ${user }
   <!--// 제목 end ------------------------------------------------------------->
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
-      <input type="button" value="목록" id="moveToList" class="btn btn-primary">
-      <input type="button" value="등록"  id="doSave" class="btn btn-primary">
+      <input type="button" value="목록" id="moveToList" class="btn btn-outline-warning">
+      <input type="button" value="등록"  id="doSave" class="btn btn-outline-warning">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
-  <form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="regForm" id="regForm" action="${CP}/file/fileUpload.do" method="post" enctype="multipart/form-data">
+  <form action="${CP}/board/fileUpload.do" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
     <div class="row mb-2">
 	    <label for="gname" class="col-sm-2 col-form-label">구이름</label>

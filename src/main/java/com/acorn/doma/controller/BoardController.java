@@ -4,10 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -38,6 +34,8 @@ import com.acorn.doma.domain.Board;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.StringUtil;
 import com.acorn.doma.domain.Code;
+import com.acorn.doma.domain.FileVO;
+
 
 @Controller
 @RequestMapping("board")
@@ -52,11 +50,166 @@ public class BoardController implements PLog {
 	@Autowired
 	MarkdownService markdownService;
 	
+	//none image 파일
+	final String FILE_PATH = "C:\\Users\\acorn\\Documents\\DOMA\\src\\main\\webapp\\resources\\upload\\file";
+	
+	//image 파일
+	final String IMG_PATH = "C:\\Users\\acorn\\Documents\\DOMA\\src\\main\\webapp\\resources\\upload\\img";
+	
+	private String yyyyMMPath = "";//년월 포함 경로
+	private String saveFilePath = "";//none image 파일 절대경로
+	private String saveImageFilePath = "";//image 파일 절대경로
+	
 	public BoardController() {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ BoardController()         │");
 		log.debug("└───────────────────────────┘");
 		
+		//FILE_PATH 생성
+		File normalFileRoot =new File(FILE_PATH);
+		
+		if(normalFileRoot.isDirectory() == false) {//디렉토리가 없으며
+			boolean isMakeDir=normalFileRoot.mkdirs();
+			log.debug("isMakeDir:"+isMakeDir);
+		}
+		
+		//IMG_PATH 생성
+		File imageFileRoot =new File(IMG_PATH);
+		if(imageFileRoot.isDirectory() == false) {
+			boolean isMakeDir = imageFileRoot.mkdirs();
+			log.debug("imageFileRoot:"+isMakeDir);
+		}
+		
+		String yyyy = StringUtil.getCurrentDate("yyyy");
+		String mm   = StringUtil.getCurrentDate("MM");
+		
+		log.debug("yyyy:"+yyyy);
+		log.debug("mm:"+mm);
+		
+		//\2024\08
+		this.yyyyMMPath = File.separator+yyyy+ File.separator+mm;
+		log.debug("yyyyMMPath:"+yyyyMMPath);
+		
+		normalFileRoot = new File(FILE_PATH+yyyyMMPath);
+		if(normalFileRoot.isDirectory() == false) {
+			boolean isMakeDir = normalFileRoot.mkdirs();
+			log.debug("isMakeDir:"+isMakeDir);
+		}
+		
+		imageFileRoot =new File(IMG_PATH+yyyyMMPath);
+		if(imageFileRoot.isDirectory() == false) {
+			boolean isImageFileRoot=imageFileRoot.mkdirs();
+			log.debug("isImageFileRoot:"+isImageFileRoot);
+		}
+		
+		
+		saveFilePath = normalFileRoot.getAbsolutePath();
+		log.debug("saveFilePath:"+saveFilePath);
+		
+		saveImageFilePath = imageFileRoot.getAbsolutePath();
+		log.debug("saveImageFilePath:"+saveImageFilePath);
+		
+	}
+	
+	//파일 업로드
+	@RequestMapping(value = "/fileUpload.do",method = RequestMethod.POST)
+	public ModelAndView fileUpload(ModelAndView modelAndView, MultipartHttpServletRequest mHttp) {
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ fileUploadView()                         │");
+		log.debug("└──────────────────────────────────────────┘");
+		
+		//title
+		String title = StringUtil.nvl(mHttp.getParameter("title"),"");
+		log.debug("title:"+title);
+		
+		//content
+		String content = StringUtil.nvl(mHttp.getParameter("content"),"");
+		log.debug("content:"+content);
+		
+		//파일들 읽기
+		List<FileVO>  list=new ArrayList<FileVO>();
+		
+		//<input type="file"  name="file1"
+		//<input type="file"  name="file2"
+		Iterator<String> fileNames =  mHttp.getFileNames();
+		while(fileNames.hasNext()) {
+			FileVO fileVO =new FileVO();
+			
+			String uploadFileName = fileNames.next();
+			
+			MultipartFile multipartFile = mHttp.getFile(uploadFileName);
+			
+			//파일이 없는 경우
+			if(multipartFile.isEmpty() == true) {
+				continue;
+			}
+			//---------------------------------------------------------------
+			//원본 파일명
+			String orgFileName = multipartFile.getOriginalFilename();
+			log.debug("orgFileName:"+orgFileName);
+			
+			fileVO.setOrgFileName(orgFileName);
+
+			//파일 확장자
+			String ext = StringUtil.getExt(orgFileName);
+			log.debug("ext:"+ext);
+			
+			fileVO.setExtension(ext);
+			
+			//파일 사이즈
+			long fileSize = multipartFile.getSize();//byte
+			log.debug("fileSize:"+fileSize);
+			
+			fileVO.setFileSize(fileSize);
+			
+			
+			//저장 파일명
+			String saveFileName = StringUtil.getDateUUID("yyyyMMddhhmmss")+"."+ext;
+			log.debug("saveFileName:"+saveFileName);
+			fileVO.setSaveFileName(saveFileName);
+			
+			//저장 경로: FILE_PATH+/2024/08/
+			String contentType =  multipartFile.getContentType();
+			log.debug("contentType:"+contentType);
+			String saveFilePath = "";
+			if(contentType.startsWith("image")==true) {//image파일
+				saveFilePath = this.saveImageFilePath;
+			}else {
+				saveFilePath = this.saveFilePath;
+			}
+			
+			log.debug("saveFilePath:"+saveFilePath);
+			fileVO.setSavePath(saveFilePath);
+			
+			log.debug("********************");
+			log.debug("fileVO:"+fileVO);
+			log.debug("********************");
+			
+			try {
+				multipartFile.transferTo(new File(fileVO.getSavePath(),fileVO.getSaveFileName()));
+			}catch (IOException e) {
+				log.debug("IOException:"+e.getMessage());
+			}
+			
+			list.add(fileVO);
+			//---------------------------------------------------------------			
+		}
+		modelAndView.addObject("fileList", list);
+		modelAndView.setViewName("file/fileUpload");
+		
+		return modelAndView;
+	}
+	
+	//파일 업로드 화면
+	//http://localhost:8080/ehr/board/fileUpload.do
+	@GetMapping("/fileUpload.do")
+	public ModelAndView fileUploadView(ModelAndView modelAndView) {
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ fileUploadView()                         │");
+		log.debug("└──────────────────────────────────────────┘");		
+		modelAndView.setViewName("board/board_reg");
+		
+		return modelAndView;
 	}
 	
 	/**
@@ -130,6 +283,88 @@ public class BoardController implements PLog {
 	 * @param req
 	 * @return
 	 * @throws SQLException
+	 * http://localhost:8080/doma/board/doRetrieveAn.do
+	 */
+	@RequestMapping(value = "/doRetrieveAn.do"
+			   , method = RequestMethod.GET)
+	public String doRetrieveAN(Model model, HttpServletRequest req) throws SQLException{
+		log.debug("┌──────────────────────────────────────────────┐");
+		log.debug("│ doRetrieve()                                 │");
+		log.debug("└──────────────────────────────────────────────┘");
+		
+		String viewName = "board/board_anlist";
+		
+		Search search = new Search();
+		
+		String div = StringUtil.nvl(req.getParameter("div"), "20");
+		search.setDiv(div);
+		
+		String searchGu = StringUtil.nvl(req.getParameter("searchGu"), "");
+		search.setSearchGu(searchGu);
+		
+		//검색구분
+		//검색 null 처리 : null -> ""
+		String searchDiv = StringUtil.nvl(req.getParameter("searchDiv"), "");
+		String searchWord = StringUtil.nvl(req.getParameter("searchWord"), "");
+		
+		search.setSearchDiv(searchDiv);
+		search.setSearchWord(searchWord);
+		
+		//브라우저에서 숫자 : 문자로 들어 온다.
+		String pagsSize = StringUtil.nvl(req.getParameter("pageSize"), "10");
+		String pageNo = StringUtil.nvl(req.getParameter("pageNo"), "1");
+		
+		search.setPageSize(Integer.parseInt(pagsSize));
+		search.setPageNo(Integer.parseInt(pageNo));
+		
+		log.debug("1. search:" + search);
+		
+		List<Board> list = this.boardService.doRetrieveAn(search);
+		
+		//2.화면 전송 데이터
+		//조회 데이터
+		model.addAttribute("list", list);
+		
+		//검색 조건
+		model.addAttribute("search", search);
+		
+		//페이징 : totalCnt
+		int totalCnt = 0;
+		if(null != list && list.size() > 0) {
+			Board firstVO = list.get(0);
+			totalCnt = firstVO.getTotalCnt();
+		}
+		//검색 조건
+		model.addAttribute("totalCnt", totalCnt);
+		
+		//----------------------------------------------------------------------
+		Code code = new Code();
+		
+		//MEMBER_SEARCH : 회원 검색 조건
+		code.setMstCode("BOARD_SEARCH");
+		List<Code> memberSearch = this.codeService.doRetrieveAn(code);
+		model.addAttribute("BOARD_SEARCH", memberSearch); //검색조건
+		
+		//COM_PAGE_SIZE : 페이지 사이즈
+		code.setMstCode("COM_PAGE_SIZE");
+		List<Code> pageSizeSearch = this.codeService.doRetrieveAn(code);
+		model.addAttribute("COM_PAGE_SIZE", pageSizeSearch); //페이지 사이즈
+		
+		//GNAME : 구이름
+		code.setMstCode("GNAME");
+		List<Code> gname = this.codeService.doRetrieveAn(code);
+		model.addAttribute("GNAME", gname); //구이름
+		//----------------------------------------------------------------------
+		
+		return viewName;
+	}
+	
+	/**
+	 * 다건 조회
+	 * @param model
+	 * @param req
+	 * @return
+	 * @throws SQLException
 	 * http://localhost:8080/doma/board/doRetrieve.do
 	 */
 	@RequestMapping(value = "/doRetrieve.do"
@@ -143,7 +378,7 @@ public class BoardController implements PLog {
 		
 		Search search = new Search();
 		
-		String div = StringUtil.nvl(req.getParameter("div"), "");
+		String div = StringUtil.nvl(req.getParameter("div"), "10");
 		search.setDiv(div);
 		
 		String searchGu = StringUtil.nvl(req.getParameter("searchGu"), "");
@@ -501,31 +736,6 @@ public class BoardController implements PLog {
 		
 		return viewName;
 	}
-	
-	@PostMapping("/board/fileUpload.do")
-	public String handleFileUpload(@RequestParam("imgLink") MultipartFile file, Model model) {
-	    if (!file.isEmpty()) {
-	        try {
-	            // 파일 저장 경로 설정
-	            String uploadDir = "/uploads/";
-	            String fileName = file.getOriginalFilename();
-	            Path path = Paths.get(uploadDir + fileName);
-	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-	            // 파일 경로를 모델에 추가
-	            model.addAttribute("filePath", uploadDir + fileName);
-	            
-	            // 필요한 경우 파일 경로를 데이터베이스에 저장
-	            // yourService.saveFilePathToDatabase(uploadDir + fileName);
-
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            return "redirect:/error"; // 오류 페이지로 리다이렉트
-	        }
-	    }
-	    return "redirect:/board/doRetrieve.do"; // 파일 업로드 후 리다이렉트할 페이지
-	}
-
 	
 	
 }

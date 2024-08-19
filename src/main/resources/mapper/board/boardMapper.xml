@@ -51,6 +51,14 @@
 	    FROM dual
 	    CONNECT BY LEVEL <![CDATA[<= 202]]>
 	</insert>
+	
+	<select id="notice" resultType="Board" >
+        <![CDATA[select * 
+				from (select * from d_board where div=10 order by div desc) 
+				where ROWNUM <=2 
+				order by div desc
+		]]>
+    </select>
     
     <sql id="divDoRetrieve">
         <choose>
@@ -107,6 +115,42 @@
 	    </choose>
 	</sql>
     
+	<select id="doRetrieveAn" parameterType="Search" resultType="Board">
+    -- TODO : 커뮤니티(10), 공지사항(20)
+    SELECT A.*, B.*
+      FROM (
+        SELECT tt1.rnum as no,
+               tt1.div,
+               tt1.title,
+               tt1.mod_id as modId,
+               DECODE( TO_CHAR(tt1.mod_dt,'YYYYMMDD'),TO_CHAR(SYSDATE,'YYYYMMDD'),
+                       TO_CHAR(tt1.mod_dt,'HH24:MI'),TO_CHAR(tt1.mod_dt,'YYYY/MM/DD')
+               ) as modDt,
+               tt1.views,
+               TT1.seq
+          FROM (
+        SELECT ROWNUM as rnum, T1.*
+          FROM (
+            SELECT * 
+              FROM d_board
+              --WHERE : title(10), content(20), title+content(30)
+              WHERE 1=1
+              <include refid="divDoRetrieve"></include>
+              <include refid="whereDoRetrieve"></include>
+              ORDER BY mod_dt DESC
+        )T1
+            WHERE rownum  <![CDATA[ <= ( #{pageSize} * (#{pageNo} -1) + #{pageSize} )]]>
+        )TT1
+        WHERE tt1.rnum <![CDATA[ >= ( #{pageSize} * (#{pageNo} -1) + 1 )]]>
+        )A
+        CROSS JOIN (
+            SELECT COUNT (*) totalCnt
+            FROM d_board
+            WHERE 1=1
+            <include refid="divDoRetrieve"></include>
+            <include refid="whereDoRetrieve"></include>
+        )B
+    </select>
 	
     <select id="doRetrieve" parameterType="Search" resultType="Board">
     -- TODO : 커뮤니티(10), 공지사항(20)

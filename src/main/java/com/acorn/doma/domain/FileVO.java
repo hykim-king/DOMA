@@ -2,18 +2,18 @@ package com.acorn.doma.domain;
 
 import com.acorn.doma.cmn.DTO;
 
-public class File extends DTO {
+public class FileVO extends DTO {
 	
 	private String orgFileName; //원본 파일명
 	private String saveFileName; //저장 파일명
 	private String savePath; //저장 경로
 	
-	private String fileSize; //파일크기
+	private long fileSize; //파일크기
 	private String extension; //확장자
 	
-	public File() { }
-	
-	public File(String orgFileName, String saveFileName, String savePath, String fileSize, String extension) {
+	public FileVO() { }
+
+	public FileVO(String orgFileName, String saveFileName, String savePath, long fileSize, String extension) {
 		super();
 		this.orgFileName = orgFileName;
 		this.saveFileName = saveFileName;
@@ -46,11 +46,11 @@ public class File extends DTO {
 		this.savePath = savePath;
 	}
 
-	public String getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
 
-	public void setFileSize(String fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 
@@ -64,7 +64,8 @@ public class File extends DTO {
 
 	@Override
 	public String toString() {
-		return "File [orgFileName=" + orgFileName + ", saveFileName=" + saveFileName + ", savePath=" + savePath
+		return "FileVO [orgFileName=" + orgFileName + ", saveFileName=" + saveFileName + ", savePath=" + savePath
 				+ ", fileSize=" + fileSize + ", extension=" + extension + ", toString()=" + super.toString() + "]";
 	}
+	
 }

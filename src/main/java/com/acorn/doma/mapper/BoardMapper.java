@@ -15,6 +15,7 @@ import com.acorn.doma.domain.User;
 @Mapper
 public interface BoardMapper extends WorkDiv<Board>{
 
+	
 	Board moveUpdate(Board inVO) throws SQLException, NullPointerException;
 	/**
 	 * 최신 sequence 조회
@@ -58,7 +59,6 @@ public interface BoardMapper extends WorkDiv<Board>{
 	Board mpBoardSelectOne(Board inVO) throws SQLException;
 	
 	int mpBoardUp(Board inVO) throws SQLException;
-	
 	
 	//안전정보페이지에서 사용할 메서드
 	int save(Board inVO)throws SQLException;

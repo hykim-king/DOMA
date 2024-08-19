@@ -152,6 +152,13 @@ public class BoardServiceImpl implements BoardService, PLog {
 		
 		return flag;
 	}
+
+	@Override
+	public List<Board> doRetrieveAn(DTO search) throws SQLException {
+		log.debug("1. param :"+search);
+		return this.boardMapper.doRetrieve(search);
+	}
+
 		 
 
 }

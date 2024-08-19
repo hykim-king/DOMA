@@ -34,6 +34,18 @@ public class CodeServiceImpl implements CodeService, PLog {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Code> doRetrieveAn(DTO search) throws SQLException {
+		Code inVO = (Code) search;
+		
+		log.debug("1.param" + inVO);
+		List<Code> list = codeMapper.doRetrieve(inVO);
+		for(Code vo :list) {
+			log.debug(vo);
+		}
+		return list;
+	}
 
 	@Override
 	public int doUpdate(Code inVO) throws SQLException {

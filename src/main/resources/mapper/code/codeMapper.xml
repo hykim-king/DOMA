@@ -21,6 +21,18 @@
 		ORDER BY seq        
     </select>
     
+    <select id="doRetrieveAn" parameterType="Code" resultMap="codeResultMap">
+        SELECT 
+               mst_code,
+               det_code,
+               det_code_nm,
+               seq    
+         FROM D_CODE
+        WHERE mst_code = UPPER(#{mstCode})
+         AND USE_YN = 1
+        ORDER BY seq        
+    </select>
+    
     <select id="doSelectOne" parameterType="Code" resultMap="codeResultMap">
         SELECT
 		    <include refid="CodeColumn"/>

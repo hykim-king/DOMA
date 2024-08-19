@@ -255,7 +255,6 @@ document.addEventListener("DOMContentLoaded", function(){
                     //JSON문자열을 JSON Object로 변환
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
                         moveToMain();
                     }else{
                         alert(message.messageContents);
@@ -296,8 +295,8 @@ board : ${board }
   
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
-      <input type="button" value="뒤로가기"  id="moveToMain" class="btn btn-primary">
-      <input type="button" value="수정"  id="doUpdate" class="btn btn-primary">
+      <input type="button" value="뒤로가기"  id="moveToMain" class="btn btn-outline-warning">
+      <input type="button" value="수정"  id="doUpdate" class="btn btn-outline-warning">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
