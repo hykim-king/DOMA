@@ -15,8 +15,13 @@ document.addEventListener("DOMContentLoaded", function(){
     const gradeInput = document.querySelector("#grade");
     const birthInput = document.querySelector("#birth");
     const addressInput = document.querySelector("#address");
-    
-    //
+    const detailAddressInput = document.querySelector("#detailAddress");
+   
+	const addrInput = document.querySelector("#sample4_roadAddress");
+	const detailAddrInput = document.querySelector("#sample4_detailAddress");
+	
+
+
     const seqInput = document.querySelector("#seq");
     const titleInput = document.querySelector("#title");
     const gnameInput = document.querySelector("#gname");
@@ -30,13 +35,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	//비밀번호 확인 버튼
 	let idCheckCount = 0;
 	let passwordCheckCount = 0;
-	 
-	
-	
-	
-	
-    const detailAddressInput = document.querySelector("#detailAddress");
-    
+	  
     const doUpdateBtn = document.querySelector("#updateInfo");
     const doDeleteBtn = document.querySelector("#deleteInfo"); 
 
@@ -60,18 +59,13 @@ document.addEventListener("DOMContentLoaded", function(){
       MoveBoard();
     });
 	
-	//----비번
-	passwordCheckBtn.addEventListener("click",function(event){
-		console.log("passwordCheckBtn click");
-		
-		passwordCheck();
-	});
+	 
 
 
 
     doUpdateBtn.addEventListener("click",function(event){
 		console.log("doUpdateBtn click");
-		
+		passwordCheck();
 		updateInfo();
 	});
 
@@ -176,13 +170,13 @@ document.addEventListener("DOMContentLoaded", function(){
           birthInput.focus();
           return;
       } 
-        if(isEmpty(addressInput.value) == true){
+        if(isEmpty(addrInput.value) == true){
         alert("주소 입력 하세요.");
         addressInput.focus();
         return;
         }  
 
-        if(isEmpty(detailAddressInput.value) == true){
+        if(isEmpty(detailAddrInput.value) == true){
         alert("상세주소 입력 하세요.");
         detailAddressInput.focus();
         return;
@@ -201,8 +195,8 @@ document.addEventListener("DOMContentLoaded", function(){
             "userName"     :userNameInput.value,
             "userPw" :userPwInput.value, 
             "birth"    :birthInput.value,
-            "address"    :addressInput.value ,
-            "detailAddress":detailAddressInput.value
+            "address"    :addrInput.value ,
+            "detailAddress":detailAddrInput.value
             
         };        
         

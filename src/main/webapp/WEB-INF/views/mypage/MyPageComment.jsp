@@ -23,8 +23,7 @@
     User outVO = (User)session.getAttribute("user");
     String userId = null;
     if (outVO != null) {
-        userId = outVO.getUserId();
-        out.println("User ID: " + userId); // Debugging output
+        userId = outVO.getUserId(); 
     } else {
         out.println("User session attribute is null"); // Debugging output
     }

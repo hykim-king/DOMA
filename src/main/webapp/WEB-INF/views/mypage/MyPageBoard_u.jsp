@@ -183,10 +183,7 @@ document.addEventListener("DOMContentLoaded", function(){
 });    
 </script>
 </head>
-<body> 
-user : ${user }
-board : ${board }
-seq : ${seqInput }
+<body>  
 <!-- container -->
 <div class="container">
   <!-- 제목 -->

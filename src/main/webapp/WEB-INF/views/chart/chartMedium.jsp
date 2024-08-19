@@ -68,7 +68,41 @@
                 })
                 .catch(error => console.error('차트 데이터 가져오기 오류:', error));
         });
-    </script>    
+    </script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.showChartsButton').forEach((button, index) => {
+            button.addEventListener('click', () => {
+                switch (index) {
+                    case 0:
+                        window.location.href = '${CP}/chart/chartMonth.do';
+                        break;
+                    case 1:
+                        window.location.href = '${CP}/chart/chartWeek.do';
+                        break;
+                    case 2:
+                        window.location.href = '${CP}/chart/chartHour.do';
+                        break;
+                    case 3:
+                        window.location.href = '${CP}/chart/chartNight.do'; // 예시 URL
+                        break;
+                    case 4:
+                        window.location.href = '${CP}/chart/chartMajor.do'; // 예시 URL
+                        break;
+                    case 5:
+                        window.location.href = '${CP}/chart/chartMedium.do'; // 예시 URL
+                        break;
+                    case 6:
+                        window.location.href = '${CP}/chart/chartGname.do'; // 예시 URL
+                        break;
+                    case 7:
+                        window.location.href = '${CP}/chart/chartSummary.do'; // 예시 URL
+                        break;
+                }
+            });
+        });
+    });
+</script>   
     <style>
         .chart-container {
             display: none; /* 처음에는 차트를 숨김 */
