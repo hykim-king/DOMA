@@ -14,11 +14,6 @@
 <link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded",function(){
-    console.log("DOMContentLoaded");
-});
-</script>
 <title>Insert title here</title>
 </head>
 <body>

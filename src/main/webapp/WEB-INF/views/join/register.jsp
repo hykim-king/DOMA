@@ -19,8 +19,8 @@ ${user }
 	<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
 		<div class="col-6">
 			<h1 style="color:#ffc107; font-weight:bold;">회원가입</h1>
+			<br>
 			<form action="#" method="post" class="form-horizontal" style="margin : auto">
-			
 				<div class="form-group row mb-2">
 					<label for="id" class="col-sm-2 col-form-label">아이디</label>
 					<div class="col-sm-10">
@@ -28,7 +28,7 @@ ${user }
 							<div class="col-sm-5">
 								<input type="text" class="form-control" name="id" id="id" maxlength="20" required="required">
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-4" >
 								<input type="button" value="중복확인" class="btn btn-warning" id="idDuplicateCheck">
 							</div>
 						</div>
@@ -40,6 +40,9 @@ ${user }
 						<input type="text" class="form-control" name="name" id="name" maxlength="20" required="required">
 					</div>
 				</div>
+				<br>
+				<div><p>% 비밀번호는 최소 특수문자 1자, 영어 대소문자 1자, 숫자 1자리 이상이며 8~20자리 이내입니다. %</p></div>
+				<br>
 				<div class="form-group row mb-2">
 					<label for="password" class="col-sm-2 col-form-label">비밀번호</label>
 					<div class="col-sm-4">
@@ -51,14 +54,12 @@ ${user }
 					<div class="col-sm-4">
 						<input type="password" class="form-control" name="passwordCheck" id="passwordCheck" maxlength="20" required="required">
 					</div>
-					<div class="col-sm-4">
-							<input type="button" value="비밀번호 확인" class="btn btn-warning" id="passwordDuplicateCheck">
-					</div>
 				</div>
+				<br>
 				<div class="form-group row mb-2">
 					<label for="birth" class="col-sm-2 col-form-label">생년월일</label>
 					<div class="col-sm-4">
-						<input type="date" class="form-control" name="birth" id="birth" maxlength="10" required="required">
+						<input type="date" min="1907-01-01" max="2024-08-01" class="form-control" name="birth" id="birth" maxlength="10" required="required">
 					</div>
 				</div>
 				<div class="form-group row mb-2">
@@ -66,12 +67,12 @@ ${user }
 					<div class="col-sm-10">
 						<div class="row">
 							<div class="col-sm-5">
-								<input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호">
-								<input type="text" class="form-control" id="sample4_jibunAddress" placeholder="지번주소">
-								<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소">
+								<input type="text" class="form-control" id="sample4_postcode" disabled=false placeholder="우편번호">
+								<input type="text" class="form-control" id="sample4_jibunAddress" disabled=false placeholder="지번주소">
+								<input type="text" class="form-control" id="sample4_roadAddress" disabled=false placeholder="도로명주소">
 								<span id="guide" style="color:#999;display:none"></span>
 								<input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소">
-								<input type="text" class="form-control" id="sample4_extraAddress" placeholder="참고항목">
+								<input type="text" class="form-control" id="sample4_extraAddress" disabled=false placeholder="참고항목">
 								<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
 							</div>
 							<div class="col-sm-4">

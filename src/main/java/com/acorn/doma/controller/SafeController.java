@@ -42,7 +42,9 @@ public class SafeController implements PLog {
 			   , produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String doUpdate(Board inVO) throws SQLException {
-		
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ safeController : doUpdate()              │");
+		log.debug("└──────────────────────────────────────────┘");
 		String jsonString = "";
 		log.debug("1.param:" + inVO);
 		

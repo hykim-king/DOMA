@@ -21,9 +21,6 @@
 	const idCheckBtn =  document.querySelector("#idDuplicateCheck");
 	console.log("idCheckBtn", idCheckBtn);
 	
-	const passwordCheckBtn =  document.querySelector("#passwordDuplicateCheck");
-	console.log("passwordCheckBtn", passwordCheckBtn);
-	
 	//이벤트 리스너
 	doSaveBtn.addEventListener("click",function(event){
 		console.log("doSaveBtn click");
@@ -37,14 +34,11 @@
 		idCheck();
 	});
 	
-	passwordCheckBtn.addEventListener("click",function(event){
-		console.log("passwordCheckBtn click");
-		
-		passwordCheck();
-	});
 	  
 	function doSave() {
         console.log("doSave()");
+        const minDate = "1907-01-01";
+        const maxDate = "2024-08-01";
         
 		if(isEmpty(idInput.value) == true){
 			alert("사용하실 아이디를 입력하세요.");
@@ -71,6 +65,17 @@
 			birthInput.focus();
 			return;
 		}
+		
+		birthInput.setAttribute("min", minDate);
+        birthInput.setAttribute("max", maxDate);
+        
+        
+		if (birthInput.value < minDate || birthInput.value > maxDate) {
+            alert("생년월일은" + minDate + "~" + maxDate + "내로 입력 가능합니다.");
+
+            return;
+        }
+		
 		if(isEmpty(addrInput.value) == true){
 			alert("주소를 입력하세요.");
 			addrInput.focus();
@@ -88,12 +93,28 @@
 			return;
 		}
 		
-		if(passwordCheckCount != 1){
-			console.log("passwordCheckCount : " + passwordCheckCount);
+		if(passwordInput.value !== passwordCheckInput.value){
 			alert("비밀번호가 일치하는지 확인하세요.");
 			return;
 		}
 		
+		if(passwordInput.value.indexOf(" ") !== -1 || passwordCheckInput.value.indexOf(" ") !== -1){
+			alert("비밀번호와 비밀번호 확인에 공백 문자가 있습니다.");
+			passwordInput.focus();
+			return;
+		}
+
+		if(passwordValidation(passwordInput.value) === false){
+			alert("특수문자나 대소문자를 포함한 8~20자 이내의 비밀번호를 사용하세요."); 
+			return;
+		}
+
+		 // 길이 체크 (8자리 ~ 20자리)
+		 if (passwordInput.value.length < 8 || passwordInput.value.length > 20) {
+			alert("비밀번호는 8자리에서 20자리 사이여야 합니다.");
+			passwordInput.focus();
+			return;
+		}
 		
 		let type="POST";
         let url ="/doma/user/doSave.do";
@@ -138,6 +159,16 @@
 	function idCheck() {
 		console.log("idCheck()");
 		
+		const usernamePattern = /^[a-zA-Z0-9]+$/;
+
+        if (!usernamePattern.test(idInput.value)) {
+            // 유효하지 않은 경우 경고 메시지 표시
+            alert("아이디는 영어와 숫자만 가능합니다.");
+
+            // 폼 제출 중단
+            event.preventDefault();
+            return;
+        }
 		if (idInput.value !== "" && idInput.value.length >= 4 && idInput.value.length <= 16) {
 		    if (/\s/.test(idInput.value)) {
 		        alert("아이디에는 공백을 사용할 수 없습니다.");
@@ -191,44 +222,6 @@
         });
 	}
 	
-	function passwordCheck() {
-		console.log("passwordCheck()");
-		console.log("passwordInput.value : " + passwordInput.value);
-		//패스워드 인풋
-		const pw = passwordInput.value;
-		//패스워드 체크 인풋
-		const pwc = passwordCheckInput.value;
-
-		console.log("pw : " + pw);
-		console.log("pwc : " + pwc);
-
-		if(pw.indexOf(" ") !== -1 || pwc.indexOf(" ") !== -1){
-			alert("비밀번호와 비밀번호 확인에 공백 문자가 있습니다.");
-			passwordInput.focus();
-			return false;
-		}
-
-		if(passwordValidation(pw) === false){
-			alert("특수문자나 대소문자를 포함한 8~20자 이내의 비밀번호를 사용하세요."); 
-			return;
-		}
-
-		 // 길이 체크 (8자리 ~ 20자리)
-		 if (password.length < 8 || password.length > 20) {
-			alert("비밀번호는 8자리에서 20자리 사이여야 합니다.");
-			passwordInput.focus();
-			return;
-		}
-
-		if(passwordInput.value === passwordCheckInput.value){	
-			passwordCheckCount = 1;
-			alert("비밀번호가 일치합니다.");
-		}else{
-			alert("비밀번호가 일치하지 않습니다.");
-			return;
-		}
-		
-	}
 	
 	function onlyNumberAndEnglish(input) {
   		return /^[A-Za-z0-9][A-Za-z0-9]*$/.test(input);

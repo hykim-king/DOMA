@@ -327,8 +327,10 @@
         UPDATE d_board
          SET div     = #{div},
              title   = #{title},
+             user_id = #{userId},
              mod_id  = #{userId},
              content = #{content},
+             img_link = #{imgLink},
              mod_dt  = SYSDATE
           WHERE seq = #{seq} 
             AND user_id = #{userId}

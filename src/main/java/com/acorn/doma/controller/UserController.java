@@ -2,6 +2,7 @@ package com.acorn.doma.controller;
 
 import java.sql.SQLException;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,10 @@ public class UserController implements PLog {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ logout()                  │");
 		log.debug("└───────────────────────────┘");
-		String viewName = "main/main_emergency_info";
 		
 		session.invalidate(); //세션 끊기
 		
-		return viewName;
+		return "redirect:/main/main.do";
 	}
 	
 	@RequestMapping(value = "/RegisterPage.do"

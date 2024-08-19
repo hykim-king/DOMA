@@ -64,7 +64,7 @@ user : ${user}
 	    <div class="row mb-2">
 	        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
 	        <div class="col-sm-10">
-	          <input type="file" class="form-control" name="imgLink" id="imgLink">        
+	          <input type="file" multiple class="form-control" name="imgLink" id="imgLink">        
 	        </div>        
 	    </div>
 	    <div class="row mb-2">
