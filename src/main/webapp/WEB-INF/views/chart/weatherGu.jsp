@@ -28,130 +28,112 @@
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/chart/chart.js"></script>
+<script src="${CP}/resources/js/chart/weatherGu.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<style>
+        /* CSS 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .chart-wrapper {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+            height: 500px;
+        }
+        #guSelection {
+            margin: 20px 0;
+        }
+        #guDropdown {
+            width: 100%;
+            height: 200px;
+            overflow-y: auto;
+        }
+        #loadChartButton {
+            width: 100%;
+            height: 35px;
+            font-weight: bold;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .showChartsButton {
+            flex: 1;
+            min-width: 150px;
+            height: 35px;
+            font-weight: bold;
+            border: 2px solid black;
+            cursor: pointer;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .showChartsButton:hover {
+            background-color: #e2e6ea;
+        }
+    </style>
  <script>
-        $(document).ready(function() {
-            // Initialize gname as an empty array
-            let gname = [];
+ let gname = []; 
 
-            // Load Google Charts library
-            google.charts.load('current', {'packages':['corechart']});
+ $(document).ready(function() {
+     // Initialize gname as an empty array
+     gname = []; // 초기값 설정
+
+     // Load Google Charts library
+     google.charts.load('current', {'packages':['corechart']});
+     
+     // Function to handle dropdown selection changes
+     function updateGuSelection() {
+         const selectedGu = $('#guDropdown').val();
+
+         // Update gname array
+         gname = selectedGu;
+         
+         // Log the updated gname array
+         console.log('Updated gname array:', gname);
+
+         // Validate number of selected regions
+         if (selectedGu.length < 3 || selectedGu.length > 10) {
+             $('#loadChartButton').prop('disabled', true);
+             if (selectedGu.length < 3) {
+                 $('#loadChartButton').attr('title', '최소 3개 구를 선택해야 합니다.');
+             } else if (selectedGu.length > 10) {
+                 $('#loadChartButton').attr('title', '최대 10개 구를 선택할 수 있습니다.');
+             }
+         } else {
+             $('#loadChartButton').prop('disabled', false);
+             $('#loadChartButton').removeAttr('title');
+         }
+     }
+
+     // Attach updateGuSelection to dropdown change
+     $('#guDropdown').change(updateGuSelection);
+
+     
+
             
-            // Function to handle dropdown selection changes
-            function updateGuSelection() {
-                const selectedGu = $('#guDropdown').val();
 
-                // Update gname array
-                gname = selectedGu;
-                
-                // Log the updated gname array
-                console.log('Updated gname array:', gname);
-
-                // Validate number of selected regions
-                if (selectedGu.length < 3 || selectedGu.length > 10) {
-                    $('#loadChartButton').prop('disabled', true);
-                    if (selectedGu.length < 3) {
-                        $('#loadChartButton').attr('title', '최소 3개 구를 선택해야 합니다.');
-                    } else if (selectedGu.length > 10) {
-                        $('#loadChartButton').attr('title', '최대 10개 구를 선택할 수 있습니다.');
-                    }
-                } else {
-                    $('#loadChartButton').prop('disabled', false);
-                    $('#loadChartButton').removeAttr('title');
-                }
-            }
-
-            // Attach updateGuSelection to dropdown change
-            $('#guDropdown').change(updateGuSelection);
-
-            // Function to load chart data
-            function loadChartData() {
-                // Validate number of selected regions
-                if (gname.length < 3 || gname.length > 10) {
-                    alert('최소 3개, 최대 10개의 구를 선택해야 합니다.');
-                    return;
-                }
-
-                $.ajax({
-                    url: '${CP}/chart/chartWeatherGuSelect.do', // 데이터 요청 URL
-                    method: 'GET',
-                    data: { gu: gname },
-                    success: function(response) {
-                        console.log('Data received:', response); // Data for debugging
-                        drawChart(response);
-                    },
-                    error: function() {
-                        alert('데이터를 가져오는 데 실패했습니다.');
-                    }
-                });
-            }
-
-         // Function to draw chart
-            function drawChart(data) {
-                google.charts.setOnLoadCallback(function() {
-                    // Check if data is in array format
-                    let chartDataArray = [];
-                    
-                    if (Array.isArray(data)) {
-                        chartDataArray = data;
-                    } else {
-                        // Convert data to array if it's not
-                        console.log('Data is not an array. Converting to array...');
-                        chartDataArray = Object.keys(data).map(key => data[key]);
-                    }
-
-                    console.log('Processed chartDataArray:', chartDataArray);
-
-                    // Prepare chart data array
-                    const chartData = [['Region', '비', '흐림', '눈', '안개', '기타/불명']];
-
-                    // Aggregate data
-                    const aggregatedData = {};
-
-                    chartDataArray.forEach(item => {
-                        const region = item.GNAME || 'Unknown';
-                        if (!aggregatedData[region]) {
-                            aggregatedData[region] = { '비': 0, '흐림': 0, '눈': 0, '안개': 0, '기타/불명': 0 };
-                        }
-                        aggregatedData[region][item.WEATHER_CONDITION] += item.TOTAL_INJURY;
-                    });
-
-                    // Convert aggregated data to array format
-                    Object.keys(aggregatedData).forEach(region => {
-                        chartData.push([
-                            region,
-                            aggregatedData[region]['비'],
-                            aggregatedData[region]['흐림'],
-                            aggregatedData[region]['눈'],
-                            aggregatedData[region]['안개'],
-                            aggregatedData[region]['기타/불명']
-                        ]);
-                    });
-
-                    const dataTable = google.visualization.arrayToDataTable(chartData);
-
-                    const options = {
-                        title: 'Injuries by Weather Condition and Region',
-                        chartArea: { width: '50%' },
-                        hAxis: {
-                            title: 'Total Injuries',
-                            minValue: 0,
-                            scaleType: 'log' // Log scale
-                        },
-                        vAxis: {
-                            title: 'Region'
-                        },
-                        isStacked: true
-                    };
-
-                    const chart = new google.visualization.BarChart(document.getElementById('chartContainer'));
-                    chart.draw(dataTable, options);
-                });
-            }
-
-            // Attach loadChartData to button click
-            $('#loadChartButton').click(loadChartData);
-        });
+    // Attach loadChartData to button click
+    $('#loadChartButton').click(loadChartData);
+});
     </script>
 </head>
 <body>
@@ -208,8 +190,8 @@
             <button id="loadChartButton" style="width: 150px; height: 35px; font-weight: bold; text-align: center; border: 2px solid black;">조회</button>
         </div>
     </div>
-    <!-- 차트 컨테이너 -->
-    <div id="chartContainer" style="height: 500px; margin: 0 auto;"></div>
+    <div id="chartContainer1" style="height: 500px; margin: 0 auto;"></div>
+    <div id="chartContainer2" style="height: 500px; margin: 0 auto;"></div>
     
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 
