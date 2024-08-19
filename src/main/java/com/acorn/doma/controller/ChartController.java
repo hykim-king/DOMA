@@ -239,8 +239,54 @@ public class ChartController implements PLog{
         return response;
     }
     
+    @GetMapping("/chartMedium.do")
+    public String showMediumChartPage() {
+        String viewName = "/chart/chartMedium";  // JSP 페이지 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);                                
+        log.debug("└──────────────────────────────────────────┘");
+        return viewName;
+    }
 
-    
-    
+    @GetMapping("/chartDataMedium.do")
+    @ResponseBody
+    public Map<String, List<Map<String, Object>>> getChartDataMedium() throws SQLException {
+        Death inVO = new Death(); // 필요한 필드 설정
+        List<Map<String, Object>> mediumDead = deathMapper.MediumDead(inVO);
+        List<Map<String, Object>> mediumCasualties = deathMapper.MediumCasualties(inVO);
+        List<Map<String, Object>> mediumSeriously = deathMapper.MediumSeriously(inVO);
+
+        Map<String, List<Map<String, Object>>> response = new HashMap<>();
+        response.put("mediumDead", mediumDead);
+        response.put("mediumCasualties", mediumCasualties);
+        response.put("mediumSeriously", mediumSeriously);
+        return response;
+    }
+
+
+    @GetMapping("/chartGname.do")
+    public String showGnameChartPage() {
+        String viewName = "/chart/chartGname";  // JSP 페이지 경로
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ viewName: " + viewName);                                
+        log.debug("└──────────────────────────────────────────┘");
+        return viewName;
+    }
+
+    @GetMapping("/chartDataGname.do")
+    @ResponseBody
+    public Map<String, List<Map<String, Object>>> getChartDataGname() throws SQLException {
+        Death inVO = new Death(); // 필요한 필드 설정
+        List<Map<String, Object>> gnameDead = deathMapper.GnameDead(inVO);
+        List<Map<String, Object>> gnameCasualties = deathMapper.GnameCasualties(inVO);
+        List<Map<String, Object>> gnameSeriously = deathMapper.GnameSeriously(inVO);
+
+        Map<String, List<Map<String, Object>>> response = new HashMap<>();
+        response.put("gnameDead", gnameDead);
+        response.put("gnameCasualties", gnameCasualties);
+        response.put("gnameSeriously", gnameSeriously);
+        return response;
+    }
+
 
 }

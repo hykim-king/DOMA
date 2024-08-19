@@ -250,7 +250,7 @@
     <!--사고종류별-->
      <select id="MediumDead" parameterType="String"  resultType="map">
 	SELECT
-	dm.medium_name AS accident_type,
+	dm.medium_name,
 	SUM(dd.dead) AS total_deaths
 	FROM
 	d_death dd
@@ -259,12 +259,12 @@
 	GROUP BY
 	dm.medium_name
 	ORDER BY
-	total_deaths DESC   
+	total_deaths    
     </select>
     
       <select id="MediumCasualties" parameterType="String"  resultType="map">
 	SELECT
-	dm.medium_name AS accident_type,
+	dm.medium_name,
 	SUM(dd.casualties) AS total_casualties
 	FROM
 	d_death dd
@@ -273,12 +273,12 @@
 	GROUP BY
 	dm.medium_name
 	ORDER BY
-	total_casualties DESC   
+	total_casualties   
     </select>
     
       <select id="MediumSeriously" parameterType="String"  resultType="map">
 	SELECT
-	dm.medium_name AS accident_type,
+	dm.medium_name,
 	SUM(dd.seriously) AS total_seriously
 	FROM
 	d_death dd
@@ -287,52 +287,54 @@
 	GROUP BY
 	dm.medium_name
 	ORDER BY
-	total_seriously DESC    
+	total_seriously  
     </select>
     
     <!--───────────────────────────────────────────────────────────────────────────  -->
-    <!--사고종류별-->
-      <select id="GnameDead" parameterType="String"  resultType="map">
-	SELECT
-	ds.gname AS region_name,
-	SUM(dd.dead) AS total_deaths
-	FROM
-	d_death dd
-	JOIN
-	d_death_sido ds ON dd.gcode = ds.gcode
-	GROUP BY
-	ds.gname
-	ORDER BY
-	ds.gname  
-    </select>
-    
-     <select id="GnameCasualties" parameterType="String"  resultType="map">
-	SELECT
-	ds.gname AS region_name,
-	SUM(dd.casualties) AS total_casualties
-	FROM
-	d_death dd
-	JOIN
-	d_death_sido ds ON dd.gcode = ds.gcode
-	GROUP BY
-	ds.gname
-	ORDER BY
-	ds.gname;
-   
-    </select>
-    
-     <select id="GnameSeriously" parameterType="String"  resultType="map">
-	SELECT
-	ds.gname AS region_name,
-	SUM(dd.seriously) AS total_seriously
-	FROM
-	d_death dd
-	JOIN
-	d_death_sido ds ON dd.gcode = ds.gcode
-	GROUP BY
-	ds.gname
-	ORDER BY
-	ds.gname; 
-    </select>
+    <!-- 지역별 사망자 수 쿼리 -->
+<select id="GnameDead" parameterType="String" resultType="map">
+    SELECT
+        ds.gname  , 
+        SUM(dd.dead) AS total_deaths
+    FROM
+        d_death dd
+    JOIN
+        d_death_sido ds ON dd.gcode = ds.gcode
+    GROUP BY
+        ds.gname
+    ORDER BY
+        ds.gname
+</select>
+
+<!-- 지역별 부상자 수 쿼리 -->
+<select id="GnameCasualties" parameterType="String" resultType="map">
+    SELECT
+        ds.gname  ,
+        SUM(dd.casualties) AS total_casualties
+    FROM
+        d_death dd
+    JOIN
+        d_death_sido ds ON dd.gcode = ds.gcode
+    GROUP BY
+        ds.gname
+    ORDER BY
+        ds.gname
+</select>
+
+<!-- 지역별 중상자 수 쿼리 -->
+<select id="GnameSeriously" parameterType="String" resultType="map">
+    SELECT
+        ds.gname  ,
+        SUM(dd.seriously) AS total_seriously
+    FROM
+        d_death dd
+    JOIN
+        d_death_sido ds ON dd.gcode = ds.gcode
+    GROUP BY
+        ds.gname
+    ORDER BY
+        ds.gname
+</select>
+
 
 </mapper>
