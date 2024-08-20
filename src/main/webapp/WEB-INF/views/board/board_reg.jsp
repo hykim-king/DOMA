@@ -166,7 +166,7 @@ header, footer {
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
 //객체 생성=================================================================================================    
-    const doSaveBtn = document.querySelector("#doSave");
+    const fileSaveBtn = document.querySelector("#fileSave");
     const moveToListBtn = document.querySelector("#moveToList");
     const titleInput = document.querySelector("#title");
     const userIdInput = document.querySelector("#userId");
@@ -177,9 +177,19 @@ document.addEventListener("DOMContentLoaded", function(){
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
+    const form = document.querySelector("form");
+    const fileInput = document.querySelector("input[type='file']");
+    const fileNameInput = document.querySelector("#fileName");
+    
     
 //이벤트 처리=================================================================================================    
     
+	form.addEventListener("submit", function(event) {
+        const filePath = fileInput.value;
+        const fileName = filePath.split('\\').pop();  // 파일 이름 추출
+        fileNameInput.value = fileName;
+    });
+	
 	//구분
     searchDivSelect.addEventListener("change",function(event){
         if("" === searchDivSelect.value){
@@ -202,9 +212,9 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 	
 	//등록
-    doSaveBtn.addEventListener("click", function(event){
-        console.log("doSaveBtn click");     
-        doSave();
+    fileSaveBtn.addEventListener("click", function(event){
+        console.log("fileSaveBtn click");     
+        fileSave();
     });
 	
     
@@ -216,72 +226,85 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
     }
 	
-	//doSave()
-	function doSave(){
-        console.log("doSave()");
-        
-        if(isEmpty(searchDivSelect.value) == true){
-            alert('구를 선택 하세요.')
-            searchDivSelect.focus();
-            return;
-        }
-        
-        if(isEmpty(titleInput.value) == true){
-            alert('제목을 입력 하세요.')
-            titleInput.focus();
-            return;
-        }
-        
-        if(isEmpty(userIdInput.value) == true){
-            alert('등록자 아이디를 입력 하세요.')
-            userIdInput.focus();
-            return;
-        }
-        
-        if(isEmpty(simplemde.value()) == true){
-            alert('내용을 입력 하세요.')
-            contentsTextArea.focus();
-            return;
-        }
-        
-        console.log("simplemde", simplemde.value());
-        if(confirm("등록 하시겠습니까?") === false)return;
-        
-        //비동기 통신
-        let type = "POST";
-        let url = "/doma/board/doSave.do";
-        let async = "true";
-        let dataType = "html";
-        
-        let params = {
-        	"seq" : seqInput.value,
-       		"gname"   : searchDivSelect.value,
-            "title"    : titleInput.value,
-            "userId"    : userIdInput.value,
-            "content" : simplemde.value(),
-            "imgLink" : imgLinkInput.value,
-            "div"      : divInput.value
-        };
-
-        PClass.pAjax(url, params, dataType, type, async, function(data){
-            if(data){
-                try{
-                    //JSON문자열을 JSON Object로 변환
-                    const message = JSON.parse(data)
-                    if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
-                        //window.location.href = "/doma/board/boardInfo.do?seq=" + seqInput.value + "&div=" + divInput.value;
-                        moveToList();
-                    }else{
-                        alert(message.messageContents);
-                    }
-                    
-                }catch(e){
-                    alert("data를 확인 하세요");
-                }
-            }
-        });
-    }
+	//fileSave()
+	function fileSave() {
+	    console.log("fileSave()");
+	    
+	    if(isEmpty(searchDivSelect.value) == true){
+	        alert('구를 선택 하세요.')
+	        searchDivSelect.focus();
+	        return;
+	    }
+	    
+	    if (isEmpty(titleInput.value)) {
+	        alert('제목을 입력 하세요.');
+	        titleInput.focus();
+	        return;
+	    }
+	    
+	    // 내용 입력 검증
+	    if (isEmpty(simplemde.value())) {
+	        alert('내용을 입력 하세요.');
+	        contentsTextArea.focus();
+	        return;
+	    }
+	    
+	    console.log("seqInput", seqInput.value);
+	    console.log("searchDivSelect", searchDivSelect.value);
+	    console.log("divInput", divInput.value);
+	    console.log("titleInput", titleInput.value);
+	    console.log("userIdInput", userIdInput.value);
+	    console.log("content", simplemde.value());
+	    console.log("imgLinkInput.files[0]", imgLinkInput.files[0]);
+	    
+	    if (!confirm("등록 하시겠습니까?")) return;
+	
+	    // FormData 객체 생성
+	    let formData = new FormData();
+	    formData.append("seq", seqInput.value);
+	    formData.append("gname", searchDivSelect.value);
+	    formData.append("div", divInput.value);
+	    formData.append("title", titleInput.value);
+	    formData.append("userId", userIdInput.value);
+	    formData.append("content", simplemde.value());
+	    formData.append("imgFile", imgLinkInput.files[0]);  // file이 서버에서 받는 MultipartFile의 키와 일치
+	
+	    
+	    if (fileInput.files.length > 0) {
+	        formData.append("imgFile", imgLinkInput.files[0]);
+	    }
+	
+	    // 비동기 요청 보내기
+	    let url = "/doma/board/fileSave.do";
+	
+	    $.ajax({
+	        url: url,
+	        type: "POST",
+	        data: formData,
+	        processData: false,  // FormData가 자동으로 처리되지 않도록 설정
+	        contentType: false,  // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
+	        success: function(data) {
+	            if (data) {
+	                try {
+	                    // JSON 문자열을 JSON 객체로 변환
+	                    const message = JSON.parse(data);
+	                    if (message && message.messageId === 1) {
+	                        alert(message.messageContents);
+	                        moveToList()
+	                    } else {
+	                        alert(message.messageContents);
+	                    }
+	                } catch (e) {
+	                	moveToList()
+	                }
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("요청 실패: " + status + ", " + error);
+	            alert("요청 처리 중 오류가 발생했습니다.");
+	        }
+	    });
+	}
 	
 	
     
@@ -290,7 +313,6 @@ document.addEventListener("DOMContentLoaded", function(){
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-user : ${user }
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
@@ -309,11 +331,11 @@ user : ${user }
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
       <input type="button" value="목록" id="moveToList" class="btn btn-outline-warning">
-      <input type="button" value="등록"  id="doSave" class="btn btn-outline-warning">
+      <input type="button" value="등록"  id="fileSave" class="btn btn-outline-warning">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
-  <form action="${CP}/board/fileUpload.do" method="post" enctype="multipart/form-data" class="form-horizontal">
+  <form action="${CP}/board/doSave.do" class="form-horizontal"  name="regForm" id="regForm" method="post" enctype="multipart/form-data">
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
     <div class="row mb-2">
@@ -342,7 +364,7 @@ user : ${user }
     <div class="row mb-2">
         <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
         <div class="col-sm-10">
-          <input type="file" class="form-control" name="imgLink" id="imgLink">        
+          <input type="file" multiple class="form-control" name="fileName" id="imgLink">        
         </div>        
     </div>
     <div class="row mb-2">
@@ -353,7 +375,6 @@ user : ${user }
     </div>
   </form>
   <!--// form end -->
-  fileList:${fileList }
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->

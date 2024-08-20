@@ -197,6 +197,17 @@ public class BoardServiceImpl implements BoardService, PLog {
 		return boardMapper.anUpdate(inVO);
 	}
 
+	@Override
+	public List<Board> notice(DTO search) throws Exception {
+		return boardMapper.notice(search);
+	}
+
+	@Override
+	public int fileSave(Board inVO) throws SQLException {
+		log.debug("1. param :"+inVO);
+		return boardMapper.fileSave(inVO);
+	}
+
 		 
 
 }

@@ -10,6 +10,10 @@ import com.acorn.doma.domain.Board;
 
 public interface BoardService extends WorkDiv<Board> {
 	
+	public int fileSave(Board inVO) throws SQLException;
+	
+	public List<Board> notice(DTO search) throws Exception;
+	
 	int anUpdate(Board inVO) throws SQLException;
 	
 	Board anMoveUpdate(Board inVO) throws SQLException, NullPointerException;

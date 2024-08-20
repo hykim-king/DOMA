@@ -25,7 +25,6 @@
     User outVO = (User) session.getAttribute("user");
     String userId = (outVO != null) ? outVO.getUserId() : "";
     
-
 %> 
 <c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>

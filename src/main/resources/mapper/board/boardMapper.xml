@@ -326,6 +326,34 @@
      )
     </insert>
     
+    <insert id="fileSave" parameterType="Board">
+     INSERT INTO D_BOARD(
+        seq,
+        div,
+        gname,
+        title,
+        user_id,
+        mod_id,
+        content,
+        img_link,
+        reg_dt,
+        mod_dt,
+        views       
+     )VALUES(
+      doma_board_seq.NEXTVAL,
+      #{div},
+      #{gname},
+      #{title},
+      #{userId},
+      #{userId},
+      #{content},
+      #{imgLink},
+      SYSDATE,
+      SYSDATE,
+      0
+     )
+    </insert>
+    
     <insert id="doSave" parameterType="Board">
      INSERT INTO D_BOARD(
         seq,

@@ -273,7 +273,6 @@ document.addEventListener("DOMContentLoaded", function(){
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-user : ${user }
 <!-- container -->
 <div class="container">
   <!-- 제목 -->
@@ -300,11 +299,11 @@ user : ${user }
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
     <div class="row mb-2">
-        <label for="title" class="col-sm-2 col-form-label">제목</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="title" id="title"  maxlength="75" required="required">
-        </div>
-    </div>
+	    <label for="title" class="col-sm-2 col-form-label">제목</label>
+	    <div class="col-sm-10">
+	        <input type="text" class="form-control" name="title" id="title" value="[공지사항] " maxlength="75" required="required">
+	    </div>
+	</div>
     <div class="row mb-2">
         <label for="userId" class="col-sm-2 col-form-label">등록자</label>
         <div class="col-sm-10">
@@ -325,7 +324,6 @@ user : ${user }
     </div>
   </form>
   <!--// form end -->
-  fileList:${fileList }
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->

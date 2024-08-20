@@ -2,6 +2,7 @@ package com.acorn.doma.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.service.BoardService;
 import com.acorn.doma.service.CodeService;
 import com.acorn.doma.service.MarkdownService;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.acorn.doma.cmn.Message;
 import com.acorn.doma.domain.Board;
@@ -50,167 +52,68 @@ public class BoardController implements PLog {
 	@Autowired
 	MarkdownService markdownService;
 	
-	//none image 파일
-	final String FILE_PATH = "C:\\Users\\acorn\\Documents\\DOMA\\src\\main\\webapp\\resources\\upload\\file";
-	
-	//image 파일
-	final String IMG_PATH = "C:\\Users\\acorn\\Documents\\DOMA\\src\\main\\webapp\\resources\\upload\\img";
-	
-	private String yyyyMMPath = "";//년월 포함 경로
-	private String saveFilePath = "";//none image 파일 절대경로
-	private String saveImageFilePath = "";//image 파일 절대경로
-	
 	public BoardController() {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ BoardController()         │");
 		log.debug("└───────────────────────────┘");
 		
-		//FILE_PATH 생성
-		File normalFileRoot =new File(FILE_PATH);
-		
-		if(normalFileRoot.isDirectory() == false) {//디렉토리가 없으며
-			boolean isMakeDir=normalFileRoot.mkdirs();
-			log.debug("isMakeDir:"+isMakeDir);
-		}
-		
-		//IMG_PATH 생성
-		File imageFileRoot =new File(IMG_PATH);
-		if(imageFileRoot.isDirectory() == false) {
-			boolean isMakeDir = imageFileRoot.mkdirs();
-			log.debug("imageFileRoot:"+isMakeDir);
-		}
-		
-		String yyyy = StringUtil.getCurrentDate("yyyy");
-		String mm   = StringUtil.getCurrentDate("MM");
-		
-		log.debug("yyyy:"+yyyy);
-		log.debug("mm:"+mm);
-		
-		//\2024\08
-		this.yyyyMMPath = File.separator+yyyy+ File.separator+mm;
-		log.debug("yyyyMMPath:"+yyyyMMPath);
-		
-		normalFileRoot = new File(FILE_PATH+yyyyMMPath);
-		if(normalFileRoot.isDirectory() == false) {
-			boolean isMakeDir = normalFileRoot.mkdirs();
-			log.debug("isMakeDir:"+isMakeDir);
-		}
-		
-		imageFileRoot =new File(IMG_PATH+yyyyMMPath);
-		if(imageFileRoot.isDirectory() == false) {
-			boolean isImageFileRoot=imageFileRoot.mkdirs();
-			log.debug("isImageFileRoot:"+isImageFileRoot);
-		}
-		
-		
-		saveFilePath = normalFileRoot.getAbsolutePath();
-		log.debug("saveFilePath:"+saveFilePath);
-		
-		saveImageFilePath = imageFileRoot.getAbsolutePath();
-		log.debug("saveImageFilePath:"+saveImageFilePath);
-		
 	}
 	
-	//파일 업로드
-	@RequestMapping(value = "/fileUpload.do",method = RequestMethod.POST)
-	public ModelAndView fileUpload(ModelAndView modelAndView, MultipartHttpServletRequest mHttp) {
-		log.debug("┌──────────────────────────────────────────┐");
-		log.debug("│ fileUploadView()                         │");
-		log.debug("└──────────────────────────────────────────┘");
-		
-		//title
-		String title = StringUtil.nvl(mHttp.getParameter("title"),"");
-		log.debug("title:"+title);
-		
-		//content
-		String content = StringUtil.nvl(mHttp.getParameter("content"),"");
-		log.debug("content:"+content);
-		
-		//파일들 읽기
-		List<FileVO>  list=new ArrayList<FileVO>();
-		
-		//<input type="file"  name="file1"
-		//<input type="file"  name="file2"
-		Iterator<String> fileNames =  mHttp.getFileNames();
-		while(fileNames.hasNext()) {
-			FileVO fileVO =new FileVO();
-			
-			String uploadFileName = fileNames.next();
-			
-			MultipartFile multipartFile = mHttp.getFile(uploadFileName);
-			
-			//파일이 없는 경우
-			if(multipartFile.isEmpty() == true) {
-				continue;
-			}
-			//---------------------------------------------------------------
-			//원본 파일명
-			String orgFileName = multipartFile.getOriginalFilename();
-			log.debug("orgFileName:"+orgFileName);
-			
-			fileVO.setOrgFileName(orgFileName);
+	// 실제 파일이 저장될 경로 (서버의 절대 경로)
+    private static final String UPLOAD_DIR = "C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/";
 
-			//파일 확장자
-			String ext = StringUtil.getExt(orgFileName);
-			log.debug("ext:"+ext);
-			
-			fileVO.setExtension(ext);
-			
-			//파일 사이즈
-			long fileSize = multipartFile.getSize();//byte
-			log.debug("fileSize:"+fileSize);
-			
-			fileVO.setFileSize(fileSize);
-			
-			
-			//저장 파일명
-			String saveFileName = StringUtil.getDateUUID("yyyyMMddhhmmss")+"."+ext;
-			log.debug("saveFileName:"+saveFileName);
-			fileVO.setSaveFileName(saveFileName);
-			
-			//저장 경로: FILE_PATH+/2024/08/
-			String contentType =  multipartFile.getContentType();
-			log.debug("contentType:"+contentType);
-			String saveFilePath = "";
-			if(contentType.startsWith("image")==true) {//image파일
-				saveFilePath = this.saveImageFilePath;
-			}else {
-				saveFilePath = this.saveFilePath;
-			}
-			
-			log.debug("saveFilePath:"+saveFilePath);
-			fileVO.setSavePath(saveFilePath);
-			
-			log.debug("********************");
-			log.debug("fileVO:"+fileVO);
-			log.debug("********************");
-			
-			try {
-				multipartFile.transferTo(new File(fileVO.getSavePath(),fileVO.getSaveFileName()));
-			}catch (IOException e) {
-				log.debug("IOException:"+e.getMessage());
-			}
-			
-			list.add(fileVO);
-			//---------------------------------------------------------------			
-		}
-		modelAndView.addObject("fileList", list);
-		modelAndView.setViewName("file/fileUpload");
-		
-		return modelAndView;
-	}
+    @PostMapping(value = "/fileSave.do", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String fileSave(Board inVO, @RequestParam(value = "imgFile", required = false) MultipartFile file) throws SQLException {
+        log.debug("┌──────────────────────────────────────────┐");
+        log.debug("│ fileSave()                               │");
+        log.debug("└──────────────────────────────────────────┘");
+
+        // 파일 처리
+        if (file != null) {
+            try {
+            	UUID uuid = UUID.randomUUID(); 
+            	 
+                // 서버의 특정 경로에 파일 저장
+                String originalFileName = file.getOriginalFilename();
+                String imageFileName = uuid + "_" + file.getOriginalFilename();
+                String filePath = UPLOAD_DIR + imageFileName;
+                File uploadFile = new File(filePath);
+
+                // 파일 저장
+                file.transferTo(uploadFile);
+
+                // 파일 경로를 웹 애플리케이션의 접근 가능한 경로로 설정
+                String relativeFilePath = "/resources/img/board_img/" + imageFileName;
+                inVO.setImgLink(imageFileName);
+
+            } catch (IOException e) {
+                log.error("File upload error: ", e);
+                return new Gson().toJson(new Message(0, "파일 업로드에 실패했습니다."));
+            }
+        } else {
+            log.warn("파일이 없습니다.");
+        }
+
+        log.debug("1. inVO : " + inVO);
+
+        String jsonString;
+        String message;
+
+        // 데이터베이스에 저장
+        int flag = boardService.fileSave(inVO);
+        if (flag == 1) {
+            message = inVO.getTitle() + "이 저장되었습니다.";
+        } else {
+            message = "게시물 저장에 실패했습니다.";
+        }
+
+        jsonString = new Gson().toJson(new Message(flag, message));
+        log.debug("2. jsonString : " + jsonString);
+
+        return jsonString;
+    }
 	
-	//파일 업로드 화면
-	//http://localhost:8080/ehr/board/fileUpload.do
-	@GetMapping("/fileUpload.do")
-	public ModelAndView fileUploadView(ModelAndView modelAndView) {
-		log.debug("┌──────────────────────────────────────────┐");
-		log.debug("│ fileUploadView()                         │");
-		log.debug("└──────────────────────────────────────────┘");		
-		modelAndView.setViewName("board/board_reg");
-		
-		return modelAndView;
-	}
 	
 	/**
 	 * 공지사항 상세페이지 이동

@@ -54,8 +54,9 @@
 <%-- common js --%>
 <script src="${CP}/resources/js/common.js"></script>
 
-<%-- Google Fonts --%>
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+<%-- google Nanum+Gothic --%>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
 
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet"
@@ -79,20 +80,17 @@ body {
 }
 
 .container {
-    font-family: 'Nanum Gothic', sans-serif;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
 header, footer {
-    font-family: 'Nanum Gothic', sans-serif;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
 }
 
 .post {
-    font-family: 'Nanum Gothic', sans-serif;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -102,7 +100,6 @@ header, footer {
 }
 
 .post-title {
-    font-family: 'Nanum Gothic', sans-serif;
     font-weight: bold;
     font-size: 24px;
     color: #333;
@@ -110,13 +107,11 @@ header, footer {
 }
 
 .post-content {
-    font-family: 'Nanum Gothic', sans-serif;
     font-size: 16px;
     color: #555;
 }
 
 .post-meta {
-    font-family: 'Nanum Gothic', sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -124,21 +119,18 @@ header, footer {
 }
 
 .post-author {
-    font-family: 'Nanum Gothic', sans-serif;
     margin: 0;
     font-size: 14px;
     color: #555;
 }
 
 .post-date {
-    font-family: 'Nanum Gothic', sans-serif;
     margin: 0;
     font-size: 14px;
     color: #777;
 }
 
 .comments {
-    font-family: 'Nanum Gothic', sans-serif;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -146,19 +138,16 @@ header, footer {
 }
 
 .comment-form {
-    font-family: 'Nanum Gothic', sans-serif;
     margin-bottom: 20px;
 }
 
 .comment-form label {
-    font-family: 'Nanum Gothic', sans-serif;
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
 .comment-form textarea {
-    font-family: 'Nanum Gothic', sans-serif;
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -167,7 +156,6 @@ header, footer {
 }
 
 .comment-form button {
-    font-family: 'Nanum Gothic', sans-serif;
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -179,38 +167,24 @@ header, footer {
 }
 
 .comment-form button:hover {
-    font-family: 'Nanum Gothic', sans-serif;
     background-color: #0056b3;
 }
 
 .comment-list {
-    font-family: 'Nanum Gothic', sans-serif;
     margin-top: 20px;
 }
 
 .comment {
-    font-family: 'Nanum Gothic', sans-serif;
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
 }
 
 .comment p {
-    font-family: 'Nanum Gothic', sans-serif;
     margin: 0;
 }
 
 .comment strong {
-    font-family: 'Nanum Gothic', sans-serif;
     color: #007bff;
-}
-
-.button-container {
-    text-align: right; /* 버튼들을 오른쪽에 정렬 */
-    margin-bottom: 20px; /* 버튼들 아래에 간격 추가 */
-}
-
-.button-container button {
-    margin-left: 10px; /* 버튼들 사이에 간격 추가 */
 }
 </style>
 <script>
@@ -583,68 +557,69 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 	
-</script> 
+</script>
+
+
+<title>DOMA 커뮤니티</title>
 </head>
 <body>
-    user : ${user } 
-    board : ${board }
-
-    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-    <input type="hidden" name="seq" id="seq" value="${board.seq}">
-    <input type="hidden" name="div" id="div" value="${board.getDiv()}">
-    <input type="hidden" name="modId" id="modId" value="${board.modId}">
+board:${board }
+	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
+    <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
+    <input type="hidden" name="modId"  id="modId" value="${board.modId}">
     <input type="hidden" name="comSeq" id="comSeq" value="${comments.comSeq}">
-    <div class="container">
-        <div class="button-container">
-            <button type="button" value="목록" id="moveToList" class="btn btn-outline-dark">목록으로</button>
-            <button type="button" value="수정" id="moveToUp" class="btn btn-outline-dark">수정하기</button>
-            <button type="button" value="삭제" id="doDelete" class="btn btn-outline-danger">삭제하기</button>
-        </div>
-        <article class="post">
-            <h2 name="title" id="title" class="post-title">${board.title}</h2>
-            <div class="post-meta">
-                <p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
-                <p class="post-date">${board.regDt}</p>
-                <p class="text-end">조회수: ${board.views}</p>
-            </div>
-            <div class="row mb-2">
-                <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
-                <div class="col-sm-2">
-                    <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
-                </div>
-            </div>
-            <hr>
-            <div id="imgLink" class="post-content">
-                <img src="${info.imgLink }">
-            </div>
-            
-            <div name="content" id="content" class="post-content">
-                <p>${board.content}</p>
-            </div>
-        </article>
+	<div class="container">
+		<button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
+		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
+		<button type="button" value="삭제" id="doDelete" class="btn btn-outline-warning">삭제하기</button>
+		<article class="post">
+			<h2 name="title" id="title" class="post-title">${board.title}</h2>
+			<div class="post-meta">
+				<p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
+				<p class="post-date">${board.regDt}</p>
+				<p class="text-end">조회수: ${board.views}</p>
+			</div>
+			<div class="row mb-2">
+		        <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
+		        <div class="col-sm-2">
+		            <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
+		        </div>
+		    </div>
+			<hr>
+			<div class="img_section">
+			    <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" style="width:10%; height:auto;">
+			</div>
+			<hr>
+			<div name="content" id="content" class="post-content">
+				<p>${board.content}</p>
+			</div>
+		</article>
 
-        <section class="comments">
-            <h3>댓글</h3>
-            <div class="comment-form">
-                <form action="board_main.jsp" method="post" onsubmit="commentSave(event)">
-                    <label for="comment">댓글을 입력하세요:</label>
-                    <textarea id="comment" name="comment" rows="4" required></textarea>
-                    <button type="button" value="댓글 쓰기" id="doSave" name="doSave" class="btn btn-primary mt-2">댓글 쓰기</button>
-                </form>
-            </div>
-            <div class="comment-list">
-                <div class="comment">
-                    <p>
-                        <strong>작성자:</strong> 댓글 내용이 여기에 표시됩니다.
-                    </p>
-                </div>
-                <!-- 추가 댓글은 여기에 나열됩니다 -->
+		<section class="comments">
+			<h3>댓글</h3>
+			<div class="comment-form">
+				<form action="board_main.jsp" method="post" onsubmit="commentSave(event)">
+					<label for="comment">댓글을 입력하세요:</label>
+					<textarea id="comment" name="comment" rows="4" required></textarea>
+					<button type="button" value="댓글 쓰기" id="doSave" name="doSave" class="btn btn-primary mt-2">댓글 쓰기</button>
+				</form>
+			</div>
+			<div class="comment-list">
+				<div class="comment">
+					<p>
+						<strong>작성자:</strong> 댓글 내용이 여기에 표시됩니다.
+					</p>
+				</div>
+				<!-- 추가 댓글은 여기에 나열됩니다 -->
                 <ul id="reply-list" class="list-unstyled">
-                    <!-- AJAX를 통해 동적으로 댓글이 추가될 영역 -->
+                <!-- AJAX를 통해 동적으로 댓글이 추가될 영역 -->
+                
                 </ul>
-            </div>
-        </section>
-    </div>
+			</div>
+		</section>
+	</div>
+
 </body>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </html>

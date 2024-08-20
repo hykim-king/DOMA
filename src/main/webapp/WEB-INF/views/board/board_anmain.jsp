@@ -563,8 +563,6 @@ document.addEventListener("DOMContentLoaded", function() {
 <title>DOMA 커뮤니티</title>
 </head>
 <body>
-user : ${user } 
-board : ${board }
 
     <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
@@ -575,6 +573,7 @@ board : ${board }
         <button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
         <button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
         <button type="button" value="삭제" id="doDelete" class="btn btn-outline-warning">삭제하기</button>
+        
         <article class="post">
             <h2 name="title" id="title" class="post-title">${board.title}</h2>
             <div class="post-meta">
