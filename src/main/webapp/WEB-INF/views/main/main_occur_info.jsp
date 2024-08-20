@@ -16,22 +16,26 @@
 <link rel="stylesheet" href="${CP}/resources/css/main/main_occur_info.css">
 <style>
     select option {
-        padding: 10px;
+        padding: 5px; /* 줄어든 패딩 */
+        font-size: 14px; /* 줄어든 글자 크기 */
     }
     .selected-option {
         background-color: lightblue !important;
         color: black !important;
     }
     .risk-button {
-        display: inline-block;
-        width: 50px;
-        height: 30px;
-        margin: 5px;
+        display: block;
+        width: 40px; /* 줄어든 너비 */
+        height: 25px; /* 줄어든 높이 */
+        margin: 5px auto; /* 자동 좌우 정렬 */
         text-align: center;
-        line-height: 30px;
+        line-height: 25px; /* 줄어든 높이와 맞춤 */
         border: 1px solid #ccc;
         cursor: pointer;
         font-weight: bold;
+        border-radius: 5px; /* 둥근 모서리 */
+        transition: background-color 0.3s, color 0.3s;
+        font-size: 14px; /* 줄어든 글자 크기 */
     }
     .risk-button:hover {
         background-color: #e0e0e0;
@@ -44,30 +48,69 @@
         text-align: center;
         margin-bottom: 20px;
         position: relative;
+        width: 100%; /* 드롭다운과 버튼이 전체 폭을 차지하도록 설정 */
     }
     #guDropdown {
         display: none;
-        width: 150px;
-        height: 150px;
+        width: 100%; /* 드롭다운이 전체 폭을 차지하도록 설정 */
+        height: auto; /* 높이 자동 조정 */
         font-weight: bold;
         text-align: center;
         border: 2px solid black;
+        border-radius: 5px; /* 둥근 모서리 */
+        background-color: #f9f9f9; /* 밝은 배경색 */
+        box-sizing: border-box; /* 패딩과 테두리 포함 크기 계산 */
+        padding: 10px; /* 패딩 추가 */
+        font-size: 14px; /* 줄어든 글자 크기 */
     }
     #showGuList {
         cursor: pointer;
-        width: 150px;
+        width: 100%; /* 버튼이 전체 폭을 차지하도록 설정 */
         height: 35px;
         font-weight: bold;
         text-align: center;
         border: 2px solid black;
         background-color: #f0f0f0;
-        margin: 0 auto;
         line-height: 35px;
+        border-radius: 5px; /* 둥근 모서리 */
+        transition: background-color 0.3s;
+        font-size: 14px; /* 줄어든 글자 크기 */
+    }
+    #showGuList:hover {
+        background-color: #e0e0e0;
     }
     .risk-section {
         display: none;
         text-align: center;
         margin-bottom: 20px;
+    }
+    .year-selection, .gu-selection, .risk-section, .fetch-button {
+        margin-bottom: 20px;
+    }
+    .fetch-button {
+        text-align: center;
+        margin: 20px 0;
+    }
+    #mapContainer {
+        display: flex;
+        flex-direction: column; /* 세로 방향으로 정렬 */
+        align-items: center; /* 중앙 정렬 */
+    }
+    #subMap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%; /* 전체 폭 차지 */
+    }
+    .aside {
+        height: 820px;
+        width: 350px;
+        overflow: scroll;
+        display: none;
+        background-color: #f9f9f9; /* 밝은 배경색 */
+        border-left: 2px solid #ddd; /* 분리선 */
+        box-sizing: border-box; /* 패딩과 테두리 포함 크기 계산 */
+        padding: 10px; /* 패딩 추가 */
     }
 </style>
 <script>
@@ -167,6 +210,7 @@ function toggleGuDropdown() {
         guDropdown.style.display = 'none';
         showGuListButton.innerText = '전체 선택'; // 버튼 텍스트 변경
         deselectAllGu(); // 드롭다운이 숨겨질 때 전체 취소
+        removeExistingMarkers(); // 마커 제거
     }
 
     // 전체 선택 후 사고 위험도 섹션 보이기
@@ -298,9 +342,8 @@ function addMarkersToMap(data) {
 <body>
     <div style="display: flex">
         <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
-        <div id="subMap" style="height: 815px; display: inline-block;">
+        <div id="subMap" style="height: 815px; display: flex; flex-direction: column;">
             <section id="mapContainer">
-
                 <!-- 기본적으로 "년도 선택" 드롭다운 -->
                 <div class="year-selection" style="text-align: center; margin-bottom: 20px;">
                     <h3>년도 선택</h3>
@@ -360,26 +403,23 @@ function addMarkersToMap(data) {
                 </div>
                     
                 <!-- 조회 버튼 -->
-                <div style="text-align: center; margin-bottom: 20px;">
+                <div class="fetch-button">
                     <button onclick="fetchData()" style="width: 150px; height: 35px; font-weight: bold; text-align: center; border: 2px solid black;">조회</button>
                 </div>
 
                 <!-- 조회 결과 표시 영역 -->
-                <div class="aside" id="resultContainer" style="height: 820px; width: 350px; overflow: scroll; display: none;">
+                <div class="aside" id="resultContainer">
                     <!-- 서버로부터 받아온 데이터가 이곳에 삽입됩니다 -->
                 </div>
-
             </section>
-        </div>>
+        </div>
         <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
     </div>
 
-    <!-- 스크립트 -->
->
-    <script src="${CP}/resources/js/main/main_occur_detail.js"></script>
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
-
-    <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-   
+    <!-- 스크립트 파일 로드 -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery_3_7_1.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/main_occur_info.js"></script>
 </body>
 </html>
