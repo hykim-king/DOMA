@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Gowun Dodum', sans-serif;
 }
 
 header {
@@ -48,8 +48,8 @@ header nav .menu {
     display: inline-block;
     text-decoration: none;
     color: #000000;
-    font-weight: bold;
-    padding-bottom: 5px;
+    //font-weight: bold;
+    //padding-bottom: 5px;
 }
 
 .menu-align a:before, .menu-align a:after {
@@ -80,6 +80,43 @@ header nav .menu {
     opacity: 1;
 }
 
+.menu-list {
+    padding-top: 10px;
+    margin-left: 0;
+    margin-right: auto;
+    padding: 10px 0;
+    text-align: left;
+}
+
+.menu-list td {
+    padding: 0 20px; /* 좌우 여백 조절 */
+    text-align: left; /* 가운데 정렬 */
+}
+.menu-list {
+    margin-left: 0;
+    margin-right: auto;
+    padding: 10px 0; /* 위아래 여백 조절 */
+    text-align: left; /* 메뉴를 가운데 정렬 */
+}
+
+.menu-list a {
+	//text-align: left;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: #000000;
+    letter-spacing: 1px;
+    padding: 0 0px;
+    text-align: center;
+    /* font-weight: bold; */
+    /* padding-bottom: 5px; */
+}
+
+.menu-list a:hover {
+    color: #FFEB3B; /* 마우스를 올렸을 때의 색상 (예: 노란색) */
+    font-weight: bold; /* 마우스를 올렸을 때 글씨 굵기 */
+}
+
 @keyframes road {
     from {
         background-position: 0;
@@ -91,16 +128,18 @@ header nav .menu {
 
 /* header-container 스타일 */
 .header-container {
-    padding-top: 20px;
+    padding-top: 5px;
     background-color: #ffffff;
     text-align: center;
-    border-bottom: 2px solid #000000;
+    border-bottom: 1px solid #0000004a;
+    padding-bottom: 7px;
 }
 
 /* main-nav 스타일 */
 .main-nav {
     display: flex;
     position: relative; /* 드롭다운 박스를 위해 상대 위치 설정 */
+    justify-content: flex-start;
 }
 
 .main-nav ul {
@@ -145,8 +184,9 @@ header nav .menu {
 
 /* 각 드롭다운 메뉴 스타일 */
 .dropdown {
-	padding : 20px;
-	width : 200px;
+    padding : 0px;
+    //width : 140px;
+    //margin: 0 auto;
 }
 .dropdown-menu {
     margin-bottom: 10px;
