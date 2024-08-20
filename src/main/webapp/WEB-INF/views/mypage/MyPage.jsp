@@ -48,8 +48,11 @@ if(session.getAttribute("user")!=null){
 <%-- common js --%>
 <script src="${CP}/resources/js/common.js"></script> 
 
-<%-- google Nanum+Gothic --%>
-<link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 <%-- bootstrap icon --%>
 <%-- <link rel="stylesheet" href="${CP}/resources/icon/font/bootstrap-icons.min.css">--%>
@@ -65,6 +68,7 @@ if(session.getAttribute("user")!=null){
     display: none;
 }
 .container {
+	 font-family: 'Nanum Gothic', sans-serif !important;
     display: flex;
     gap: 20px;
     padding: 20px;

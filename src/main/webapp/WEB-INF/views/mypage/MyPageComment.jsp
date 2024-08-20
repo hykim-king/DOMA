@@ -49,8 +49,8 @@
 <%-- common js --%>
 <script src="${CP}/resources/js/common.js"></script>
 
-<%-- google Nanum+Gothic --%>
-<link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+<%-- Google Fonts --%>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
 
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -61,18 +61,21 @@
  
 <style>
     .table-content {
+     font-family: 'Nanum Gothic', sans-serif !important;
         margin-top: 50px;
         margin-bottom:50px;
     }
      
 
 	.table {
+	 font-family: 'Nanum Gothic', sans-serif !important;
 		margin: 20px;
     	width: 1000px; /* 테이블 너비를 부모 컨테이너에 맞게 조정 */
     	 
 	}
 
 	.table thead th, .table tbody td {
+	 font-family: 'Nanum Gothic', sans-serif !important;
     	text-align: center; /* 가운데 정렬 */
 	}
 </style>
