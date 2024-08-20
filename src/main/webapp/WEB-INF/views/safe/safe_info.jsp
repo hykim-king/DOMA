@@ -47,7 +47,9 @@ button {
 	width:30%;
 	display : inline-block;
 	margin : 5px 5px 15px 10px;
-		
+}
+.ui_section:hover { 
+    transform: scale(1.05);
 }
 .img_section {
     height: 150px;
@@ -77,6 +79,10 @@ button {
     /* font-family: Arial, sans-serif; 폰트는 취향대로 바꾸세요 */
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+
+
+
 .token-link {
     position: relative;
     display: inline-block;
