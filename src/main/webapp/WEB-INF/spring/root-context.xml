@@ -8,7 +8,12 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-    
+    <!-- Scheduler Configuration -->
+    <bean id="schedulerConfig" class="com.acorn.doma.service.SchedulerConfig">
+        <!-- 프로퍼티를 수동으로 주입할 수도 있습니다 -->
+        <property name="serverId" value="server1"/>
+        <property name="serviceKey" value="5146697052736b6f3438696a4d6574"/>
+    </bean>
     <!-- fileupload
         multipartResolver : ID 이름 변경하면 안됨!
         maxUploadSize : byte, (default = -1 제한없음) 5 * 1024 * 1024 -> 5M

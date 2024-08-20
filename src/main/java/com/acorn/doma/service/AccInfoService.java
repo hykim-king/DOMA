@@ -10,11 +10,11 @@ import com.acorn.doma.domain.Accident;
 
 public interface AccInfoService extends WorkDiv<Accident>{
 	
-	String fetchDataFromApi() throws IOException;
-	
-    List<Accident> parseXmlData(String xmlData);
-    
-    void insertAccidentData();
+//	String fetchDataFromApi() throws IOException;
+//	
+//    List<Accident> parseXmlData(String xmlData);
+//    
+//    void insertAccidentData();
     
     List<Accident> fullTableScan() throws SQLException;
     List<Accident> A01Retrieve() throws SQLException;

@@ -51,11 +51,11 @@ public class AccInfoServiceImplTest implements PLog{
 		log.debug("└──────────────────────────────────────┘");
 		
 	}
-	@Test
-	public void dataInsert() throws Exception{
-		accInfoService.insertAccidentData();
-		accMapper.countAll();
-	}
+//	@Test
+//	public void dataInsert() throws Exception{
+//		accInfoService.insertAccidentData();
+//		accMapper.countAll();
+//	}
 //	@Ignore
 	@Test
 	public void doSelectOne() throws Exception{
