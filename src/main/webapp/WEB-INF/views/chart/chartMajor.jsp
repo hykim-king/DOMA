@@ -76,40 +76,7 @@
             .catch(error => console.error('차트 데이터 가져오기 오류:', error));
     }
 </script>
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.showChartsButton').forEach((button, index) => {
-            button.addEventListener('click', () => {
-                switch (index) {
-                    case 0:
-                        window.location.href = '${CP}/chart/chartMonth.do';
-                        break;
-                    case 1:
-                        window.location.href = '${CP}/chart/chartWeek.do';
-                        break;
-                    case 2:
-                        window.location.href = '${CP}/chart/chartHour.do';
-                        break;
-                    case 3:
-                        window.location.href = '${CP}/chart/chartNight.do'; // 예시 URL
-                        break;
-                    case 4:
-                        window.location.href = '${CP}/chart/chartMajor.do'; // 예시 URL
-                        break;
-                    case 5:
-                        window.location.href = '${CP}/chart/chartMedium.do'; // 예시 URL
-                        break;
-                    case 6:
-                        window.location.href = '${CP}/chart/chartGname.do'; // 예시 URL
-                        break;
-                    case 7:
-                        window.location.href = '${CP}/chart/chartSummary.do'; // 예시 URL
-                        break;
-                }
-            });
-        });
-    });
-</script>
+
 <style>
     .center-content {
         text-align: center;
@@ -143,10 +110,10 @@
         <button class="showChartsButton">주야별 교통사고</button>
         <button class="showChartsButton">사고유형별 교통사고</button>
         <button class="showChartsButton">사고종류별 교통사고</button>
-        <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">연도별 기상사고</button>
-        <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
-        <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
+        <button class="showChartsButton">구별 교통사고</button>
+        <button class="showChartsButton">연도별 기상사고(구)</button>
+        <button class="showChartsButton">연도별 부상자 수 추이(기상상태)</button>
+        <button class="showChartsButton">구별 기상상태와 부상자 수</button>
     </div>
     
     <!-- 콤보 차트 컨테이너 -->

@@ -30,66 +30,6 @@
 <script src="${CP}/resources/js/chart/chart.js"></script>
 <script src="${CP}/resources/js/chart/weatherGu.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<style>
-        /* CSS 스타일 */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .chart-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .chart-wrapper {
-            flex: 1;
-            min-width: 300px;
-            max-width: 600px;
-            height: 500px;
-        }
-        #guSelection {
-            margin: 20px 0;
-        }
-        #guDropdown {
-            width: 100%;
-            height: 200px;
-            overflow-y: auto;
-        }
-        #loadChartButton {
-            width: 100%;
-            height: 35px;
-            font-weight: bold;
-            border: 2px solid black;
-            cursor: pointer;
-        }
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .showChartsButton {
-            flex: 1;
-            min-width: 150px;
-            height: 35px;
-            font-weight: bold;
-            border: 2px solid black;
-            cursor: pointer;
-            text-align: center;
-            background-color: #f8f9fa;
-        }
-        .showChartsButton:hover {
-            background-color: #e2e6ea;
-        }
-    </style>
  <script>
  let gname = []; 
 
@@ -148,10 +88,10 @@
         <button class="showChartsButton">주야별 교통사고</button>
         <button class="showChartsButton">사고유형별 교통사고</button>
         <button class="showChartsButton">사고종류별 교통사고</button>
-        <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">연도별 기상사고</button>
-        <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
-        <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
+        <button class="showChartsButton">구별 교통사고</button>
+        <button class="showChartsButton">연도별 기상사고(구)</button>
+        <button class="showChartsButton">연도별 부상자 수 추이(기상상태)</button>
+        <button class="showChartsButton">구별 기상상태와 부상자 수</button>
     </div>
     <!-- 전체 선택 버튼 및 구 선택 드롭다운 -->
    <!-- 구 선택 버튼 및 드롭다운 -->
@@ -190,8 +130,11 @@
             <button id="loadChartButton" style="width: 150px; height: 35px; font-weight: bold; text-align: center; border: 2px solid black;">조회</button>
         </div>
     </div>
-    <div id="chartContainer1" style="height: 500px; margin: 0 auto;"></div>
-    <div id="chartContainer2" style="height: 500px; margin: 0 auto;"></div>
+    <div id="chartContainer1" style="width: 45%; height: 400px; display: inline-block;"></div>
+    <div id="chartContainer2" style="width: 45%; height: 400px; display: inline-block;"></div>
+    <div id="chartContainer3" style="width: 45%; height: 400px; display: inline-block;"></div>
+    <div id="chartContainer4" style="width: 45%; height: 400px; display: inline-block;"></div>
+    <div id="chartContainer5" style="width: 45%; height: 400px; display: inline-block;"></div>
     
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 

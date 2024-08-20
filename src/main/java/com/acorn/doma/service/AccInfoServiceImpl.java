@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -26,7 +27,6 @@ import org.w3c.dom.NodeList;
 import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
-import com.acorn.doma.domain.Board;
 import com.acorn.doma.mapper.AccMapper;
 import com.acorn.doma.proj4j.CoordinateConverter;
 

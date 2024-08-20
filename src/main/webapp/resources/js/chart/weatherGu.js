@@ -49,75 +49,60 @@ function buildQueryParams(params) {
 
 function drawChart(data) {
     google.charts.setOnLoadCallback(function () {
-        // 데이터 형식을 변환하여 2차원 배열 생성
-        var chartDataArray1 = []; // For low-frequency weather conditions
-        var chartDataArray2 = []; // For high-frequency weather conditions
+        // 기상 상태를 기준으로 데이터를 분리
+        const weatherConditions = ['안개', '눈', '비', '흐림'];
+        const chartContainers = ['chartContainer1', 'chartContainer2', 'chartContainer3', 'chartContainer4'];
 
-        // 첫 번째 행: 헤더 추가 (기상 상태와 선택된 구들)
-        const header = ['Weather Condition'];
-        gname.forEach(gu => header.push(gu));
-        
-        // 기상 상태별로 부상자 수를 모은 객체 초기화
-        const weatherConditions1 = ['안개', '기타/불명', '눈'];
-        const weatherConditions2 = ['비', '흐림'];
-        
-        const conditionData1 = {};
-        const conditionData2 = {};
-        
-        weatherConditions1.forEach(condition => {
-            conditionData1[condition] = gname.map(() => 0); // 구별로 0으로 초기화된 배열
+        const conditionData = {};
+
+        // 기상 상태별로 초기화
+        weatherConditions.forEach(condition => {
+            conditionData[condition] = gname.map(() => 0); // 구별로 0으로 초기화된 배열
         });
-        
-        weatherConditions2.forEach(condition => {
-            conditionData2[condition] = gname.map(() => 0); // 구별로 0으로 초기화된 배열
-        });
-        
+
         // 데이터를 기상 상태별로 구분하여 부상자 수를 집계
         data.forEach(function (item) {
-            if (gname.includes(item.GNAME)) {
+            if (gname.includes(item.GNAME) && weatherConditions.includes(item.WEATHER_CONDITION)) {
                 const guIndex = gname.indexOf(item.GNAME);
-                if (weatherConditions1.includes(item.WEATHER_CONDITION)) {
-                    conditionData1[item.WEATHER_CONDITION][guIndex] = item.TOTAL_INJURY;
-                } else if (weatherConditions2.includes(item.WEATHER_CONDITION)) {
-                    conditionData2[item.WEATHER_CONDITION][guIndex] = item.TOTAL_INJURY;
-                }
+                conditionData[item.WEATHER_CONDITION][guIndex] = item.TOTAL_INJURY;
             }
         });
-        
-        // 조건별로 데이터를 2차원 배열에 추가
-        weatherConditions1.forEach(condition => {
-            const row = [condition];
-            row.push(...conditionData1[condition]);
-            chartDataArray1.push(row);
-        });
-        
-        weatherConditions2.forEach(condition => {
-            const row = [condition];
-            row.push(...conditionData2[condition]);
-            chartDataArray2.push(row);
-        });
-        
-        console.log('2D Array for Chart 1:', chartDataArray1); // Low-frequency conditions
-        console.log('2D Array for Chart 2:', chartDataArray2); // High-frequency conditions
-        
-        // 구글 차트를 그리기 위한 데이터 테이블 생성
-        var dataTable1 = google.visualization.arrayToDataTable([header].concat(chartDataArray1));
-        var dataTable2 = google.visualization.arrayToDataTable([header].concat(chartDataArray2));
 
-        // 차트 옵션 설정
-        var options = {
-            title: '기상 상태에 따른 부상자 수',
-            isStacked: true,
-            hAxis: { title: '총 부상자 수' },
-            vAxis: { title: '기상 상태' },
-            legend: { position: 'top', maxLines: 3 }
-        };
-        
-        // 차트 그리기
-        var chart1 = new google.visualization.BarChart(document.getElementById('chartContainer1'));
-        var chart2 = new google.visualization.BarChart(document.getElementById('chartContainer2'));
+        // 각 기상 상태별로 파이차트 생성
+        weatherConditions.forEach((condition, index) => {
+            const chartDataArray = [['구 이름', '부상자 수']];
+            gname.forEach((gu, i) => {
+                chartDataArray.push([gu, conditionData[condition][i]]);
+            });
 
-        chart1.draw(dataTable1, options);
-        chart2.draw(dataTable2, options);
+            const dataTable = google.visualization.arrayToDataTable(chartDataArray);
+
+            // 가장 큰 값 찾기
+            const maxInjury = Math.max(...chartDataArray.slice(1).map(row => row[1]));
+
+            // 최대값을 가진 모든 인덱스 찾기
+            const maxIndices = chartDataArray.slice(1).reduce((indices, row, idx) => {
+                if (row[1] === maxInjury) indices.push(idx);
+                return indices;
+            }, []);
+
+            // slices 옵션 생성: 최대값을 가진 슬라이스 강조
+            const slices = {};
+            maxIndices.forEach(idx => {
+                slices[idx] = { offset: 0.1 };
+            });
+
+            // 옵션 설정
+            const options = {
+                title: condition + '에 따른 부상자 수',
+                pieSliceText: 'value',
+                slices: slices,  // 강조할 슬라이스 설정
+                legend: { position: 'right' },
+            };
+
+            // 차트 그리기
+            const chart = new google.visualization.PieChart(document.getElementById(chartContainers[index]));
+            chart.draw(dataTable, options);
+        });
     });
 }

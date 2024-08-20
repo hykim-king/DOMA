@@ -15,60 +15,90 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('${CP}/chart/chartDataMedium.do')
-                .then(response => response.json())
-                .then(data => {
-                    // Prepare data for each chart
-                    const mediumDeadData = data.mediumDead.map(item => ({label: item.MEDIUM_NAME, value: item.TOTAL_DEATHS}));
-                    const mediumCasualtiesData = data.mediumCasualties.map(item => ({label: item.MEDIUM_NAME, value: item.TOTAL_CASUALTIES}));
-                    const mediumSeriouslyData = data.mediumSeriously.map(item => ({label: item.MEDIUM_NAME, value: item.TOTAL_SERIOUSLY}));
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('${CP}/chart/chartDataMedium.do')
+            .then(response => response.json())
+            .then(data => {
+                // Prepare data for each chart
+                const mediumDeadData = data.mediumDead.map(item => ({label: item.MEDIUM_NAME, value: item.TOTAL_DEATHS}));
+                const mediumCasualtiesData = data.mediumCasualties.map(item => ({label: item.MEDIUM_NAME, value: item.TOTAL_CASUALTIES}));
+                const mediumSeriouslyData = data.mediumSeriously.map(item => ({label: item.MEDIUM_NAME, value: item.TOTAL_SERIOUSLY}));
 
-                    function createPieChart(containerId, chartData, title) {
-                        const ctx = document.getElementById(containerId).getContext('2d');
-                        new Chart(ctx, {
-                            type: 'pie',
-                            data: {
-                                labels: chartData.map(item => item.label),
-                                datasets: [{
-                                    label: title,
-                                    data: chartData.map(item => item.value),
-                                    backgroundColor: ['#050C9C', '#3572EF', '#3ABEF9', '#A7E6FF', '#ffffff',
-                                    	'#f9eb97', '#f7e36d', '#f6df58', '#F4D72F', '#F7F7F8',  
-                                    	'#EEEEEE', '#ACE2E1', '#41C9E2', '#36A2EB', '#0F67B1' ],
-                                    borderColor: '#ffffff',
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'right',
-                                    },
-                                    tooltip: {
-                                        callbacks: {
-                                            label: function(tooltipItem) {
-                                                return tooltipItem.label + ': ' + tooltipItem.raw;
-                                            }
+                function createPieChart(containerId, chartData, title) {
+                    // Sort chart data by value in descending order
+                    chartData.sort((a, b) => b.value - a.value);
+
+                    // Exclude "기타" data
+                    const filteredData = chartData.filter(item => item.label !== '기타');
+
+                    // Extract labels and values
+                    const labels = filteredData.map(item => item.label);
+                    const values = filteredData.map(item => item.value);
+
+                    // Add "기타" data to the end for the legend
+                    const 기타Data = chartData.find(item => item.label === '기타');
+                    if (기타Data) {
+                        labels.push(기타Data.label);
+                        values.push(기타Data.value);
+                    }
+
+                    const ctx = document.getElementById(containerId).getContext('2d');
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: title,
+                                data: values,
+                                backgroundColor: ['#050C9C', '#3572EF', '#3ABEF9', '#A7E6FF', '#ffffff',
+                                    '#f9eb97', '#f7e36d', '#f6df58', '#F4D72F', '#F7F7F8',
+                                    '#EEEEEE', '#ACE2E1', '#41C9E2', '#36A2EB', '#0F67B1'
+                                ],
+                                borderColor: '#ffffff',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: title, // Title for each chart
+                                    font: {
+                                        size: 18
+                                    }
+                                },
+                                legend: {
+                                    position: 'right',
+                                    labels: {
+                                        usePointStyle: true,
+                                        // Note: Chart.js does not have a native sort for legend items based on data values.
+                                        // Sorting needs to be handled in data processing or by other methods.
+                                    }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return tooltipItem.label + ': ' + tooltipItem.raw;
                                         }
                                     }
                                 }
                             }
-                        });
-                    }
+                        }
+                    });
+                }
 
-                    // Create charts
-                    createPieChart('deathChart', mediumDeadData, '사고 종류별 총 사망자 수');
-                    createPieChart('casualtiesChart', mediumCasualtiesData, '사고 종류별 총 부상자 수');
-                    createPieChart('seriouslyChart', mediumSeriouslyData, '사고 종류별 총 중상자 수');
+                // Create charts
+                createPieChart('deathChart', mediumDeadData, '총 사망자 수');
+                createPieChart('casualtiesChart', mediumCasualtiesData, '총 부상자 수');
+                createPieChart('seriouslyChart', mediumSeriouslyData, '총 중상자 수');
 
-                    // 차트 컨테이너 표시
-                    document.getElementById('chartsContainer').style.display = 'flex';
-                })
-                .catch(error => console.error('차트 데이터 가져오기 오류:', error));
-        });
-    </script>
+                // 차트 컨테이너 표시
+                document.getElementById('chartsContainer').style.display = 'flex';
+            })
+            .catch(error => console.error('차트 데이터 가져오기 오류:', error));
+    });
+</script>
    
     <style>
         .chart-container {
@@ -113,10 +143,10 @@
         <button class="showChartsButton">주야별 교통사고</button>
         <button class="showChartsButton">사고유형별 교통사고</button>
         <button class="showChartsButton">사고종류별 교통사고</button>
-        <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">연도별 기상사고</button>
-        <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
-        <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
+        <button class="showChartsButton">구별 교통사고</button>
+        <button class="showChartsButton">연도별 기상사고(구)</button>
+        <button class="showChartsButton">연도별 부상자 수 추이(기상상태)</button>
+        <button class="showChartsButton">구별 기상상태와 부상자 수</button>
     </div>
 
     <!-- 차트 컨테이너 -->

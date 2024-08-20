@@ -42,44 +42,43 @@
                 const dayChartData = [dayDead, dayCasualties, daySeriously];
                 const nightChartData = [nightDead, nightCasualties, nightSeriously];
                 const labels = ['사망자 수', '부상자 수', '중상자 수'];
-
-                function createPieChart(ctx, chartData, title) {
-                    new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                data: chartData,
-                                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-                            }]
+                const chartData = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: '주간',
+                                data: [dayDead, dayCasualties, daySeriously],
+                                backgroundColor: '#FF6384'
+                            },
+                            {
+                                label: '야간',
+                                data: [nightDead, nightCasualties, nightSeriously],
+                                backgroundColor: '#36A2EB'
+                            }
+                        ]
+                    };
+                const ctx = document.getElementById('comparisonChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: '주간 및 야간 사망자 수, 부상자 수, 중상자 수 비교'
+                            }
                         },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                title: {
-                                    display: true,
-                                    text: title
-                                },
-                                animation: {
-                                    animateScale: true,
-                                    animateRotate: true
-                                }
+                        scales: {
+                            y: {
+                                beginAtZero: true
                             }
                         }
-                    });
-                }
-
-                // 주간 파이 차트
-                const dayCtx = document.getElementById('dayChart').getContext('2d');
-                createPieChart(dayCtx, dayChartData, '주간 총 사망자 수 및 부상자 수');
-
-                // 야간 파이 차트
-                const nightCtx = document.getElementById('nightChart').getContext('2d');
-                createPieChart(nightCtx, nightChartData, '야간 총 사망자 수 및 부상자 수');
+                    }
+                });
             })
             .catch(error => console.error('차트 데이터 가져오기 오류:', error));
     }
@@ -127,22 +126,16 @@
         <button class="showChartsButton">주야별 교통사고</button>
         <button class="showChartsButton">사고유형별 교통사고</button>
         <button class="showChartsButton">사고종류별 교통사고</button>
-        <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">연도별 기상사고</button>
-        <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
-        <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
+        <button class="showChartsButton">구별 교통사고</button>
+        <button class="showChartsButton">연도별 기상사고(구)</button>
+        <button class="showChartsButton">연도별 부상자 수 추이(기상상태)</button>
+        <button class="showChartsButton">구별 기상상태와 부상자 수</button>
     </div>
     
     <!-- 차트 컨테이너 -->
     <div id="chartsContainer" class="chart-container">
-        <!-- 주간 차트 -->
         <div class="chart-box">
-            <canvas id="dayChart"></canvas>
-        </div>
-        
-        <!-- 야간 차트 -->
-        <div class="chart-box">
-            <canvas id="nightChart"></canvas>
+            <canvas id="comparisonChart"></canvas>
         </div>
     </div>
 </body>

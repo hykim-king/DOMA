@@ -42,11 +42,10 @@
         <button class="showChartsButton">주야별 교통사고</button>
         <button class="showChartsButton">사고유형별 교통사고</button>
         <button class="showChartsButton">사고종류별 교통사고</button>
-        <button class="showChartsButton">시군구별 교통사고</button>
-        <button class="showChartsButton">연도별 기상사고</button>
-        <button class="showChartsButton">연도별 기상사고 발생 빈도</button>
-        <button class="showChartsButton">연도별 부상자 상위 5개 구</button>
-        <button class="showChartsButton">시군구별 기상상태와 부상자 수</button>
+        <button class="showChartsButton">구별 교통사고</button>
+        <button class="showChartsButton">연도별 기상사고(구)</button>
+        <button class="showChartsButton">연도별 부상자 수 추이(기상상태)</button>
+        <button class="showChartsButton">구별 기상상태와 부상자 수</button>
     </div>
     
     <!-- 차트 컨테이너 -->
@@ -118,7 +117,7 @@
                     },
                     curveType: 'function',
                     pointSize: 5,
-                    legend: { position: 'bottom' } // 범례 위치 설정
+                    legend: { position: 'bottom' }, // 범례 위치 설정
                 };
 
                 // 차트 그리기
