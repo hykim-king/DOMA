@@ -34,6 +34,9 @@
 	                <td class="dropdown">
 	                    <a style="width:200px;" aria-current="page" href="${CP}/board/doRetrieve.do?div=10">커뮤니티</a>
 	                </td>
+	                <td class="dropdown">
+                        <a style="width:200px;" aria-current="page" href="${CP}/main/guide.do">이용 안내</a>
+                    </td>
                 </tr>
             </table>
             <table class="menu-align" style="margin-left : 25%;">

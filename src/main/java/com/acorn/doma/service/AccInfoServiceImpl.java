@@ -195,11 +195,7 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
 		return outVO;
 	}
 	
-	@Override
-	public List<Accident> etcRetrieve() throws SQLException {
-		List<Accident> list = accMapper.etcRetrieve();
-		return list;
-	}
+	
 	@Override
 	public List<Accident> A01Retrieve() throws SQLException {
 		List<Accident> list = accMapper.A01Retrieve();
@@ -224,5 +220,40 @@ public class AccInfoServiceImpl implements AccInfoService, PLog{
 	public List<Accident> A11Retrieve() throws SQLException {
 		List<Accident> list = accMapper.A11Retrieve();
 		return list;
+	}
+	@Override
+	public List<Accident> A03Retrieve() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Accident> A05Retrieve() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Accident> A06Retrieve() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Accident> A07Retrieve() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Accident> A08Retrieve() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Accident> A09Retrieve() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Accident> A12Retrieve() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

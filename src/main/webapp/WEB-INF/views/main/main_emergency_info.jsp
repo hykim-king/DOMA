@@ -103,12 +103,54 @@ function initKakaoMap() {
                 info: "${A02.info}"
             }<c:if test="${!A02Status.last}">,</c:if>
             </c:forEach>,
+            <c:forEach var="A03" items="${A03List}" varStatus="A03Status">
+            {
+                latlng: new kakao.maps.LatLng('${A03.latitude}', '${A03.longitude}'),
+                imageSrc: "${CP}/resources/img/map/A03.png",
+                info: "${A03.info}"
+            }<c:if test="${!A03Status.last}">,</c:if>
+            </c:forEach>,
             <c:forEach var="A04" items="${A04List}" varStatus="A04Status">
             {                 
                 latlng: new kakao.maps.LatLng('${A04.latitude}', '${A04.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A04.png",
                 info: "${A04.info}",
             }<c:if test="${!A04Status.last}">,</c:if>
+            </c:forEach>,
+            <c:forEach var="A05" items="${A05List}" varStatus="A05Status">
+            {                 
+                latlng: new kakao.maps.LatLng('${A05.latitude}', '${A05.longitude}'),
+                imageSrc: "${CP}/resources/img/map/A05.png",
+                info: "${A05.info}",
+            }<c:if test="${!A05Status.last}">,</c:if>
+            </c:forEach>,
+            <c:forEach var="A06" items="${A06List}" varStatus="A06Status">
+            {                 
+                latlng: new kakao.maps.LatLng('${A06.latitude}', '${A06.longitude}'),
+                imageSrc: "${CP}/resources/img/map/A06.png",
+                info: "${A06.info}",
+            }<c:if test="${!A06Status.last}">,</c:if>
+            </c:forEach>,
+            <c:forEach var="A07" items="${A07List}" varStatus="A07Status">
+            {                 
+                latlng: new kakao.maps.LatLng('${A07.latitude}', '${A07.longitude}'),
+                imageSrc: "${CP}/resources/img/map/A07.png",
+                info: "${A07.info}",
+            }<c:if test="${!A07Status.last}">,</c:if>
+            </c:forEach>,
+            <c:forEach var="A08" items="${A08List}" varStatus="A08Status">
+            {                 
+                latlng: new kakao.maps.LatLng('${A08.latitude}', '${A08.longitude}'),
+                imageSrc: "${CP}/resources/img/map/A08.png",
+                info: "${A08.info}",
+            }<c:if test="${!A08Status.last}">,</c:if>
+            </c:forEach>,
+            <c:forEach var="A09" items="${A09List}" varStatus="A09Status">
+            {                 
+                latlng: new kakao.maps.LatLng('${A09.latitude}', '${A09.longitude}'),
+                imageSrc: "${CP}/resources/img/map/A09.png",
+                info: "${A09.info}",
+            }<c:if test="${!A09Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A10" items="${A10List}" varStatus="A10Status">
             {                 
@@ -123,6 +165,13 @@ function initKakaoMap() {
                 imageSrc: "${CP}/resources/img/map/A11.png",
                 info: "${A11.info}"
             }<c:if test="${!A11Status.last}">,</c:if>
+            </c:forEach>,
+            <c:forEach var="A12" items="${A12List}" varStatus="A12Status">
+            {                 
+                latlng: new kakao.maps.LatLng('${A12.latitude}', '${A12.longitude}'),
+                imageSrc: "${CP}/resources/img/map/A12.png",
+                info: "${A12.info}"
+            }<c:if test="${!A12Status.last}">,</c:if>
             </c:forEach>
         ];
 

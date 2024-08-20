@@ -18,10 +18,16 @@ public interface AccInfoService extends WorkDiv<Accident>{
     
     List<Accident> fullTableScan() throws SQLException;
     List<Accident> A01Retrieve() throws SQLException;
-    List<Accident> A02Retrieve() throws SQLException;
-    List<Accident> A04Retrieve() throws SQLException;
-    List<Accident> A10Retrieve() throws SQLException;
-    List<Accident> A11Retrieve() throws SQLException;
-	List<Accident> etcRetrieve() throws SQLException;
+	List<Accident> A02Retrieve() throws SQLException;
+	List<Accident> A03Retrieve() throws SQLException;
+	List<Accident> A04Retrieve() throws SQLException;
+	List<Accident> A05Retrieve() throws SQLException;
+	List<Accident> A06Retrieve() throws SQLException;
+	List<Accident> A07Retrieve() throws SQLException;
+	List<Accident> A08Retrieve() throws SQLException;
+	List<Accident> A09Retrieve() throws SQLException;
+	List<Accident> A10Retrieve() throws SQLException;
+	List<Accident> A11Retrieve() throws SQLException;
+	List<Accident> A12Retrieve() throws SQLException;	
     
 }

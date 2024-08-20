@@ -76,12 +76,26 @@ public class MainController implements PLog {
 		model.addAttribute("A01List", A01List);
 		List<Accident> A02List = accInfoService.A02Retrieve();
 		model.addAttribute("A02List", A02List);
+		List<Accident> A03List = accInfoService.A03Retrieve();
+		model.addAttribute("A03List", A03List);
 		List<Accident> A04List = accInfoService.A04Retrieve();
 		model.addAttribute("A04List", A04List);
+		List<Accident> A05List = accInfoService.A05Retrieve();
+		model.addAttribute("A05List", A05List);
+		List<Accident> A06List = accInfoService.A06Retrieve();
+		model.addAttribute("A06List", A06List);
+		List<Accident> A07List = accInfoService.A07Retrieve();
+		model.addAttribute("A07List", A07List);
+		List<Accident> A08List = accInfoService.A08Retrieve();
+		model.addAttribute("A08List", A08List);
+		List<Accident> A09List = accInfoService.A09Retrieve();
+		model.addAttribute("A09List", A09List);
 		List<Accident> A10List = accInfoService.A10Retrieve();
 		model.addAttribute("A10List", A10List);
 		List<Accident> A11List = accInfoService.A11Retrieve();
 		model.addAttribute("A11List", A11List);
+		List<Accident> A12List = accInfoService.A12Retrieve();
+		model.addAttribute("A12List", A12List);
 		return viewName;
 	}
 	@RequestMapping(value = "/IdSelect.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
@@ -93,6 +107,14 @@ public class MainController implements PLog {
 	    log.debug("accIdSelect: "+accIdSelect);
 	    model.addAttribute("accIdSelect", accIdSelect);
 	    return viewName;
+	}
+	@GetMapping("/guide.do")
+	public String guidePage() {
+		String viewName = "/guide/guide"; // JSP 페이지 경로
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ viewName: " + viewName);
+		log.debug("└──────────────────────────────────────────┘");
+		return viewName;
 	}
 	
 

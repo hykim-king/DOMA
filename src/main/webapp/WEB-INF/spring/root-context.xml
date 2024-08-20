@@ -99,9 +99,9 @@
         <!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/> -->
         <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
         <!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
-        <!--  <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.0.55:1521:xe"></property>-->
+          <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.0.55:1521:xe"></property>
         <!-- 외부 ip 본인이 집에서 사용할 때는 이걸로 하면 됨. -->
-        <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@118.33.104.105:7777:xe"></property>
+        <!--<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@118.33.104.105:7777:xe"></property>-->
         <property name="username" value="DOMA"></property>
         <property name="password" value="DOROMASTER"></property>
         
