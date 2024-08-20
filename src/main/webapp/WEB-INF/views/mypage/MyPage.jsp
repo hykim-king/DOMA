@@ -181,7 +181,7 @@ $(document).ready(function(){
                              <i class="fa fa-eye fa-lg toggle-password"></i>
                             </div>
 
-                            <input type="text" class="form-control" value="<c:out value='${user.birth}'/>" id="birth" name="birth">
+                            <input type="date" min="1907-01-01" max="2024-08-01" class="form-control" value="<c:out value='${user.birth}'/>" id="birth" name="birth" maxlength="10" required>
                             <input type="text" class="form-control" value="<c:out value='${user.address}'/>" id="sample4_roadAddress" name="address"  >
                             <input type="text" class="form-control" id="sample4_jibunAddress" placeholder="지번주소" style="display: none;" disabled>
                             <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호" style="display: none;" disabled>
