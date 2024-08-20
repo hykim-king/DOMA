@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,27 +30,24 @@ import com.acorn.doma.domain.Accident;
 import com.acorn.doma.mapper.AccMapper;
 import com.acorn.doma.proj4j.CoordinateConverter;
 
-@Configuration
+@Component
 @EnableScheduling
 public class SchedulerConfig {
-	private String serverId;
-    private String serviceKey;
+	private final String serverId;
+    private final String serviceKey;
+    private final AccMapper accMapper;
 
-    public void setServerId(String serverId) {
+
+    @Autowired
+    public SchedulerConfig(AccMapper accMapper, @Value("${server.id}") String serverId,@Qualifier("accInfoServiceKey") String serviceKey) {
+        this.accMapper = accMapper;
         this.serverId = serverId;
-    }
-
-    public void setServiceKey(String serviceKey) {
         this.serviceKey = serviceKey;
     }
-
-	@Autowired
-	AccMapper accMapper;
-
-	@Autowired
-	public SchedulerConfig(AccMapper accMapper) {
-		this.accMapper = accMapper;
-	}
+	@PostConstruct
+    public void init() {
+        System.out.println("Server ID: " + serverId);
+    }
 
 	@Scheduled(fixedDelay = 60000)
     public void insertAccidentData() {
