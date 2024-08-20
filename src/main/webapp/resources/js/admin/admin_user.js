@@ -1,26 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    checkUserPermission(); // 페이지 로드 시 권한 확인
-});
-
-function checkUserPermission() {
-    fetch('/doma/admin/checkUserPermission.do')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'error') {
-                alert(data.message); // 오류 메시지 표시
-                window.location.href = '/doma/main/main.do'; // 메인 페이지로 리다이렉트
-            } else {
-                loadNotices(1); // 권한이 있으면 공지사항 로드
-            }
-        })
-        .catch(error => {
-            console.error('Error checking user permission:', error);
-            alert('권한 확인 중 오류가 발생했습니다.');
-            window.location.href = '/doma/main/main.do'; // 메인 페이지로 리다이렉트
-        });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
     loadUsers(1); // 페이지 로딩 시 사용자 목록을 로드
 });
 
@@ -174,9 +152,18 @@ function updateUser() {
     // 수정할 데이터 수집
     const userId = document.getElementById('memberId').value;
     const userName = document.getElementById('name').value || null;
-    const userBirth = document.getElementById('birthdate').value || null;
+    let userBirth = document.getElementById('birthdate').value || null;
     const userAddress = document.getElementById('address').value || null;
     const userDetailAddress = document.getElementById('detailAddress').value || null;
+
+    // 생년월일 형식 검증 및 포맷팅
+    if (userBirth) {
+        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+        if (!datePattern.test(userBirth)) {
+            alert('생년월일을 양식에 맞게 입력해주세요.');
+            return; // 요청을 보내지 않음
+        }
+    }
 
     // 수정할 내용이 있는지 확인
     if (!userName && !userBirth && !userAddress && !userDetailAddress) {
@@ -214,6 +201,7 @@ function updateUser() {
         alert('데이터 업데이트 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.'); // 네트워크 오류 처리
     });
 }
+
 
 //회원 삭제
 function deleteUser() {

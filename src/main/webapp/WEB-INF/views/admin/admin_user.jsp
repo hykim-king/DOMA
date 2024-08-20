@@ -58,11 +58,11 @@
                     </div>
                     <div class="form-group">
                         <label for="address"></label>
-                        <input type="text" id="address" name="address" placeholder="주소">
+                        <input type="text" id="address" name="address" placeholder="주소" readonly>
                     </div>
                     <div class="form-group">
                         <label for="detailAddress"></label>
-                        <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소">
+                        <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소" readonly>
                     </div>
                     <div class="form-group">
                         <label for="birthdate"></label>

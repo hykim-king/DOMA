@@ -288,13 +288,22 @@ public class AdminController implements PLog {
         return user;  // JSON 형식으로 반환
     }
 
-
-    //회원 수정
+    //회원수정
     @RequestMapping(value = "/updateUser.do", method = RequestMethod.POST)
     public @ResponseBody Map<String, Object> updateUser(@RequestBody Admin user) {
         Map<String, Object> response = new HashMap<>();
         
         try {
+            // 생년월일 형식 확인
+            if (user.getUserBirth() != null) {
+                String birthDatePattern = "^\\d{4}-\\d{2}-\\d{2}$";
+                if (!user.getUserBirth().matches(birthDatePattern)) {
+                    response.put("status", "error");
+                    response.put("message", "생년월일은 YYYY-MM-DD 형식이어야 합니다.");
+                    return response;
+                }
+            }
+
             // 현재 데이터베이스의 값을 가져옵니다.
             Admin existingUser = adminService.getUser(user.getUserId());
 
@@ -339,6 +348,7 @@ public class AdminController implements PLog {
         }
         return response;
     }
+
 
 
     //회원 삭제
