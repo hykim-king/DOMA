@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,6 @@
     <script src="<%=request.getContextPath()%>/resources/js/script.js"></script>
 </head>
 <body>
-    <%@ include file="/WEB-INF/views/template/header.jsp" %>
 
     <main class="main-content">
         <h1>회원관리</h1>

@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
-<title>Insert title here</title>
+<title>DOMA</title>
 </head>
 <body>
     <div style="display : flex">

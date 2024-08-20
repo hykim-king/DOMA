@@ -1,6 +1,7 @@
 \<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>   
 <c:set var="CP"  value="${pageContext.request.contextPath}"  />
 <!DOCTYPE html>
 <html>
@@ -10,7 +11,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script> 
-<title>Insert title here</title>
+<title>DOMA</title>
 
 </head>
 <style>
@@ -98,7 +99,6 @@ button {
 }
 </style>
 <body>
- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  <div style="margin : 1% 0px 15px 80%;">
 	<c:choose>
 		<c:when test="${user ne null}">

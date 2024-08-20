@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <c:set var="CP" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>요일별 사망자 수 및 부상자 수 차트</title>
+<title>DOMA</title>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
@@ -87,7 +88,6 @@
 </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
 
 <div class="center-content">
     <h1>요일별 사망자 수 및 부상자 수</h1>

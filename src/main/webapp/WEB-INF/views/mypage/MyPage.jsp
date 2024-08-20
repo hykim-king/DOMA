@@ -18,6 +18,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <%
 String userId = null;
 if(session.getAttribute("user")!=null){
@@ -61,7 +62,6 @@ if(session.getAttribute("user")!=null){
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
  <style>
  .hidden {
@@ -156,7 +156,7 @@ $(document).ready(function(){
     });
 });
 </script> 
-<title>내 정보</title>
+<title>DOMA</title>
  
 <script src="${CP}/resources/js/mypage/mypageinfo.js"></script>
 </head>

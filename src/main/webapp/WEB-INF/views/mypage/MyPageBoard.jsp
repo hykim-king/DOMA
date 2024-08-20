@@ -1,7 +1,8 @@
 <%@page import="com.acorn.doma.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 
 <%
     User outVO = (User)session.getAttribute("user");
@@ -42,7 +43,6 @@
 <%-- Additional CSS --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css">
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
     .table-content {
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<title>게시판</title> 
+<title>DOMA</title> 
 </head> 
 <body> 
     <div class="table-content">

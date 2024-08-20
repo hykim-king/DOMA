@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <c:set var="CP"  value="${pageContext.request.contextPath}"  />
 <!DOCTYPE html>
 <html>
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css"> 
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 <script src="${CP}/resources/js/safeInfoPage/safe_update.js"></script>
-<title>오늘 사람 프로그램</title>
+<title>DOMA</title>
 <style>
     .fixed-width-input {
         width: 300px;
@@ -25,7 +26,6 @@
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 user : ${user}
 target : ${target }
 <div class="container">

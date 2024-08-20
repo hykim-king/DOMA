@@ -16,6 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <c:set var="CP" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -77,7 +78,6 @@
     </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
 
     
     <!-- 버튼 컨테이너 -->

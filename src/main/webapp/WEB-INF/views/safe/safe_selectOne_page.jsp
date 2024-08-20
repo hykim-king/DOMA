@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -137,11 +138,9 @@ header, footer {
     color: #007bff;
 }
 </style>
-<title>DOMA 커뮤니티</title>
+<title>DOMA</title>
 </head>
 <body>
-info : ${info }
-	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<input type="hidden" name="seq"    id="seq" value="${info.seq}">
     <input type="hidden" name="div"    id="div" value="${info.getDiv()}">
 	<div class="container">

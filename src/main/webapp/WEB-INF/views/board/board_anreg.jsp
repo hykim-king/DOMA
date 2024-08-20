@@ -16,6 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <c:set var="CP"  value="${pageContext.request.contextPath}"  />
 <!DOCTYPE html>
 <html>
@@ -161,7 +162,7 @@ header, footer {
 }
 </style>
 
-<title>오늘 사람 프로그램</title>
+<title>DOMA</title>
 <script>
 document.addEventListener("DOMContentLoaded", function(){
     console.log("DOMContentLoaded");
@@ -272,7 +273,6 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <!-- container -->
 <div class="container">
   <!-- 제목 -->

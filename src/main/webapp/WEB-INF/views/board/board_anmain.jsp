@@ -20,6 +20,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 
 <%
 
@@ -560,11 +561,10 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-<title>DOMA 커뮤니티</title>
+<title>DOMA</title>
 </head>
 <body>
 
-    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
     <input type="hidden" name="modId"  id="modId" value="${board.modId}">

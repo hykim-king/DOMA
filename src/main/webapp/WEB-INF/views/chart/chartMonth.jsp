@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <c:set var="CP" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
 <script src="${CP}/resources/js/chart/chart.js"></script>
 
 <head>
-    <title>월별 사망자 수 및 부상자 수 차트</title>
+    <title>DOMA</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
@@ -84,7 +85,6 @@
     </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
 
 <div class="center-content">
     <h1>월별 총 사망자 수 및 부상자 수</h1>

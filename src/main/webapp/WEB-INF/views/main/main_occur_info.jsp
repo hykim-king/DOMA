@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ include file="/WEB-INF/views/template/header.jsp" %> 
 <c:set var="CP" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -295,7 +296,6 @@ function addMarkersToMap(data) {
 <title>DOMA</title>
 </head>
 <body>
-    <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <div style="display: flex">
         <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
         <div id="subMap" style="height: 815px; display: inline-block;">
@@ -370,8 +370,7 @@ function addMarkersToMap(data) {
                 </div>
 
             </section>
-        </div>
-        <jsp:include page="/WEB-INF/views/main/main_point_detail.jsp"></jsp:include>
+        </div>>
         <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
     </div>
 

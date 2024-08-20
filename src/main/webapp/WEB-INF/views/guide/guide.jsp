@@ -16,6 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>
 <c:set var="CP" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -28,7 +29,6 @@
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <div>
         <section>
             <div class="row">
