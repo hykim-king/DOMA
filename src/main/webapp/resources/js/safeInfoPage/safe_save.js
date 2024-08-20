@@ -55,19 +55,25 @@ document.addEventListener("DOMContentLoaded", function(){
         return;
     }
     
+    console.log("divInput.value", divInput.value);
+    console.log("titleInput.value", titleInput.value);
+    console.log("userIdInput.value", userIdInput.value);
     console.log("simplemde", simplemde.value());
+    console.log("imgLinkInput.files[0]", imgLinkInput.files[0]);
+    
     if (!confirm("등록 하시겠습니까?")) return;
 
     // FormData 객체 생성
     let formData = new FormData();
-    formData.append("div", divInput.value);
-    formData.append("title", titleInput.value);
-    formData.append("userId", userIdInput.value);
-    formData.append("content", simplemde.value());
-    formData.append("imgLink", imgLinkInput.value);
+   	formData.append("div", divInput.value);
+	formData.append("title", titleInput.value);
+	formData.append("userId", userIdInput.value);
+	formData.append("content", simplemde.value());
+	formData.append("imgFile", imgLinkInput.files[0]);  // file이 서버에서 받는 MultipartFile의 키와 일치
+
     
     if (fileInput.files.length > 0) {
-        formData.append("file", fileInput.files[0]);
+        formData.append("imgFile", imgLinkInput.files[0]);
     }
 
     // 비동기 요청 보내기

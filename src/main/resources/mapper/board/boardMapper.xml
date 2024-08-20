@@ -369,7 +369,7 @@
         mod_dt,
         views       
      )VALUES(
-      d_board_seq.NEXTVAL,
+      doma_board_seq.NEXTVAL,
       #{div},
       #{title},
       #{userId},

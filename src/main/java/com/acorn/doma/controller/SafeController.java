@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -103,37 +104,42 @@ public class SafeController implements PLog {
 	
 
 	 // 실제 파일이 저장될 경로 (서버의 절대 경로)
-    private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/";
+    private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/";
 
-    @PostMapping(value = "/save.do", produces = "text/plain;charset=UTF-8")
+    @PostMapping(value = "/save.do", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String doSave(Board inVO,
-                         @RequestParam(value = "fileName", required = false) MultipartFile file) throws SQLException {
+    public String doSave(Board inVO, 
+                         @RequestParam(value = "imgFile", required = false) MultipartFile file) throws SQLException {
         log.debug("┌──────────────────────────────────────────┐");
         log.debug("│ safeController : doSave()                │");
         log.debug("└──────────────────────────────────────────┘");
 
         // 파일 처리
-        if (file != null && !file.isEmpty()) {
+        if (file != null) {
             try {
+            	
+            	UUID uuid = UUID.randomUUID(); 
+            	
+            	 
                 // 서버의 특정 경로에 파일 저장
                 String originalFileName = file.getOriginalFilename();
-                String filePath = UPLOAD_DIR + originalFileName;
+                String imageFileName = uuid + "_" + file.getOriginalFilename();
+                String filePath = UPLOAD_DIR + imageFileName;
                 File uploadFile = new File(filePath);
 
                 // 파일 저장
                 file.transferTo(uploadFile);
 
                 // 파일 경로를 웹 애플리케이션의 접근 가능한 경로로 설정
-                String relativeFilePath = "/resources/img/board_img/" + originalFileName;
-                inVO.setImgLink(relativeFilePath);
+                String relativeFilePath = "/resources/img/board_img/" + imageFileName;
+                inVO.setImgLink(imageFileName);
 
             } catch (IOException e) {
                 log.error("File upload error: ", e);
                 return new Gson().toJson(new Message(0, "파일 업로드에 실패했습니다."));
             }
         } else {
-            log.warn("No file uploaded");
+            log.warn("파일이 없습니다.");
         }
 
         log.debug("1. inVO : " + inVO);
@@ -167,6 +173,7 @@ public class SafeController implements PLog {
 		
 		Board outVO = boardService.selectOne(inVO);
 		log.debug("2. outVO : " + outVO);
+		
 		
 		model.addAttribute("info", outVO);
 		return viewName;

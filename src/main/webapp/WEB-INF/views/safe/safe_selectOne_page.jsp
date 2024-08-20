@@ -180,7 +180,7 @@ info : ${info }
 			<hr>
 			<div id="content" class="post-content">
 				<p>${info.content}</p>
-				<img src="${info.imgLink }">
+				<img src="${CP}/resources/img/board_img/${info.imgLink }">
 			</div>
 		</article>
 	</div>
