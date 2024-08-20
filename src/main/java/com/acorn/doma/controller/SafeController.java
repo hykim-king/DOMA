@@ -38,22 +38,77 @@ public class SafeController implements PLog {
 	@Autowired
 	CodeService codeService;
 	
+
+	// 실제 파일이 저장될 경로 (서버의 절대 경로)
+	private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/";
+
+   
 	public void safeController() {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController()                         │");
 		log.debug("└──────────────────────────────────────────┘");	
 	};
 	
-	@RequestMapping(value = "/doUpdate.do"
-			   , method = RequestMethod.POST
-			   , produces = "text/plain;charset=UTF-8")
-	@ResponseBody
-	public String doUpdate(Board inVO) throws SQLException {
+    @PostMapping(value = "/doUpdate.do", 
+    		produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+	public String doUpdate(Board inVO, @RequestParam(value = "imgFile", required = false) MultipartFile file) throws SQLException {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController : doUpdate()              │");
 		log.debug("└──────────────────────────────────────────┘");
+		
+		// 1. 기존 이미지 파일 경로 가져오기
+	    Board existingBoard = boardService.selectOne(inVO); // 기존 데이터 가져오기
+	    String existingImageFileName = existingBoard.getImgLink(); // 기존 이미지 파일명 가져오기
+
+	    // 2. 새 파일이 업로드 되었는지 확인
+	    if (file != null) {
+	        try {
+	            // 3. 기존 파일 삭제
+	            if (existingImageFileName != null && !existingImageFileName.isEmpty()) {
+	                String existingFilePath = UPLOAD_DIR + existingImageFileName;
+	                File existingFile = new File(existingFilePath);
+	                if (existingFile.exists()) {
+	                    boolean deleted = existingFile.delete();
+	                    if (deleted) {
+	                        log.debug("기존 이미지 파일 삭제 성공: " + existingImageFileName);
+	                    } else {
+	                        log.warn("기존 이미지 파일 삭제 실패: " + existingImageFileName);
+	                    }
+	                }
+	            }
+	            
+	            // 4. 파일 처리
+            	log.debug("file : " + file);
+            	
+            	
+            	// uuid로 랜덤한 고유번호 부여
+            	UUID uuid = UUID.randomUUID(); 
+            	
+                // 서버의 특정 경로에 파일 저장
+                String originalFileName = file.getOriginalFilename();
+                String imageFileName = uuid + "_" + file.getOriginalFilename();
+                String filePath = UPLOAD_DIR + imageFileName;
+                File uploadFile = new File(filePath);
+
+                // 파일 저장
+                file.transferTo(uploadFile);
+
+                // 파일 경로를 웹 애플리케이션의 접근 가능한 경로로 설정
+                String relativeFilePath = "/resources/img/board_img/" + imageFileName;
+                inVO.setImgLink(imageFileName);
+
+            } catch (IOException e) {
+                log.error("File upload error: ", e);
+                return new Gson().toJson(new Message(0, "파일 업로드에 실패했습니다."));
+            }
+        } else {
+            log.warn("파일이 없습니다.");
+        }
+
+        log.debug("1. inVO : " + inVO);
+        
 		String jsonString = "";
-		log.debug("1.param:" + inVO);
 		
 		int flag = boardService.update(inVO);
 		log.debug("2.flag:" + flag);
@@ -102,11 +157,7 @@ public class SafeController implements PLog {
 		
 	}
 	
-
-	 // 실제 파일이 저장될 경로 (서버의 절대 경로)
-    private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/";
-
-    @PostMapping(value = "/save.do", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/save.do", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String doSave(Board inVO, 
                          @RequestParam(value = "imgFile", required = false) MultipartFile file) throws SQLException {
