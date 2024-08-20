@@ -49,21 +49,33 @@ button {
 	margin : 5px 5px 15px 10px;
 		
 }
-.img_section{
-	height: 150px;
-	border-radius : 20px 20px 0px 0px;
-	border : 2px solid #495057;
-	margin: 0px;
-	padding : 0px;
-	overflow : hidden;
+.img_section {
+    height: 150px;
+    border-radius: 20px 20px 0 0;
+    //border: 2px solid #495057;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 6px 0 10px rgba(0, 0, 0, 0.2);
 }
-.title_section{
-	height: 30px;
-	border-radius : 0px 0px 20px 20px;
-	border : 2px solid #495057;
-	margin: 0px;
-	padding : 0px;
-	overflow : hidden;
+
+.title_section {
+    height: 35px;
+    border-radius: 0 0 20px 20px;
+    //border: 2px solid #c5c5c5;
+    border-top: 1px solid #ababab; 
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fefff6; 
+    color: #333333; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    font-size: 14px; 
+    font-weight: bold;
+    /* font-family: Arial, sans-serif; 폰트는 취향대로 바꾸세요 */
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .token-link {
     position: relative;
