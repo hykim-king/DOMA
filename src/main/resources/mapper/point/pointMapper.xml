@@ -77,10 +77,6 @@
 	        LONGITUDE AS longitude
 	    FROM D_POINT
 	    WHERE year = #{year}
-	    AND gname IN
-	    <foreach item="item" collection="guList" open="(" separator="," close=")">
-	        #{item}
-	    </foreach>
 	    AND acc_frequency IN
 	    <foreach item="item" collection="accFrequencyList" open="(" separator="," close=")">
 	        #{item}

@@ -24,13 +24,24 @@ var map;
 var infowindow;
 var customOverlay;
 var polygons = {}; // 각 년도별 폴리곤 저장 객체
-var polygonColors = {}; // 년도별 색상 객체
+//색상 배열 정의
+var colorPalette = [
+	'#BF2D2D', // 어두운 빨강
+    '#2D4CBF', // 어두운 파랑
+    '#2DBF2D', // 어두운 초록
+    '#BF6D2D', // 어두운 주황
+    '#6D2DBF', // 어두운 보라
+    '#2D6DBF'  // 어두운 청록
+];
+var polygonColors = {}; 
+var currentInfoWindow; // 현재 열린 인포윈도우 추적 변수
+
 document.addEventListener("DOMContentLoaded", function () {
     kakao.maps.load(function () {
         var container = document.getElementById('map');
         var options = {
             center: new kakao.maps.LatLng(37.564214, 127.001699),
-            level: 8
+            level: 5
         };
         map = new kakao.maps.Map(container, options);
 
@@ -42,12 +53,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         infowindow = new kakao.maps.InfoWindow({
             removable: false,
-            zIndex: 1,            
+            zIndex: 1,
         });
 
         customOverlay = new kakao.maps.CustomOverlay({
             zIndex: 2,
-            clickable: false,            
+            clickable: false,
+            removable: false
         });
 
         if (document.getElementById('showAllCheckbox').checked) {
@@ -84,8 +96,8 @@ function loadAllPolygons() {
                         return new kakao.maps.LatLng(coord[1], coord[0]);
                     });
 
-                    var color = polygonColors[freezing.year] || getRandomColor();
-                    polygonColors[freezing.year] = color;
+                    // 특정 년도에 따라 색상 설정
+                    var color = getPolygonColor(freezing.year);
 
                     var polygon = new kakao.maps.Polygon({
                         path: polygonPath,
@@ -104,23 +116,28 @@ function loadAllPolygons() {
                     kakao.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
                         var position = mouseEvent.latLng;
                         var offset = new kakao.maps.LatLng(position.getLat() + 0.003, position.getLng());
-
+                        var content = '<div class="info" style="background-color: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); width: 220px; font-family: Arial, sans-serif;">' +
+                        '<div class="title" style="font-weight: bold; font-size: 16px; color: #333; margin-bottom: 10px; text-align: center;">' + freezing.gname + '</div>' +
+                        '<div class="details" style="font-size: 14px; color: #555;">' +
+                        '<div style="margin-bottom: 8px;"><b>동:</b> ' + freezing.dname + '</div>' +
+                        '<div style="margin-bottom: 8px;"><b>년도:</b> ' + freezing.year + '</div>' +
+                        '<div style="margin-bottom: 8px;"><b>사고 건수:</b> ' + freezing.accident + '</div>' +
+                        '<div style="margin-bottom: 8px;"><b>사상자 수:</b> ' + freezing.casualties + '</div>' +
+                        '<div style="margin-bottom: 8px;"><b>사망자 수:</b> ' + freezing.dead + '</div>' +
+                        '<div style="margin-bottom: 8px;"><b>중상자 수:</b> ' + freezing.seriously + '</div>' +
+                        '<div><b>경상자 수:</b> ' + freezing.ordinary + '</div>' +
+                        '</div>';
                         infowindow.setPosition(offset);
-                        infowindow.setContent('<div style="background: black; color: white; padding: 10px; border-radius: 5px;">' + freezing.accPoint + '</div>');
+                        infowindow.setContent(content);
                         infowindow.open(map);
                     });
 
                     kakao.maps.event.addListener(polygon, 'mousemove', function (mouseEvent) {
                         customOverlay.setPosition(mouseEvent.latLng);
                     });
-
                     kakao.maps.event.addListener(polygon, 'mouseout', function () {
                         infowindow.close();
                         customOverlay.setMap(null);
-                    });
-
-                    kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
-                    	infowindow.close(); // Click 시 infowindow 닫기
                     });
                 }
             });
@@ -130,6 +147,7 @@ function loadAllPolygons() {
         }
     });
 }
+
 
 function removeAllPolygons() {
     if (polygons) {
@@ -182,8 +200,7 @@ function polyData(year) {
                                 }
                             }).filter(function (latLng) { return latLng !== null; });
 
-                            var color = polygonColors[year] || getRandomColor();
-                            polygonColors[year] = color;
+                            var color = getPolygonColor(year); // 특정 년도에 맞는 색상 가져오기
 
                             var polygon = new kakao.maps.Polygon({
                                 path: polygonPath,
@@ -202,23 +219,26 @@ function polyData(year) {
                             kakao.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
                                 var position = mouseEvent.latLng;
                                 var offset = new kakao.maps.LatLng(position.getLat() + 0.003, position.getLng());
-
+                                var content = '<div class="info" style="background-color: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); width: 220px; font-family: Arial, sans-serif;">' +
+                                '<div class="title" style="font-weight: bold; font-size: 16px; color: #333; margin-bottom: 10px; text-align: center;">' + freezing.gname + '</div>' +
+                                '<div class="details" style="font-size: 14px; color: #555;">' +
+                                '<div style="margin-bottom: 8px;"><b>동:</b> ' + freezing.dname + '</div>' +
+                                '<div style="margin-bottom: 8px;"><b>년도:</b> ' + freezing.year + '</div>' +
+                                '<div style="margin-bottom: 8px;"><b>사고 건수:</b> ' + freezing.accident + '</div>' +
+                                '<div style="margin-bottom: 8px;"><b>사상자 수:</b> ' + freezing.casualties + '</div>' +
+                                '<div style="margin-bottom: 8px;"><b>사망자 수:</b> ' + freezing.dead + '</div>' +
+                                '<div style="margin-bottom: 8px;"><b>중상자 수:</b> ' + freezing.seriously + '</div>' +
+                                '<div><b>경상자 수:</b> ' + freezing.ordinary + '</div>' +
+                                '</div>';
                                 infowindow.setPosition(offset);
-                                infowindow.setContent('<div style="background: black; color: white; padding: 10px; border-radius: 5px;">' + freezing.accPoint + '</div>');
+                                infowindow.setContent(content);
                                 infowindow.open(map);
                             });
 
                             kakao.maps.event.addListener(polygon, 'mousemove', function (mouseEvent) {
                                 customOverlay.setPosition(mouseEvent.latLng);
                             });
-
                             kakao.maps.event.addListener(polygon, 'mouseout', function () {
-                                infowindow.close();
-                                customOverlay.setMap(null);
-                            });
-
-                            kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
-                                onPolygonClick(freezing.fid, mouseEvent);
                                 infowindow.close();
                                 customOverlay.setMap(null);
                             });
@@ -237,47 +257,20 @@ function polyData(year) {
         });
     }
 }
-function onPolygonClick(fid, mouseEvent) {
-    $.ajax({
-        url: "/doma/freezing/idSelect.do",
-        type: 'GET',
-        data: { fid: fid },
-        dataType: "json",
-        success: function(response) {
-            console.log(response);
-            var content = '<div class="info" style="background-color: white; padding: 10px; border-radius: 5px;">' +
-            '   <div class="title" style="font-weight: bold; font-size: 14px; color: #333;">' + response.gname + '</div>' +
-            '   <div class="details" style="margin-top: 5px; font-size: 12px; color: #555;">' +
-            '       <div><b>동:</b> ' + response.dname + '</div>' +
-            '       <div><b>년도:</b> ' + response.year + '</div>' +
-            '       <div><b>사고 건수:</b> ' + response.accident + '</div>' +
-            '       <div><b>사상자 수:</b> ' + response.casualties + '</div>' +
-            '       <div><b>사망자 수:</b> ' + response.dead + '</div>' +
-            '       <div><b>중상자 수:</b> ' + response.seriously + '</div>' +
-            '       <div><b>경상자 수:</b> ' + response.ordinary + '</div>' +
-            '   </div>' +
-            '</div>';
 
-            infowindow.setContent(content);
-            infowindow.setPosition(mouseEvent.latLng);
-            infowindow.open(map);
-            kakao.maps.event.addListener(map, 'click', function () {
-                infowindow.close();
-            });
-        },
-        error: function(error) {
-            console.error("Error fetching freezing data:", error);
-        }
-    });
-}
-function getRandomColor() {
-    var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+
+
+
+// 특정 년도에 대해 색상 선택
+function getPolygonColor(year) {
+    if (!polygonColors[year]) {
+        // 색상 팔레트에서 색상 선택
+        var colorIndex = Object.keys(polygonColors).length % colorPalette.length;
+        polygonColors[year] = colorPalette[colorIndex];
     }
-    return color;
+    return polygonColors[year];
 }
+
 </script>
 </head>
 <body>

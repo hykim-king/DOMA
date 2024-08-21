@@ -52,20 +52,40 @@
     </select>
     <select id="selectPolyByYear" parameterType="Freezing" resultType="Freezing">
      SELECT
-            freezing_id as fid,
-            REGEXP_SUBSTR(ACC_POINT, '\(([^)]+)\)', 1, 1, NULL, 1) AS accPoint,
-            polygon
-        FROM
-            d_freezing
-    WHERE YEAR =#{year}
+        f.freezing_id AS fid,
+        REGEXP_SUBSTR(f.ACC_POINT, '\(([^)]+)\)', 1, 1, NULL, 1) AS accPoint,
+        s.GNAME as gname,
+        s.DNAME as dname,
+        f.YEAR,
+        f.ACCIDENT,
+        f.CASUALTIES,
+        f.DEAD,
+        f.SERIOUSLY,
+        f.ORDINARY,
+        f.polygon as polygon
+    	FROM
+            d_freezing f
+        JOIN
+            d_sido s ON f.sido_code = s.sido_code
+    	WHERE f.YEAR =#{year}
 </select>
 <select id="selectPolyAll" resultType="Freezing">
         SELECT
-        freezing_id AS fid,
-        REGEXP_SUBSTR(ACC_POINT, '\(([^)]+)\)', 1, 1, NULL, 1) AS accPoint,
-        polygon
-    FROM
-        d_freezing
+        f.freezing_id AS fid,
+        REGEXP_SUBSTR(f.ACC_POINT, '\(([^)]+)\)', 1, 1, NULL, 1) AS accPoint,
+        s.GNAME as gname,
+        s.DNAME as dname,
+        f.YEAR,
+        f.ACCIDENT,
+        f.CASUALTIES,
+        f.DEAD,
+        f.SERIOUSLY,
+        f.ORDINARY,
+        f.polygon as polygon
+    	FROM
+            d_freezing f
+        JOIN
+            d_sido s ON f.sido_code = s.sido_code
 </select>
     <select id="selectFreezingDataById" parameterType="Freezing" resultType="Freezing">
         SELECT

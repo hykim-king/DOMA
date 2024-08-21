@@ -43,49 +43,17 @@ public class PointController implements PLog{
 		return viewName;
 	}
 	
-	@RequestMapping(value="/guListLoad.do"
-			,method=RequestMethod.POST
-			,produces = "text/plain;charset=UTF-8")
-	@ResponseBody
-	public String guListLoad(Model model,String year) throws Exception{
-		log.debug("┌───────────────────────────────────┐");
-		log.debug("│ PointController : guListLoad()	   │");
-		log.debug("└───────────────────────────────────┘");
-		
-		List<String> guList = pointService.guLoad(year);
-		Gson gson = new Gson();
-		String jsonString = gson.toJson(guList);
-		
-		return jsonString;
-	}
 	
-	@RequestMapping(value="/pointDetail.do"
-			,method=RequestMethod.GET
-			,produces = "text/plain;charset=UTF-8")
-	@ResponseBody
-	public String pointDetailInfo(Point inVO) throws Exception {
-		log.debug("┌─────────────────────────────────────┐");
-		log.debug("│ PointController : pointDetailInfo() │");
-		log.debug("└─────────────────────────────────────┘");
-		
-		
-		List<Point> listPoint = pointService.detailInfoLoad(inVO);
-		Gson gson = new Gson();
-		String jsonString = gson.toJson(listPoint);
-		return jsonString;
-	}
 	@RequestMapping(value = "/yearguSelect.do", 
 			method = RequestMethod.GET,
 			produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String getPointsByYearAndGu(
 	        @RequestParam("year") int year,
-	        @RequestParam("guList") String guList,
 	        @RequestParam("accFrequencyList") String accFrequencyList) throws Exception{
 	    // 콤마로 구분된 구 리스트를 분리하여 리스트로 변환
-	    List<String> guListParsed = Arrays.asList(guList.split(","));
 	    List<String> accFqListParsed = Arrays.asList(accFrequencyList.split(","));
-	    List<Point> ygData = pointService.databyYearAndGu(year, guListParsed, accFqListParsed);
+	    List<Point> ygData = pointService.databyYearAndGu(year, accFqListParsed);
 	    String jsonString = "";
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    try {

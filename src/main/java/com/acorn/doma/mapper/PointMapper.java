@@ -22,6 +22,6 @@ public interface PointMapper extends WorkDiv<Point> {
 	List<Point> detailInfoLoad(Point inVO) throws SQLException;
 	
 	List<String> guLoad(String year) throws SQLException;
-	List<Point> databyYearAndGu(@Param("year") int year, @Param("guList") List<String> guList, @Param("accFrequencyList") List<String> accFrequencyList) throws SQLException;
+	List<Point> databyYearAndGu(@Param("year") int year, @Param("accFrequencyList") List<String> accFrequencyList) throws SQLException;
 	
 }

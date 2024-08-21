@@ -293,8 +293,8 @@ public class PointServiceImpl implements PointService, PLog {
 	}
 
 	@Override
-	public List<Point> databyYearAndGu(int year, List<String> guList, List<String> accFrequencyList) throws Exception {
-		List<Point> result = pointMapper.databyYearAndGu(year, guList,accFrequencyList);
+	public List<Point> databyYearAndGu(int year, List<String> accFrequencyList) throws Exception {
+		List<Point> result = pointMapper.databyYearAndGu(year, accFrequencyList);
 		return result;
 	}
 
