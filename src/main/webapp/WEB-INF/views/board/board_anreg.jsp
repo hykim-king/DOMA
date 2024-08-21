@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const moveToListBtn = document.querySelector("#moveToList");
     const titleInput = document.querySelector("#title");
     const userIdInput = document.querySelector("#userId");
-    const contentsTextArea = document.querySelector("#content");
+    const contentsTextArea = document.getElementById("#content");
     const divInput = document.querySelector("#div");
     const imgLinkInput = document.querySelector("#imgLink");
     const seqInput = document.querySelector("#seq");
@@ -223,13 +223,12 @@ document.addEventListener("DOMContentLoaded", function(){
             return;
         }
         
-        if(isEmpty(simplemde.value()) == true){
+        if(isEmpty(contentsTextArea.value) == true){
             alert('내용을 입력 하세요.')
             contentsTextArea.focus();
             return;
         }
         
-        console.log("simplemde", simplemde.value());
         if(confirm("등록 하시겠습니까?") === false)return;
         
         //비동기 통신
@@ -242,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function(){
         	"seq" : seqInput.value,
             "title"    : titleInput.value,
             "userId"    : userIdInput.value,
-            "content" : simplemde.value(),
+            "content" : contentsTextArea.value,
             "imgLink" : imgLinkInput.value,
             "div"      : divInput.value
         };
@@ -327,9 +326,6 @@ document.addEventListener("DOMContentLoaded", function(){
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->
-<script>
-    var simplemde = new SimpleMDE({ element: document.getElementById("content")})
-</script>
 
 <%-- bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>

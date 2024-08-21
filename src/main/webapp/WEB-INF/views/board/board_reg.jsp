@@ -171,13 +171,14 @@ document.addEventListener("DOMContentLoaded", function(){
     const moveToListBtn = document.querySelector("#moveToList");
     const titleInput = document.querySelector("#title");
     const userIdInput = document.querySelector("#userId");
-    const contentsTextArea = document.querySelector("#content");
+    const contentsTextArea = document.getElementById("content");
     const divInput = document.querySelector("#div");
     const imgLinkInput = document.querySelector("#imgLink");
     const seqInput = document.querySelector("#seq");
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
+    //파일 업로드
     const form = document.querySelector("form");
     const fileInput = document.querySelector("input[type='file']");
     const fileNameInput = document.querySelector("#fileName");
@@ -243,8 +244,14 @@ document.addEventListener("DOMContentLoaded", function(){
 	        return;
 	    }
 	    
+	    if(isEmpty(imgLinkInput.files[0]) == true){
+            alert('사진을 선택 하세요.')
+            imgLinkInput.focus();
+            return;
+        }
+	    
 	    // 내용 입력 검증
-	    if (isEmpty(simplemde.value())) {
+	    if (isEmpty(contentsTextArea.value)) {
 	        alert('내용을 입력 하세요.');
 	        contentsTextArea.focus();
 	        return;
@@ -255,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	    console.log("divInput", divInput.value);
 	    console.log("titleInput", titleInput.value);
 	    console.log("userIdInput", userIdInput.value);
-	    console.log("content", simplemde.value());
+	    console.log("content", contentsTextArea.value);
 	    console.log("imgLinkInput.files[0]", imgLinkInput.files[0]);
 	    
 	    if (!confirm("등록 하시겠습니까?")) return;
@@ -267,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	    formData.append("div", divInput.value);
 	    formData.append("title", titleInput.value);
 	    formData.append("userId", userIdInput.value);
-	    formData.append("content", simplemde.value());
+	    formData.append("content", contentsTextArea.value);
 	    formData.append("imgFile", imgLinkInput.files[0]);  // file이 서버에서 받는 MultipartFile의 키와 일치
 	
 	    
@@ -378,9 +385,6 @@ document.addEventListener("DOMContentLoaded", function(){
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->
-<script>
-    var simplemde = new SimpleMDE({ element: document.getElementById("content")})
-</script>
 
 <%-- bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>

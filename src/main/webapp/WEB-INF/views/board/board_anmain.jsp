@@ -585,7 +585,6 @@ document.addEventListener("DOMContentLoaded", function() {
             <div id="imgLink" class="post-content">
                 <img src="${info.imgLink }">
             </div>
-            <hr>
             <div name="content" id="content" class="post-content">
                 <p>${board.content}</p>
             </div>

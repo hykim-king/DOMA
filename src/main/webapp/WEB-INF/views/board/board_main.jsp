@@ -20,7 +20,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
 
 <%
 
@@ -97,7 +96,7 @@ header, footer {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    height: 350px;
+    height : auto;
 }
 
 .post-title {
@@ -186,6 +185,15 @@ header, footer {
 
 .comment strong {
     color: #007bff;
+}
+</style>
+
+.responsive-img {
+    width: 100%;
+    max-width: 400px; 
+    height: auto;
+    display: block;
+    margin: 0 auto; 
 }
 </style>
 <script>
@@ -561,9 +569,11 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-<title>DOMA</title>
+<title>DOMA 커뮤니티</title>
 </head>
 <body>
+board:${board }
+	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
     <input type="hidden" name="modId"  id="modId" value="${board.modId}">
@@ -573,26 +583,23 @@ document.addEventListener("DOMContentLoaded", function() {
 		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
 		<button type="button" value="삭제" id="doDelete" class="btn btn-outline-warning">삭제하기</button>
 		<article class="post">
-			<h2 name="title" id="title" class="post-title">${board.title}</h2>
-			<div class="post-meta">
-				<p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
-				<p class="post-date">${board.regDt}</p>
-				<p class="text-end">조회수: ${board.views}</p>
-			</div>
-			<div class="row mb-2">
+		    <h2 name="title" id="title" class="post-title">${board.title}</h2>
+		    <div class="post-meta">
+		        <p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
+		        <p class="post-date">${board.regDt}</p>
+		        <p class="text-end">조회수: ${board.views}</p>
+		    </div>
+		    <div class="row mb-2">
 		        <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
 		        <div class="col-sm-2">
 		            <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
 		        </div>
 		    </div>
-			<hr>
-			<div class="img_section">
-			    <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" style="width:10%; height:auto;">
-			</div>
-			<hr>
-			<div name="content" id="content" class="post-content">
-				<p>${board.content}</p>
-			</div>
+		    <hr>
+		    <div name="content" id="content" class="post-content">
+		        <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" class="responsive-img">
+		        <p>${board.content}</p>
+		    </div>
 		</article>
 
 		<section class="comments">

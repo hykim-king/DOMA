@@ -15,6 +15,10 @@ import com.acorn.doma.domain.User;
 @Mapper
 public interface BoardMapper extends WorkDiv<Board>{
 	
+	int fileDelete(Board inVO) throws SQLException;
+	
+	int fileUpdate(Board inVO) throws SQLException;
+	
 	int fileSave(Board inVO) throws SQLException;
 	
 	public List<Board> notice(DTO search) throws Exception;

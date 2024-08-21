@@ -35,6 +35,12 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 		function doUpdate(){
 		
+		if(isEmpty(imgLinkInput.files[0]) == true){
+            alert('사진을 선택 하세요.')
+            imgLinkInput.focus();
+            return;
+        }
+		
         console.log("doUpdate()");
         console.log("seqInput : " + seqInput);
         console.log("seqInput : " + seqInput.value);

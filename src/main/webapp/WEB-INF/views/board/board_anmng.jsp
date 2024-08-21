@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function(){
     //이미지
     const imgLinkInput = document.querySelector("#imgLink");
     //내용
-    const contentsTextArea = document.querySelector("#content");
+    const contentsTextArea = document.getElementById("content");
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         
         //marker : simplemde.value()
-        if(isEmpty(simplemde.value()) == true){
+        if(isEmpty(contentsTextArea.value) == true){
             alert('내용을 입력 하세요.')
             contentsTextArea.focus();
             return;
@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function(){
         		"userId"   : userIdInput.value,
         		"modId"   : modIdInput.value,
                 "title"    : titleInput.value,
-                "content"  : simplemde.value()
+                "content"  : contentsTextArea.value
             };
 
         PClass.pAjax(url, params, dataType, type, async, function(data){

@@ -189,12 +189,17 @@ document.addEventListener("DOMContentLoaded", function(){
     //이미지
     const imgLinkInput = document.querySelector("#imgLink");
     //내용
-    const contentsTextArea = document.querySelector("#content");
+    const contentsTextArea = document.getElementById("content");
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
     const modIdInput = document.querySelector("#modId");
     const userIdInput = document.querySelector("#userId");
+    
+    //파일 업로드
+    const form = document.querySelector("form");
+    const fileInput = document.querySelector("input[type='file']");
+    const fileNameInput = document.querySelector("#fileName");
     
 
 //이벤트 처리=================================================================================================
@@ -202,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function(){
     moveToMainBtn.addEventListener("click",function(event){
         console.log("moveToMainBtn click");
         event.stopPropagation();
-        if(confirm("뒤로 이동 하시겠습니까?") === false)return;
+        if(confirm("수정을 취소 하시겠습니까?") === false)return;
         moveToMain();
     });
     
@@ -215,9 +220,20 @@ document.addEventListener("DOMContentLoaded", function(){
     
     
 //함수=================================================================================================
-    //doUpdate : 수정
-    function doUpdate() {
+    //doUpdate()
+	function doUpdate(){
+        
         console.log("doUpdate()");
+        
+        console.log("seqInput : " + seqInput);
+        console.log("seqInput : " + seqInput.value);
+        console.log("searchDivSelect", searchDivSelect.value);
+        console.log("divInput : " + divInput.value);
+        console.log("titleInput : " + titleInput.value);
+        console.log("userIdInput : " + userIdInput.value);
+        console.log("modIdInput : " + modIdInput.value);
+        console.log("imgLinkInput.files[0]", imgLinkInput.files[0]);
+        console.log("simplemde", contentsTextArea.value);
         
         if(isEmpty(titleInput.value) == true){
             alert('제목을 입력 하세요.')
@@ -225,8 +241,14 @@ document.addEventListener("DOMContentLoaded", function(){
             return;
         }
         
+        if(isEmpty(imgLinkInput.files[0]) == true){
+            alert('사진을 선택 하세요.')
+            imgLinkInput.focus();
+            return;
+        }
+        
         //marker : simplemde.value()
-        if(isEmpty(simplemde.value()) == true){
+        if(isEmpty(contentsTextArea.value) == true){
             alert('내용을 입력 하세요.')
             contentsTextArea.focus();
             return;
@@ -234,40 +256,53 @@ document.addEventListener("DOMContentLoaded", function(){
         
         if(confirm("수정 하시겠습니까?") === false)return;
         
-        //비동기 통신
-        let type = "POST";
-        let url = "/doma/board/doUpdate.do";
-        let async = "true";
-        let dataType = "html";
+        // FormData 객체 생성
+        let formData = new FormData();
+        formData.append("seq", seqInput.value);
+        formData.append("div", divInput.value);
+        formData.append("gname", searchDivSelect.value);
+        formData.append("title", titleInput.value);
+        formData.append("userId", userIdInput.value);
+        formData.append("modId", modIdInput.value);
+        formData.append("content", contentsTextArea.value);
+        formData.append("imgFile", imgLinkInput.files[0]);  // file이 서버에서 받는 MultipartFile의 키와 일치
         
-        let params = {
-        		"seq"      : seqInput.value,
-        		"div"      : divInput.value,
-        		"gname"    : searchDivSelect.value,
-        		"userId"   : userIdInput.value,
-        		"modId"   : modIdInput.value,
-                "title"    : titleInput.value,
-                "content"  : simplemde.value()
-            };
+        if (fileInput.files.length > 0) {
+            formData.append("imgFile", imgLinkInput.files[0]);
+        }
 
-        PClass.pAjax(url, params, dataType, type, async, function(data){
-            if(data){
-                try{
-                    //JSON문자열을 JSON Object로 변환
-                    const message = JSON.parse(data)
-                    if(isEmpty(message) === false && 1 === message.messageId){
-                        moveToMain();
-                    }else{
-                        alert(message.messageContents);
+         $.ajax({
+            url: "/doma/board/fileUpdate.do",
+            type: "POST",
+            data: formData,
+            processData: false,  // FormData가 자동으로 처리되지 않도록 설정
+            contentType: false,  // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
+            success: function(data) {
+                
+                console.log("서버 응답 데이터:", data);  // 응답 데이터를 직접 확인
+                 
+                if (data) {
+                    try {
+                        // JSON 문자열을 JSON 객체로 변환
+                        const message = JSON.parse(data);
+                        if (message && message.messageId === 1) {
+                            alert(message.messageContents);
+                            moveToMain();
+                        } else {
+                            alert(message.messageContents);
+                        }
+                    } catch (e) {
+                        alert("데이터를 확인 하세요");
                     }
-                    
-                }catch(e){
-                    alert("data를 확인 하세요");
                 }
+            },
+            error: function(xhr, status, error) {
+                console.error("요청 실패: " + status + ", " + error);
+                alert("요청 처리 중 오류가 발생했습니다.");
             }
         });
-    }
-    
+    }     
+	
     function moveToMain() {
         window.location.href = "/doma/board/boardInfo.do?seq=" + seqInput.value +"&div=" + divInput.value;
     }
@@ -321,6 +356,12 @@ document.addEventListener("DOMContentLoaded", function(){
         <div class="col-sm-10">
           <input type="text" value="<c:out value='${moveUp.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
         </div>
+    </div>
+    <div class="row mb-2">
+        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
+        <div class="col-sm-10">
+          <input type="file" multiple class="form-control" name="fileName" id="imgLink">        
+        </div>        
     </div>
     <div class="row mb-2">
     <label for="title" class="col-sm-2 col-form-label">제목</label>

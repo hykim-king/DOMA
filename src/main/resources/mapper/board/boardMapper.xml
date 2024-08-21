@@ -203,6 +203,13 @@
          WHERE seq = #{seq}
     </delete>
     
+    <update id="fileDelete" parameterType="Board">
+	    UPDATE d_board
+	    SET img_link = NULL
+	    WHERE seq = #{seq}
+	      AND user_id = #{userId}
+	</update>
+    
     <update id="doUpdateUser" parameterType="Board">
         UPDATE d_board
          SET div     = #{div},
@@ -221,6 +228,19 @@
              title   = #{title},
              mod_id  = #{modId},
              content = #{content},
+             mod_dt  = SYSDATE
+          WHERE seq = #{seq} 
+            AND user_id = #{userId}
+    </update>
+    
+    <update id="fileUpdate" parameterType="Board">
+        UPDATE d_board
+         SET div     = #{div},
+             gname   = #{gname},
+             title   = #{title},
+             mod_id  = #{modId},
+             content = #{content},
+             img_link = #{imgLink},
              mod_dt  = SYSDATE
           WHERE seq = #{seq} 
             AND user_id = #{userId}

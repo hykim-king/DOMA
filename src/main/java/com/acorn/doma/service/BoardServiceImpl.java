@@ -208,6 +208,22 @@ public class BoardServiceImpl implements BoardService, PLog {
 		return boardMapper.fileSave(inVO);
 	}
 
+	@Override
+	public int fileUpdate(Board inVO) throws SQLException {
+		int flag = boardMapper.fileUpdate(inVO);
+		log.debug("1. flag : " + flag);
+		
+		return flag;
+	}
+
+	@Override
+	public int fileDelete(Board inVO) throws SQLException {
+		int flag = boardMapper.fileDelete(inVO);
+		log.debug("1. flag : " + flag);
+		
+		return flag;
+	}
+
 		 
 
 }

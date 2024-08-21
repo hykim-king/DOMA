@@ -52,6 +52,12 @@ public class BoardController implements PLog {
 	@Autowired
 	MarkdownService markdownService;
 	
+	// 실제 파일이 저장될 경로 (서버의 절대 경로)
+    private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/";
+										   
+											//C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/
+										    //C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/
+    
 	public BoardController() {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ BoardController()         │");
@@ -59,8 +65,135 @@ public class BoardController implements PLog {
 		
 	}
 	
-	// 실제 파일이 저장될 경로 (서버의 절대 경로)
-    private static final String UPLOAD_DIR = "C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/";
+	@PostMapping(value = "/fileDelete.do", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String fileDelete(Board inVO) throws SQLException {
+	    log.debug("┌──────────────────────────────────────────┐");
+	    log.debug("│ fileDelete()                             │");
+	    log.debug("└──────────────────────────────────────────┘");
+
+	    // 1. 기존 이미지 파일 경로 가져오기
+	    Board existingBoard = boardService.doSelectOne(inVO); // 기존 데이터 가져오기
+	    String existingImageFileName = existingBoard.getImgLink(); // 기존 이미지 파일명 가져오기
+
+	    String message;
+	    int flag = 0;
+
+	    // 2. 기존 파일 삭제
+	    if (existingImageFileName != null && !existingImageFileName.isEmpty()) {
+	        String existingFilePath = UPLOAD_DIR + existingImageFileName;
+	        File existingFile = new File(existingFilePath);
+	        if (existingFile.exists()) {
+	            boolean deleted = existingFile.delete();
+	            if (deleted) {
+	                log.debug("기존 이미지 파일 삭제 성공: " + existingImageFileName);
+	                // 3. 이미지 링크 제거 및 데이터베이스 업데이트
+	                inVO.setImgLink(null); // 이미지 링크 제거
+	                flag = boardService.fileDelete(inVO); // 이미지 링크 제거 후 업데이트
+	                if (flag == 1) {
+	                    message = "이미지 파일이 성공적으로 삭제되었습니다.";
+	                } else {
+	                    message = "이미지 파일은 삭제되었지만, 데이터베이스 업데이트에 실패했습니다.";
+	                }
+	            } else {
+	                log.warn("기존 이미지 파일 삭제 실패: " + existingImageFileName);
+	                message = "이미지 파일 삭제에 실패했습니다.";
+	            }
+	        } else {
+	            log.warn("삭제하려는 파일이 존재하지 않습니다: " + existingImageFileName);
+	            message = "삭제하려는 이미지 파일이 존재하지 않습니다.";
+	        }
+	    } else {
+	        log.warn("삭제할 이미지 파일이 없습니다.");
+	        message = "이미지 파일이 존재하지 않습니다.";
+	    }
+
+	    // 4. JSON 응답 생성
+	    String jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(new Message(flag, message));
+	    log.debug("jsonString: " + jsonString);
+
+	    return jsonString;
+	}
+	     
+	
+	@PostMapping(value = "/fileUpdate.do", 
+    		produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+	public String fileUpdate(Board inVO, @RequestParam(value = "imgFile", required = false) MultipartFile file) throws SQLException {
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ safeController : doUpdate()              │");
+		log.debug("└──────────────────────────────────────────┘");
+		
+		// 1. 기존 이미지 파일 경로 가져오기
+	    Board existingBoard = boardService.doSelectOne(inVO); // 기존 데이터 가져오기
+	    String existingImageFileName = existingBoard.getImgLink(); // 기존 이미지 파일명 가져오기
+
+	    // 2. 새 파일이 업로드 되었는지 확인
+	    if (file != null) {
+	        try {
+	            // 3. 기존 파일 삭제
+	            if (existingImageFileName != null && !existingImageFileName.isEmpty()) {
+	                String existingFilePath = UPLOAD_DIR + existingImageFileName;
+	                File existingFile = new File(existingFilePath);
+	                if (existingFile.exists()) {
+	                    boolean deleted = existingFile.delete();
+	                    if (deleted) {
+	                        log.debug("기존 이미지 파일 삭제 성공: " + existingImageFileName);
+	                    } else {
+	                        log.warn("기존 이미지 파일 삭제 실패: " + existingImageFileName);
+	                    }
+	                }
+	            }
+	            
+	            // 4. 파일 처리
+            	log.debug("file : " + file);
+            	
+            	
+            	// uuid로 랜덤한 고유번호 부여
+            	UUID uuid = UUID.randomUUID(); 
+            	
+                // 서버의 특정 경로에 파일 저장
+                String originalFileName = file.getOriginalFilename();
+                String imageFileName = uuid + "_" + file.getOriginalFilename();
+                String filePath = UPLOAD_DIR + imageFileName;
+                File uploadFile = new File(filePath);
+
+                // 파일 저장
+                file.transferTo(uploadFile);
+
+                // 파일 경로를 웹 애플리케이션의 접근 가능한 경로로 설정
+                String relativeFilePath = "/resources/img/board_img/" + imageFileName;
+                inVO.setImgLink(imageFileName);
+
+            } catch (IOException e) {
+                log.error("File upload error: ", e);
+                return new Gson().toJson(new Message(0, "파일 업로드에 실패했습니다."));
+            }
+        } else {
+            log.warn("파일이 없습니다.");
+        }
+
+        log.debug("1. inVO : " + inVO);
+        
+		String jsonString = "";
+		
+		int flag = boardService.fileUpdate(inVO);
+		log.debug("2.flag:" + flag);
+		
+		String message = "";
+		if(1 == flag) {
+			message = inVO.getTitle() + "이 수정 되었습니다.";
+		}else {
+			message = "게시물 수정에 실패했습니다.";
+		}
+		
+		Message messageObj = new Message(flag, message);
+		jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+		log.debug("3.jsonString:" + jsonString);
+		
+		return jsonString;
+		
+	}
 
     @PostMapping(value = "/fileSave.do", produces = "text/plain;charset=UTF-8")
     @ResponseBody
