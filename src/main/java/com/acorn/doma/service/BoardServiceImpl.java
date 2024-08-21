@@ -3,6 +3,8 @@ package com.acorn.doma.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,34 @@ public class BoardServiceImpl implements BoardService, PLog {
 		
 		return outVO;
 	}
+	
+	@Override
+	public Board viewsSelectOne(Board inVO, HttpSession session) throws SQLException {
+	    // 단건 조회
+	    log.debug("1. param :" + inVO);
+	    Board outVO = boardMapper.doSelectOne(inVO);
+	    log.debug("2. outVO :" + outVO);
+
+	    if (outVO != null) {
+	        String readCheckKey = "read_check_" + inVO.getSeq();
+	        if (session.getAttribute(readCheckKey) == null) {
+	            // 조회수 증가
+	            int flag = boardMapper.readCntUpdate(inVO);
+	            log.debug("3. 조회 count 증가 :" + flag);
+
+	            if (flag == 1) {
+	                outVO.setViews(outVO.getViews() + 1);
+	                session.setAttribute(readCheckKey, true);
+	            }
+	        } else {
+	            log.debug("4. 이미 조회한 게시물입니다.");
+	        }
+	    }
+
+	    return outVO;
+	}
+
+	
 	/*
 	 * @Override 
 	 * public List<Board> mpSelect(Board inVO) throws SQLException {

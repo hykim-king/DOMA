@@ -834,7 +834,7 @@ public class BoardController implements PLog {
 		
 		inVO.setUserId(StringUtil.nvl(inVO.getUserId(), "admin"));
 		
-		Board outVO = boardService.doSelectOne(inVO);
+		Board outVO = boardService.viewsSelectOne(inVO, session);
 		
 		//markdown으로 contents변경
 		String markdownContents = this.markdownService.convertMarkdownToHtml(outVO.getContent());

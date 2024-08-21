@@ -3,6 +3,8 @@ package com.acorn.doma.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.WorkDiv;
@@ -45,5 +47,8 @@ public interface BoardService extends WorkDiv<Board> {
 	public Board selectOne(Board inVO) throws SQLException;
 	
 	int update(Board inVO) throws SQLException;
+
+	Board viewsSelectOne(Board inVO, HttpSession session) throws SQLException;
+
 	
 }
