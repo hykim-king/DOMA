@@ -168,7 +168,7 @@
             <div class="page_row">
                 <div class="page_item">
                     <div class="info_contents">
-                        <h4 class="info_title bold_font"></h4>
+                        <h4 class="info_title bold_font">데이터 시각화</h4>
                         <p class="info_content">
                             데이터 시각화 페이지는 교통사고 및 기상 관련 데이터를 다양한 시각화 도구를 통해 제공합니다. 
               <br>해당 페이지에서는 월별, 요일별, 시간대별, 주야별로 교통사고 패턴을 분석하고, 사고유형과 종류별 분포를 살펴볼 수 있습니다. 
