@@ -4,6 +4,7 @@
     width: 90%; /* 기본 너비 */
     max-width: 1200px; /* 최대 너비 설정 */
     margin: 0 auto; /* 중앙 정렬 */
+    padding-bottom: 30px;
 }
 
 h2 {
@@ -38,12 +39,12 @@ h2 {
 h3 {
     box-sizing: border-box;
     padding-left: 1rem;
-    margin-bottom: 2rem; /* 하단 여백을 추가하여 선과의 간격을 확보 */
+    margin-bottom: 2rem; 
     border-left: 5px solid #000000;
     border-right: 5px solid #000000;
     font-size: 1.5rem;
     color: #000000;
-    position: relative; /* 상대 위치 설정 */
+    position: relative;
 }
 
 h3::after {
@@ -101,12 +102,13 @@ h3::after {
 }
 
 .info_content {
-    margin: 5px -181 0 0; /* 설명 내용의 여백 설정 */
+    margin: 5px -507px 0 0; /* 설명 내용의 여백 설정 */
 }
 
 /* page_container */
 .page_container {
     padding: 0px; /* 원하는 패딩으로 조절 */
+    padding-bottom: 20px;
 }
 
 .page_row {
@@ -134,3 +136,4 @@ h3::after {
     padding: 0; /* 패딩 제거 */
     margin: 0; /* 마진 제거 */
 }
+

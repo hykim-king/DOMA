@@ -102,7 +102,7 @@
             <h3>페이지 기능 안내</h3>
         </div>
         <div>
-            <h4>- 메인 페이지의 사이드 버튼</h4>
+            <h4 style="font-size: 25px;">- 메인 페이지의 사이드 버튼 안내</h4>
 			<div class="flex flex_space">
 			    <p class="info_content" style="list-style: none; padding: 0; margin: 0;">지도에는 돌발, 결빙, 사고다발 정보를 표시합니다.</p>
 			</div>
@@ -143,7 +143,7 @@
             </div>
         </div>
         <div>
-            <h4>- 상황별 안전 정보</h4>
+            <h4 style="font-size: 25px;">- 상황별 안전 정보 페이지 안내</h4>
             <div class="page_row">
                 <div class="page_item">
                     <div class="info_contents">
@@ -163,12 +163,28 @@
                 </div>
             </div>
         </div>
-        <div>
-            <h4>- 커뮤니티</h4>
+                <div>
+            <h4 style="font-size: 25px;">- 데이터 시각화 페이지 안내</h4>
             <div class="page_row">
                 <div class="page_item">
                     <div class="info_contents">
-                        <h4 class="info_title bold_font">게시판</h4>
+                        <h4 class="info_title bold_font"></h4>
+                        <p class="info_content">
+                            데이터 시각화 페이지는 교통사고 및 기상 관련 데이터를 다양한 시각화 도구를 통해 제공합니다. 
+              <br>해당 페이지에서는 월별, 요일별, 시간대별, 주야별로 교통사고 패턴을 분석하고, 사고유형과 종류별 분포를 살펴볼 수 있습니다. 
+              <br>또한, 지역별 사고 발생 현황과 연도별 기상사고 데이터를 시각적으로 표현하여, 기상 상태와 부상자 수 간의 관계를 분석할 수 있습니다. 
+              <br>이 모든 정보를 통합적으로 분석하여, 교통사고와 기상 관련 문제에 대한 인사이트를 제공합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h4 style="font-size: 25px;">- 커뮤니티 페이지 안내</h4>
+            <div class="page_row">
+                <div class="page_item">
+                    <div class="info_contents">
+                        <h4 class="info_title bold_font">커뮤니티</h4>
                         <p class="info_content">
                             이용자가 현재 돌발 정보를 게시합니다.<br>지역별로 현재 상황을 공유하고 소통하며 위험에 대비합니다.
                         </p>
@@ -178,7 +194,7 @@
                     <div class="info_contents">
                         <h4 class="info_title bold_font">공지사항</h4>
                         <p class="info_content">
-                            공지사항은 뭐라 쓰지...
+                            관리자가 현재 돌발 정보를 게시합니다.<br>현재 상황을 공유하고 소통하며 위험에 대비합니다.
                         </p>
                     </div>
                 </div>
