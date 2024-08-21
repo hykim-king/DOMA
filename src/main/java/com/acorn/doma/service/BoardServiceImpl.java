@@ -12,6 +12,7 @@ import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.domain.Board;
+import com.acorn.doma.domain.User;
 import com.acorn.doma.mapper.BoardMapper;
 
 @Service("boardServiceImpl")
@@ -77,25 +78,31 @@ public class BoardServiceImpl implements BoardService, PLog {
 	    Board outVO = boardMapper.doSelectOne(inVO);
 	    log.debug("2. outVO :" + outVO);
 
+	    // userId가 null이거나 비어있다면 조회수 증가를 하지 않음
+	    if (inVO.getUserId() == null || inVO.getUserId().isEmpty()) {
+	        log.debug("3. userId가 없습니다. 조회수를 증가시키지 않습니다.");
+	        return outVO;
+	    }
+
 	    if (outVO != null) {
 	        String readCheckKey = "read_check_" + inVO.getSeq();
 	        if (session.getAttribute(readCheckKey) == null) {
 	            // 조회수 증가
 	            int flag = boardMapper.readCntUpdate(inVO);
-	            log.debug("3. 조회 count 증가 :" + flag);
+	            log.debug("4. 조회 count 증가 :" + flag);
 
 	            if (flag == 1) {
 	                outVO.setViews(outVO.getViews() + 1);
 	                session.setAttribute(readCheckKey, true);
 	            }
 	        } else {
-	            log.debug("4. 이미 조회한 게시물입니다.");
+	            log.debug("5. 이미 조회한 게시물입니다.");
 	        }
 	    }
 
 	    return outVO;
 	}
-
+	
 	
 	/*
 	 * @Override 

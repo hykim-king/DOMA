@@ -297,7 +297,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	                    // JSON 문자열을 JSON 객체로 변환
 	                    const message = JSON.parse(data);
 	                    if (message && message.messageId === 1) {
-	                        alert(message.messageContents);
 	                        moveToList()
 	                    } else {
 	                        alert(message.messageContents);

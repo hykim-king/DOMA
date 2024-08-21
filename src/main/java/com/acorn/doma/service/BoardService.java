@@ -9,6 +9,7 @@ import com.acorn.doma.cmn.DTO;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.WorkDiv;
 import com.acorn.doma.domain.Board;
+import com.acorn.doma.domain.User;
 
 public interface BoardService extends WorkDiv<Board> {
 	

@@ -53,7 +53,7 @@ public class BoardController implements PLog {
 	MarkdownService markdownService;
 	
 	// 실제 파일이 저장될 경로 (서버의 절대 경로)
-    private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/";
+    private static final String UPLOAD_DIR = "C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/";
 										   
 											//C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/
 										    //C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/
@@ -621,14 +621,14 @@ public class BoardController implements PLog {
 	@RequestMapping(value = "/anSelectOne.do"
 			, method = RequestMethod.GET
 			, produces = "text/plain;charset=UTF-8") 
-	public String anSelectOne(Board inVO, Model model) throws SQLException {
+	public String anSelectOne(Board inVO, Model model, HttpSession session) throws SQLException {
 		String viewName = "board/board_anmain";
 		String jsonString = "";
 		log.debug("1.param inVO :" + inVO);
 		
 		inVO.setUserId(StringUtil.nvl(inVO.getUserId(), "admin"));
 		
-		Board outVO = boardService.anSelectOne(inVO);
+		Board outVO = boardService.viewsSelectOne(inVO, session);
 		
 		//markdown으로 contents변경
 		String markdownContents = this.markdownService.convertMarkdownToHtml(outVO.getContent());

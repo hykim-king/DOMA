@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function(){
             "userName"     :userNameInput.value,
             "userPw" :userPwInput.value, 
             "birth"    :birthInput.value,
-            "address"    :addrInput.value ,
+            "address"    :addrInput.value,
             "detailAddress":detailAddrInput.value
             
         };        
