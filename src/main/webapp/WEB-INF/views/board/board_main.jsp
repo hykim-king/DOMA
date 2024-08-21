@@ -186,7 +186,6 @@ header, footer {
 .comment strong {
     color: #007bff;
 }
-</style>
 
 .responsive-img {
     width: 100%;
@@ -194,6 +193,20 @@ header, footer {
     height: auto;
     display: block;
     margin: 0 auto; 
+}
+
+/* 미디어 쿼리 예시: 작은 화면에서는 최대 너비를 줄이기 */
+@media (max-width: 600px) {
+    .responsive-img {
+        max-width: 300px; /* 작은 화면에서 이미지의 최대 너비 */
+    }
+}
+
+/* 미디어 쿼리 예시: 큰 화면에서는 최대 너비를 늘리기 */
+@media (min-width: 1200px) {
+    .responsive-img {
+        max-width: 800px; /* 큰 화면에서 이미지의 최대 너비 */
+    }
 }
 </style>
 <script>
@@ -572,7 +585,6 @@ document.addEventListener("DOMContentLoaded", function() {
 <title>DOMA 커뮤니티</title>
 </head>
 <body>
-board:${board }
 	<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
@@ -597,7 +609,8 @@ board:${board }
 		    </div>
 		    <hr>
 		    <div name="content" id="content" class="post-content">
-		        <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" class="responsive-img">
+		        <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" class="responsive-img"><br/>
+		        <br/>
 		        <p>${board.content}</p>
 		    </div>
 		</article>
