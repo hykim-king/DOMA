@@ -1,0 +1,79 @@
+
+
+
+
+.map-fn-l-box {
+    z-index: 500;
+    display: inline-block;
+    width: 60px;
+    background-color: #f6f6f6;
+    border-right: 1px solid #ddd;
+}
+
+.map-fn-l-box .fn-alert, 
+.map-fn-l-box .fn-road, 
+.map-fn-l-box .fn-freezing {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+}
+
+#mapContainer {
+    display: block; /* 컨테이너 중앙 정렬 제거 */
+    width: 100%; /* 필요 시 추가 */
+}
+
+/* 사고 위험도 버튼 스타일 */
+.risk-button {
+    display: block;
+    width: 60px; /* 버튼의 너비 */
+    height: 35px; /* 버튼의 높이 */
+    margin: 5px auto; /* 버튼 중앙 정렬 */
+    text-align: center;
+    line-height: 35px; /* 버튼 높이와 맞춤 */
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px; /* 둥근 모서리 */
+    transition: background-color 0.3s, color 0.3s; /* 색상 변화에 대한 부드러운 전환 효과 */
+    font-size: 14px; /* 글자 크기 */
+    color: #000000; /* 기본 글자색 */
+    background-color: #FFFFFF; /* 기본 배경색 */
+}
+
+/* 각 색상 버튼 기본 색상 설정 */
+.risk-green {
+    background-color: #4caf50; /* 초록색 */
+    color: #FFFFFF; /* 기본 글자색 */
+}
+
+.risk-blue {
+    background-color: #2196f3; /* 파란색 */
+    color: #FFFFFF; /* 기본 글자색 */
+}
+
+.risk-yellow {
+    background-color: #FFBF00; /* 주황색 */
+    color: #FFFFFF; /* 기본 글자색 */
+}
+
+.risk-red {
+    background-color: #f44336; /* 빨간색 */
+    color: #FFFFFF; /* 기본 글자색 */    
+}
+
+.risk-purple {
+    background-color: #9c27b0; /* 보라색 */
+    color: #FFFFFF; /* 기본 글자색 */    
+}
+
+/* 버튼에 마우스를 오버했을 때 색상 변경 */
+.risk-button:hover {
+    opacity: 0.8; /* 버튼의 투명도 조정 */
+}
+
+/* 선택되지 않은 상태의 버튼 스타일 */
+.risk-button:not(.selected) {
+    background-color: rgba(0, 0, 0, 0.1) !important; /* 선택되지 않은 버튼의 배경색 */
+    color: #000000; /* 선택되지 않은 버튼의 글자색 */
+}

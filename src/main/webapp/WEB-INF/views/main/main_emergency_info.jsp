@@ -11,13 +11,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
-<link rel="stylesheet" href="${CP}/resources/css/main/main_emergency_info.css">
+<link rel="stylesheet" href="${CP}/resources/css/main/main_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
 <title>DOMA</title>
 </head>
 <body>
-    <div style="display : flex">
+    <div id="container" style="display : flex">
     <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
     <div id="subMap" style="height: 815px;">
         <section id="mapContainer">
@@ -58,6 +58,7 @@
             <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
     </div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+    </body>
 <script>
 var map;
 var markers = []; // 모든 마커를 저장할 배열

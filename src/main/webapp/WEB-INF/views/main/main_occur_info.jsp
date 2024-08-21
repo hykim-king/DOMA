@@ -9,9 +9,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
-<link rel="stylesheet" href="${CP}/resources/css/main/main_occur_info.css">
+<link rel="stylesheet" href="${CP}/resources/css/main/main_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
 <script src="${CP}/resources/js/main/main_occur_info.js"></script>
 <script>
 let selectedRisk = []; // 초기에는 빈 배열로 설정합니다.
@@ -171,11 +172,11 @@ function removeExistingMarkers() {
 </script>
 <title>DOMA</title>
 </head>
-<body>
-    <div style="display: flex">
-        <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
-        <div id="subMap" style="height: 815px; display: flex; flex-direction: column;">
-            <section id="mapContainer">
+<div id="container" style="display : flex">
+    <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
+    <div id="subMap" style="height: 815px;">
+        <section id="mapContainer">
+            <div class="aside" style="height:800px; width: 200px; overflow : scroll">
                 <!-- 기본적으로 "년도 선택" 드롭다운 -->
                 <div class="year-selection" style="text-align: center; margin-bottom: 20px;">
                     <select id="yearDropdown" onchange="selectYear(this.value)" style="width: 150px; height: 35px; font-weight: bold; text-align: center; border: 2px solid black;">
@@ -199,19 +200,11 @@ function removeExistingMarkers() {
                         <div id="5" class="risk-button risk-purple" onclick="selectRisk(5)">5</div>
 				    </div>
 				</div>
-                    
-
-
-
-            </section>
-        </div>
-        <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
+			</div>
+		</section>
+    </div>            
+            <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
     </div>
-
-    <!-- 스크립트 파일 로드 -->
-    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery_3_7_1.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/main_occur_info.js"></script>
+    <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> 
 </body>
 </html>

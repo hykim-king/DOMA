@@ -8,16 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="${CP}/resources/css/main/main_freezing_info.css">
+    <link rel="stylesheet" href="${CP}/resources/css/main/main_info.css">
     <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
-    <script src="${CP}/resources/js/common.js"></script>    
-    <style>
-        #map { width: 100%; height: 800px; }
-        .area { background: #fff; padding: 5px; border: 1px solid #333; }
-        .info { background: #fff; padding: 5px; border: 1px solid #333; }
-        .details div { margin-bottom: 5px; }
-        .table-container { margin-top: 20px; }
-    </style>
+    <script src="${CP}/resources/js/common.js"></script>
    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900&autoload=false"></script>
 <script>
 var map;
@@ -41,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var container = document.getElementById('map');
         var options = {
             center: new kakao.maps.LatLng(37.564214, 127.001699),
-            level: 5
+            level: 6
         };
         map = new kakao.maps.Map(container, options);
 
@@ -274,11 +267,11 @@ function getPolygonColor(year) {
 </script>
 </head>
 <body>
-    <div style="display: flex;">
-        <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
-        <div id="subMap" style="height: 815px;">
-            <section id="mapContainer">
-                <div class="aside" style="height:800px; width: 350px; overflow: scroll;">
+     <div id="container" style="display : flex">
+    <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
+    <div id="subMap" style="height: 815px;">
+        <section id="mapContainer">
+            <div class="aside" style="height:800px; width: 350px; overflow : scroll">
                     <h2 style="font-weight: bold; text-align: center; border: 3px solid black;">결빙정보</h2>
                     <div>
                         <label>
@@ -321,7 +314,7 @@ function getPolygonColor(year) {
                 </div>
             </section>
         </div>            
-        <div id="map"></div> <!-- 지도 표시 영역 -->
+        <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
     </div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </body>
