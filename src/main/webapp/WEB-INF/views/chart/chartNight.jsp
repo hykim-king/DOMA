@@ -173,22 +173,9 @@
     </div>
     
     <!-- 버튼 컨테이너 -->
-    <div class="button-container">
-    <div class="button-row">
-        <button class="showChartsButton">월별 교통사고</button>
-        <button class="showChartsButton">요일별 교통사고</button>
-        <button class="showChartsButton">시간대별 교통사고</button>
-        <button class="showChartsButton">주야별 교통사고</button>
-        <button class="showChartsButton">사고유형별 교통사고</button>
-    </div>
-    <div class="button-row">
-        <button class="showChartsButton">사고종류별 교통사고</button>
-        <button class="showChartsButton">구별 교통사고</button>
-        <button class="showChartsButton">연도별 기상사고(구)</button>
-        <button class="showChartsButton">연도별 기상상태와 부상자 수</button>
-        <button class="showChartsButton">구별 기상상태와 부상자 수</button>
-    </div>
-</div>
+    <!-- 버튼 컨테이너 -->
+<%@ include file="/WEB-INF/views/chart/chart_btn.jsp" %> 
+ 
     
     <!-- 차트 컨테이너 -->
     <div id="chartsContainer" class="chart-container">
