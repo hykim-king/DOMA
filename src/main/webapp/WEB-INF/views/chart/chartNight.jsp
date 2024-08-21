@@ -9,6 +9,8 @@
 <title>DOMA</title>
 <!-- bootstrap css -->
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
+<%-- Additional CSS --%>
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css">
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/chart/chart.js"></script>
@@ -84,32 +86,84 @@
             .catch(error => console.error('차트 데이터 가져오기 오류:', error));
     }
 </script>
-<style>
-    .chart-container {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        margin: 20px;
-    }
-    .chart-box {
-        width: 45%; /* 차트의 너비를 설정 */
-        margin: 10px; /* 차트 사이의 여백 */
-    }
-    .center-content {
-        text-align: center;
-        margin: 20px 0;
-    }
-    .button-container {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin: 20px 0;
-    }
-    .showChartsButton {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
+<style> 
+			/* 중앙 콘텐츠 */
+.center-content {
+    text-align: center;
+    margin: 20px 0; /* 위아래 여백 20px */
+}
+
+/* 버튼 컨테이너 */
+.button-container {
+    display: flex;
+    flex-direction: column; /* 버튼을 세로 방향으로 배치 */
+    align-items: center; /* 버튼을 중앙에 배치 */
+    margin: 40px 0; /* 위아래 여백 40px */
+    gap: 10px; /* 버튼 간의 간격을 10px로 설정 */
+    width: 100%;
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 버튼 행 */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* 버튼 간의 간격을 10px로 설정 */
+    margin-bottom: 10px; /* 버튼 행 아래 여백 */
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* 버튼 스타일 */
+.showChartsButton {
+    padding: 0 20px; /* 패딩을 상하 0, 좌우 20px로 설정 */
+    font-size: 14px;
+    width: 200px; /* 버튼 너비를 200px로 설정 */
+    height: 40px; /* 버튼 높이 */
+    line-height: 40px; /* 높이와 동일하게 설정하여 텍스트 수직 중앙 정렬 */
+    box-sizing: border-box;
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #cccccc;
+    border-radius: 15px;
+    text-align: center; /* 텍스트 중앙 정렬 */
+    cursor: pointer; /* 커서를 포인터로 변경 */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 마우스 호버 시 버튼 스타일 */
+.showChartsButton:hover {
+    background-color: #f0f0f0; /* 호버 시 배경색 */
+    color: #333333; /* 호버 시 텍스트 색상 */
+    border-color: #999999; /* 호버 시 테두리 색상 */
+}
+
+/* 차트 컨테이너 */
+#chartsContainer {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center; /* 수직 정렬 */
+    width: 90%; /* 컨테이너 너비를 90%로 설정 */
+    max-width: 1200px; /* 최대 너비 설정 */
+    height: 500px; /* 차트 컨테이너의 높이 조정 */
+    margin: 40px auto; /* 위아래 여백 40px, 좌우 중앙 정렬 */
+}
+
+/* 차트 박스 */
+.chart-box {
+    width: 100%; /* 차트 박스의 너비를 100%로 설정 */
+    box-sizing: border-box; /* 패딩과 보더를 포함하여 너비 계산 */
+}
+
+/* 차트 캔버스 */
+.chart-box canvas {
+    width: 100% !important; /* 차트의 캔버스를 박스 너비에 맞게 조정 */
+    height: auto !important; /* 비율을 유지하면서 높이 자동 조정 */
+}
+
+
 </style>
 </head>
 <body>
@@ -120,17 +174,21 @@
     
     <!-- 버튼 컨테이너 -->
     <div class="button-container">
+    <div class="button-row">
         <button class="showChartsButton">월별 교통사고</button>
         <button class="showChartsButton">요일별 교통사고</button>
         <button class="showChartsButton">시간대별 교통사고</button>
         <button class="showChartsButton">주야별 교통사고</button>
         <button class="showChartsButton">사고유형별 교통사고</button>
+    </div>
+    <div class="button-row">
         <button class="showChartsButton">사고종류별 교통사고</button>
         <button class="showChartsButton">구별 교통사고</button>
         <button class="showChartsButton">연도별 기상사고(구)</button>
-        <button class="showChartsButton">연도별 부상자 수 추이(기상상태)</button>
+        <button class="showChartsButton">연도별 기상상태와 부상자 수</button>
         <button class="showChartsButton">구별 기상상태와 부상자 수</button>
     </div>
+</div>
     
     <!-- 차트 컨테이너 -->
     <div id="chartsContainer" class="chart-container">
