@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+.container {
+    width: 90%; /* 기본 너비 */
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.5em;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.container h2:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  width: 55px;
+  background-color: #111;
+}
+.container h2:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  height: 1px;
+  width: 95%;
+  max-width: 255px;
+  background-color: #333;
+}
+
+h3 {
+    box-sizing: border-box;
+    padding-left: 1rem;
+    margin-bottom: 2rem; /* 하단 여백을 추가하여 선과의 간격을 확보 */
+    border-left: 5px solid #000000;
+    border-right: 5px solid #000000;
+    font-size: 1.5rem;
+    color: #000000;
+    position: relative; /* 상대 위치 설정 */
+}
+
+h3::after {
+    content: "";
+    display: block;
+    position: absolute; /* 절대 위치 설정 */
+    left: 59%; /* 중앙 정렬 */
+    bottom: 17px; /* `h3`의 하단에 위치 */
+    transform: translateX(-50%); /* 중앙 정렬 조정 */
+    width: 83%; /* `h3` 텍스트의 너비와 같게 설정 */
+    height: 1px;
+    background-color: #000000;
+}
+
+/* icon_container*/
+.icon_container {
+    padding-top: 20px;   /* 위쪽 패딩을 20px로 설정 */
+    padding-bottom: 20px; /* 아래쪽 패딩을 20px로 설정 */
+}
+
+.icon_row {
+    display: flex; /* 수평 배치를 위해 flex 사용 */
+    justify-content: space-between; /* 아이템 간의 간격을 조정 */
+    margin-bottom: 20px; /* 줄 간의 간격 설정 */
+}
+
+.info_item {
+    flex: 1; /* 아이템이 컨테이너의 공간을 채우도록 설정 */
+    display: flex;
+    align-items: center; /* 아이콘과 내용을 수직 중앙 정렬 */
+    margin-right: 20px; /* 두 번째 아이템의 경우 오른쪽 여백 설정 */
+}
+
+.info_item:last-child {
+    margin-right: 0; /* 마지막 아이템은 오른쪽 여백 제거 */
+}
+
+.info_icon {
+    margin-right: 15px; /* 아이콘과 설명 사이의 간격 */
+}
+
+.info_icon img {
+    width: 45px; /* 아이콘의 너비 조절 */
+    height: auto; /* 아이콘의 높이 자동 조절 */
+}
+
+.info_contents {
+    max-width: 380px; /* 콘텐츠의 최대 너비 조절 */
+}
+
+.info_title {
+    margin: 0;
+    font-size: 1rem; /* 제목 폰트 사이즈 */
+    color: #000000; /* 제목 색상 */
+}
+
+.info_content {
+    margin: 5px -181 0 0; /* 설명 내용의 여백 설정 */
+}
+
+/* page_container */
+.page_container {
+    padding: 0px; /* 원하는 패딩으로 조절 */
+}
+
+.page_row {
+    display: flex; /* 수평 배치를 위해 flex 사용 */
+    justify-content: space-between; /* 아이템 간의 간격을 조정 */
+    margin-bottom: 20px; /* 줄 간의 간격 설정 */
+}
+
+.page_item {
+	padding-top: 25px;
+    flex: 1; /* 아이템이 컨테이너의 공간을 채우도록 설정 */
+    margin-right: 20px; /* 두 번째 아이템의 경우 오른쪽 여백 설정 */
+}
+
+.page_item:last-child {
+    margin-right: 0; /* 마지막 아이템은 오른쪽 여백 제거 */
+}
+.no-bullet {
+    list-style: none; /* 목록 스타일 제거 */
+    padding: 0; /* 내부 여백 제거 */
+    margin: 0; /* 외부 여백 제거 */
+}
+.page_container ul li.flex > .info_content {
+    list-style: none; /* 글머리 기호 제거 */
+    padding: 0; /* 패딩 제거 */
+    margin: 0; /* 마진 제거 */
+}
