@@ -16,56 +16,89 @@
 <script src="${CP}/resources/js/common.js"></script>
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="${CP}/resources/js/chart/chart.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
 <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    fetch('${CP}/chart/chartData2.do')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Fetched data:', data); // 데이터 구조 확인
 
-    function drawChart() {
-        fetch('${CP}/chart/chartData2.do')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('네트워크 오류');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Fetched data:', data); // 데이터 구조 확인
+            // 데이터를 Highcharts 형식으로 변환
+            const categories = [];
+            const totalDeaths = [];
+            const totalCasualties = [];
+            const totalSeriously = [];
 
-                const dataTable = new google.visualization.DataTable();
-                dataTable.addColumn('string', '요일');
-                dataTable.addColumn('number', '사망자 수');
-                dataTable.addColumn('number', '부상자 수');
-                dataTable.addColumn('number', '중상자 수');
+            data.forEach(item => {
+                categories.push(item.DAY_WEEK);
+                totalDeaths.push(item.TOTAL_DEATHS);
+                totalCasualties.push(item.TOTAL_CASUALTIES);
+                totalSeriously.push(item.TOTAL_SERIOUSLY);
+            });
 
-                data.forEach(item => {
-                    dataTable.addRow([item.DAY_WEEK, item.TOTAL_DEATHS, item.TOTAL_CASUALTIES, item.TOTAL_SERIOUSLY]);
-                });
-
-                const options = {
-                    title: '요일별 사망자 수, 부상자 수 및 중상자 수',
-                    hAxis: {
-                        title: '요일',
-                        titleTextStyle: { color: '#333' }
-                    },
-                    vAxis: {
-                        minValue: 0
-                    },
-                    chartArea: { width: '70%', height: '70%' },
-                    colors: ['#FF0000', '#FFFF00', '#FFA500'],
-                    curveType: 'function',
-                    legend: { position: 'bottom' },
+            // Highcharts 차트 생성
+            Highcharts.chart('chartContainer', {
+                chart: {
+                    type: 'line',
                     animation: {
-                        startup: true,
-                        duration: 1000,
-                        easing: 'out'
+                        duration: 1000
                     }
-                };
-
-                const chart = new google.visualization.LineChart(document.getElementById('chartContainer'));
-                chart.draw(dataTable, options);
-            })
-            .catch(error => console.error('차트 데이터 가져오기 오류:', error)); 
-    }
+                },
+                title: {
+                    text: '요일별 사망자 수, 부상자 수 및 중상자 수'
+                },
+                xAxis: {
+                    categories: categories,
+                    title: {
+                        text: '요일'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: '수'
+                    },
+                    min: 0
+                },
+                series: [
+                    {
+                        name: '사망자 수',
+                        data: totalDeaths,
+                        color: '#FF0000' // 빨강
+                    },
+                    {
+                        name: '부상자 수',
+                        data: totalCasualties,
+                        color: '#4caf50' // 초록
+                    },
+                    {
+                        name: '중상자 수',
+                        data: totalSeriously,
+                        color: '#FFA500' // 주황
+                    }
+                ],
+                legend: {
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: true
+                    }
+                },
+                // 애니메이션 및 스타일링
+                credits: {
+                    enabled: false
+                }
+            });
+        })
+        .catch(error => console.error('차트 데이터 가져오기 오류:', error));
 </script>
   
 </head>
@@ -79,7 +112,7 @@
 <!-- 버튼 컨테이너 -->
 <%@ include file="/WEB-INF/views/chart/chart_btn.jsp" %> 
 <!-- 차트 컨테이너 -->
-<div id="chartContainer" class="chart-container" style="height: 500px;"></div>
+<div id="chartContainer" style="height: 500px; margin: 0 auto;"></div>
 
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 
 </body>

@@ -16,69 +16,101 @@
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/chart/chart.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    document.addEventListener('DOMContentLoaded', function () {
+        function drawChart() {
+            fetch('${CP}/chart/chartDataMajor.do')
+                .then(response => response.json())
+                .then(data => {
+                    // 데이터 정리
+                    const accidentTypes = [];
+                    const deaths = [];
+                    const casualties = [];
+                    const seriously = [];
 
-    function drawChart() {
-        fetch('${CP}/chart/chartDataMajor.do')
-            .then(response => response.json())
-            .then(data => {
-                const dataTable = new google.visualization.DataTable();
-                dataTable.addColumn('string', '사고 유형');
-                dataTable.addColumn('number', '사망자 수');
-                dataTable.addColumn('number', '부상자 수');
-                dataTable.addColumn('number', '중상자 수');
+                    data.majorDead.forEach((item, index) => {
+                        accidentTypes.push(item.MAJOR_NAME);
+                        deaths.push(item.TOTAL_DEATHS);
+                        casualties.push(data.majorCasualties[index].TOTAL_CASUALTIES);
+                        seriously.push(data.majorSeriously[index].TOTAL_SERIOUSLY);
+                    });
 
-                data.majorDead.forEach((item, index) => {
-                    const accidentType = item.MAJOR_NAME;
-                    const deaths = item.TOTAL_DEATHS;
-                    const casualties = data.majorCasualties[index].TOTAL_CASUALTIES;
-                    const seriously = data.majorSeriously[index].TOTAL_SERIOUSLY;
-                    dataTable.addRow([accidentType, deaths, casualties, seriously]);
-                });
+                    // Highcharts 차트 생성
+                    Highcharts.chart('comboChart', {
+                        chart: {
+                            type: 'column', // 기본 타입
+                            animation: {
+                                duration: 1000
+                            },
+                            events: {
+                                load: function() {
+                                    // 차트 클릭 이벤트 핸들러
+                                    this.series.forEach(series => {
+                                        series.points.forEach(point => {
+                                            point.update({ events: { click: function() {
+                                                alert(this.category + '이 선택되었습니다.');
+                                            }}});
+                                        });
+                                    });
+                                }
+                            }
+                        },
+                        title: {
+                            text: '사고 유형별 사망자 수, 부상자 수 및 중상자 수'
+                        },
+                        xAxis: {
+                            categories: accidentTypes,
+                            title: {
+                                text: '사고 유형'
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '수'
+                            }
+                        },
+                        series: [
+                            {
+                                name: '사망자 수',
+                                data: deaths,
+                                color: '#FF0000',
+                                type: 'column'
+                            },
+                            {
+                                name: '부상자 수',
+                                data: casualties,
+                                color: '#FFD700',
+                                type: 'column'
+                            },
+                            {
+                                name: '중상자 수',
+                                data: seriously,
+                                color: '#0000FF',
+                                type: 'line'
+                            }
+                        ],
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        },
+                        tooltip: {
+                            shared: true,
+                            useHTML: true
+                        }
+                    });
+                })
+                .catch(error => console.error('차트 데이터 가져오기 오류:', error));
+        }
 
-                const options = {
-                    title: '사고 유형별 사망자 수, 부상자 수 및 중상자 수',
-                    chartArea: {width: '70%', height: '70%'},
-                    hAxis: {
-                        title: '사고 유형',
-                        titleTextStyle: {color: '#333'}
-                    },
-                    vAxis: {
-                        minValue: 0
-                    },
-                    seriesType: 'bars',
-                    series: {
-                        0: {type: 'bars', color: '#FF0000'},  // 사망자 수 - 빨간색 막대
-                        1: {type: 'bars', color: '#FFFF00'},  // 부상자 수 - 노란색 막대
-                        2: {type: 'line', color: '#0000FF'}   // 중상자 수 - 파란색 선
-                    },
-                    animation: {
-                        startup: true,
-                        duration: 1000,
-                        easing: 'out'
-                    },
-                    tooltip: {isHtml: true},
-                    legend: {position: 'bottom'}
-                };
-
-                const chart = new google.visualization.ComboChart(document.getElementById('comboChart'));
-                chart.draw(dataTable, options);
-
-                // 차트 클릭 이벤트 핸들러
-                google.visualization.events.addListener(chart, 'select', function() {
-                    const selectedItem = chart.getSelection()[0];
-                    if (selectedItem) {
-                        const accidentType = dataTable.getValue(selectedItem.row, 0);
-                        alert(accidentType + '이 선택되었습니다.');
-                    }
-                });
-            })
-            .catch(error => console.error('차트 데이터 가져오기 오류:', error));
-    }
+        drawChart(); // 차트 그리기 함수 호출
+    });
 </script>
 
  

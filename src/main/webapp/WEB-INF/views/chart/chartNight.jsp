@@ -16,13 +16,11 @@
 <script src="${CP}/resources/js/chart/chart.js"></script>
 <!-- Chart.js 라이브러리 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', () => {
-        drawCharts();
-    });
-
-    function drawCharts() {
         fetch('${CP}/chart/chartData4.do')
             .then(response => response.json())
             .then(data => {
@@ -42,49 +40,57 @@
                 const nightCasualties = nightCasualtiesData.find(item => item.DAY_NIGHT === '야간').TOTAL_CASUALTIES;
 
                 // 차트 데이터 준비
-                const dayChartData = [dayDead, dayCasualties, daySeriously];
-                const nightChartData = [nightDead, nightCasualties, nightSeriously];
-                const labels = ['사망자 수', '부상자 수', '중상자 수'];
-                const chartData = {
-                        labels: labels,
-                        datasets: [
-                            {
-                                label: '주간',
-                                data: [dayDead, dayCasualties, daySeriously],
-                                backgroundColor: '#FF6384'
-                            },
-                            {
-                                label: '야간',
-                                data: [nightDead, nightCasualties, nightSeriously],
-                                backgroundColor: '#36A2EB'
-                            }
-                        ]
-                    };
-                const ctx = document.getElementById('comparisonChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: chartData,
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            title: {
-                                display: true,
-                                text: '주간 및 야간 사망자 수, 부상자 수, 중상자 수 비교'
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                Highcharts.chart('chartContainer', {
+                    chart: {
+                        type: 'bar',
+                        animation: {
+                            duration: 1000
+                        }
+                    },
+                    title: {
+                        text: '주간 및 야간 사망자 수, 부상자 수, 중상자 수 비교'
+                    },
+                    xAxis: {
+                        categories: ['사망자 수', '부상자 수', '중상자 수'],
+                        title: {
+                            text: null
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: '수',
+                            align: 'high'
+                        }
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        x: -10
+                    },
+                    plotOptions: {
+                        bar: {
+                            dataLabels: {
+                                enabled: true
                             }
                         }
-                    }
+                    },
+                    series: [
+                        {
+                            name: '주간',
+                            data: [dayDead, dayCasualties, daySeriously],
+                            color: '#FF6384'
+                        },
+                        {
+                            name: '야간',
+                            data: [nightDead, nightCasualties, nightSeriously],
+                            color: '#36A2EB'
+                        }
+                    ]
                 });
             })
             .catch(error => console.error('차트 데이터 가져오기 오류:', error));
-    }
 </script>
 <style> 
 			/* 중앙 콘텐츠 */
@@ -177,12 +183,7 @@
 <%@ include file="/WEB-INF/views/chart/chart_btn.jsp" %> 
  
     
-    <!-- 차트 컨테이너 -->
-    <div id="chartsContainer" class="chart-container">
-        <div class="chart-box">
-            <canvas id="comparisonChart"></canvas>
-        </div>
-    </div>
+    <div id="chartContainer" style="height: 500px; margin: 0 auto;"></div>
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 
 </html>

@@ -95,9 +95,9 @@
     <div class="button-row">
         <button class="showChartsButton">사고종류별 교통사고</button>
         <button class="showChartsButton">구별 교통사고</button>
-        <button class="showChartsButton">연도별 기상사고(구)</button>
-        <button class="showChartsButton">연도별 기상상태와 부상자 수</button>
-        <button class="showChartsButton">구별 기상상태와 부상자 수</button>
+        <button class="showChartsButton">연도별 기상사고 부상자수</button>
+        <button class="showChartsButton">기상사고 추이</button>
+        <button class="showChartsButton">구별 기상상태의 부상자 수</button>
     </div>
 </div>
 

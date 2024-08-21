@@ -32,7 +32,12 @@
 <script src="${CP}/resources/js/common.js"></script>
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/chart/chart.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 </head>
  
 <body>
@@ -43,49 +48,51 @@
 <!-- 버튼 컨테이너 -->
 <%@ include file="/WEB-INF/views/chart/chart_btn.jsp" %> 
     <!-- 연도 선택 버튼 컨테이너 -->
-<div class="year-button-container">
-    <c:forEach var="year" begin="2005" end="2023">
-        <button class="year-button" data-year="${year}">${year}</button>
-    </c:forEach>
-</div>
+<div class="container mt-4">
+        <div class="btn-group" role="group" aria-label="Year Buttons">
+            <c:forEach var="year" begin="2005" end="2023">
+                <button type="button" class="btn btn-primary year-button" data-year="${year}">
+                    ${year}
+                </button>
+            </c:forEach>
+        </div>
+    </div>
 
 <!-- 차트 컨테이너 -->
 <div id="chartContainer" style="height: 500px; margin: 0 auto;"></div>
 
 <script>
-    $(document).ready(function() {
-        // 연도 버튼 클릭 이벤트
-        $('.year-button').on('click', function() {
-            var selectedYear = $(this).data('year');
-            // 선택한 연도를 사용하여 차트를 갱신하거나 데이터 요청
-            loadChartForYear(selectedYear);
-        });
-
-        function loadChartForYear(year) {
-            // 예시: AJAX 요청으로 연도별 데이터를 가져와 차트 갱신
-            $.ajax({
-                url: '${CP}/chart/weatherByYear.do', // 데이터 요청 URL
-                method: 'GET',
-                data: { year: year },
-                success: function(response) {
-                    console.log(response);
-                    // 차트 데이터를 업데이트하는 로직 추가
-                    drawChart(response);
-                },
-                error: function() {
-                    alert('데이터를 가져오는 데 실패했습니다.');
-                }
+        $(document).ready(function() {
+            // 연도 버튼 클릭 이벤트
+            $('.year-button').on('click', function() {
+                var selectedYear = $(this).data('year');
+                // 선택한 연도를 사용하여 차트를 갱신하거나 데이터 요청
+                loadChartForYear(selectedYear);
             });
-        }
 
-        function drawChart(data) {
-            google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(function () {
+            function loadChartForYear(year) {
+                // 예시: AJAX 요청으로 연도별 데이터를 가져와 차트 갱신
+                $.ajax({
+                    url: '${CP}/chart/weatherByYear.do', // 데이터 요청 URL
+                    method: 'GET',
+                    data: { year: year },
+                    success: function(response) {
+                        console.log(response);
+                        // 차트 데이터를 업데이트하는 로직 추가
+                        drawChart(response);
+                    },
+                    error: function() {
+                        alert('데이터를 가져오는 데 실패했습니다.');
+                    }
+                });
+            }
+
+            function drawChart(data) {
                 // 구별로 부상자 수 합산을 위한 객체
                 var regionInjuryCount = {};
 
                 // 데이터를 순회하며 각 구별로 부상자 수를 합산
-                data.forEach(function (item) {
+                data.forEach(function(item) {
                     if (regionInjuryCount[item.REGION]) {
                         regionInjuryCount[item.REGION] += item.INJURYCOUNT;
                     } else {
@@ -94,53 +101,66 @@
                 });
 
                 // 차트 데이터 배열 생성
-                var chartDataArray = [];
-
-                // 첫 번째 행에 헤더를 추가합니다 (구 이름, 부상자 수)
-                chartDataArray.push(['Region', 'Injury Count']);
+                var chartData = [];
 
                 // 구별로 합산된 데이터를 배열에 추가
                 for (var region in regionInjuryCount) {
-                    chartDataArray.push([region, regionInjuryCount[region]]);
+                    chartData.push([region, regionInjuryCount[region]]);
                 }
 
                 // 데이터 오름차순으로 정렬 (부상자 수 기준)
-                chartDataArray.sort(function(a, b) {
+                chartData.sort(function(a, b) {
                     return b[1] - a[1]; // 내림차순 정렬
                 });
 
-                // 구글 차트 데이터 테이블로 변환
-                var chartData = google.visualization.arrayToDataTable(chartDataArray);
-
-                // 차트 옵션 설정
-                var options = {
-                    title: 'Total Injury Count by Region',
-                    legend: { position: 'none' },
-                    hAxis: {
-                        title: 'Injury Count',
-                        slantedText: true,  // x축 텍스트 기울이기
-                        slantedTextAngle: 45 // 텍스트 기울기 각도
+                Highcharts.chart('chartContainer', {
+                    chart: {
+                        type: 'bar',
+                        marginRight: 150
                     },
-                    vAxis: {
-                        title: 'Region',
-                        textStyle: {
-                            fontSize: 12
+                    title: {
+                    	text: null // 제목 비활성화
+                    },
+                    xAxis: {
+                        categories: chartData.map(item => item[0]),
+                        title: {
+                            text: 'Region'
                         },
-                        viewWindow: {
-                            min: 0
+                        labels: {
+                            rotation: -45
                         }
                     },
-                    bars: 'horizontal',  // 세로 막대 그래프
-                    chartArea: { width: '70%' },  // 차트 영역 너비
-                };
-
-                // 차트 그리기
-                var chart = new google.visualization.BarChart(document.getElementById('chartContainer'));
-                chart.draw(chartData, options);
-            });
-        }
-    });
-</script>
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: '부상자 수',
+                            align: 'high'
+                        },
+                        stackLabels: {
+                            enabled: true
+                        }
+                    },
+                    legend: {
+                        enabled: false // 범례 비활성화
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{point.x}</b><br/>',
+                        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                    },
+                    plotOptions: {
+                        bar: {
+                            stacking: 'normal'
+                        }
+                    },
+                    series: [{
+                        name: '부상자 수',
+                        data: chartData.map(item => item[1]),
+                        color: '#2196f3'
+                    }]
+                });
+            }
+        });
+    </script>
 
 </body>
 <%@ include file="/WEB-INF/views/template/footer.jsp" %> 
