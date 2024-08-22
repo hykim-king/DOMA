@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const imgLinkInput = document.querySelector("#imgLink");
     
     //내용
-    const contentsTextArea = document.querySelector("#content");
+    const contentsTextArea = document.getElementById("content");
     
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
@@ -120,25 +120,18 @@ document.addEventListener("DOMContentLoaded", function(){
 	//doUpdate : 수정
     function doUpdate() {
         console.log("doUpdate()");
-        
-        if(isEmpty(seqInput.value) == true){
-            alert('seq를 확인 하세요.')
-            //seqInput.focus();
-            return;
-        }
-        
+   
         if(isEmpty(titleInput.value) == true){
             alert('제목을 입력 하세요.')
             titleInput.focus();
             return;
         }
-        
-        //marker : simplemde.value()
-        if(isEmpty(simplemde.value()) == true){
-            alert('내용을 입력 하세요.')
-            contentsTextArea.focus();
-            return;
-        }
+         
+        if (isEmpty(contentsTextArea.value)) {
+	        alert('내용을 입력 하세요.');
+	        contentsTextArea.focus();
+	        return;
+	    }
         
         if(confirm("수정 하시겠습니까?") === false)return;
         
@@ -155,7 +148,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 "title"    : titleInput.value,
                 "userId"    : userIdInput.value,
                 "modId"    : modIdInput.value,
-                "content"  : simplemde.value()
+                "content"  : contentsTextArea.value,
+                "imgLinkInput.files[0]": imgLinkInput.files[0]
             };
 
         PClass.pAjax(url, params, dataType, type, async, function(data){
@@ -188,9 +182,9 @@ document.addEventListener("DOMContentLoaded", function(){
 <div class="container">
   <!-- 제목 -->
   <div class="page-header  mb-4">
-    <h2>
-         
-    </h2>
+  <br>
+    <h2> 게시글 수정하기 </h2>
+    <hr>
   </div> 
   <!--// 제목 end ------------------------------------------------------------->
   
@@ -237,11 +231,16 @@ document.addEventListener("DOMContentLoaded", function(){
         </div>
     </div> 
     <div class="row mb-2">
-        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="imgLink" id="imgLink"  maxlength="75" required="required">
-        </div>
-    </div>
+    <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
+    <div class="col-sm-10">
+        <input type="file" multiple class="form-control" name="fileName" id="imgLink">
+        <!-- 현재 업로드된 파일 링크 표시 -->
+        <c:if test="${not empty board.imgLink}">
+            <p>[ 파일 첨부 ] <a href="<c:out value='${board.imgLink}'/>" target="_blank"><c:out value='${board.imgLink}'/></a></p>
+        </c:if>
+    </div>        
+</div>
+
     <div class="row mb-2">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
         <div class="col-sm-10">
@@ -250,19 +249,18 @@ document.addEventListener("DOMContentLoaded", function(){
     </div>
     <div class="row mb-2"">
         <label for="content" class="col-sm-2 col-form-label">내용</label>
-        <div class="col-sm-10">
-         <textarea style="height: 200px"  class="form-control" id="content" name="content"><c:out value='${board.content}'></c:out>
-         </textarea>
-        </div>
+         <div class="col-sm-10">
+         <textarea style="height: 200px" class="form-control" id="content" name="content">
+    	<c:out value="${board.content}"/>
+		</textarea>
+		</div>
     </div>
   </form>
   <!--// form end -->
  
 </div>
 <!--// container end ---------------------------------------------------------->
-<script>
-    var simplemde = new SimpleMDE({ element: document.getElementById("content")})
-</script>
+ 
 
 <%-- bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script> 

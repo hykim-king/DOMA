@@ -62,9 +62,7 @@ public class MyPageController implements PLog {
 	@Autowired
 	CommentsMapper commentMapper;
 	
-	
-	@Autowired
-	MarkdownService markdownService;
+	 
 	 
 	@Autowired
 	DeathMapper deathMapper;
@@ -246,8 +244,7 @@ public class MyPageController implements PLog {
 		 inVO.setUserId(StringUtil.nvl(inVO.getUserId(), "admin"));
 			
 		 Board outVO = boardService.doSelectOne(inVO);
-		 String markdownContents = this.markdownService.convertMarkdownToHtml(outVO.getContent());
-			
+		 	
 			log.debug("2.outVO :" + outVO);
 			
 			String message = "";
@@ -260,8 +257,7 @@ public class MyPageController implements PLog {
 			}
 			
 			Message messageObj = new Message(flag, message);
-			
-			model.addAttribute("markdownContents", markdownContents);
+			 
 			model.addAttribute("board", outVO);
 			model.addAttribute("message", message);
 			
