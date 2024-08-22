@@ -179,7 +179,7 @@ header, footer {
 			<hr>
 			<div id="content" class="post-content">
 				<p>${info.content}</p>
-				<img src="${CP}/resources/img/board_img/${info.imgLink }">
+				<img style="width:100%;" src="${CP}/resources/img/board_img/${info.imgLink }">
 			</div>
 		</article>
 	</div>

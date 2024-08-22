@@ -26,8 +26,6 @@
 </style>
 </head>
 <body>
-user : ${user}
-target : ${target }
 <div class="container">
 	<div class="d-flex align-items-center justify-content-between">
 	    <h2 class="mb-0">게시물 수정</h2>
