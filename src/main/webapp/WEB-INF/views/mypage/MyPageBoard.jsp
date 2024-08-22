@@ -89,11 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function deleteBoard(seq, userId) { 
         console.log("deleteBoard called with seq:", seq, "and userId:", userId);
-
-        if (!seq) {
-            alert('seq를 확인 하세요.');
-            return;
-        }
+ 
 
         if (!confirm("삭제 하시겠습니까?")) return;
 
