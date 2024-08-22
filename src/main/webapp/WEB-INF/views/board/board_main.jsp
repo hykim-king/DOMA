@@ -506,7 +506,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             } else if (grade === 1 && userId === reply.userId) {
                                 // grade가 1이고 userId가 댓글 작성자와 같을 때 수정/삭제 버튼 추가
                                 var updateButton = $("<button></button>").text("수정").addClass("btn btn-outline-warning");
-                                var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-warning");
+                                var deleteButton = $("<button></button>").text("삭제").addClass("btn btn-outline-danger");
 
                                 // 수정 버튼 클릭 이벤트
                                 updateButton.on("click", function() {
@@ -591,9 +591,9 @@ document.addEventListener("DOMContentLoaded", function() {
     <input type="hidden" name="modId"  id="modId" value="${board.modId}">
     <input type="hidden" name="comSeq" id="comSeq" value="${comments.comSeq}">
 	<div class="container">
-		<button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
-		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
-		<button type="button" value="삭제" id="doDelete" class="btn btn-outline-warning">삭제하기</button>
+		<button type="button" value="목록" id="moveToList" class="btn btn-outline-dark">목록으로</button>
+		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-dark">수정하기</button>
+		<button type="button" value="삭제" id="doDelete" class="btn btn-outline-danger">삭제하기</button>
 		<article class="post">
 		    <h2 name="title" id="title" class="post-title">${board.title}</h2>
 		    <div class="post-meta">
