@@ -45,6 +45,11 @@
 			idInput.focus();
 			return;
 		}
+		if(idInput.value.indexOf(" ") !== -1){
+			alert("아이디에 공백 문자가 있습니다.");
+			idInput.focus();
+			return;
+		}
 		if(isEmpty(nameInput.value) == true){
 			alert("사용하실 닉네임을 입력하세요.");
 			nameInput.focus();
