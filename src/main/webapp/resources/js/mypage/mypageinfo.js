@@ -239,12 +239,12 @@ document.addEventListener("DOMContentLoaded", function(){
           let gradeValue = "";  
                                   
           let params = { 
-              "userId"   :userIdInput.value,
-              "userName"     :userNameInput.value,
-              "userPw" :userPwInput.value, 
-              "birth"    :birthInput.value, 
-              "address"    :addressInput.value ,
-              "detailAddress":detailAddressInput.value
+               "userId"   :userIdInput.value,
+            "userName"     :userNameInput.value,
+            "userPw" :userPwInput.value, 
+            "birth"    :birthInput.value,
+            "address"    :addrInput.value,
+            "detailAddress":detailAddrInput.value
               
           };        
           
