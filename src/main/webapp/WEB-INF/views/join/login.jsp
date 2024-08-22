@@ -22,11 +22,6 @@
 				<p><input type="text" name="userId" id="userId" placeholder="id"></p>
 				<p><input type="password" name="password" id="password" placeholder="password"></p>
 				<div style="text-align: center;">
-					<div class="checkboxouter">
-						<input type="checkbox" name="rememberme" id="remember" value="Remember">
-						<label class="checkbox"></label>
-					</div>
-					<label for="remember">회원정보 기억하기</label>
 				</div>
 				<input class="loginLoginValue" type="hidden" name="service" value="login" />
 			</div>
