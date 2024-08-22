@@ -51,7 +51,7 @@
                 <form class="member-form">
                     <div class="form-group">
                         <label for="title">제목</label>
-                        <input type="text" id="title" name="title" placeholder="">
+                        <input type="text" id="title" name="title" value="[공지사항] " placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="content">내용</label>

@@ -233,7 +233,13 @@ document.addEventListener("DOMContentLoaded", function(){
         console.log("userIdInput : " + userIdInput.value);
         console.log("modIdInput : " + modIdInput.value);
         console.log("imgLinkInput.files[0]", imgLinkInput.files[0]);
-        console.log("simplemde", contentsTextArea.value);
+        console.log("content", contentsTextArea.value);
+        
+        if(isEmpty(searchDivSelect.value) == true){
+            alert('구를 선택 하세요.')
+            searchDivSelect.focus();
+            return;
+        }
         
         if(isEmpty(titleInput.value) == true){
             alert('제목을 입력 하세요.')
@@ -242,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         
         if(isEmpty(imgLinkInput.files[0]) == true){
-            alert('사진을 선택 하세요.')
+            alert('이미지를 선택 하세요.')
             imgLinkInput.focus();
             return;
         }
@@ -380,9 +386,6 @@ document.addEventListener("DOMContentLoaded", function(){
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->
-<script>
-    var simplemde = new SimpleMDE({ element: document.getElementById("content")})
-</script>
 
 <%-- bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script> 

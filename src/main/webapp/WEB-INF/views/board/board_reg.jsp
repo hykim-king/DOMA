@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	    }
 	    
 	    if(isEmpty(imgLinkInput.files[0]) == true){
-            alert('사진을 선택 하세요.')
+            alert('이미지를 선택 하세요.')
             imgLinkInput.focus();
             return;
         }

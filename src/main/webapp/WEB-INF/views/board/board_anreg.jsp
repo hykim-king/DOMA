@@ -171,10 +171,11 @@ document.addEventListener("DOMContentLoaded", function(){
     const moveToListBtn = document.querySelector("#moveToList");
     const titleInput = document.querySelector("#title");
     const userIdInput = document.querySelector("#userId");
-    const contentsTextArea = document.getElementById("#content");
+    const contentsTextArea = document.getElementById("content");
     const divInput = document.querySelector("#div");
     const imgLinkInput = document.querySelector("#imgLink");
     const seqInput = document.querySelector("#seq");
+    const modIdInput = document.querySelector("#modId");
     //구분
     const searchDivSelect = document.querySelector("#searchDiv");
     
@@ -232,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function(){
         if(confirm("등록 하시겠습니까?") === false)return;
         
         //비동기 통신
-        let type = "POST";
+        let type = "GET";
         let url = "/doma/board/anSave.do";
         let async = "true";
         let dataType = "html";
@@ -241,8 +242,8 @@ document.addEventListener("DOMContentLoaded", function(){
         	"seq" : seqInput.value,
             "title"    : titleInput.value,
             "userId"    : userIdInput.value,
+            "modId"  : userIdInput.value,
             "content" : contentsTextArea.value,
-            "imgLink" : imgLinkInput.value,
             "div"      : divInput.value
         };
 
@@ -252,8 +253,6 @@ document.addEventListener("DOMContentLoaded", function(){
                     //JSON문자열을 JSON Object로 변환
                     const message = JSON.parse(data)
                     if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
-                        //window.location.href = "/doma/board/boardInfo.do?seq=" + seqInput.value + "&div=" + divInput.value;
                         moveToList();
                     }else{
                         alert(message.messageContents);
@@ -297,6 +296,7 @@ document.addEventListener("DOMContentLoaded", function(){
   <form action="${CP}/board/fileUpload.do" method="post" enctype="multipart/form-data" class="form-horizontal">
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
+    <input type="hidden" name="modId" id="modId" value="${board.modId}">
     <div class="row mb-2">
 	    <label for="title" class="col-sm-2 col-form-label">제목</label>
 	    <div class="col-sm-10">
@@ -308,12 +308,6 @@ document.addEventListener("DOMContentLoaded", function(){
         <div class="col-sm-10">
           <input type="text" value="<c:out value='${user.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
         </div>
-    </div>
-    <div class="row mb-2">
-        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
-        <div class="col-sm-10">
-          <input type="file" class="form-control" name="imgLink" id="imgLink">        
-        </div>        
     </div>
     <div class="row mb-2">
         <label for="content" class="col-sm-2 col-form-label">내용</label>
