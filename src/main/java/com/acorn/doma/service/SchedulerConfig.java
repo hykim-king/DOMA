@@ -86,7 +86,7 @@ public class SchedulerConfig {
                 retryCount++;
                 if (retryCount < maxRetries) {
                     try {
-                        System.out.println("Retrying in " + retryDelay / 1000 + " seconds...");
+                        System.out.println("재시도 중.. " + retryDelay / 1000 + " 초...");
                         Thread.sleep(retryDelay); // 재시도 전 지연 시간
                     } catch (InterruptedException ie) {
                         ie.printStackTrace();
@@ -94,11 +94,11 @@ public class SchedulerConfig {
                         break;
                     }
                 } else {
-                    System.out.println("Max retry attempts reached. Giving up.");
+                    System.out.println("최대 재시도 횟수에 도달했습니다. API 연동 불가.");
                 }
             }
         } else {
-            System.out.println("서버가 다름");
+            System.out.println("해당 서버에서는 실시간 돌발 정보를 가져오지 못합니다.");
         }
     }
 

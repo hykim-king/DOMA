@@ -83,3 +83,26 @@ body {
     background-color: rgba(0, 0, 0, 0.1) !important; /* 선택되지 않은 버튼의 배경색 */
     color: #000000; /* 선택되지 않은 버튼의 글자색 */
 }
+
+/* freezing */
+/* CSS 파일에 추가 */
+.year-button {
+    display: block;
+    width: 60px; /* 버튼의 너비 */
+    height: 35px; /* 버튼의 높이 */
+    margin: 5px auto; /* 버튼 중앙 정렬 */
+    text-align: center;
+    line-height: 35px; /* 버튼 높이와 맞춤 */
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px; /* 둥근 모서리 */
+    transition: background-color 0.3s, color 0.3s; /* 색상 변화에 대한 부드러운 전환 효과 */
+    font-size: 14px; /* 글자 크기 */
+    color: #000000; /* 기본 글자색 */
+    background-color: #FFFFFF; /* 기본 배경색 */
+}
+
+.year-button:hover {
+    opacity: 0.8; /* 버튼의 투명도 조정 */
+}
