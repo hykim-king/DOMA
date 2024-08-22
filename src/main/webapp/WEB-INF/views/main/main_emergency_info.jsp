@@ -21,8 +21,8 @@
     <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
     <div id="subMap" style="height: 815px;">
         <section id="mapContainer">
-            <div class="aside" style="height:800px; width: 350px; overflow : scroll">
-                <h2 style="font-weight : bold; text-align : center; border: 3px solid black">돌발정보</h2>
+            <div class="aside" style="height:800px; width: 305px; overflow : scroll">
+                <h2>돌발정보</h2>
                 <c:forEach var="acc" items="${accList}">
                 <ul class="info_ul">
                     <li>
@@ -33,19 +33,19 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <td colspan="2" style="font-weight: bold; text-align: center; border: 1px solid black; background-color: #868e96"
+                                    <td colspan="2" style="cursor: pointer; box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);"
                                         onclick="moveToMarker('${acc.latitude}', '${acc.longitude}')">${acc.accName} : ${acc.accDName}</td>
                                 </tr>
                                 <tr>
-                                    <th class="info_th" style="background-color: #FFDF00; border: 1px solid black;">기간</th>
-                                    <td>${acc.occrDate} ${acc.occrTime} ~ <br>${acc.endDate} ${acc.endTime}</td>
+                                    <th class="info_th">기간</th>
+                                    <td style="background-color: #F4F4F4; border: 1px solid #ffffff; font-weight: normal;">${acc.occrDate} ${acc.occrTime} ~ <br>${acc.endDate} ${acc.endTime}</td>
                                 </tr>
                                 <tr>
-                                    <th class="info_th" style="background-color: #FFDF00; border: 1px solid black;">돌발유형</th>
-                                    <td>${acc.accDName}</td>
+                                    <th class="info_th">돌발유형</th>
+                                    <td style="background-color: #F4F4F4; border: 1px solid #ffffff; font-weight: normal;">${acc.accDName}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="background-color: #868e96; border: 1px solid black;">${acc.info}</td>
+                                    <td colspan="2" style="background-color: #FFFACF; border: 1px solid white; font-weight: normal;">${acc.info}</td>
                                 </tr>
                             </tbody>
                         </table>

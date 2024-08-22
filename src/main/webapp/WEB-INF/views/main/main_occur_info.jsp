@@ -176,10 +176,11 @@ function removeExistingMarkers() {
     <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
     <div id="subMap" style="height: 815px;">
         <section id="mapContainer">
-            <div class="aside" style="height:800px; width: 200px; overflow : scroll">
+            <div class="aside" style="height:800px; width: 170px; overflow : scroll">
+            <h2>사고 발생도</h2>
                 <!-- 기본적으로 "년도 선택" 드롭다운 -->
                 <div class="year-selection" style="text-align: center; margin-bottom: 20px;">
-                    <select id="yearDropdown" onchange="selectYear(this.value)" style="width: 150px; height: 35px; font-weight: bold; text-align: center; border: 2px solid black;">
+                    <select id="yearDropdown" onchange="selectYear(this.value)" style="margin-top: 10px; width: 130px; height: 33px; text-align: center; border: 1px solid #c1c1c1;">
                         <option value="" disabled selected>년도 선택</option>
                         <option value="2018">2018</option>
                         <option value="2019">2019</option>
@@ -191,7 +192,6 @@ function removeExistingMarkers() {
 
                 <!-- 사고 위험도 버튼 -->
 				<div class="risk-section">
-				    <h4>사고 발생도</h4>
 				    <div id="riskButtons">
 				       <div id="1" class="risk-button risk-green" onclick="selectRisk(1)">1</div>
                         <div id="2" class="risk-button risk-blue" onclick="selectRisk(2)">2</div>

@@ -20,12 +20,12 @@ var polygons = {}; // 각 년도별 폴리곤 저장 객체
 
 // 색상 배열 정의
 var colorPalette = {
-    '2018': 'rgba(191, 45, 45, 0.8)', // 연한 어두운 빨강
-    '2019': 'rgba(45, 76, 191, 0.8)', // 연한 어두운 파랑
-    '2020': 'rgba(45, 191, 45, 0.8)', // 연한 어두운 초록
-    '2021': 'rgba(191, 109, 45, 0.8)', // 연한 어두운 주황
-    '2022': 'rgba(109, 45, 191, 0.8)', // 연한 어두운 보라
-    '2023': 'rgba(45, 109, 191, 0.8)'  // 연한 어두운 청록
+    '2018': 'rgba(114, 53, 255, 1)', // 연한 어두운 빨강
+    '2019': 'rgba(28, 75, 255, 1)', // 연한 어두운 파랑
+    '2020': 'rgba(0, 195, 53, 1)', // 연한 어두운 초록
+    '2021': 'rgba(255, 229, 0, 1)', // 연한 어두운 주황
+    '2022': 'rgba(255, 166, 27, 1)', // 연한 어두운 보라
+    '2023': 'rgba(255, 27, 27, 1)'  // 연한 어두운 청록
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -276,9 +276,9 @@ function getPolygonColor(year) {
     <jsp:include page="/WEB-INF/views/main/main_sidebar.jsp"></jsp:include>
     <div id="subMap" style="height: 815px;">
         <section id="mapContainer">
-            <div class="aside" style="height:800px; width: 350px; overflow : scroll">
-                    <h2 style="font-weight: bold; text-align: center; border: 3px solid black;">결빙정보</h2>
-                    <div>
+            <div class="aside" style="height:800px; width: 500px; overflow : scroll">
+                    <h2>결빙정보</h2>
+                    <div style="margin: 10px;">
                         <label>
                             <input type="checkbox" id="showAllCheckbox" checked>
                             전체 보기
@@ -303,14 +303,14 @@ function getPolygonColor(year) {
                                         <td>
 										    <button type="button" class="year-button" id="btn-${freezing.year}" onclick="polyData('${freezing.year}')">
 										        ${freezing.year}
-										        <span style="background-color: ${polygonColors[freezing.year] || '#FFFFFF'}; color: #FFF; padding: 0 4px;"></span>
+										        <span style="background-color: ${polygonColors[freezing.year] || '#FFFFFF'}; color: #FFF;"></span>
 										    </button>
 										</td>
-                                        <td>${freezing.accident}건</td>
-                                        <td>${freezing.casualties}명</td>
-                                        <td>${freezing.dead}명</td>
-                                        <td>${freezing.seriously}명</td>
-                                        <td>${freezing.ordinary}명</td>
+                                        <td  style="text-align: center;">${freezing.accident}건</td>
+                                        <td  style="text-align: center;">${freezing.casualties}명</td>
+                                        <td  style="text-align: center;">${freezing.dead}명</td>
+                                        <td  style="text-align: center;">${freezing.seriously}명</td>
+                                        <td style="text-align: center;">${freezing.ordinary}명</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

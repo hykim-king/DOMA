@@ -1,4 +1,4 @@
-
+@charset "UTF-8";
 
 
 body {
@@ -32,24 +32,24 @@ body {
 /* 사고 위험도 버튼 스타일 */
 .risk-button {
     display: block;
-    width: 60px; /* 버튼의 너비 */
-    height: 35px; /* 버튼의 높이 */
-    margin: 5px auto; /* 버튼 중앙 정렬 */
+    width: 100px; /* 버튼의 너비 */
+    height: 40px; /* 버튼의 높이 */
+    margin: 8px auto; /* 버튼 중앙 정렬 */
     text-align: center;
-    line-height: 35px; /* 버튼 높이와 맞춤 */
-    border: 1px solid #ccc;
+    line-height: 38px; /* 버튼 높이와 맞춤 */
+    border: 1px solid #ffffff;
     cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px; /* 둥근 모서리 */
+    //font-weight: bold;
+    border-radius: 20px; /* 둥근 모서리 */
     transition: background-color 0.3s, color 0.3s; /* 색상 변화에 대한 부드러운 전환 효과 */
-    font-size: 14px; /* 글자 크기 */
+    font-size: 21px; /* 글자 크기 */
     color: #000000; /* 기본 글자색 */
     background-color: #FFFFFF; /* 기본 배경색 */
 }
 
 /* 각 색상 버튼 기본 색상 설정 */
 .risk-green {
-    background-color: #4caf50; /* 초록색 */
+    background-color: #04cf28; /* 초록색 */
     color: #FFFFFF; /* 기본 글자색 */
 }
 
@@ -69,7 +69,7 @@ body {
 }
 
 .risk-purple {
-    background-color: #9c27b0; /* 보라색 */
+    background-color: #9c00b7; /* 보라색 */
     color: #FFFFFF; /* 기본 글자색 */    
 }
 
@@ -88,21 +88,89 @@ body {
 /* CSS 파일에 추가 */
 .year-button {
     display: block;
-    width: 60px; /* 버튼의 너비 */
-    height: 35px; /* 버튼의 높이 */
-    margin: 5px auto; /* 버튼 중앙 정렬 */
+    width: 53px; /* 버튼의 너비 */
+    height: 37px; /* 버튼의 높이 */
+    margin: 0px auto; /* 버튼 중앙 정렬 */
     text-align: center;
     line-height: 35px; /* 버튼 높이와 맞춤 */
-    border: 1px solid #ccc;
+    border: 1px solid #FFF;
     cursor: pointer;
     font-weight: bold;
-    border-radius: 5px; /* 둥근 모서리 */
+    border-radius: 20px; /* 둥근 모서리 */
     transition: background-color 0.3s, color 0.3s; /* 색상 변화에 대한 부드러운 전환 효과 */
-    font-size: 14px; /* 글자 크기 */
+    font-size: 15px; /* 글자 크기 */
     color: #000000; /* 기본 글자색 */
     background-color: #FFFFFF; /* 기본 배경색 */
 }
 
 .year-button:hover {
     opacity: 0.8; /* 버튼의 투명도 조정 */
+}
+
+
+/* */
+
+h2 {
+    //font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #5d5d5d;
+    margin: 0; /* 상하 여백을 0으로 설정하여 선과 텍스트 간의 간격을 조절합니다 */
+    padding-bottom: 9px; /* 텍스트와 선 간의 간격 조절 */
+    padding-top: 10px;
+    font-size: 1.5rem;
+}
+
+
+.info_ul {
+    margin-top: 10px;
+    padding-left: 0rem;
+}
+
+/* 테이블 스타일 */
+.info_table {
+    caption-side: bottom;
+    border-collapse: collapse;
+}
+
+.info_table td {
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #FFEB3B;
+    background-color: #ffffff;
+    padding: 3px; 
+    font-size: 16px;
+}
+
+
+.info_table th {
+    background-color: #ebebeb;
+    border: 1px solid white;
+    text-align: center; /* 중앙 정렬 */
+}
+
+.info_th{
+    background-color: #ebebeb;
+    border: 1px solid white;
+    text-align: center; /* 중앙 정렬 */
+    font-weight: normal;
+}
+
+
+/* 메인 스크롤바 */
+.aside::-webkit-scrollbar {
+    width: 10px; /* 스크롤바의 너비 */
+}
+
+.aside::-webkit-scrollbar-track {
+    background: #ffffff; /* 스크롤바 트랙의 배경색 */
+}
+
+.aside::-webkit-scrollbar-thumb {
+    background-color: #FFEB3B; /* 스크롤바 핸들의 색상 */
+    border-radius: 10px; /* 스크롤바 핸들의 둥근 모서리 */
+    border: 2px solid #ffffff; /* 스크롤바 핸들의 경계 */
+}
+
+.aside::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* 스크롤바 핸들에 마우스를 올렸을 때 색상 */
 }
