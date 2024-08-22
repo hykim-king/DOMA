@@ -191,7 +191,7 @@ function removeExistingMarkers() {
 
                 <!-- 사고 위험도 버튼 -->
 				<div class="risk-section">
-				    <h4>사고 위험도</h4>
+				    <h4>사고 발생도</h4>
 				    <div id="riskButtons">
 				       <div id="1" class="risk-button risk-green" onclick="selectRisk(1)">1</div>
                         <div id="2" class="risk-button risk-blue" onclick="selectRisk(2)">2</div>
