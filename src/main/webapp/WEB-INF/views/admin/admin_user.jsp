@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
     <script src="<%=request.getContextPath()%>/resources/js/admin/admin_user.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/js/script.js"></script>
+    <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/pcon.png">
 </head>
 <body>
 
