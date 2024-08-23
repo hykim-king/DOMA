@@ -66,6 +66,37 @@
 
 <title>DOMA</title>
 <style> 
+h2 {
+    font-size: 30px;
+    font-weight: 500px;
+    letter-spacing: 0;
+    line-height: 1.5em;
+    padding-bottom: 15px;
+    position: relative;
+    margin-left: 67px;
+}
+
+h2:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 5px;
+    width: 55px;
+    background-color: #111;
+}
+
+h2:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    height: 1px;
+    width: 95%;
+    max-width: 255px;
+    background-color: #333;
+}
+
 .boardTable {
         border: 1px #a39485 solid;
         font-size: .9em;
@@ -94,7 +125,7 @@
         background: #000000;
     }
 
-    td, th {
+    .boardTable td, th {
         padding: 1em .5em;
         vertical-align: middle;
     }
@@ -321,14 +352,14 @@ document.addEventListener("DOMContentLoaded", function(){
         </div> 
         <!--// 제목 end ------------------------------------------------------------->
         <!-- 버튼 -->
-        <div class="form-buttons" style="margin : 20px 0px 10px 30px" >
+        <div class="form-buttons" style="margin : 9px 65px 1px 23px" >
             <input type="button" value="글쓰기" id="anMoveToReg" class="btn btn-dark">
             <input type="button" value="조회" id="doRetrieveAn" class="btn btn-dark" >
         </div>
         <!-- //버튼 -------------------------------------------------------------------->
         
         <!-- 검색 -->
-        <form action="#" name="boardForm" class="row g-2 align-items-center" id="boardForm">
+        <form action="#" name="boardForm" class="row g-2 align-items-center" id="boardForm" style="margin : 4px 65px 6px 23px">
             <input type="hidden" name="div"    id="div" value="${search.getDiv() }">
             <input type="hidden" name="pageNo" id="pageNo" value="${search.pageNo}">
             <div class="col-sm-3">
