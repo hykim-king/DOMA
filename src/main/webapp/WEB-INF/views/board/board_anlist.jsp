@@ -206,6 +206,8 @@ document.addEventListener("DOMContentLoaded", function(){
     
     const div = document.querySelector("#div");
     
+    const userIdInput = document.querySelector("#userId");
+    
     
 //이벤트 처리=================================================================================================  
     
@@ -362,6 +364,7 @@ document.addEventListener("DOMContentLoaded", function(){
         <form action="#" name="boardForm" class="row g-2 align-items-center" id="boardForm" style="margin : 4px 65px 6px 23px">
             <input type="hidden" name="div"    id="div" value="${search.getDiv() }">
             <input type="hidden" name="pageNo" id="pageNo" value="${search.pageNo}">
+            <input type="hidden" name="userId" id="userId" value="${board.userId}">
             <div class="col-sm-3">
             </div>
             <div class="col-sm-2 text-end g-2">

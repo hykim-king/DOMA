@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function(){
         		"seq"      : seqInput.value,
         		"div"      : divInput.value,
         		"userId"   : userIdInput.value,
-        		"modId"   : modIdInput.value,
+        		"modId"   : userIdInput.value,
                 "title"    : titleInput.value,
                 "content"  : contentsTextArea.value
             };
