@@ -45,9 +45,7 @@
 
 <%-- common js --%>
 <script src="${CP}/resources/js/common.js"></script>
-
-<%-- google Nanum+Gothic --%>
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+ 
 
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -64,7 +62,7 @@
 <title>DOMA</title>
 <style> 
 .boardTable {
- 		font-family: 'Nanum Gothic', sans-serif !important;
+ 		 font-family: 'Gowun Dodum', sans-serif;
         border: 1px #a39485 solid;
         font-size: .9em;
         box-shadow: 0 2px 5px rgba(0,0,0,.25);
@@ -77,54 +75,54 @@
 
     /* 두 번째 테이블의 상단에 간격 추가 */
     .secondTableContainer {
-    	font-family: 'Nanum Gothic', sans-serif !important;
+    	 font-family: 'Gowun Dodum', sans-serif;
         margin-left: 20px; 
        	width: 10%;
     }
 
     /* 나머지 CSS 스타일 그대로 유지 */
     th {
-     	font-family: 'Nanum Gothic', sans-serif !important;
+     	 font-family: 'Gowun Dodum', sans-serif;
         text-align: left;
     }
 
     thead {
-     	font-family: 'Nanum Gothic', sans-serif !important;
+     	 font-family: 'Gowun Dodum', sans-serif;
         font-weight: bold;
         color: #fff;
         background: #000000;
     }
 
     td, th {
-     	font-family: 'Nanum Gothic', sans-serif !important;
+     	 font-family: 'Gowun Dodum', sans-serif;
         padding: 1em .5em;
         vertical-align: middle;
     }
 
     td {
-     	font-family: 'Nanum Gothic', sans-serif !important;
+     	 font-family: 'Gowun Dodum', sans-serif;
         background: #fff;
     }
 
     a {
-     font-family: 'Nanum Gothic', sans-serif !important;
+      font-family: 'Gowun Dodum', sans-serif;
         color: #73685d;
     }
 
     @media all and (max-width: 768px) {
         table, thead, tbody, th, td, tr {
-        	font-family: 'Nanum Gothic', sans-serif !important;
+         font-family: 'Gowun Dodum', sans-serif;
             display: block;
            
         }
 
         th {
-         	font-family: 'Nanum Gothic', sans-serif !important;
+          font-family: 'Gowun Dodum', sans-serif;
             text-align: right;
         }
 
         table {
-         	font-family: 'Nanum Gothic', sans-serif !important;
+         	 font-family: 'Gowun Dodum', sans-serif;
             position: relative; 
             padding-bottom: 0;
             border: none;
@@ -132,13 +130,13 @@
         }
 
         thead {
-         	font-family: 'Nanum Gothic', sans-serif !important;
+          font-family: 'Gowun Dodum', sans-serif;
             float: left;
             white-space: nowrap;
         }
 
         tbody {
-         	font-family: 'Nanum Gothic', sans-serif !important;
+       font-family: 'Gowun Dodum', sans-serif;
             overflow-x: auto;
             overflow-y: hidden;
             position: relative;
@@ -146,18 +144,18 @@
         }
 
         tr {
-         	font-family: 'Nanum Gothic', sans-serif !important;
+         font-family: 'Gowun Dodum', sans-serif;
             display: inline-block;
             vertical-align: top;
         }
 
         th {
-         	font-family: 'Nanum Gothic', sans-serif !important;
+         	 font-family: 'Gowun Dodum', sans-serif;
             border-bottom: 1px solid #a39485;
         }
 
         td {
-         	font-family: 'Nanum Gothic', sans-serif !important;
+         	 font-family: 'Gowun Dodum', sans-serif;
             border-bottom: 1px solid #e5e5e5;
         }
     }
@@ -351,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function(){
 <div class="container"> 
         <!-- 제목 -->
 		<div class="page-header mb-4">
-	    <h2 style="font-family: 'Nanum Gothic', sans-serif;">
+	    <h2 style="font-family: 'Gowun Dodum', sans-serif;">
 	        <c:choose>
 	            <c:when test="${ '10'== search.getDiv() }">커뮤니티</c:when>
 	            <c:when test="${ '20'== search.getDiv() }">공지사항</c:when>

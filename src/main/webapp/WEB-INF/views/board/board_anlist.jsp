@@ -307,8 +307,9 @@ document.addEventListener("DOMContentLoaded", function(){
 <!-- container -->
 <div class="container"> 
         <!-- 제목 -->
+        <br>
         <div class="page-header  mb-4">
-          <h2>
+           <h2 style="font-family: 'Gowun Dodum', sans-serif;">
               <c:choose>
                  <c:when test="${ '10'== search.getDiv() }">커뮤니티</c:when>
                  <c:when test="${ '20'== search.getDiv() }">공지사항</c:when>

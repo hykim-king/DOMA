@@ -54,14 +54,11 @@
 <%-- common js --%>
 <script src="${CP}/resources/js/common.js"></script>
 
-<%-- google Nanum+Gothic --%>
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
-
-<%-- FontAwesome for icons --%>
+ <%-- FontAwesome for icons --%>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+<%-- Additional CSS --%>
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css">
 <!-- simplemde -->
 <link rel="stylesheet"
 	href="${CP }/resources/css/bootstrap/simplemde.min.css">
@@ -72,7 +69,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
 body {
-    font-family: 'Nanum Gothic', sans-serif;
+     font-family: 'Gowun Dodum', sans-serif;
     color: #333;
     background-color: #f4f4f4;
     margin: 0;
@@ -80,6 +77,7 @@ body {
 }
 
 .container {
+ font-family: 'Gowun Dodum', sans-serif;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -90,6 +88,7 @@ header, footer {
     border-bottom: 1px solid #ddd;
 }
 .button-container {
+ font-family: 'Gowun Dodum', sans-serif;
     display: flex;
     justify-content: flex-end;
     gap: 10px; /* 버튼 간의 간격을 조정 */
@@ -97,6 +96,7 @@ header, footer {
 }
 
 .post {
+ font-family: 'Gowun Dodum', sans-serif;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -106,6 +106,7 @@ header, footer {
 }
 
 .post-title {
+ font-family: 'Gowun Dodum', sans-serif;
     font-weight: bold;
     font-size: 24px;
     color: #333;
@@ -113,11 +114,13 @@ header, footer {
 }
 
 .post-content {
+ font-family: 'Gowun Dodum', sans-serif;
     font-size: 16px;
     color: #555;
 }
 
 .post-meta {
+ font-family: 'Gowun Dodum', sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -125,18 +128,21 @@ header, footer {
 }
 
 .post-author {
+ font-family: 'Gowun Dodum', sans-serif;
     margin: 0;
     font-size: 14px;
     color: #555;
 }
 
 .post-date {
+ font-family: 'Gowun Dodum', sans-serif;
     margin: 0;
     font-size: 14px;
     color: #777;
 }
 
 .comments {
+ font-family: 'Gowun Dodum', sans-serif;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -144,16 +150,19 @@ header, footer {
 }
 
 .comment-form {
+ font-family: 'Gowun Dodum', sans-serif;
     margin-bottom: 20px;
 }
 
 .comment-form label {
+ font-family: 'Gowun Dodum', sans-serif;
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
 .comment-form textarea {
+ font-family: 'Gowun Dodum', sans-serif;
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -162,6 +171,7 @@ header, footer {
 }
 
 .comment-form button {
+ font-family: 'Gowun Dodum', sans-serif;
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -173,23 +183,28 @@ header, footer {
 }
 
 .comment-form button:hover {
+ font-family: 'Gowun Dodum', sans-serif;
     background-color: #0056b3;
 }
 
 .comment-list {
+ font-family: 'Gowun Dodum', sans-serif;
     margin-top: 20px;
 }
 
 .comment {
+ font-family: 'Gowun Dodum', sans-serif;
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
 }
 
 .comment p {
+ font-family: 'Gowun Dodum', sans-serif;
     margin: 0;
 }
 
 .comment strong {
+ font-family: 'Gowun Dodum', sans-serif;
     color: #007bff;
 }
 
@@ -205,6 +220,7 @@ header, footer {
 @media (max-width: 600px) {
     .responsive-img {
         max-width: 300px; /* 작은 화면에서 이미지의 최대 너비 */
+         font-family: 'Gowun Dodum', sans-serif;
     }
 }
 
@@ -212,6 +228,7 @@ header, footer {
 @media (min-width: 1200px) {
     .responsive-img {
         max-width: 800px; /* 큰 화면에서 이미지의 최대 너비 */
+         font-family: 'Gowun Dodum', sans-serif;
     }
 }
 </style>
@@ -607,7 +624,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="post-meta">
             <p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
             <p class="post-date">${board.regDt}</p>
-            <p class="text-end">조회수: ${board.views}</p>
+            <p class="text-end" style="font-family: 'Gowun Dodum', sans-serif;" >조회수: ${board.views}</p>
         </div>
         <div class="row mb-2">
             <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
@@ -616,7 +633,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         </div>
         <hr>
-        <div name="content" id="content" class="post-content">
+        <div name="content" id="content" class="post-content" style="font-family: 'Gowun Dodum', sans-serif;">
             <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" class="responsive-img"><br/>
             <br/>
             <p>${board.content}</p>

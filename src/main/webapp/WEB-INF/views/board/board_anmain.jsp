@@ -58,6 +58,8 @@
 <%-- google Nanum+Gothic --%>
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+<%-- Additional CSS --%>
+<link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css">
 
 <%-- FontAwesome for icons --%>
 <link rel="stylesheet"
@@ -73,7 +75,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
 body {
-    font-family: 'Nanum Gothic', sans-serif;
+   font-family: 'Gowun Dodum', sans-serif;
     color: #333;
     background-color: #f4f4f4;
     margin: 0;
@@ -90,7 +92,13 @@ header, footer {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
 }
-
+.button-container {
+ font-family: 'Gowun Dodum', sans-serif;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* 버튼 간의 간격을 조정 */
+    margin-bottom: 20px; /* 아래 컨텐츠와의 간격 */
+}
 .post {
     background-color: #fff;
     padding: 20px;
@@ -570,10 +578,11 @@ document.addEventListener("DOMContentLoaded", function() {
     <input type="hidden" name="modId"  id="modId" value="${board.modId}">
     <input type="hidden" name="comSeq" id="comSeq" value="${comments.comSeq}">
     <div class="container">
-        <button type="button" value="목록" id="moveToList" class="btn btn-outline-warning">목록으로</button>
-        <button type="button" value="수정" id="moveToUp" class="btn btn-outline-warning">수정하기</button>
-        <button type="button" value="삭제" id="doDelete" class="btn btn-outline-warning">삭제하기</button>
-        
+      <div class="button-container">
+        <button type="button" value="목록" id="moveToList" class="btn btn-outline-dark">목록으로</button>
+        <button type="button" value="수정" id="moveToUp" class="btn btn-outline-dark">수정하기</button>
+        <button type="button" value="삭제" id="doDelete" class="btn btn-outline-danger">삭제하기</button>
+        </div>
         <article class="post">
             <h2 name="title" id="title" class="post-title">${board.title}</h2>
             <div class="post-meta">

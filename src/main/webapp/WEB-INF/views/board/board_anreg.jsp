@@ -45,23 +45,33 @@
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 <style>
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
+    background-color: #f4f4f4;
     font-family: 'Nanum Gothic', sans-serif;
     color: #333;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+    background-color: #f4f4f4;
+    padding-bottom: 10px; /* 컨테이너와 푸터 사이의 간격 줄이기 */
 }
 
-header, footer {
+footer {
+    margin-top: -100px; /* 푸터가 위로 올라가도록 설정 */
+    padding: 10px 0;
     background-color: #fff;
-    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    width: 100%;
 }
 
 .post {
@@ -273,6 +283,7 @@ document.addEventListener("DOMContentLoaded", function(){
 <body>
 <!-- container -->
 <div class="container">
+  <br>   <br>   <br> 
   <!-- 제목 -->
   <div class="page-header mb-4">
       <h2>
@@ -317,11 +328,13 @@ document.addEventListener("DOMContentLoaded", function(){
     </div>
   </form>
   <!--// form end -->
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+ 
 </div>
 <!--// container end ---------------------------------------------------------->
 
 <%-- bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </body>
 </html>

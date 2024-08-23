@@ -344,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function(){
 <body>
 <!-- container -->
 <div class="container">
-  <br>   <br>   <br>   <br>
+  <br>   <br>   <br>   
        <!-- 제목 -->
   <div class="page-header mb-4">
       <h2>

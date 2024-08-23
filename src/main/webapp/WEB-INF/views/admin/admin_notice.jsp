@@ -13,6 +13,7 @@
 <body>
 
     <main class="main-content">
+    <br>
         <h1>공지사항</h1>
         <div class="admin-actions">
             <a href="<%=request.getContextPath()%>/admin/adminuser.do" class="admin-action-button">회원관리</a>

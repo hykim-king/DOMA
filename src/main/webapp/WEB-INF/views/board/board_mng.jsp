@@ -52,33 +52,46 @@
 
  
 <style>
-body {
-    font-family: 'Nanum Gothic', sans-serif;
-    color: #333;
-    background-color: #f4f4f4;
+html, body {
+    height: 100%;
     margin: 0;
-    padding: 0;
+}
+
+body {
+    background-color: #f4f4f4;
+     font-family: 'Gowun Dodum', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+    background-color: #f4f4f4;
+    padding-bottom: 10px; /* 컨테이너와 푸터 사이의 간격 줄이기 */
 }
 
-header, footer {
+footer {
+    margin-top: -10px; /* 푸터가 위로 올라가도록 설정 */
+    padding: 10px 0;
     background-color: #fff;
-    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    width: 100%;
 }
 
-.post {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    height: 350px;
+form {
+	margin-top : 50px;
+    margin-bottom: 0; /* 폼과 하단 요소 간의 간격 제거 */
 }
+
+.form-control {
+    margin-bottom: 10px; /* 폼 필드 간의 간격 줄이기 */
+}
+
+/* 필요한 경우 추가적인 조정 가능 */
+
 
 .post-title {
     font-weight: bold;
@@ -319,12 +332,13 @@ document.addEventListener("DOMContentLoaded", function(){
 <body>
 <!-- container -->
 <div class="container">
+  <br>   <br>   <br>   
   <!-- 제목 -->
   <div class="page-header  mb-4">
     <h2>
         <c:choose>
-           <c:when test="${ '10'== board.getDiv() }">커뮤니티</c:when>
-           <c:when test="${ '20'== board.getDiv() }">공지사항</c:when>
+           <c:when test="${ '10'== board.getDiv() }">게시글 수정하기</c:when>
+           <c:when test="${ '20'== board.getDiv() }">공지사항 수정하기</c:when>
            <c:otherwise>
                                 공지사항/자유게시판
            </c:otherwise>
