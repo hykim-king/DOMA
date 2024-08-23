@@ -36,7 +36,7 @@
     dai.occr_time AS occrTime, 
     dai.end_date AS endDate, 
     dai.end_time AS endTime, 
-    dai.info, 
+    REPLACE(REPLACE(REPLACE(dai.info, CHR(13) || CHR(10), ' '), CHR(13), ' '), CHR(10), ' ') AS info,  -- CRLF, CR, LF 처리 
     dai.longitude, 
     dai.latitude
 	FROM 
@@ -79,6 +79,7 @@
     <select id="A01Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -101,6 +102,7 @@
     <select id="A02Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -123,6 +125,7 @@
     <select id="A03Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -145,6 +148,7 @@
     <select id="A04Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -167,6 +171,7 @@
     <select id="A05Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -189,6 +194,7 @@
     <select id="A06Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -211,6 +217,7 @@
     <select id="A07Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -233,6 +240,7 @@
     <select id="A08Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -255,6 +263,7 @@
     <select id="A09Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -277,6 +286,7 @@
     <select id="A10Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -299,6 +309,7 @@
     <select id="A11Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,
@@ -321,6 +332,7 @@
     <select id="A12Retrieve" resultType="Accident">
     SELECT * FROM (
         SELECT 
+        	A.ACC_ID as accId,
             T.ACC_NAME as accName,
             A.ACC_DTYPE as accDtype,
             D.ACC_DNAME as accDName,

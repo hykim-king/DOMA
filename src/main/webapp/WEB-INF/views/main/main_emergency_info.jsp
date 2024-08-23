@@ -94,21 +94,24 @@ function initKakaoMap() {
             {
                 latlng: new kakao.maps.LatLng('${A01.latitude}', '${A01.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A01.png",
-                info: "${A01.info}"
+                info: "${A01.info}",
+                accId: "${A01.accId}"
             }<c:if test="${!A01Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A02" items="${A02List}" varStatus="A02Status">
             {
                 latlng: new kakao.maps.LatLng('${A02.latitude}', '${A02.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A02.png",
-                info: "${A02.info}"
+                info: "${A02.info}",
+                accId: "${A02.accId}"
             }<c:if test="${!A02Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A03" items="${A03List}" varStatus="A03Status">
             {
                 latlng: new kakao.maps.LatLng('${A03.latitude}', '${A03.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A03.png",
-                info: "${A03.info}"
+                info: "${A03.info}",
+                accId: "${A03.accId}"
             }<c:if test="${!A03Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A04" items="${A04List}" varStatus="A04Status">
@@ -116,6 +119,7 @@ function initKakaoMap() {
                 latlng: new kakao.maps.LatLng('${A04.latitude}', '${A04.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A04.png",
                 info: "${A04.info}",
+                accId: "${A04.accId}" 
             }<c:if test="${!A04Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A05" items="${A05List}" varStatus="A05Status">
@@ -123,6 +127,7 @@ function initKakaoMap() {
                 latlng: new kakao.maps.LatLng('${A05.latitude}', '${A05.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A05.png",
                 info: "${A05.info}",
+                accId: "${A05.accId}"
             }<c:if test="${!A05Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A06" items="${A06List}" varStatus="A06Status">
@@ -130,6 +135,7 @@ function initKakaoMap() {
                 latlng: new kakao.maps.LatLng('${A06.latitude}', '${A06.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A06.png",
                 info: "${A06.info}",
+                accId: "${A05.accId}"
             }<c:if test="${!A06Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A07" items="${A07List}" varStatus="A07Status">
@@ -137,6 +143,7 @@ function initKakaoMap() {
                 latlng: new kakao.maps.LatLng('${A07.latitude}', '${A07.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A07.png",
                 info: "${A07.info}",
+                accId: "${A07.accId}"
             }<c:if test="${!A07Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A08" items="${A08List}" varStatus="A08Status">
@@ -144,6 +151,7 @@ function initKakaoMap() {
                 latlng: new kakao.maps.LatLng('${A08.latitude}', '${A08.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A08.png",
                 info: "${A08.info}",
+                accId: "${A08.accId}"
             }<c:if test="${!A08Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A09" items="${A09List}" varStatus="A09Status">
@@ -151,6 +159,7 @@ function initKakaoMap() {
                 latlng: new kakao.maps.LatLng('${A09.latitude}', '${A09.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A09.png",
                 info: "${A09.info}",
+                accId: "${A09.accId}"
             }<c:if test="${!A09Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A10" items="${A10List}" varStatus="A10Status">
@@ -158,26 +167,30 @@ function initKakaoMap() {
                 latlng: new kakao.maps.LatLng('${A10.latitude}', '${A10.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A10.png",
                 info: "${A10.info}",
+                accId: "${A10.accId}"
             }<c:if test="${!A10Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A11" items="${A11List}" varStatus="A11Status">
             {                 
                 latlng: new kakao.maps.LatLng('${A11.latitude}', '${A11.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A11.png",
-                info: "${A11.info}"
+                info: "${A11.info}",
+                accId: "${A11.accId}"
             }<c:if test="${!A11Status.last}">,</c:if>
             </c:forEach>,
             <c:forEach var="A12" items="${A12List}" varStatus="A12Status">
             {                 
                 latlng: new kakao.maps.LatLng('${A12.latitude}', '${A12.longitude}'),
                 imageSrc: "${CP}/resources/img/map/A12.png",
-                info: "${A12.info}"
+                info: "${A12.info}",
+                accId: "${A12.accId}"
             }<c:if test="${!A12Status.last}">,</c:if>
             </c:forEach>
         ];
 
         var imageSize = new kakao.maps.Size(26, 26);
         positions.forEach(function(pos) {
+        	var accId = pos.accId;
             var markerImage = new kakao.maps.MarkerImage(pos.imageSrc, imageSize);
             var marker = new kakao.maps.Marker({
                 map: map,
@@ -200,6 +213,12 @@ function initKakaoMap() {
                 infowindow.close();
             });
 
+         // 마커에 마우스아웃 이벤트를 등록합니다
+            kakao.maps.event.addListener(marker, 'click', function() {                
+                infowindow.close();
+                cctvInfo(accId);
+            });
+
             // 마커와 인포윈도우 객체를 배열에 저장합니다
             markers.push({
                 marker: marker,
@@ -207,7 +226,7 @@ function initKakaoMap() {
                 latlng: pos.latlng
             });
         });
-
+	
         // 맵에 마우스 드래그 이벤트를 추가하여 인포윈도우를 닫습니다
          kakao.maps.event.addListener(map, 'dragend', function() {
             if (currentInfoWindow) {
@@ -242,8 +261,23 @@ function moveToMarker(lat, lng) {
 function onInfoClick(lat, lng) {
     moveToMarker(lat, lng);
 }
-
+function cctvInfo(accId){
+	$.ajax({
+		url: "/doma/main/getNearestCctv.do",
+        type: 'GET',
+        data:{accId:accId},
+        dataType: "json",
+        success: function(response){
+        	console.log(response);
+        },
+        error: function(error){
+        	console.error("Error: ", error);
+        }
+	});
+}
 // 초기화 스크립트 로딩
 loadKakaoMapScript(initKakaoMap);
+
+
 </script>
 </html>
