@@ -2,6 +2,10 @@
  * 
  */
  document.addEventListener("DOMContentLoaded", function(){
+ 
+	const loginBtn = document.querySelector("#login");
+	const userIdInput = document.querySelector("#userId");
+	const passwordInput = document.querySelector("#password");
 	
 	loginBtn.addEventListener("click",function(event){
 		login();
@@ -55,6 +59,7 @@
                     alert("일치하지 않는 아이디 혹은 비밀번호입니다.");
                 }
             }else{
+                console.log("else");
                 alert("data가 null 혹은, undefined 입니다.");
             }
         });
