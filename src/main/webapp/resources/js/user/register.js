@@ -1,6 +1,5 @@
 	
  document.addEventListener("DOMContentLoaded", function(){
-	console.log("────────DOMContentLoaded────────");
 	
 	const idInput = document.querySelector("#id");
 	const nameInput = document.querySelector("#name");
@@ -16,27 +15,19 @@
 	
 	//변수
 	const doSaveBtn = document.querySelector("#doSave");
-	console.log("doSaveBtn", doSaveBtn);
-	
 	const idCheckBtn =  document.querySelector("#idDuplicateCheck");
-	console.log("idCheckBtn", idCheckBtn);
 	
 	//이벤트 리스너
 	doSaveBtn.addEventListener("click",function(event){
-		console.log("doSaveBtn click");
-		
 		doSave();
 	});
 	
 	idCheckBtn.addEventListener("click",function(event){
-		console.log("idCheckBtn click");
-		
 		idCheck();
 	});
 	
 	  
 	function doSave() {
-        console.log("doSave()");
         const minDate = "1907-01-01";
         const maxDate = "2024-08-01";
         
@@ -109,18 +100,11 @@
 			return;
 		}
 
-		if(passwordValidation(passwordInput.value) === false){
+		if(passwordValidation(passwordInput.value) === false && (passwordInput.value.length < 8 || passwordInput.value.length > 20)){
 			alert("특수문자나 대소문자를 포함한 8~20자 이내의 비밀번호를 사용하세요."); 
 			return;
 		}
 
-		 // 길이 체크 (8자리 ~ 20자리)
-		 if (passwordInput.value.length < 8 || passwordInput.value.length > 20) {
-			alert("비밀번호는 8자리에서 20자리 사이여야 합니다.");
-			passwordInput.focus();
-			return;
-		}
-		
 		let type="POST";
         let url ="/doma/user/doSave.do";
         let async = "true";

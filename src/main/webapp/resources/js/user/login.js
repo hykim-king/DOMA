@@ -2,30 +2,18 @@
  * 
  */
  document.addEventListener("DOMContentLoaded", function(){
-	console.log("────────DOMContentLoaded────────");
-	
-	const loginBtn = document.querySelector("#login");
- 	//인풋 변수
-	const userIdInput = document.querySelector("#userId");
-	console.log("userIdInput : " + userIdInput);
-	const passwordInput = document.querySelector("#password");
-	console.log("passwordInput : " + passwordInput);
 	
 	loginBtn.addEventListener("click",function(event){
-		console.log("idCheckBtn click");
-		
 		login();
 	});
 	
 	 document.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
-            console.log("loginBtn enter");
             login(); 
         }
     });
 	
 	function login() {
-		console.log("login()");
 		const id = userIdInput.value;
 		const pw = passwordInput.value;
 		
@@ -58,19 +46,15 @@
                     //문자열 Json Object로 변환
                     const message = JSON.parse(data);
                     if(isEmpty(message) === false && 1== message.messageId){
-                    	console.log(message.messageContent);
-                    	console.log(message.messageId);
                         alert(message.messageContents);
    						window.location.href="/doma/main/main.do";
                     }else{
                         alert(message.messageContents);
                     }
                 }catch(e){
-                    console.error("data가 null 혹은, undefined 입니다");
                     alert("일치하지 않는 아이디 혹은 비밀번호입니다.");
                 }
             }else{
-                console.log("else");
                 alert("data가 null 혹은, undefined 입니다.");
             }
         });

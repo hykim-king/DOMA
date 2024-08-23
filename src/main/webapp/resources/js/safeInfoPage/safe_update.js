@@ -32,6 +32,12 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 		function doUpdate(){
 		
+		if(isEmpty(titleInput.value) == true){
+            alert('제목을 입력하세요.')
+            titleInput.focus();
+            return;
+        }
+		
 		if(isEmpty(imgLinkInput.files[0]) == true){
             alert('사진을 선택 하세요.')
             imgLinkInput.focus();
