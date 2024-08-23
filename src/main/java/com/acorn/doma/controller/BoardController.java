@@ -52,7 +52,7 @@ public class BoardController implements PLog {
 	MarkdownService markdownService;
 	
 	// 실제 파일이 저장될 경로 (서버의 절대 경로)
-    private static final String UPLOAD_DIR = "C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/";
+    private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/";
 										   
 											//C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/
 										    //C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/
