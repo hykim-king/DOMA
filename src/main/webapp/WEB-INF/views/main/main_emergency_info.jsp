@@ -176,7 +176,7 @@ function initKakaoMap() {
             </c:forEach>
         ];
 
-        var imageSize = new kakao.maps.Size(24, 35);
+        var imageSize = new kakao.maps.Size(26, 26);
         positions.forEach(function(pos) {
             var markerImage = new kakao.maps.MarkerImage(pos.imageSrc, imageSize);
             var marker = new kakao.maps.Marker({
