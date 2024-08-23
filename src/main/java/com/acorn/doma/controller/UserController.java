@@ -95,7 +95,7 @@ public class UserController implements PLog {
 			message = "\"" +  inVO + "\"" + "를 사용할 수 있습니다.";
 			flag = 1;
 		}else {
-			message = "\"" +  inVO + "\"" + "는 이미 존재하는 아이디입니다.";
+			message = "사용할 수 없는 아이디입니다.";
 		}
 		
 		jsonString = new Gson().toJson(new Message(flag, message));	
@@ -240,7 +240,7 @@ public class UserController implements PLog {
 			httpSession.setAttribute("user", outVO);	
 			httpSession.setMaxInactiveInterval(600); //10분간 아이디 유지
 		}else {
-			message = "아이디 혹은 비밀번호가 일치하지 않습니다.";
+			message = "아이디 혹은 비밀번호가 일치하지 않거나 탈퇴한 계정입니다.";
 		}
 		
 		
