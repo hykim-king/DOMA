@@ -21,8 +21,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
-public class AccInfoDataApi {
+public class AccInfoDataApi implements PLog{
 	// JDBC URL, username, and password of MySQL server
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe"; // 예시 URL
     private static final String USER = "scott";
@@ -37,32 +38,38 @@ public class AccInfoDataApi {
 		urlBuilder.append("/" +  URLEncoder.encode("xml","UTF-8") ); /*요청파일타입 (xml,xmlf,xls,json) */
 		urlBuilder.append("/" + URLEncoder.encode("AccInfo","UTF-8")); /*서비스명 (대소문자 구분 필수입니다.)*/
 		urlBuilder.append("/" + URLEncoder.encode("1","UTF-8")); /*요청시작위치 (sample인증키 사용시 5이내 숫자)*/
-		urlBuilder.append("/" + URLEncoder.encode("50","UTF-8")); /*요청종료위치(sample인증키 사용시 5이상 숫자 선택 안 됨)*/
+//		urlBuilder.append("/" + URLEncoder.encode("50","UTF-8")); /*요청종료위치(sample인증키 사용시 5이상 숫자 선택 안 됨)*/
 		// 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
 		
-
+		
 		URL url = new URL(urlBuilder.toString());
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/xml");
-		System.out.println("Response code: " + conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다.*/
-		BufferedReader rd;
+	    log.debug(url.toString());
+	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	    conn.setRequestMethod("GET");
+	    conn.setRequestProperty("Content-type", "application/xml");
+	    BufferedReader rd;
+	    if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	        rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	    } else {
+	        rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	    }
+	    StringBuilder sb = new StringBuilder();
+	    String line;
+	    while ((line = rd.readLine()) != null) {
+	        sb.append(line);
+	    }
+	    rd.close();
+	    conn.disconnect();
+	    String xmlData = sb.toString();
+	    log.debug("XML Response: " + xmlData);
+	    
+	    // Error code extraction
+	    String errorCode = getErrorCode(xmlData);
+	    if (errorCode != null) {
+	        log.error("API Error Code: " + errorCode);
+	    }
 
-		// 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
-		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		StringBuilder sb = new StringBuilder();
-		String line;
-		while ((line = rd.readLine()) != null) {
-				sb.append(line);
-		}
-		rd.close();
-		conn.disconnect();
-		String xmlData = sb.toString();
-		return xmlData;
+	    return xmlData;
 	}
 	private static List<Accident> parseXmlData(String xmlData) {
         List<Accident> accInfoList = new ArrayList<>();
@@ -146,6 +153,30 @@ public class AccInfoDataApi {
 	    	System.err.println("Error saving data to database: " + e.getMessage());
 
 	    }
+	}
+	private static String getErrorCode(String xmlData) {
+	    String errorCode = null;
+
+	    try {
+	        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	        DocumentBuilder builder = factory.newDocumentBuilder();
+	        Document document = builder.parse(new java.io.ByteArrayInputStream(xmlData.getBytes("UTF-8")));
+
+	        document.getDocumentElement().normalize();
+
+	        NodeList nList = document.getElementsByTagName("CODE");
+	        if (nList.getLength() > 0) {
+	            Node node = nList.item(0);
+	            if (node.getNodeType() == Node.ELEMENT_NODE) {
+	                Element eElement = (Element) node;
+	                errorCode = eElement.getTextContent();
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return errorCode;
 	}
 }
 	

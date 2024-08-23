@@ -26,13 +26,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.domain.Accident;
 import com.acorn.doma.mapper.AccMapper;
 import com.acorn.doma.proj4j.CoordinateConverter;
 
 @Component
 @EnableScheduling
-public class SchedulerConfig {
+public class SchedulerConfig implements PLog{
 	private final String serverId;
     private final String serviceKey;
     private final AccMapper accMapper;
@@ -51,7 +52,6 @@ public class SchedulerConfig {
 
 	@Scheduled(fixedDelay = 60000)
     public void insertAccidentData() {
-        // 특정 서버에서만 작업 수행
         if ("server1".equals(serverId)) {
             int retryCount = 0;
             int maxRetries = 3; // 최대 재시도 횟수
@@ -61,18 +61,32 @@ public class SchedulerConfig {
                 try {
                     // 데이터 가져오기
                     String xmlData = fetchDataFromApi();
-                    List<Accident> accInfoList = parseXmlData(xmlData);
-
-                    // 기존 데이터 삭제
-                    accMapper.doDeleteAll();
-
-                    // 새 데이터 삽입
-                    for (Accident accident : accInfoList) {
-                        accMapper.dataInsert(accident);
+                    if (xmlData == null || xmlData.isEmpty()) {
+                        throw new IOException("No data received from API.");
                     }
 
-                    // 성공하면 루프 종료
-                    break;
+                    // 오류 처리
+                    String code = getCode(xmlData);
+                    if (code != null) {
+                        if ("INFO-000".equals(code)) {
+                            // 데이터 파싱
+                            List<Accident> accInfoList = parseXmlData(xmlData);
+
+                            // 기존 데이터 삭제
+                            accMapper.doDeleteAll();
+
+                            // 새 데이터 삽입
+                            for (Accident accident : accInfoList) {
+                                accMapper.dataInsert(accident);
+                            }
+
+                            // 성공하면 루프 종료
+                            break;
+                        } else {
+                            handleApiError(code);
+                            return;
+                        }
+                    }
 
                 } catch (IOException e) {
                     // 데이터 가져오기 관련 예외 처리
@@ -130,8 +144,14 @@ public class SchedulerConfig {
 		}
 		rd.close();
 		conn.disconnect();
-
-		return sb.toString();
+		xmlData = sb.toString();
+	    
+	    // Error code extraction
+	    String code = getCode(xmlData);
+	    if (code != null) {
+	        log.error("API Code: " + code);
+	    }
+		return xmlData;
 	}
 
 	public List<Accident> parseXmlData(String xmlData) {
@@ -191,4 +211,77 @@ public class SchedulerConfig {
 
 		return accInfoList;
 	}
+	private static String getCode(String xmlData) {
+	    String code = null;
+
+	    try {
+	        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	        DocumentBuilder builder = factory.newDocumentBuilder();
+	        Document document = builder.parse(new java.io.ByteArrayInputStream(xmlData.getBytes("UTF-8")));
+
+	        document.getDocumentElement().normalize();
+
+	        NodeList nList = document.getElementsByTagName("CODE");
+	        if (nList.getLength() > 0) {
+	            Node node = nList.item(0);
+	            if (node.getNodeType() == Node.ELEMENT_NODE) {
+	                Element eElement = (Element) node;
+	                code = eElement.getTextContent();
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return code;
+	}
+	private void handleApiError(String errorCode) {
+        switch (errorCode) {
+            case "ERROR-300":
+                log.error("필수 값이 누락되어 있습니다.");
+                break;
+            case "INFO-100":
+                log.error("인증키가 유효하지 않습니다.");
+                break;
+            case "ERROR-301":
+                log.error("파일타입 값이 누락 혹은 유효하지 않습니다.");
+                break;
+            case "ERROR-310":
+                log.error("해당하는 서비스를 찾을 수 없습니다.");
+                break;
+            case "ERROR-331":
+                log.error("요청시작위치 값을 확인하십시오.");
+                break;
+            case "ERROR-332":
+                log.error("요청종료위치 값을 확인하십시오.");
+                break;
+            case "ERROR-333":
+                log.error("요청위치 값의 타입이 유효하지 않습니다.");
+                break;
+            case "ERROR-334":
+                log.error("요청종료위치 보다 요청시작위치가 더 큽니다.");
+                break;
+            case "ERROR-335":
+                log.error("샘플데이터는 한번에 최대 5건을 넘을 수 없습니다.");
+                break;
+            case "ERROR-336":
+                log.error("데이터요청은 한번에 최대 1000건을 넘을 수 없습니다.");
+                break;
+            case "ERROR-500":
+                log.error("서버 오류입니다.");
+                break;
+            case "ERROR-600":
+                log.error("데이터베이스 연결 오류입니다.");
+                break;
+            case "ERROR-601":
+                log.error("SQL 문장 오류 입니다.");
+                break;
+            case "INFO-200":
+                log.info("해당하는 데이터가 없습니다.");
+                break;
+            default:
+                log.error("알 수 없는 오류 코드: " + errorCode);
+                break;
+        }
+    }
 }
