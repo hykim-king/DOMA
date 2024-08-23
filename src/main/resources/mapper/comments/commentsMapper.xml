@@ -17,12 +17,12 @@
 
     <update id="doUpdate" parameterType="Comments">
         UPDATE D_COMMENT
-		   SET mod_id = #{modId},
-		       comments = #{comments},
+		   SET comments = #{comments},
 		       mod_dt  = SYSDATE
 		 WHERE comseq = #{comSeq}
 		   AND seq = #{seq}
 		   AND user_id = #{userId}
+		   AND mod_id = #{modId}
     </update>
     
     <delete id="commentsDelete" parameterType="Comments">
