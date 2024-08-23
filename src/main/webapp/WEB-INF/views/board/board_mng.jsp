@@ -228,6 +228,7 @@ document.addEventListener("DOMContentLoaded", function(){
     doUpdateBtn.addEventListener("click",function(event){
         console.log("doUpdateBtn click");
         event.stopPropagation();
+        if(confirm("수정을 하시겠습니까?") === false)return;
         doUpdate();
     });
     
@@ -274,6 +275,12 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         
         if(confirm("수정 하시겠습니까?") === false)return;
+        
+        // imgFile이 없는 경우 doUpdate() 함수 호출
+        if (imgLinkInput.files.length === 0) {
+        	doUpdate();
+            return;
+        }
         
         // FormData 객체 생성
         let formData = new FormData();
@@ -324,6 +331,63 @@ document.addEventListener("DOMContentLoaded", function(){
 	
     function moveToMain() {
         window.location.href = "/doma/board/boardInfo.do?seq=" + seqInput.value +"&div=" + divInput.value;
+    }
+    
+  //doUpdate : 수정
+    function doUpdate() {
+        console.log("anUpdate()");
+        
+        if (isEmpty(searchDivSelect.value)) {
+            alert('구를 선택 하세요.');
+            searchDivSelect.focus();
+            return;
+        }
+        
+        if(isEmpty(titleInput.value) == true){
+            alert('제목을 입력 하세요.')
+            titleInput.focus();
+            return;
+        }
+        
+        //marker : simplemde.value()
+        if(isEmpty(contentsTextArea.value) == true){
+            alert('내용을 입력 하세요.')
+            contentsTextArea.focus();
+            return;
+        }
+        
+        //비동기 통신
+        let type = "POST";
+        let url = "/doma/board/doUpdate.do";
+        let async = "true";
+        let dataType = "html";
+        
+        let params = {
+                "seq"      : seqInput.value,
+                "div"      : divInput.value,
+                "gname": searchDivSelect.value,
+                "userId"   : userIdInput.value,
+                "modId"   : modIdInput.value,
+                "title"    : titleInput.value,
+                "content"  : contentsTextArea.value
+            };
+
+        PClass.pAjax(url, params, dataType, type, async, function(data){
+            if(data){
+                try{
+                    //JSON문자열을 JSON Object로 변환
+                    const message = JSON.parse(data)
+                    if(isEmpty(message) === false && 1 === message.messageId){
+                        moveToMain();
+                    }else{
+                        alert(message.messageContents);
+                    }
+                    
+                }catch(e){
+                    alert("data를 확인 하세요");
+                }
+            }
+        });
     }
     
 });    

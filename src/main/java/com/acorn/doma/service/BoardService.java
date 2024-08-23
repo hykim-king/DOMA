@@ -13,6 +13,8 @@ import com.acorn.doma.domain.User;
 
 public interface BoardService extends WorkDiv<Board> {
 	
+	int noFileSave(Board inVO) throws SQLException;
+	
 	int fileDelete(Board inVO) throws SQLException;
 	
 	int fileUpdate(Board inVO) throws SQLException;

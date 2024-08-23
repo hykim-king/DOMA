@@ -36,7 +36,6 @@ import com.acorn.doma.domain.Board;
 import com.acorn.doma.cmn.Search;
 import com.acorn.doma.cmn.StringUtil;
 import com.acorn.doma.domain.Code;
-import com.acorn.doma.domain.FileVO;
 
 
 @Controller
@@ -53,7 +52,7 @@ public class BoardController implements PLog {
 	MarkdownService markdownService;
 	
 	// 실제 파일이 저장될 경로 (서버의 절대 경로)
-    private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/";
+    private static final String UPLOAD_DIR = "C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/";
 										   
 											//C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/
 										    //C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/
@@ -769,6 +768,42 @@ public class BoardController implements PLog {
 		log.debug("1.param inVO:" + inVO);
 		
 		int flag = boardService.anSave(inVO);
+		log.debug("2.flag:" + flag);
+		
+		String message = "";
+		if(1 == flag) {
+			message = inVO.getUserId() + "님이 등록 되었습니다.";
+		}else {
+			message = inVO.getUserId() + "님 등록 실패 했습니다.";
+		}
+		
+		Message messageObj = new Message(flag, message);
+		
+		//json 출력을 가지런하게!
+		jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+		
+		log.debug("3.jsonString:" + jsonString);
+		
+		return jsonString;
+	}
+	
+	/**
+	 * 단건 등록
+	 * @param user
+	 * @return
+	 * @throws SQLException
+	 * http://localhost:8080/doma/board/noFileSave.do
+	 */
+	@RequestMapping(value = "/noFileSave.do"
+				   , method = RequestMethod.POST
+				   , produces = "text/plain;charset=UTF-8"
+				   ) //produces : 화면으로 전송 encoding
+	@ResponseBody
+	public String noFileSave(Board inVO) throws SQLException {
+		String jsonString = "";
+		log.debug("1.param inVO:" + inVO);
+		
+		int flag = boardService.noFileSave(inVO);
 		log.debug("2.flag:" + flag);
 		
 		String message = "";

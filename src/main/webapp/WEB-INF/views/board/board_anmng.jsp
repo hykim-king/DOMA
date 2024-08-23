@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function(){
     moveToMainBtn.addEventListener("click",function(event){
         console.log("moveToMainBtn click");
         event.stopPropagation();
-        if(confirm("뒤로 이동 하시겠습니까?") === false)return;
+        if(confirm("수정을 취소 하시겠습니까?") === false)return;
         moveToMain();
     });
     
@@ -337,9 +337,6 @@ document.addEventListener("DOMContentLoaded", function(){
  
 </div>
 <!--// container end ---------------------------------------------------------->
-<script>
-    var simplemde = new SimpleMDE({ element: document.getElementById("content")})
-</script>
 
 <%-- bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script> 

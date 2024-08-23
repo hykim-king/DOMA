@@ -261,6 +261,12 @@ public class BoardServiceImpl implements BoardService, PLog {
 		return flag;
 	}
 
+	@Override
+	public int noFileSave(Board inVO) throws SQLException {
+		log.debug("1. param :"+inVO);
+		return boardMapper.noFileSave(inVO);
+	}
+
 		 
 
 }

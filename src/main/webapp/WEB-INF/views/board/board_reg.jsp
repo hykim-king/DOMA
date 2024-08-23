@@ -45,47 +45,24 @@
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 <style>
-html, body {
-    height: 100%;
-    margin: 0;
-}
-
 body {
-    background-color: #f4f4f4;
     font-family: 'Nanum Gothic', sans-serif;
     color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
-    background-color: #f4f4f4;
-    padding-bottom: 10px; /* 컨테이너와 푸터 사이의 간격 줄이기 */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-footer {
-    margin-top: -10px; /* 푸터가 위로 올라가도록 설정 */
-    padding: 10px 0;
+header, footer {
     background-color: #fff;
-    border-top: 1px solid #ddd;
-    text-align: center;
-    width: 100%;
+    border-bottom: 1px solid #ddd;
 }
-
-form {
-	margin-top : 50px;
-    margin-bottom: 0; /* 폼과 하단 요소 간의 간격 제거 */
-}
-
-.form-control {
-    margin-bottom: 10px; /* 폼 필드 간의 간격 줄이기 */
-}
-
-/* 필요한 경우 추가적인 조정 가능 */
-
-
 
 .post {
     background-color: #fff;
@@ -207,6 +184,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const fileNameInput = document.querySelector("#fileName");
     
     
+    
 //이벤트 처리=================================================================================================    
     
 	form.addEventListener("submit", function(event) {
@@ -251,92 +229,138 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location.href = "/doma/board/doRetrieve.do?div=" + divInput.value;
     }
 	
-	//fileSave()
-	function fileSave() {
-	    console.log("fileSave()");
-	    
-	    if(isEmpty(searchDivSelect.value) == true){
-	        alert('구를 선택 하세요.')
-	        searchDivSelect.focus();
-	        return;
-	    }
-	    
-	    if (isEmpty(titleInput.value)) {
-	        alert('제목을 입력 하세요.');
-	        titleInput.focus();
-	        return;
-	    }
-	    
-	    if(isEmpty(imgLinkInput.files[0]) == true){
-            alert('이미지를 선택 하세요.')
-            imgLinkInput.focus();
+ // fileSave()
+    function fileSave() {
+        console.log("fileSave()");
+        
+        if (isEmpty(searchDivSelect.value)) {
+            alert('구를 선택 하세요.');
+            searchDivSelect.focus();
             return;
         }
-	    
-	    // 내용 입력 검증
-	    if (isEmpty(contentsTextArea.value)) {
-	        alert('내용을 입력 하세요.');
-	        contentsTextArea.focus();
-	        return;
-	    }
-	    
-	    console.log("seqInput", seqInput.value);
-	    console.log("searchDivSelect", searchDivSelect.value);
-	    console.log("divInput", divInput.value);
-	    console.log("titleInput", titleInput.value);
-	    console.log("userIdInput", userIdInput.value);
-	    console.log("content", contentsTextArea.value);
-	    console.log("imgLinkInput.files[0]", imgLinkInput.files[0]);
-	    
-	    if (!confirm("등록 하시겠습니까?")) return;
-	
-	    // FormData 객체 생성
-	    let formData = new FormData();
-	    formData.append("seq", seqInput.value);
-	    formData.append("gname", searchDivSelect.value);
-	    formData.append("div", divInput.value);
-	    formData.append("title", titleInput.value);
-	    formData.append("userId", userIdInput.value);
-	    formData.append("content", contentsTextArea.value);
-	    formData.append("imgFile", imgLinkInput.files[0]);  // file이 서버에서 받는 MultipartFile의 키와 일치
-	
-	    
-	    if (fileInput.files.length > 0) {
-	        formData.append("imgFile", imgLinkInput.files[0]);
-	    }
-	
-	    // 비동기 요청 보내기
-	    let url = "/doma/board/fileSave.do";
-	
-	    $.ajax({
-	        url: url,
-	        type: "POST",
-	        data: formData,
-	        processData: false,  // FormData가 자동으로 처리되지 않도록 설정
-	        contentType: false,  // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
-	        success: function(data) {
-	            if (data) {
-	                try {
-	                    // JSON 문자열을 JSON 객체로 변환
-	                    const message = JSON.parse(data);
-	                    if (message && message.messageId === 1) {
-	                        moveToList()
-	                    } else {
-	                        alert(message.messageContents);
-	                    }
-	                } catch (e) {
-	                	moveToList()
-	                }
-	            }
-	        },
-	        error: function(xhr, status, error) {
-	            console.error("요청 실패: " + status + ", " + error);
-	            alert("요청 처리 중 오류가 발생했습니다.");
-	        }
-	    });
-	}
-	
-	
+        
+        if (isEmpty(titleInput.value)) {
+            alert('제목을 입력 하세요.');
+            titleInput.focus();
+            return;
+        }
+        
+        // 내용 입력 검증
+        if (isEmpty(contentsTextArea.value)) {
+            alert('내용을 입력 하세요.');
+            contentsTextArea.focus();
+            return;
+        }
+        
+        console.log("seqInput", seqInput.value);
+        console.log("searchDivSelect", searchDivSelect.value);
+        console.log("divInput", divInput.value);
+        console.log("titleInput", titleInput.value);
+        console.log("userIdInput", userIdInput.value);
+        console.log("content", contentsTextArea.value);
+        console.log("imgLinkInput.files[0]", imgLinkInput.files[0]);
+        
+        if (!confirm("등록 하시겠습니까?")) return;
+
+        // imgFile이 없는 경우 doSave() 함수 호출
+        if (imgLinkInput.files.length === 0) {
+            doSave();
+            return;
+        }
+
+        // FormData 객체 생성
+        let formData = new FormData();
+        formData.append("seq", seqInput.value);
+        formData.append("gname", searchDivSelect.value);
+        formData.append("div", divInput.value);
+        formData.append("title", titleInput.value);
+        formData.append("userId", userIdInput.value);
+        formData.append("content", contentsTextArea.value);
+
+        // 이미지 파일이 있는 경우에만 추가
+        if (imgLinkInput.files.length > 0) {
+            formData.append("imgFile", imgLinkInput.files[0]);
+        }
+
+        // 비동기 요청 보내기
+        let url = "/doma/board/fileSave.do";
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: formData,
+            processData: false,  // FormData가 자동으로 처리되지 않도록 설정
+            contentType: false,  // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
+            success: function(data) {
+                if (data) {
+                    try {
+                        // JSON 문자열을 JSON 객체로 변환
+                        const message = JSON.parse(data);
+                        if (message && message.messageId === 1) {
+                            moveToList();
+                        } else {
+                            alert(message.messageContents);
+                        }
+                    } catch (e) {
+                        moveToList();
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("요청 실패: " + status + ", " + error);
+                alert("요청 처리 중 오류가 발생했습니다.");
+            }
+        });
+    }
+
+    // doSave()
+    function doSave(){
+        console.log("doSave()");
+        
+        if (isEmpty(titleInput.value)) {
+            alert('제목을 입력 하세요.');
+            titleInput.focus();
+            return;
+        }
+        
+        if (isEmpty(contentsTextArea.value)) {
+            alert('내용을 입력 하세요.');
+            contentsTextArea.focus();
+            return;
+        }
+        
+        // 비동기 통신
+        let type = "POST";
+        let url = "/doma/board/noFileSave.do";
+        let async = "true";
+        let dataType = "html";
+        
+        let params = {
+            "seq": seqInput.value,
+            "gname": searchDivSelect.value,
+            "title": titleInput.value,
+            "userId": userIdInput.value,
+            "modId": userIdInput.value,
+            "content": contentsTextArea.value,
+            "div": divInput.value
+        };
+
+        PClass.pAjax(url, params, dataType, type, async, function(data){
+            if (data) {
+                try {
+                    // JSON 문자열을 JSON Object로 변환
+                    const message = JSON.parse(data);
+                    if (isEmpty(message) === false && message.messageId === 1) {
+                        moveToList();
+                    } else {
+                        alert(message.messageContents);
+                    }
+                } catch (e) {
+                    alert("data를 확인 하세요");
+                }
+            }
+        });
+    }
     
 });
 </script>
@@ -344,8 +368,7 @@ document.addEventListener("DOMContentLoaded", function(){
 <body>
 <!-- container -->
 <div class="container">
-  <br>   <br>   <br>   
-       <!-- 제목 -->
+  <!-- 제목 -->
   <div class="page-header mb-4">
       <h2>
         <c:choose>
@@ -357,16 +380,15 @@ document.addEventListener("DOMContentLoaded", function(){
         </c:choose>
       </h2>
   </div>
-    <!--// form end -->
+  <!--// 제목 end ------------------------------------------------------------->
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
       <input type="button" value="목록" id="moveToList" class="btn btn-outline-warning">
       <input type="button" value="등록"  id="fileSave" class="btn btn-outline-warning">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
-  <!-- form --> 
+  <!-- form -->
   <form action="${CP}/board/doSave.do" class="form-horizontal"  name="regForm" id="regForm" method="post" enctype="multipart/form-data">
-       
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
     <div class="row mb-2">
@@ -405,14 +427,12 @@ document.addEventListener("DOMContentLoaded", function(){
         </div>
     </div>
   </form>
- 
+  <!--// form end -->
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 </div>
 <!--// container end ---------------------------------------------------------->
 
 <%-- bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>
-
-<%-- Ensure the footer include is here --%>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> 
 </body>
 </html>
