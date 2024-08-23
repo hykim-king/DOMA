@@ -146,7 +146,7 @@ h2 {
 .member-table th, .member-table td {
     border: 1px solid #ebebeb;
     padding: 20px;
-    
+    color: black;
     background-color: white;
 }
 
@@ -161,6 +161,10 @@ h2 {
 
 .member-table tr:hover {
     background-color: #f1f1f1;
+}
+
+.member-table a{
+	color: black;
 }
 
 /* 회원 정보 폼 스타일 */
