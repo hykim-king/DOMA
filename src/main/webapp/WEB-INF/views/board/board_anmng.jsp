@@ -228,56 +228,66 @@ document.addEventListener("DOMContentLoaded", function(){
     
 //함수=================================================================================================
     //doUpdate : 수정
-    function anUpdate() {
-        console.log("anUpdate()");
-        
-        if(isEmpty(titleInput.value) == true){
-            alert('제목을 입력 하세요.')
-            titleInput.focus();
-            return;
-        }
-        
-        //marker : simplemde.value()
-        if(isEmpty(contentsTextArea.value) == true){
-            alert('내용을 입력 하세요.')
-            contentsTextArea.focus();
-            return;
-        }
-        
-        if(confirm("수정 하시겠습니까?") === false)return;
-        
-        //비동기 통신
-        let type = "POST";
-        let url = "/doma/board/anUpdate.do";
-        let async = "true";
-        let dataType = "html";
-        
-        let params = {
-        		"seq"      : seqInput.value,
-        		"div"      : divInput.value,
-        		"userId"   : userIdInput.value,
-        		"modId"   : modIdInput.value,
-                "title"    : titleInput.value,
-                "content"  : contentsTextArea.value
-            };
-
-        PClass.pAjax(url, params, dataType, type, async, function(data){
-            if(data){
-                try{
-                    //JSON문자열을 JSON Object로 변환
-                    const message = JSON.parse(data)
-                    if(isEmpty(message) === false && 1 === message.messageId){
-                        moveToMain();
-                    }else{
-                        alert(message.messageContents);
-                    }
-                    
-                }catch(e){
-                    alert("data를 확인 하세요");
-                }
-            }
-        });
-    }
+    //doUpdate : 수정
+	function anUpdate() {
+	    console.log("anUpdate()");
+	
+	    // 현재 입력값과 원래 값 비교
+	    const originalTitle = "<c:out value='${moveUp.title}'/>"; // 서버에서 받아온 원래 값
+	    const originalContent = "<c:out value='${moveUp.content}'/>"; // 서버에서 받아온 원래 값
+	
+	    if (isEmpty(titleInput.value)) {
+	        alert('제목을 입력 하세요.');
+	        titleInput.focus();
+	        return;
+	    }
+	
+	    // marker : simplemde.value()
+	    if (isEmpty(contentsTextArea.value)) {
+	        alert('내용을 입력 하세요.');
+	        contentsTextArea.focus();
+	        return;
+	    }
+	
+	    // 수정사항이 없을 경우 알림
+	    if (titleInput.value === originalTitle && contentsTextArea.value === originalContent) {
+	        alert('수정사항이 없습니다.');
+	        return;
+	    }
+	
+	    if (confirm("수정 하시겠습니까?") === false) return;
+	
+	    // 비동기 통신
+	    let type = "POST";
+	    let url = "/doma/board/anUpdate.do";
+	    let async = "true";
+	    let dataType = "html";
+	
+	    let params = {
+	        "seq": seqInput.value,
+	        "div": divInput.value,
+	        "userId": userIdInput.value,
+	        "modId": modIdInput.value,
+	        "title": titleInput.value,
+	        "content": contentsTextArea.value
+	    };
+	
+	    PClass.pAjax(url, params, dataType, type, async, function(data) {
+	        if (data) {
+	            try {
+	                // JSON문자열을 JSON Object로 변환
+	                const message = JSON.parse(data);
+	                if (isEmpty(message) === false && 1 === message.messageId) {
+	                    moveToMain();
+	                } else {
+	                    alert(message.messageContents);
+	                }
+	            } catch (e) {
+	                alert("data를 확인 하세요");
+	            }
+	        }
+	    });
+	}
     
     function moveToMain() {
         window.location.href = "/doma/board/anSelectOne.do?seq=" + seqInput.value +"&div=" + divInput.value;

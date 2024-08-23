@@ -261,12 +261,6 @@ document.addEventListener("DOMContentLoaded", function(){
             return;
         }
         
-        if(isEmpty(imgLinkInput.files[0]) == true){
-            alert('이미지를 선택 하세요.')
-            imgLinkInput.focus();
-            return;
-        }
-        
         //marker : simplemde.value()
         if(isEmpty(contentsTextArea.value) == true){
             alert('내용을 입력 하세요.')
