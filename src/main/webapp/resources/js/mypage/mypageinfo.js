@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }  
 
         if(isEmpty(detailAddrInput.value) == true){
-        alert("상세주소 입력 하세요.");
+        alert("상세주소 입력 하세요.(ex.000동 000호)");
         detailAddressInput.focus();
         return;
         }
