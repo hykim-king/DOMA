@@ -18,7 +18,7 @@
     <div class="header-container" style="display : inline-block; width: 100%;">
         <div>
             <a class="navbar-brand" href="/doma/main/main.do">
-                <img src="${CP}/resources/img/logoo.png" alt="Logo"  style="width: 135px; height: auto;">
+                <img src="${CP}/resources/img/top_logo.png" alt="Logo"  style="width: 155px; height: auto;">
             </a>
         </div>
         <div class="main-nav">
