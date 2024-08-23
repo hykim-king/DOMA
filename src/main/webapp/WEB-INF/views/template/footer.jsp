@@ -12,9 +12,9 @@
 <body>
     <!-- Footer -->
     <footer>
-        <img class="footer-logo" src="${CP}/resources/img/footerlogo.png" alt="Footer Logo">
+        <img class="footer-logo" src="${CP}/resources/img/title_003.png" alt="Footer Logo" style="width: 1100px; height: auto;">
         <div class="footer-copyright">
-            <p>&copy; 2024 DOMA. All rights reserved.</p>
+           <!--   <p>&copy; 2024 DOMA. All rights reserved.</p>-->
         </div>
         <a id="top-button" href="#">
             <img src="${CP}/resources/img/top.png" alt="Top Button">

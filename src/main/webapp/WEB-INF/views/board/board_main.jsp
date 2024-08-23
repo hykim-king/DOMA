@@ -89,6 +89,12 @@ header, footer {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
 }
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* 버튼 간의 간격을 조정 */
+    margin-bottom: 20px; /* 아래 컨텐츠와의 간격 */
+}
 
 .post {
     background-color: #fff;
@@ -591,53 +597,55 @@ document.addEventListener("DOMContentLoaded", function() {
     <input type="hidden" name="modId"  id="modId" value="${board.modId}">
     <input type="hidden" name="comSeq" id="comSeq" value="${comments.comSeq}">
 	<div class="container">
-		<button type="button" value="목록" id="moveToList" class="btn btn-outline-dark">목록으로</button>
-		<button type="button" value="수정" id="moveToUp" class="btn btn-outline-dark">수정하기</button>
-		<button type="button" value="삭제" id="doDelete" class="btn btn-outline-danger">삭제하기</button>
-		<article class="post">
-		    <h2 name="title" id="title" class="post-title">${board.title}</h2>
-		    <div class="post-meta">
-		        <p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
-		        <p class="post-date">${board.regDt}</p>
-		        <p class="text-end">조회수: ${board.views}</p>
-		    </div>
-		    <div class="row mb-2">
-		        <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
-		        <div class="col-sm-2">
-		            <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
-		        </div>
-		    </div>
-		    <hr>
-		    <div name="content" id="content" class="post-content">
-		        <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" class="responsive-img"><br/>
-		        <br/>
-		        <p>${board.content}</p>
-		    </div>
-		</article>
+    <div class="button-container">
+        <button type="button" value="목록" id="moveToList" class="btn btn-outline-dark">목록으로</button>
+        <button type="button" value="수정" id="moveToUp" class="btn btn-outline-dark">수정하기</button>
+        <button type="button" value="삭제" id="doDelete" class="btn btn-outline-danger">삭제하기</button>
+    </div>
+    <article class="post">
+        <h2 name="title" id="title" class="post-title">${board.title}</h2>
+        <div class="post-meta">
+            <p name="userId" id="userId" class="post-author">작성자: ${board.userId}</p>
+            <p class="post-date">${board.regDt}</p>
+            <p class="text-end">조회수: ${board.views}</p>
+        </div>
+        <div class="row mb-2">
+            <label for="searchDiv" class="col-sm-2 col-form-label">지역:</label>
+            <div class="col-sm-2">
+                <input type="text" value="<c:out value='${board.gname}'/>" class="form-control readonly-input" readonly="readonly" name="searchDiv" id="searchDiv">   
+            </div>
+        </div>
+        <hr>
+        <div name="content" id="content" class="post-content">
+            <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" class="responsive-img"><br/>
+            <br/>
+            <p>${board.content}</p>
+        </div>
+    </article>
 
-		<section class="comments">
-			<h3>댓글</h3>
-			<div class="comment-form">
-				<form action="board_main.jsp" method="post" onsubmit="commentSave(event)">
-					<label for="comment">댓글을 입력하세요:</label>
-					<textarea id="comment" name="comment" rows="4" required></textarea>
-					<button type="button" value="댓글 쓰기" id="doSave" name="doSave" class="btn btn-primary mt-2">댓글 쓰기</button>
-				</form>
-			</div>
-			<div class="comment-list">
-				<div class="comment">
-					<p>
-						<strong>작성자:</strong> 댓글 내용이 여기에 표시됩니다.
-					</p>
-				</div>
-				<!-- 추가 댓글은 여기에 나열됩니다 -->
-                <ul id="reply-list" class="list-unstyled">
-                <!-- AJAX를 통해 동적으로 댓글이 추가될 영역 -->
-                
-                </ul>
-			</div>
-		</section>
-	</div>
+    <section class="comments">
+        <h3>댓글</h3>
+        <div class="comment-form">
+            <form action="board_main.jsp" method="post" onsubmit="commentSave(event)">
+                <label for="comment">댓글을 입력하세요:</label>
+                <textarea id="comment" name="comment" rows="4" required></textarea>
+                <button type="button" value="댓글 쓰기" id="doSave" name="doSave" class="btn btn-primary mt-2">댓글 쓰기</button>
+            </form>
+        </div>
+        <div class="comment-list">
+            <div class="comment">
+                <p>
+                    <strong>작성자:</strong> 댓글 내용이 여기에 표시됩니다.
+                </p>
+            </div>
+            <!-- 추가 댓글은 여기에 나열됩니다 -->
+            <ul id="reply-list" class="list-unstyled">
+            <!-- AJAX를 통해 동적으로 댓글이 추가될 영역 -->
+            </ul>
+        </div>
+    </section>
+</div>
+
 
 </body>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

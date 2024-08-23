@@ -45,24 +45,47 @@
 <link rel="stylesheet" href="${CP }/resources/css/bootstrap/simplemde.min.css">
 <script src="${CP }/resources/js/bootstrap/simplemde.min.js"></script>
 <style>
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
+    background-color: #f4f4f4;
     font-family: 'Nanum Gothic', sans-serif;
     color: #333;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+    background-color: #f4f4f4;
+    padding-bottom: 10px; /* 컨테이너와 푸터 사이의 간격 줄이기 */
 }
 
-header, footer {
+footer {
+    margin-top: -10px; /* 푸터가 위로 올라가도록 설정 */
+    padding: 10px 0;
     background-color: #fff;
-    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    width: 100%;
 }
+
+form {
+	margin-top : 50px;
+    margin-bottom: 0; /* 폼과 하단 요소 간의 간격 제거 */
+}
+
+.form-control {
+    margin-bottom: 10px; /* 폼 필드 간의 간격 줄이기 */
+}
+
+/* 필요한 경우 추가적인 조정 가능 */
+
+
 
 .post {
     background-color: #fff;
@@ -321,7 +344,8 @@ document.addEventListener("DOMContentLoaded", function(){
 <body>
 <!-- container -->
 <div class="container">
-  <!-- 제목 -->
+  <br>   <br>   <br>   <br>
+       <!-- 제목 -->
   <div class="page-header mb-4">
       <h2>
         <c:choose>
@@ -333,15 +357,16 @@ document.addEventListener("DOMContentLoaded", function(){
         </c:choose>
       </h2>
   </div>
-  <!--// 제목 end ------------------------------------------------------------->
+    <!--// form end -->
   <!-- 버튼 -->
   <div class="mb-2 d-grid gap-2 d-md-flex justify-content-md-end">
       <input type="button" value="목록" id="moveToList" class="btn btn-outline-warning">
       <input type="button" value="등록"  id="fileSave" class="btn btn-outline-warning">
   </div>
   <!--// 버튼 ----------------------------------------------------------------->
-  <!-- form -->
+  <!-- form --> 
   <form action="${CP}/board/doSave.do" class="form-horizontal"  name="regForm" id="regForm" method="post" enctype="multipart/form-data">
+       
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div" id="div" value="${board.getDiv() }">
     <div class="row mb-2">
@@ -380,12 +405,14 @@ document.addEventListener("DOMContentLoaded", function(){
         </div>
     </div>
   </form>
-  <!--// form end -->
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+ 
 </div>
 <!--// container end ---------------------------------------------------------->
 
 <%-- bootstrap js --%>
 <script src="${CP}/resources/js/bootstrap/bootstrap.bundle.js"></script>
+
+<%-- Ensure the footer include is here --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> 
 </body>
 </html>

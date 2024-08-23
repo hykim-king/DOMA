@@ -382,8 +382,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	    </div>
 	</div>
   </form>
-  <!--// form end -->
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+  <!--// form end --> 
 </div>
 <!--// container end ---------------------------------------------------------->
 
