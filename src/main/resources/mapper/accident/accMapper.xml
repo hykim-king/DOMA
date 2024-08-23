@@ -86,7 +86,7 @@
             TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
             TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
             TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
-            A.INFO as info,
+            REPLACE(REPLACE(REPLACE(A.INFO, CHR(13) || CHR(10), ' '), CHR(13), ' '), CHR(10), ' ') AS info,  -- CRLF, CR, LF 처리
             A.LONGITUDE as longitude,
             A.LATITUDE as latitude
             FROM 
@@ -108,7 +108,7 @@
             TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
             TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
             TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
-            A.INFO as info,
+            REPLACE(REPLACE(REPLACE(A.INFO, CHR(13) || CHR(10), ' '), CHR(13), ' '), CHR(10), ' ') AS info,  -- CRLF, CR, LF 처리
             A.LONGITUDE as longitude,
             A.LATITUDE as latitude
             FROM 
@@ -130,7 +130,7 @@
             TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
             TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
             TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
-            A.INFO as info,
+            REPLACE(REPLACE(REPLACE(A.INFO, CHR(13) || CHR(10), ' '), CHR(13), ' '), CHR(10), ' ') AS info,  -- CRLF, CR, LF 처리
             A.LONGITUDE as longitude,
             A.LATITUDE as latitude
             FROM 
@@ -306,7 +306,7 @@
             TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
             TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
             TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
-            A.INFO as info,
+            REPLACE(REPLACE(REPLACE(A.INFO, CHR(13) || CHR(10), ' '), CHR(13), ' '), CHR(10), ' ') AS info,  -- CRLF, CR, LF 처리
             A.LONGITUDE as longitude,
             A.LATITUDE as latitude
             FROM 
@@ -328,7 +328,7 @@
             TO_CHAR(TO_DATE(A.OCCR_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS occrTime,
             TO_CHAR(TO_DATE(A.END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS endDate,
             TO_CHAR(TO_DATE(A.END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') AS endTime,
-            A.INFO as info,
+            REPLACE(REPLACE(REPLACE(A.INFO, CHR(13) || CHR(10), ' '), CHR(13), ' '), CHR(10), ' ') AS info,  -- CRLF, CR, LF 처리
             A.LONGITUDE as longitude,
             A.LATITUDE as latitude
             FROM 
