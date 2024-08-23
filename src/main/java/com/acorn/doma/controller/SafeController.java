@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,23 +41,9 @@ public class SafeController implements PLog {
 	CodeService codeService;
 	
 
-
-	
 	// 실제 파일이 저장될 경로 (서버의 절대 경로)
-	private  String UPLOAD_DIR = "";
+	private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/safe_img/";
    
-	
-	
-	public SafeController() {
-		log.debug("┌──────────────────────────────────────────┐");
-		log.debug("│ SafeController()                         │");
-		log.debug("└──────────────────────────────────────────┘");		
-		
-
-		
-		
-	}
-
 	public void safeController() {
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ safeController()                         │");
@@ -69,16 +52,11 @@ public class SafeController implements PLog {
 	
 	@PostMapping(value = "/doUpdate.do", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String doUpdate(Board inVO, HttpServletRequest req,@RequestParam(value = "imgFile", required = false ) MultipartFile[] files) throws SQLException {
+	public String doUpdate(Board inVO, @RequestParam(value = "imgFile", required = false) MultipartFile[] files) throws SQLException {
 	    log.debug("┌──────────────────────────────────────────┐");
 	    log.debug("│ safeController : doUpdate()              │");
 	    log.debug("└──────────────────────────────────────────┘");
 
-	    ServletContext  sc =req.getServletContext();
-	    UPLOAD_DIR = sc.getRealPath("/resources/img/safe_img/"); 
-	    log.debug("Absolute Path: " + UPLOAD_DIR);
-	    
-	    
 	    // 1. 기존 이미지 파일 경로 가져오기
 	    Board existingBoard = boardService.selectOne(inVO); // 기존 데이터 가져오기
 	    String existingImageFileNames = existingBoard.getImgLink(); // 기존 이미지 파일명 가져오기
