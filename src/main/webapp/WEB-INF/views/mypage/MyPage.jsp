@@ -182,13 +182,13 @@ $(document).ready(function(){
                             </div>
 
                             <input type="date" min="1907-01-01" max="2024-08-01" class="form-control" value="<c:out value='${user.birth}'/>" id="birth" name="birth" maxlength="10" required>
-                            <input type="text" class="form-control" value="<c:out value='${user.address}'/>" id="sample4_roadAddress" name="address"  >
+                            <input type="text" class="form-control" value="<c:out value='${user.address}'/>" id="sample4_roadAddress" name="address" disabled="disabled" >
                             <input type="text" class="form-control" id="sample4_jibunAddress" placeholder="지번주소" style="display: none;" disabled>
                             <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호" style="display: none;" disabled>
 
                             <input type="button" class="btn btn-secondary" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
                             <span id="guide" style="color:#999;display:none"></span>
-                            <input type="text" class="form-control" value="<c:out value='${user.detailAddress}'/>" id="sample4_detailAddress" placeholder="상세주소"  >
+                            <input type="text" class="form-control" value="<c:out value='${user.detailAddress}'/>" id="sample4_detailAddress"  placeholder="상세주소(ex.000동 000호)" >
                         	<input type="text" class="form-control" id="sample4_extraAddress"   placeholder="참고항목" style="display: none;" disabled>
                         	<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
                         </div>
