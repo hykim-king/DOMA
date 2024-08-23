@@ -179,7 +179,9 @@ header, footer {
 			<hr>
 			<div id="content" class="post-content">
 				<p>${info.content}</p>
-				<img style="width:100%;" src="${CP}/resources/img/board_img/${info.imgLink }">
+				<c:forEach var="imgLink" items="${imgLinks}">
+					<img style="width:100%;" src="${CP}/resources/img/board_img/${imgLink }">
+				</c:forEach>
 			</div>
 		</article>
 	</div>

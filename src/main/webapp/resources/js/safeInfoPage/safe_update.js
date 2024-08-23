@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function(){
-    console.log("DOMContentLoaded");
 
 	const seqInput = document.querySelector("#seq");
     const divInput = document.querySelector("#boardDiv");
@@ -17,14 +16,12 @@ document.addEventListener("DOMContentLoaded", function(){
     const moveToListBtn = document.querySelector("#moveToList");
        
     moveToListBtn.addEventListener("click",function(event){
-        console.log("moveToListBtn click");
         event.stopPropagation();
         if(confirm("목록 으로 이동 하시겠습니까?") === false)return;
         moveToList();
     });
 	
     doUpdateBtn.addEventListener("click", function(event){
-        console.log("doUpdateBtn click");     
         doUpdate();
     });
 	    
@@ -40,15 +37,6 @@ document.addEventListener("DOMContentLoaded", function(){
             imgLinkInput.focus();
             return;
         }
-		
-        console.log("doUpdate()");
-        console.log("seqInput : " + seqInput);
-        console.log("seqInput : " + seqInput.value);
-        console.log("divInput : " + divInput.value);
-        console.log("titleInput : " + titleInput.value);
-        console.log("userIdInput : " + userIdInput.value);
-	    console.log("imgLinkInput.files[0]", imgLinkInput.files[0]);
-        console.log("simplemde", simplemde.value());
         
         if(confirm("수정 하시겠습니까?") === false)return;
 		
@@ -59,11 +47,13 @@ document.addEventListener("DOMContentLoaded", function(){
 		formData.append("title", titleInput.value);
 		formData.append("userId", userIdInput.value);
 		formData.append("content", simplemde.value());
-		formData.append("imgFile", imgLinkInput.files[0]);  // file이 서버에서 받는 MultipartFile의 키와 일치
 		
-		if (fileInput.files.length > 0) {
-	        formData.append("imgFile", imgLinkInput.files[0]);
-	    }
+		// 파일이 있는 경우 FormData에 추가
+        if (imgLinkInput.files.length > 0) {
+            for (let i = 0; i < imgLinkInput.files.length; i++) {
+                formData.append("imgFile", imgLinkInput.files[i]);
+            }
+        }
 
          $.ajax({
 	        url: "/doma/safe/doUpdate.do",
@@ -73,8 +63,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	        contentType: false,  // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
 	        success: function(data) {
 	        	
-	        	console.log("서버 응답 데이터:", data);  // 응답 데이터를 직접 확인
-	        	 
 	            if (data) {
 	                try {
 	                    // JSON 문자열을 JSON 객체로 변환
@@ -91,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	            }
 	        },
 	        error: function(xhr, status, error) {
-	            console.error("요청 실패: " + status + ", " + error);
 	            alert("요청 처리 중 오류가 발생했습니다.");
 	        }
 	    });
