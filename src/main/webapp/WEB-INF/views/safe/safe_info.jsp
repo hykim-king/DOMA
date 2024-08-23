@@ -69,14 +69,14 @@ button {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #fefff6; 
+    background-color: #ffffff;
     color: #333333; 
     display: flex; 
     align-items: center;
     justify-content: center; 
     font-size: 14px; 
     font-weight: bold;
-    /* font-family: Arial, sans-serif; 폰트는 취향대로 바꾸세요 */
+    /* font-family: Arial, sans-serif; */
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
