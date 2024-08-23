@@ -121,6 +121,7 @@
       FROM (
         SELECT tt1.rnum as no,
                tt1.div,
+               tt1.user_Id as userId,
                tt1.title,
                tt1.mod_id as modId,
                DECODE( TO_CHAR(tt1.mod_dt,'YYYYMMDD'),TO_CHAR(SYSDATE,'YYYYMMDD'),
@@ -159,6 +160,7 @@
         SELECT tt1.rnum as no,
                tt1.div,
                tt1.gname,
+               tt1.user_Id as userId,
                tt1.title,
                tt1.mod_id as modId,
                DECODE( TO_CHAR(tt1.mod_dt,'YYYYMMDD'),TO_CHAR(SYSDATE,'YYYYMMDD'),

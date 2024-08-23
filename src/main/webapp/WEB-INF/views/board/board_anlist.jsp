@@ -206,7 +206,6 @@ document.addEventListener("DOMContentLoaded", function(){
     
     const div = document.querySelector("#div");
     
-    const userIdInput = document.querySelector("#userId");
     
     
 //이벤트 처리=================================================================================================  
@@ -364,7 +363,6 @@ document.addEventListener("DOMContentLoaded", function(){
         <form action="#" name="boardForm" class="row g-2 align-items-center" id="boardForm" style="margin : 4px 65px 6px 23px">
             <input type="hidden" name="div"    id="div" value="${search.getDiv() }">
             <input type="hidden" name="pageNo" id="pageNo" value="${search.pageNo}">
-            <input type="hidden" name="userId" id="userId" value="${board.userId}">
             <div class="col-sm-3">
             </div>
             <div class="col-sm-2 text-end g-2">
@@ -414,7 +412,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		              <td class="text-left">
 		                <a href="/doma/board/anSelectOne.do?seq=${vo.seq }&div=${vo.getDiv() }"><c:out value="${vo.title}"></c:out></a>
 		              </td>
-		              <td class="text-center"><c:out value="${vo.modId}"></c:out></td>
+		              <td class="text-center"><c:out value="${vo.userId}"></c:out></td>
 		              <td class="text-center"><c:out value="${vo.modDt }"></c:out></td>
 		              <td class="text-end"><c:out value="${vo.views }"></c:out></td>
 		              <td class="text-center d-none"><c:out value="${vo.seq }"></c:out></td>

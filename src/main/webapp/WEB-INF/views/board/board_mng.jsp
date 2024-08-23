@@ -229,13 +229,13 @@ document.addEventListener("DOMContentLoaded", function(){
         console.log("doUpdateBtn click");
         event.stopPropagation();
         if(confirm("수정을 하시겠습니까?") === false)return;
-        doUpdate();
+        fileUpdate();
     });
     
     
 //함수=================================================================================================
     //doUpdate()
-	function doUpdate(){
+	function fileUpdate(){
         
         console.log("doUpdate()");
         
@@ -421,7 +421,7 @@ document.addEventListener("DOMContentLoaded", function(){
   <form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="mngForm" id="mngForm" action="${CP}/file/fileUpload.do" method="post" enctype="multipart/form-data">
     <input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
-    <input type="hidden" name="modId"    id="modId" value="${board.modId}">
+    <input type="hidden" name="modId"   id="modId" value="${user.userId}">
     
     <div class="row mb-2">
 	    <label for="searchDiv" class="col-sm-2 col-form-label">구 이름</label>

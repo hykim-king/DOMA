@@ -204,6 +204,8 @@ document.addEventListener("DOMContentLoaded", function(){
     const searchDivSelect = document.querySelector("#searchDiv");
     
     const modIdInput = document.querySelector("#modId");
+    console.log("modIdInput:", modIdInput);
+    
     const userIdInput = document.querySelector("#userId");
     
 
@@ -254,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function(){
         		"seq"      : seqInput.value,
         		"div"      : divInput.value,
         		"userId"   : userIdInput.value,
-        		"modId"   : userIdInput.value,
+        		"modId"   : modIdInput.value,
                 "title"    : titleInput.value,
                 "content"  : contentsTextArea.value
             };
@@ -310,9 +312,9 @@ document.addEventListener("DOMContentLoaded", function(){
   <!--// 버튼 ----------------------------------------------------------------->
   <!-- form -->
   <form action="${CP}/board/fileUpload.do" class="form-horizontal"  name="mngForm" id="mngForm" action="${CP}/file/fileUpload.do" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="seq"    id="seq" value="${board.seq}">
-    <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
-    <input type="hidden" name="modId"    id="modId" value="${board.modId}">
+    <input type="hidden" name="seq" id="seq" value="${board.seq}">
+    <input type="hidden" name="div" id="div" value="${board.getDiv()}">
+    <input type="hidden" name="modId" id="modId" value="${user.userId}">
     
 	<div class="row mb-2">
         <label for="userId" class="col-sm-2 col-form-label">등록자</label>
