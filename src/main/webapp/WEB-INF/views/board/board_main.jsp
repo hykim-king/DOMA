@@ -14,6 +14,7 @@
     Copyright (C) by KandJang All right reserved.
 */
  --%>
+<%@page import="com.acorn.doma.domain.Board"%>
 <%@page import="com.acorn.doma.domain.User"%>
 <%@ page import="com.acorn.doma.cmn.StringUtil"%>
 <%@ page import="com.acorn.doma.cmn.Search"%>
@@ -22,7 +23,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-
     User outVO = (User) session.getAttribute("user");
     String userId = (outVO != null) ? outVO.getUserId() : "";
     
@@ -223,6 +223,9 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("modId: " + modId);
     console.log("grade: " + grade);
     
+    const board = document.getElementById("board").value;
+    console.log("board: " + board);
+    
     // 객체 생성=================================================================================================
     const moveToListBtn = document.querySelector("#moveToList");
     const doDeleteBtn = document.querySelector("#doDelete");
@@ -238,6 +241,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const modIdInput = document.querySelector("#modId");
     const titleInput = document.getElementById("title");
     const contentInput = document.getElementById("content");
+    
     
 
     ajaxGetComments();
@@ -590,6 +594,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	<input type="hidden" name="seq"    id="seq" value="${board.seq}">
     <input type="hidden" name="div"    id="div" value="${board.getDiv()}">
     <input type="hidden" name="modId"  id="modId" value="${board.modId}">
+    <input type="hidden" name="board" id="board" value="${board}">
     <input type="hidden" name="comSeq" id="comSeq" value="${comments.comSeq}">
 	<div class="container">
 		<button type="button" value="목록" id="moveToList" class="btn btn-outline-dark">목록으로</button>
@@ -610,10 +615,12 @@ document.addEventListener("DOMContentLoaded", function() {
 		    </div>
 		    <hr>
 		    <div name="content" id="content" class="post-content">
-		        <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" class="responsive-img"><br/>
-		        <br/>
-		        <p>${board.content}</p>
-		    </div>
+			    <c:if test="${not empty board.imgLink}">
+			        <img src='${CP}/resources/img/board_img/${board.imgLink}' alt="게시물 이미지" class="responsive-img"><br/>
+			        <br/>
+			    </c:if>
+			    <p>${board.content}</p>
+			</div>
 		</article>
 		<section class="comments">
 			<h3>댓글</h3>
