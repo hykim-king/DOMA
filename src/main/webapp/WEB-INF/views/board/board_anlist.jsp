@@ -38,7 +38,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%-- favicon  --%>
-<link rel="shortcut icon" href="${CP}/resources/img/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="${CP}/resources/img/pcon.png" type="image/x-icon">
 
 <%-- bootstrap css --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css">

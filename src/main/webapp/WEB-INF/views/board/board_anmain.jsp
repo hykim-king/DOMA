@@ -42,7 +42,7 @@
     href="<%=request.getContextPath()%>/resources/css/admin/admin_page.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%-- favicon  --%>
-<link rel="shortcut icon" href="${CP}/resources/img/favicon.ico"
+<link rel="shortcut icon" href="${CP}/resources/img/pcon.png"
     type="image/x-icon">
 
 <%-- bootstrap css --%>
