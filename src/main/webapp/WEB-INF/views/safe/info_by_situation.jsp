@@ -11,7 +11,7 @@
 	 		<ul class="ui_section">
 				<li id="situation_seq_${situation.seq}" style="display: hidden; border : 0px;" data-value="${situation.seq}"></li>
 				<li class="img_section">
-					<img src="${CP }/resources/img/board_img/${situation.imgLink}" style="width:100%; height:100%;">
+					<img src="${CP }/resources/img/safe_img/${situation.imgLink}" style="width:100%; height:100%;">
 				</li>
 				<li class="title_section">${situation.title }</li>
 			</ul>

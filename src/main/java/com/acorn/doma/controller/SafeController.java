@@ -3,6 +3,7 @@ package com.acorn.doma.controller;
 
 
 import java.io.File;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,8 +43,23 @@ public class SafeController implements PLog {
 	@Autowired
 	CodeService codeService;
 	
-	@Autowired
-	private ServletContext servletContext;
+
+
+	
+	// 실제 파일이 저장될 경로 (서버의 절대 경로)
+	private  String UPLOAD_DIR = "";
+   
+	
+	
+	public SafeController() {
+		log.debug("┌──────────────────────────────────────────┐");
+		log.debug("│ SafeController()                         │");
+		log.debug("└──────────────────────────────────────────┘");		
+		
+
+		
+		
+	}
 
 	public void safeController() {
 		log.debug("┌──────────────────────────────────────────┐");
@@ -52,11 +69,16 @@ public class SafeController implements PLog {
 	
 	@PostMapping(value = "/doUpdate.do", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String doUpdate(Board inVO, @RequestParam(value = "imgFile", required = false) MultipartFile[] files) throws SQLException {
+	public String doUpdate(Board inVO, HttpServletRequest req,@RequestParam(value = "imgFile", required = false ) MultipartFile[] files) throws SQLException {
 	    log.debug("┌──────────────────────────────────────────┐");
 	    log.debug("│ safeController : doUpdate()              │");
 	    log.debug("└──────────────────────────────────────────┘");
 
+	    ServletContext  sc =req.getServletContext();
+	    UPLOAD_DIR = sc.getRealPath("/resources/img/safe_img/"); 
+	    log.debug("Absolute Path: " + UPLOAD_DIR);
+	    
+	    
 	    // 1. 기존 이미지 파일 경로 가져오기
 	    Board existingBoard = boardService.selectOne(inVO); // 기존 데이터 가져오기
 	    String existingImageFileNames = existingBoard.getImgLink(); // 기존 이미지 파일명 가져오기
@@ -68,7 +90,7 @@ public class SafeController implements PLog {
 	        if (existingImageFileNames != null && !existingImageFileNames.isEmpty()) {
 	            String[] existingFilePaths = existingImageFileNames.split(",");
 	            for (String fileName : existingFilePaths) {
-	            	String existingFilePath = servletContext.getRealPath("/resources/img/board_img/") + fileName;
+	                String existingFilePath = UPLOAD_DIR + fileName;
 	                File existingFile = new File(existingFilePath);
 	                if (existingFile.exists()) {
 	                    boolean deleted = existingFile.delete();
@@ -89,7 +111,7 @@ public class SafeController implements PLog {
 	                // 서버의 특정 경로에 파일 저장
 	                String originalFileName = file.getOriginalFilename();
 	                String imageFileName = uuid + "_" + originalFileName;
-	                String filePath = servletContext.getRealPath("/resources/img/board_img/") + imageFileName;
+	                String filePath = UPLOAD_DIR + imageFileName;
 	                File uploadFile = new File(filePath);
 
 	                // 파일 저장
@@ -143,10 +165,10 @@ public class SafeController implements PLog {
 		if (existingImageFileNames != null && !existingImageFileNames.isEmpty()) {
 	        String[] imageFileNames = existingImageFileNames.split(",");
 	        for (String fileName : imageFileNames) {
-	        	String existingFilePath = servletContext.getRealPath("/resources/img/board_img/") + fileName;
-                File existingFile = new File(existingFilePath);
-                if (existingFile.exists()) {
-	                boolean deleted = existingFile.delete();
+	            String filePath = UPLOAD_DIR + fileName;
+	            File file = new File(filePath);
+	            if (file.exists()) {
+	                boolean deleted = file.delete();
 	                if (deleted) {
 	                    log.debug("이미지 파일 삭제 성공: " + fileName);
 	                } else {
@@ -193,12 +215,14 @@ public class SafeController implements PLog {
 	                    // 서버의 특정 경로에 파일 저장
 	                    String originalFileName = file.getOriginalFilename();
 	                    String imageFileName = uuid + "_" + originalFileName;
-	                    String existingFilePath = servletContext.getRealPath("/resources/img/board_img/") + imageFileName;
-		                File uploadFile = new File(existingFilePath);
-		                
+	                    String filePath = UPLOAD_DIR + imageFileName;
+	                    File uploadFile = new File(filePath);
+
 	                    // 파일 저장
 	                    file.transferTo(uploadFile);
 
+	                    // 파일 경로를 웹 애플리케이션의 접근 가능한 경로로 설정
+	                    String relativeFilePath = "/resources/img/board_img/" + imageFileName;
 	                    imgLinks.add(imageFileName);
 
 	                } catch (IOException e) {

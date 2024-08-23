@@ -180,7 +180,7 @@ header, footer {
 			<div id="content" class="post-content">
 				<p>${info.content}</p>
 				<c:forEach var="imgLink" items="${imgLinks}">
-					<img style="width:100%;" src="${CP}/resources/img/board_img/${imgLink }">
+					<img style="width:100%;" src="${CP}/resources/img/safe_img/${imgLink }">
 				</c:forEach>
 			</div>
 		</article>
