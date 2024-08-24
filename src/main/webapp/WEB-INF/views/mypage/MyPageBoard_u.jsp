@@ -148,8 +148,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 "title"    : titleInput.value,
                 "userId"    : userIdInput.value,
                 "modId"    : modIdInput.value,
-                "content"  : contentsTextArea.value,
-                "imgLinkInput.files[0]": imgLinkInput.files[0]
+                "content"  : contentsTextArea.value 
             };
 
         PClass.pAjax(url, params, dataType, type, async, function(data){
@@ -233,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function(){
     <div class="row mb-2">
     <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
     <div class="col-sm-10">
-        <input type="file" multiple class="form-control" name="fileName" id="imgLink">
+        <!--<input type="file" multiple class="form-control" name="fileName" id="imgLink"> -->
         <!-- 현재 업로드된 파일 링크 표시 -->
         <c:if test="${not empty board.imgLink}">
             <p>[ 파일 첨부 ] <a href="<c:out value='${board.imgLink}'/>" target="_blank"><c:out value='${board.imgLink}'/></a></p>
