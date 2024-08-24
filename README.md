@@ -38,8 +38,8 @@
         <br />
         <sub><b>김현석</b></sub>
         <br />
-        <a href="[https://github.com/codestates-seb/seb40_main_010/commits?author=mozzi327](https://github.com/hykim-king/DOMA/commits/main/?author=iwanttoexplorer)" title="Documentation">📖</a> 
-        <a href="[https://github.com/codestates-seb/seb40_main_010/pulls?q=is%3Apr+author%3Amozzi327](https://github.com/iwanttoexplorer)" title="git_URL">🏡</a>
+        <a href="https://github.com/hykim-king/DOMA/commits/main/?author=iwanttoexplorer" title="Documentation">📖</a> 
+        <a href="https://github.com/iwanttoexplorer" title="git_URL">🏡</a>
       </td>   
       <td align="center">
         <img src="https://github.com/user-attachments/assets/cfa728c9-9ade-4796-97a4-eeab01996a7c" width="300px;" alt="doma2"/>
