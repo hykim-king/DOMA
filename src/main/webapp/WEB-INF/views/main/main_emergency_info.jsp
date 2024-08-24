@@ -67,7 +67,7 @@ var currentInfoWindow = null; // 현재 열려 있는 인포윈도우
 function loadKakaoMapScript(callback) {
     var script = document.createElement('script');
     script.onload = callback;
-    script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900&autoload=false";
+    script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=940c61b2edb65a3a454f86781d95d116&autoload=false";
     document.head.appendChild(script);
 }
 

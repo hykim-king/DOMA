@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="${CP}/resources/css/main/main_info.css">
     <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
     <script src="${CP}/resources/js/common.js"></script>
-   <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900&autoload=false"></script>
+   <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=940c61b2edb65a3a454f86781d95d116&autoload=false"></script>
 <script>
 var map;
 var infowindow;

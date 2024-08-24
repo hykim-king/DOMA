@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/main/main_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
-<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=697612f7482b0b832f526a2e125de900"></script>
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=940c61b2edb65a3a454f86781d95d116"></script>
 <script src="${CP}/resources/js/main/main_occur_info.js"></script>
 <script>
 let selectedRisk = []; // 초기에는 빈 배열로 설정합니다.
