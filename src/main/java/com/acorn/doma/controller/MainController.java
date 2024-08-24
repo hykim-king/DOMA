@@ -141,26 +141,27 @@ public class MainController implements PLog {
 
 	    return nearestCctv;
 	}
-	@RequestMapping(value = "/getNearestCctv.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@RequestMapping(value = "/getNearestCctv.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getNearestCctv(@RequestParam("accId") String accId) {
 	    log.debug("Received accId: " + accId);
 	    Accident accident = new Accident();
 	    accident.setAccId(accId);
 	    Accident inVO = new Accident();
+	    String accData = "";
 	    try {
 	        // 사고 정보 조회
-	    	inVO = accInfoService.doSelectOne(accident);
+	        inVO = accInfoService.doSelectOne(accident);
 	        ObjectMapper objectMapper = new ObjectMapper();
-	        String accData = objectMapper.writeValueAsString(inVO);
-	        log.debug("Accident data: " + inVO);
+	        accData = objectMapper.writeValueAsString(inVO);
+	        log.debug("Accident data: " + accData);
 	        log.debug("Parsed Accident object: " + inVO.toString());
 	    } catch (SQLException e) {
 	        log.error("Error retrieving accident data", e);
-	        return "Error retrieving accident data";
+	        return createErrorResponse("Error retrieving accident data");
 	    } catch (JsonProcessingException e) {
 	        log.error("Error converting to JSON", e);
-	        return "Error converting to JSON";
+	        return createErrorResponse("Error converting to JSON");
 	    }
 
 	    // CCTV 데이터 조회
@@ -169,8 +170,20 @@ public class MainController implements PLog {
 
 	    JSONObject nearestCctv = findNearestCctv(inVO.getLatitude(), inVO.getLongitude(), cctvDataJson);
 
+	    // 결과 JSON 객체 생성
+	    JSONObject result = new JSONObject();
+	    result.put("accident", new JSONObject(accData)); // 사고 정보 추가
+	    result.put("nearestCctv", nearestCctv != null ? nearestCctv : "No CCTV found"); // CCTV 정보 추가
+
 	    // 결과 반환
-	    return nearestCctv != null ? nearestCctv.toString() : "No CCTV found";
+	    return result.toString();
+	}
+
+	// 오류 메시지를 포함한 JSON 응답 생성 메소드
+	private String createErrorResponse(String message) {
+	    JSONObject errorResponse = new JSONObject();
+	    errorResponse.put("error", message);
+	    return errorResponse.toString();
 	}
 	@GetMapping("/guide.do")
 	public String guidePage() {
@@ -180,6 +193,19 @@ public class MainController implements PLog {
 		log.debug("└──────────────────────────────────────────┘");
 		return viewName;
 	}
+		@RequestMapping(value="/popup.do"
+						,method=RequestMethod.GET
+						,produces = "text/plain;charset=UTF-8")
+		public String popup() throws SQLException {
+			log.debug("┌──────────────────────────────┐");
+			log.debug("│ main()                       │");
+			log.debug("└──────────────────────────────┘");
+			
+			String viewName = "main/popup";
+
+			
+			return viewName;
+		}
 	
 
 }

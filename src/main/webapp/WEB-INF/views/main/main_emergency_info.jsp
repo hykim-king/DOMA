@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/main/main_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
+<script src="${CP}/resources/js/main/main_emergency_info.js"></script>
 <title>DOMA</title>
 </head>
 <body>
@@ -260,20 +261,6 @@ function moveToMarker(lat, lng) {
 // 외부에서 돌발정보 클릭 시 인포윈도우 열기
 function onInfoClick(lat, lng) {
     moveToMarker(lat, lng);
-}
-function cctvInfo(accId){
-	$.ajax({
-		url: "/doma/main/getNearestCctv.do",
-        type: 'GET',
-        data:{accId:accId},
-        dataType: "json",
-        success: function(response){
-        	console.log(response);
-        },
-        error: function(error){
-        	console.error("Error: ", error);
-        }
-	});
 }
 // 초기화 스크립트 로딩
 loadKakaoMapScript(initKakaoMap);
