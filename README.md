@@ -1,87 +1,117 @@
-# Spring Project - DOMA(DOROMASTER)
+# 📢 Spring Project - DOMA(DOROMASTER)
+![DOMA](https://github.com/user-attachments/assets/04cb051c-48c4-4f12-831a-1e41d25e2fbe)
 
-## 🖥️ 프로젝트 배경 및 소개
- 
-현대에 들어서 서울의 인구밀도와 교통량은 교통혼잡을 유발하여 시민들의 일상생활, 생산성, 삶의 질에 부정적인 영향을 미치고있습니다. 
-이를 해결하기위해 교통사고,공사,악천후등 예측하기 어려운 상황에서도 신속한대응이 필요하다고 생각했으며
-따라서 저희는 시민들이 적절한 대체경로를 선택 하도록 도와 교통흐름을 개선하고, 
-시민들이 직접 목격한 돌발상황을 신고하고 공유 할 수 있는 플랫폼을 통해 
-보다 **효율적인 교통관리와 시민들의 안전과편의를증진시키기위한 웹사이트**를 제작하기로 하였습니다.
- 
-## 🕰️ 개발 기간
-* 24.07.01 - 24.08.26
+<br>
 
-### 🧑‍🤝‍🧑 맴버구성
- - 팀장_김현석 : 팀원_박효준 임강혁 엄기은 박현아
+# 📍 목차
 
-### ⚙️ 개발 환경
-- `Java 8`
-- `JDK 1.8.0`
-- **IDE** : STS 3.9 
-- **Database** : Oracle DB(11xe)
-- **ORM** : Mybatis
 
-### ⚙️ 자료 
-   ![Flowchar](https://github.com/hykim-king/DOMA/blob/main/Flowchart.png) 
+>[프로젝트 개요](#프로젝트-개요)\
+><br>
+>[프로젝트 기획](#프로젝트-기획)\
+><br>
+>[프로젝트 설계](#프로젝트-설계)\
+><br>
+>[주요 기능 시연](#주요-기능-시연)
+><br>
+><br>
+<br>
+
+## 🖥️ 프로젝트 개요
+
+|팀/프로젝트 명|DOMA|  
+|:-----:|:-----|  
+|프로젝트 종류|도로상황 빅데이터 통합 플렛폼 웹 서비스|
+|기간|2024.07.01~08.26(총 9주)|
+|프로젝트 목표|시민들이 사고 다발 구역, 결빙 사고 도로와 같은 위험 지역을 인지 시켜 사고를 방지하고,<br>직접 목격한 돌발상황을 신고하고 공유 할 수 있는 플랫폼을 통해 보다 효율적인 교통관리와 시민들의 안전과 편의를 증진시키기위한 웹 사이트 제작|
+|PPT|[최종 발표 자료](https://www.miricanvas.com/v/13l00on)|
+
+<br>
+
+## 🙋‍♂️팀원 소개
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/f1b00e00-7702-458a-94cf-28e681262bdf" width="300px;" alt="doma1"/>
+        <br />
+        <sub><b>김현석</b></sub>
+        <br />
+        <a href="[https://github.com/codestates-seb/seb40_main_010/commits?author=mozzi327](https://github.com/hykim-king/DOMA/commits/main/?author=iwanttoexplorer)" title="Documentation">📖</a> 
+        <a href="[https://github.com/codestates-seb/seb40_main_010/pulls?q=is%3Apr+author%3Amozzi327](https://github.com/iwanttoexplorer)" title="git_URL">🏡</a>
+      </td>   
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/cfa728c9-9ade-4796-97a4-eeab01996a7c" width="300px;" alt="doma2"/>
+        <br />
+        <sub><b>박현아</b></sub>
+        <br />
+        <a href="[https://github.com/codestates-seb/seb40_main_010/commits?author=Quartz614](https://github.com/hykim-king/DOMA/commits/main/?author=mmmzm)" title="Documentation">📖</a> 
+        <a href="[https://github.com/codestates-seb/seb40_main_010/pulls?q=is%3Apr+author%3AQuartz614](https://github.com/mmmzm)" title="git_URL">🏡</a>
+      </td>          
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/8c3014dc-0150-4bfa-9e45-9c433a7d9197" width="300px;" alt="doma5"/>
+        <br />
+        <sub><b>박효준</b></sub>
+        <br />
+        <a href="[https://github.com/codestates-seb/seb40_main_010/commits?author=LimJaeminZ](https://github.com/hykim-king/DOMA/commits/main/?author=oopoo1425)" title="Documentation">📖</a> 
+        <a href="[https://github.com/codestates-seb/seb40_main_010/pulls?q=is%3Apr+author%3ALimJaeminZ](https://github.com/oopoo1425)" title="git_URL">🏡</a>
+      </td>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/9a818ebc-f3fd-434d-b5ec-cd366fb663e4" width="300px;" alt="doma3"/>
+        <br />
+        <sub><b>엄기은</b></sub>
+        <br />
+        <a href="[https://github.com/codestates-seb/seb40_main_010/commits?author=LeeGoh" title="Documentation](https://github.com/hykim-king/DOMA/commits/main/?author=uki010215)">📖</a> 
+        <a href="[https://github.com/codestates-seb/seb40_main_010/pulls?q=is%3Apr+author%3ALeeGoh](https://github.com/uki010215)" title="git_URL">🏡</a>
+      </td>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/600d1291-d9ad-4ae6-a85d-bbaee6e426fe" width="300px;" alt="doma4"/>
+        <br />
+        <sub><b>임강혁</b></sub>
+        <br />
+        <a href="[https://github.com/codestates-seb/seb40_main_010/commits?author=ichenny](https://github.com/hykim-king/DOMA/commits/main/?author=rkdgur2016)" title="Documentation">📖</a> 
+        <a href="[https://github.com/codestates-seb/seb40_main_010/pulls?q=is%3Apr+author%3Aichenny](https://github.com/rkdgur2016)" title="git_URL">🏡</a>
+      </td>      
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+## 📆 프로젝트 기획
+### 🛠 개발 환경
+![STACK](https://github.com/user-attachments/assets/d095c926-e4f6-47ea-bb21-7bd4a1e4c5e9)
 -  [WBS](https://docs.google.com/spreadsheets/d/1ygw7R05fOniBzU3TDZoJKI-ECfYrxgn_rOPfDotEg7A/edit?usp=sharing)
+
+<br>
+
+## 💾 프로젝트 설계
+   ![Flowchar](https://github.com/hykim-king/DOMA/blob/main/Flowchart.png) 
+   ![ERD](https://github.com/user-attachments/assets/0e17036e-19a7-4240-9393-901016058256)
 -  [요구사항정의서](https://docs.google.com/spreadsheets/d/1aGMeFKOgAOLuhniAtfQUniX5u7MJNdnl/edit?gid=1427165370#gid=1427165370)
 -  [화면정의서](https://docs.google.com/spreadsheets/d/1auP1GR0EAGFrWE36mVaE0yUEWEycyrzZpsFjArp7BOc/edit?gid=1917835692#gid=1917835692)
--  [발표자료](https://www.miricanvas.com/v/13l00on)
- 
 
-## 🖥️ 데이터 추출 항목 
-## 🖥️ 기능 정의  
-* 실시간 교통 돌발상황 정보 제공
-   1. 교통 상황 모니터링 시스템
-      - 실시간 교통 데이터 수집 및 분석
-      - 도로 공사, 사고, 자연 재해 등의 돌발 상황 감지
-   2. 지도 기반 시각화
-       - 실시간 교통 돌발상황을 지도에 표시
-       - 다양한 필터 및 레이어 기능 제공(사고, 공사, 등)
-* 데이터 분석 및 예측기능
-   1. 과거 데이터 분석
-      - 과거 교통 데이터 분석을 통한 패턴 인식
-      - 자주 발생하는 돌발 상황 및 문제 구간 식별
-   2. 교통 상황 예측
-      - 예측된 정보 기반의 사전 알림 및 대체 경로 추천
-* 사용자 커뮤니티 기능
-  1. 커뮤니티 게시판
-     - 교통 정보 공유 및 토론을 위한 게시판
-     - 주제, 지역별로 게시판을 분류
-## 📌 주요 기능
-* 서울 내 날씨 현황 제공
-  - 데이터에 가상 데이터를 넣고 랜덤으로 화면에 표시 할 예정
-  - 각 날씨 상황에 따른 도로 위 위험 요소 표시(침수, 결빙, 등) 시각화
-  - 도로 사고 다발지역 및 돌발상황 알림
-* 서울 내 주요 사고다발지역 표시
-  - 실시간 돌발상황(사고, 도로공사) 알림
-  - 사고 위험 및 교통소통 정보 시각화
-* 데이터 분석 및 시각화
-   - 수집된 교통 데이터를 분석하여 사고 다발 지역, 교통 혼잡 시간대 등을 시각화 한다.
-   - 사용자들에게 유용한 교통 통계 정보를 제공하여 안전한 운전을 지원한다.
-* 사고 위험 지역 및 시간대별 분석
-   - 교통 소통 현황(정체구간, 우회도로) 시각화
-   - 예방 대응 방법 안내
- * 날씨별 안전 운전 요령 제공
-   - 사고 발생 시 대처 방법 및 비상 연락처 안내
- * 경로 안내  및 대체 경로 제시
-   - 실시간 교통 상황을 반영한 최적의 경로를 안내한다.
-   - 돌발 상황 발생 시 대체 경로를 제시하여 교통 혼잡을 최소화 한다.
- * 커뮤니티 기능
-    - 교통 관련 주제에 대해 사용자들이 자유롭게 토론할 수 있는 게시판 제공
-    - 안전 운전 팁, 도로 안전 캠페인 정보 등을 공유할 수있는 공간을 제공한다.
-    - 사용자들이 자신의 경험을 공유하고, 유사한 상황에서의 대처법을 논의할 수 있다.
-## 📌 기대효과
-* 위험 구간 식별 및 개선
-   - 수집된 교통 돌발상황 데이터를 분석하여 사고 다발 지역이나 위험 구간을 식별하고 개선 방안을 마련할 수 있다
-   - 커뮤니티 피드백을 기반으로 도로 상태나 교통 시설을 개선하여 사고 위험을 줄인다.
-* 사고 예방 교육 및 인식 제고
-   - 커뮤니티 내에서 안전 운전에 대한 정보를 공유하고, 사고 예방을 위한 교육 자료를 제공하여 운전자들의 인식을 높인다.
-   - 운전자들이 자신이 겪은 돌발 상황과 대처 방법을 공유함으로서 다른 운전자들이 유사한 상황에서 올바르게 대처할 수 있도록 한다.
-* 시민 안전 증대
-  - 돌발 상황 정보를 실시간으로 제공하여 위험 구역을 피하도록 안내함으로서 시민들의 안전을 보호할 수 있다.
-* 교통 혼잡 완화
-  - 돌발 상황으로 인한 교통 혼잡 정보를 제공하여 운전자들이 혼잡 지역을 피할 수 있게 한다.
-  - 돌발 상황에 대한 정보를 미리 공유함으로서 교통 흐름을 유지하고 2차 사고를 예방한다.
- * 효율적인 교통관리
-    - 교통 당국이 실시간 데이터를 통해 교통 상황을 모니터링하고 효율적으로 관리할 수 있어, 더 나은 교통 정책을 수립하고 실행할 수 있다.
+<br>
+
+## 📌 주요 기능 시연
+
+<div align="center">
+   
+| Main - 서울내 주요 돌발/결빙/사고다발 정보 안내 (추가예정)|
+|:---:|
+| <img src= 추가예정 width = "800"> |
+| 데이터 시각화 |
+| <img src= 추가예정 width = "800"> |
+| 회원가입 & 로그인 | 
+| <img src= 추가예정 width = "800"> |
+| 안전정보 & 위급상황 대처법 | 
+| <img src= 추가예정 width = "800"> |
+| 공지사항 & 커뮤니티 |
+| <img src= 추가예정 width = "800"> |
+| MY PAGE |
+| <img src= 추가예정 width = "800"> |
+| ADMIN PAGE |
+| <img src= 추가예정 width = "800"> |
+
+</div>
