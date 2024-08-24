@@ -50,7 +50,7 @@ public class SchedulerConfig implements PLog{
         System.out.println("Server ID: " + serverId);
     }
 
-	@Scheduled(fixedDelay = 60000)
+	@Scheduled(fixedDelay = 60000000)
     public void insertAccidentData() {
         if ("server1".equals(serverId)) {
             int retryCount = 0;
