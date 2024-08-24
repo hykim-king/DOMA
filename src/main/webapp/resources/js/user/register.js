@@ -100,8 +100,13 @@
 			return;
 		}
 
-		if(passwordValidation(passwordInput.value) === false && (passwordInput.value.length < 8 || passwordInput.value.length > 20)){
+		if(passwordValidation(passwordInput.value) === false ){
 			alert("특수문자나 대소문자를 포함한 8~20자 이내의 비밀번호를 사용하세요."); 
+			return;	
+		}
+		
+		if(passwordInput.value.length < 8 && passwordInput.value.length > 20){
+			alert("비밀번호는 8자 이상 20자 이하입니다."); 
 			return;	
 		}
 
