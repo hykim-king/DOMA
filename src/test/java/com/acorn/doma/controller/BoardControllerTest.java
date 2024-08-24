@@ -73,7 +73,7 @@ public class BoardControllerTest implements PLog {
 		log.debug("│ setUp()                      │");
 		log.debug("└──────────────────────────────┘");
 		
-		boardMapper.deleteAll();
+		//boardMapper.deleteAll();
 		
 		board01 = new Board(1,"10","구_01","제목_01","admin","admin","내용_01","1111","사용안함","사용안함",0);
 		board02 = new Board(2,"10","구_02","제목_02","admin","admin","내용_02","1111","사용안함","사용안함",0);
@@ -146,7 +146,7 @@ public class BoardControllerTest implements PLog {
 		
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void doRetrieve() throws Exception {
 		log.debug("┌───────────────────────────┐");

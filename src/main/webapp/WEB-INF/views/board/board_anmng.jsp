@@ -228,13 +228,12 @@ document.addEventListener("DOMContentLoaded", function(){
     
 //함수=================================================================================================
     //doUpdate : 수정
-    //doUpdate : 수정
 	function anUpdate() {
 	    console.log("anUpdate()");
 	
 	    // 현재 입력값과 원래 값 비교
-	    const originalTitle = "<c:out value='${moveUp.title}'/>"; // 서버에서 받아온 원래 값
-	    const originalContent = "<c:out value='${moveUp.content}'/>"; // 서버에서 받아온 원래 값
+	    const originalTitle = "${moveUp.title}"; // 서버에서 받아온 원래 값
+	    const originalContent = "${moveUp.content}"; // 서버에서 받아온 원래 값
 	
 	    if (isEmpty(titleInput.value)) {
 	        alert('제목을 입력 하세요.');
