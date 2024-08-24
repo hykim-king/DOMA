@@ -26,7 +26,7 @@
 -  [WBS](https://docs.google.com/spreadsheets/d/1ygw7R05fOniBzU3TDZoJKI-ECfYrxgn_rOPfDotEg7A/edit?usp=sharing)
 -  [요구사항정의서](https://docs.google.com/spreadsheets/d/1aGMeFKOgAOLuhniAtfQUniX5u7MJNdnl/edit?gid=1427165370#gid=1427165370)
 -  [화면정의서](https://docs.google.com/spreadsheets/d/1auP1GR0EAGFrWE36mVaE0yUEWEycyrzZpsFjArp7BOc/edit?gid=1917835692#gid=1917835692)
--  [파일설계서](https://docs.google.com/spreadsheets/d/181ljV_PhBrw8tRpnTNh9Y_URI921AwEqz2VpbCJ1r9E/edit?gid=0#gid=0)
+-  [발표자료](https://www.miricanvas.com/v/13l00on)
  
 
 ## 🖥️ 데이터 추출 항목 
