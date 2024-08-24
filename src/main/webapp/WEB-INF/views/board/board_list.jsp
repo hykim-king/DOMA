@@ -408,7 +408,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	        </div>
 	        <div class="col-sm-2">
                 <select name="searchDiv" class="form-select" id="searchDiv">
-                    <option value="">구 전체</option>
+                    <option value="">구분</option>
                     <c:forEach var="item" items="${BOARD_SEARCH}">
                        <option value="${item.detCode}"  <c:if test="${item.detCode == search.searchDiv }">selected</c:if>    >${ item.detNm}</option>
                     </c:forEach>
