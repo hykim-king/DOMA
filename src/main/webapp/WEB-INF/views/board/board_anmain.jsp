@@ -55,9 +55,9 @@
 <%-- common js --%>
 <script src="${CP}/resources/js/common.js"></script>
 
-<%-- google Nanum+Gothic --%>
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
 <%-- Additional CSS --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css">
 
@@ -144,7 +144,9 @@ header, footer {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Gowun Dodum', sans-serif;
 }
+
 
 .comment-form {
     margin-bottom: 20px;

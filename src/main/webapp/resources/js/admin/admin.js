@@ -74,11 +74,15 @@ function displayNotices(notices) {
         // 날짜만 추출 
         const boardRegDateOnly = notice.boardRegDt.split(' ')[0];
 
+        // 제목과 내용을 6글자로 제한
+        const truncatedTitle = notice.title.length > 6 ? notice.title.substring(0, 10) + '...' : notice.title;
+        const truncatedContent = notice.content.length > 6 ? notice.content.substring(0, 10) + '...' : notice.content;
+
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${notice.rn}</td>
-            <td><a href="#" class="notice-title" data-id="${notice.seq}">${notice.title}</a></td>
-            <td>${notice.content}</td>
+            <td><a href="#" class="notice-title" data-id="${notice.seq}">${truncatedTitle}</a></td>
+            <td>${truncatedContent}</td>
             <td>${notice.userId}</td>
             <td>${boardRegDateOnly}</td>
         `;
@@ -94,6 +98,7 @@ function displayNotices(notices) {
         });
     });
 }
+
 
 
 function renderPagination() {
