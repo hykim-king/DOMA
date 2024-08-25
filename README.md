@@ -102,9 +102,9 @@
 
 <div align="center">
    
-| Main - 서울 내 주요 돌발/결빙/사고 다발 정보 안내 (추가 예정)|
+| Main - 서울 내 주요 돌발/결빙/사고 다발 정보 안내|
 |:---:|
-| <img src="추가예정" width="800"> |
+|  <img src="https://github.com/user-attachments/assets/1f69b25d-c926-4fc8-acf3-f7c1295856f9" width="800"> |
 | 데이터 시각화 |
 | <img src="https://github.com/user-attachments/assets/d1e81b7e-a8f4-4056-afae-5c9a8c902146" width="800"> |
 | 회원가입 & 로그인 | 
@@ -121,7 +121,7 @@
    
 </div>
 
-<br>
+<br><br><br><br>
 
 <footer>
   <img src="https://capsule-render.vercel.app/api?type=slice&height=120&color=FFFF00&text=Thank%20you%20&section=footer&fontAlignY=47&fontSize=80" alt="Thank You Footer">
