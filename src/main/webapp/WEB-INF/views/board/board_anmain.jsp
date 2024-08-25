@@ -508,7 +508,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 "comSeq": reply.comSeq,
                                                 "seq": seq,
                                                 "userId": userId,
-                                                "modId": modId,
+                                                "modId": userId,
                                                 "comments": newComments,
                                                 "ajax": true
                                             },
