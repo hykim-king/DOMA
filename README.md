@@ -18,7 +18,7 @@
 <br>
 
 
-## 🖥️ 프로젝트 개요
+<h2 id="프로젝트-개요">🖥️ 프로젝트 개요</h2>
 
 |팀/프로젝트 명|DOMA(DOROMASTER)|  
 |:-----:|:-----|  
@@ -81,14 +81,14 @@
 
 <br>
 
-## 📆 프로젝트 기획
+<h2 id="프로젝트-기획">📆 프로젝트 기획</h2>
 ### 🛠 개발 환경
 ![STACK](https://github.com/user-attachments/assets/d095c926-e4f6-47ea-bb21-7bd4a1e4c5e9)
 -  [WBS](https://docs.google.com/spreadsheets/d/1ygw7R05fOniBzU3TDZoJKI-ECfYrxgn_rOPfDotEg7A/edit?usp=sharing)
 
 <br>
 
-## 💾 프로젝트 설계
+<h2 id="프로젝트-설계">💾 프로젝트 설계</h2>
    ![Flowchar](https://github.com/hykim-king/DOMA/blob/main/Flowchart.png) 
    ![ERD](https://github.com/user-attachments/assets/0e17036e-19a7-4240-9393-901016058256)
 -  [요구사항정의서](https://docs.google.com/spreadsheets/d/1aGMeFKOgAOLuhniAtfQUniX5u7MJNdnl/edit?gid=1427165370#gid=1427165370)
@@ -96,7 +96,7 @@
 -  [단위테스트](https://docs.google.com/spreadsheets/d/1u-iTZOnCEJC0xbomhsjI7Ah5l0lOeoPEs9axq4YpGVo/edit?pli=1&gid=1809420560#gid=1809420560)
 <br>
 
-## 📌 주요 기능 시연
+<h2 id="주요-기능-시연">📌 주요 기능 시연</h2>
 
 <div align="center">
    
