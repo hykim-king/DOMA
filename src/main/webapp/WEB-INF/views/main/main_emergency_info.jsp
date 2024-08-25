@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="${CP}/resources/css/main/main_info.css">
 <script src="${CP}/resources/js/jquery_3_7_1.js"></script>
 <script src="${CP}/resources/js/common.js"></script>
-<script src="${CP}/resources/js/main/main_emergency_info.js"></script>
 <title>DOMA</title>
 </head>
 <body>
@@ -59,6 +58,63 @@
             <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
     </div>
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+    <!-- 모달 오버레이 -->
+<div class="modal-overlay" id="cctvModal" style="display: none;">
+    <div class="modal-content">
+        <!-- 상세 정보 섹션 -->
+		<div class="info-table">
+		    <table>
+		        <tbody>
+		            <tr>
+		                <th>기간</th>
+		                <td>
+		                    <span id="occrDate"></span> 
+		                    <span id="occrTime"></span> ~ 
+		                    <span id="endDate"></span> 
+		                    <span id="endTime"></span>
+		                </td>
+		            </tr>
+		            <tr>
+		                <th>돌발유형</th>
+		                <td>
+		                <span id="modalAccName"></span> : <span id="modalAccDName"></span>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td colspan="2" class="info-details" id="modalInfo"></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+
+        <!-- CCTV 영상 섹션 -->
+        <div class="cctv-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>CCTV</th>
+                        <td id="modalCctvName"></td>
+                    </tr>
+                    <tr>
+                        <th>영상</th>
+                        <td>
+                            <video id="cctvVideo" controls autoplay>
+                                <source id="cctvVideoSource" type="application/x-mpegURL">
+                            </video>
+                            <p>가장 인접한 cctv 영상입니다.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 닫기 버튼 -->
+        <button class="close-button" onclick="closeModal()">닫기</button>
+    </div>
+</div>
+    
+    <!-- HLS.js 라이브러리 포함 -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     </body>
 <script>
 var map;
@@ -264,7 +320,79 @@ function onInfoClick(lat, lng) {
 }
 // 초기화 스크립트 로딩
 loadKakaoMapScript(initKakaoMap);
+function cctvInfo(accId) {
+    $.ajax({
+        url: "/doma/main/getNearestCctv.do",
+        type: 'GET',
+        data: { accId: accId },
+        dataType: "json",
+        success: function(response) {
+        console.log(response);
+            const accData = response.accident || {};
+            const cctvData = response.nearestCctv || {};
+            const accName = accData.accName;
+            const accDName = accData.accDName;
+            const occrDate = accData.occrDate;
+            const occrTime = accData.occrTime;
+            const endDate = accData.endDate;
+            const endTime = accData.endTime;
+            const info = accData.info;
+            const cctvName = cctvData.cctvname;
+            const cctvurl = cctvData.cctvurl;
+            openModal(accName, occrDate, occrTime,endDate,endTime, accDName, info, cctvName, cctvurl);
+        },
+        error: function(error) {
+            console.error("Error: ", error);
+        }
+    });
+}
 
+function openModal(accName, occrDate, occrTime,endDate,endTime, accDName, info, cctvName, cctvurl) {
+	console.log("openModal");
+	console.log(accName);
+	console.log(cctvurl);
+    document.getElementById('modalAccName').innerText = accName;
+    document.getElementById('occrDate').innerText = occrDate;
+    document.getElementById('occrTime').innerText = occrTime;
+    document.getElementById('endDate').innerText = endDate;
+    document.getElementById('endTime').innerText = endTime;
+    document.getElementById('modalAccDName').innerText = accDName;
+    document.getElementById('modalInfo').innerText = info;
+    document.getElementById('modalCctvName').innerText = cctvName;
+    
+    var video = document.getElementById('cctvVideo');
+    var source = document.getElementById('cctvVideoSource');
+    console.log("video element:", video);
+    console.log("source element:", source);
+    
+    if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(cctvurl);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play();
+        });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = cctvurl;
+        video.addEventListener('loadedmetadata', function () {
+            video.play();
+        });
+    } else {
+        console.error('HLS is not supported in this browser.');
+    }
+
+    var modal = document.getElementById('cctvModal');
+    console.log(modal);
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('cctvModal').style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadKakaoMapScript(initKakaoMap);
+});
 
 </script>
 </html>

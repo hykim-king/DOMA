@@ -191,17 +191,28 @@ function removeExistingMarkers() {
                 </div>
 
                 <!-- 사고 위험도 버튼 -->
-				<div class="risk-section">
-				    <div id="riskButtons">
-				       <div id="1" class="risk-button risk-green" onclick="selectRisk(1)">1</div>
+                <div class="risk-section">
+                    <div id="riskButtons">
+                        <div id="1" class="risk-button risk-green" onclick="selectRisk(1)">1</div>
                         <div id="2" class="risk-button risk-blue" onclick="selectRisk(2)">2</div>
                         <div id="3" class="risk-button risk-yellow" onclick="selectRisk(3)">3</div>
                         <div id="4" class="risk-button risk-red" onclick="selectRisk(4)">4</div>
                         <div id="5" class="risk-button risk-purple" onclick="selectRisk(5)">5</div>
-				    </div>
-				</div>
-			</div>
-		</section>
+                    </div>
+                </div>
+
+                <!-- 사고 발생 건수 백분위 마커 범례 -->
+                <div class="percentile-legend">
+                    <ul>
+                        <li><span class="percentile-legend-marker risk-green"></span>낮은 위험도</li>
+                        <li><span class="percentile-legend-marker risk-blue"></span>다소 낮은 위험도</li>
+                        <li><span class="percentile-legend-marker risk-yellow"></span>중간 위험도</li>
+                        <li><span class="percentile-legend-marker risk-red"></span>다소 높은 위험도</li>
+                        <li><span class="percentile-legend-marker risk-purple"></span>높은 위험도</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </div>            
             <jsp:include page="/WEB-INF/views/main/main_emergency_map.jsp"></jsp:include>
     </div>

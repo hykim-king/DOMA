@@ -25,7 +25,7 @@
 <title>DOMA</title>
 <%-- bootstrap css --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap.css"> 
-
+<link rel="stylesheet" href="${CP}/resources/css/main/main_info.css">
 <%-- Additional CSS --%>
 <link rel="stylesheet" href="${CP}/resources/css/bootstrap/bootstrap-ege.min.css">
 <link rel="stylesheet" href="${CP}/resources/css/chart/chart.css"> 
@@ -41,31 +41,38 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>  
   <script>
-  
-        let gname = []; 
+  let gname = []; // 초기 구 배열 설정
+  $(document).ready(function() {
+	  gname = [];
 
-        $(document).ready(function() {
-            // Initialize gname as an empty array
-            gname = []; // 초기값 설정
+      // 버튼 클릭 이벤트 핸들러
+      $('.gu-button').click(function() {
+          const value = $(this).data('value'); // 클릭된 버튼의 값
+          const index = gname.indexOf(value);
+          
+          if (index === -1) {
+              // 배열에 값이 없으면 추가
+              gname.push(value);
+              $(this).addClass('active');
+          } else {
+              // 배열에 값이 있으면 제거
+              gname.splice(index, 1);
+              $(this).removeClass('active');
+          }
+          
+          console.log('Updated gname array:', gname); // 배열 업데이트 로그
+      });
 
-            // Function to handle dropdown selection changes
-            function updateGuSelection() {
-                const selectedGu = $('#guDropdown').val();
-
-                // Update gname array
-                gname = selectedGu;
-                
-                // Log the updated gname array
-                console.log('Updated gname array:', gname);
-             
-            }
-
-            // Attach updateGuSelection to dropdown change
-            $('#guDropdown').change(updateGuSelection);
-
-            // Attach loadChartData to button click
-            $('#loadChartButton').click(loadChartData);
-        });
+      // 차트 로드 버튼 클릭 이벤트 핸들러
+      $('#loadChartButton').click(function() {
+          if (gname.length < 3) {
+              alert('최소 3개 구를 선택해야 합니다.');
+              return;
+          }
+          
+          loadChartData();
+      });
+  });
  </script>
  <style>
     /* 기존 스타일 유지 */
@@ -118,42 +125,47 @@
     <!-- 구 선택 및 조회 버튼 -->
    <div class="row">
     <div class="col-md-3">
-        <div class="gu-selection">
-            <h3>구 선택</h3>
-            <select id="guDropdown" multiple class="form-select" size="10">
-                <!-- Options for the dropdown -->
-                <option value="강남구">강남구</option>
-                <option value="강동구">강동구</option>
-                <option value="강북구">강북구</option>
-                <option value="강서구">강서구</option>
-                <option value="관악구">관악구</option>
-                <option value="광진구">광진구</option>
-                <option value="구로구">구로구</option>
-                <option value="금천구">금천구</option>
-                <option value="노원구">노원구</option>
-                <option value="도봉구">도봉구</option>
-                <option value="동대문구">동대문구</option>
-                <option value="동작구">동작구</option>
-                <option value="마포구">마포구</option>
-                <option value="서대문구">서대문구</option>
-                <option value="서초구">서초구</option>
-                <option value="성동구">성동구</option>
-                <option value="성북구">성북구</option>
-                <option value="송파구">송파구</option>
-                <option value="양천구">양천구</option>
-                <option value="영등포구">영등포구</option>
-                <option value="용산구">용산구</option>
-                <option value="은평구">은평구</option>
-                <option value="종로구">종로구</option>
-                <option value="중구">중구</option>
-                <option value="중랑구">중랑구</option>
-            </select>
-            <!-- 조회 버튼 -->
-            <div class="text-center mt-3">
-                <button id="loadChartButton" class="btn btn-dark">조회</button>
-            </div>
-        </div>
-    </div>
+    <div class="gu-selection">
+	        <h3>구 선택</h3>
+	        <div id="guButtons" class="btn-container">
+	            <!-- 첫 번째 줄 13개의 버튼 -->
+	            <div class="btn-row">
+	                <button class="btn btn-outline-primary gu-button" data-value="강남구">강남구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="강동구">강동구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="강북구">강북구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="강서구">강서구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="관악구">관악구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="광진구">광진구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="구로구">구로구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="금천구">금천구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="노원구">노원구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="도봉구">도봉구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="동대문구">동대문구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="동작구">동작구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="마포구">마포구</button>
+	            </div>
+	            <!-- 두 번째 줄 12개의 버튼 -->
+	            <div class="btn-row">
+	                <button class="btn btn-outline-primary gu-button" data-value="서대문구">서대문구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="서초구">서초구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="성동구">성동구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="성북구">성북구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="송파구">송파구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="양천구">양천구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="영등포구">영등포구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="용산구">용산구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="은평구">은평구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="종로구">종로구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="중구">중구</button>
+	                <button class="btn btn-outline-primary gu-button" data-value="중랑구">중랑구</button>
+	            </div>
+	        </div>
+	        <!-- 조회 버튼 -->
+	        <div class="text-center mt-3">
+	            <button id="loadChartButton" class="btn btn-dark">조회</button>
+	        </div>
+	    </div>
+	</div>
 
 	        <!-- 차트 컨테이너 -->
 	<div class="col-md-9">

@@ -1,6 +1,199 @@
 @charset "UTF-8";
 
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 버튼 행 간의 간격 */
+}
 
+.btn-row {
+    display: flex;
+    flex-wrap: wrap; /* 버튼이 줄 바꿈 될 수 있도록 설정 */
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+.gu-button {
+    flex: 1 1 calc(33.333% - 20px); /* 3개 열로 나누고 간격을 고려한 너비 */
+    min-width: calc(33.333% - 20px); /* 최소 너비 설정 */
+    height: 50px; /* 버튼 높이 고정 */
+    font-size: 0.8rem !important;  /* 글자 크기 조정 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    box-sizing: border-box; /* 패딩과 경계를 버튼 너비에 포함 */
+    border-radius: 4px; /* 버튼 모서리 둥글게 설정 */
+    border: 1px solid #007bff; /* 기본 경계 설정 */
+    background-color: #f8f9fa; /* 기본 배경색 */
+    color: #007bff; /* 기본 글자색 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+    white-space: nowrap; /* 버튼 텍스트 줄 바꿈 방지 */
+    overflow: hidden; /* 텍스트가 버튼을 넘어서지 않도록 설정 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 ... 추가 */
+    padding: 0 !important; /* 버튼 내 패딩 제거 */
+    line-height: 50px; /* 버튼 높이에 맞게 텍스트 수직 정렬 */
+}
+
+/* 선택된 버튼 스타일 */
+.gu-button.active {
+    background-color: #007bff; /* 선택된 버튼 배경색 */
+    color: white; /* 선택된 버튼 글자색 */
+    border: none; /* 선택된 버튼의 경계 제거 */
+}
+
+/* 버튼 비활성화 시 스타일 */
+.gu-button:not(.active) {
+    background-color: #f8f9fa; /* 비활성화된 버튼의 배경색 */
+    color: #007bff; /* 비활성화된 버튼의 글자색 */
+    border: 1px solid #007bff; /* 비활성화된 버튼의 경계 설정 */
+}
+/* 사고 발생 건수 백분위 범례 스타일 */
+.percentile-legend {
+    background-color: #f9f9f9;
+    border: 1px solid #c1c1c1;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+
+
+.percentile-legend ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.percentile-legend li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.8rem; /* 폰트 크기를 줄여서 공간 확보 */
+    color: #333;
+}
+
+.percentile-legend-marker {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* 각 백분위 구간 색상 */
+.percentile-legend .risk-green { background-color: #04cf28; }
+.percentile-legend .risk-blue { background-color: #2196f3; }
+.percentile-legend .risk-yellow { background-color: #FFBF00; }
+.percentile-legend .risk-red { background-color: #f44336; }
+.percentile-legend .risk-purple { background-color: #9c00b7; }
+/* 모달 오버레이 스타일 */
+.modal-overlay {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 모달이 다른 요소들 위에 표시되도록 설정 */
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%; /* 모달의 너비를 화면 너비의 80%로 설정 */
+    max-width: 800px; /* 모달의 최대 너비 설정 */
+    height: 80%; /* 모달의 높이를 화면 높이의 80%로 설정 */
+    max-height: 800px; /* 모달의 최대 높이 설정 */
+    position: relative;
+    overflow: hidden; /* 콘텐츠가 모달의 크기를 초과하지 않도록 숨김 */
+    z-index: 1001; /* 모달 오버레이보다 위에 표시되도록 설정 */
+}
+
+/* 전체 테이블 스타일 */
+.info-table, .cctv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* 테이블 헤더 스타일 */
+.info-table th, .cctv-table th {
+    background-color: #f8f8f8;
+    color: #333;
+    padding: 12px; /* 여백을 더 추가 */
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* 테이블 데이터 셀 스타일 */
+.info-table td, .cctv-table td {
+    background-color: #ffffff;
+    padding: 12px; /* 여백을 더 추가 */
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    word-wrap: break-word; /* 내용이 셀을 벗어나지 않도록 자동 줄바꿈 */
+}
+
+/* 제목 셀 스타일 */
+.info-title {
+    background-color: #e0e0e0;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    white-space: nowrap; /* 제목이 줄 바꿈 없이 표시되도록 */
+}
+
+/* 세부 정보 셀 스타일 */
+.info-details {
+    text-align: center;
+}
+
+/* 테이블의 마지막 행의 경계 제거 */
+.info-table tr:last-child td, .cctv-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* CCTV 비디오 및 이름의 스타일 조정 */
+.cctv-table td {
+    overflow: hidden; /* 내용이 셀을 벗어나지 않도록 설정 */
+    text-overflow: ellipsis; /* 내용이 넘칠 경우 '...'로 표시 */
+    white-space: nowrap; /* 텍스트가 줄 바꿈 없이 한 줄로 표시되도록 설정 */
+}
+
+/* 모달 내의 비디오 크기 조정 */
+.cctv-table video {
+    max-width: 100%;
+    height: auto; /* 비디오 비율 유지 */
+    border-radius: 4px; /* 모서리 둥글게 */
+}
+
+/* 닫기 버튼 스타일 */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+
+/* 모달이 전체 화면을 차지하도록 조정 */
+.modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 모달이 다른 요소들 위에 표시되도록 설정 */
+}
 body {
     margin: 0;
     padding: 0;
@@ -27,6 +220,7 @@ body {
 #mapContainer {
     display: block; /* 컨테이너 중앙 정렬 제거 */
     width: 100%; /* 필요 시 추가 */
+     z-index: 500; /* 모달보다 낮은 값으로 설정 */
 }
 
 /* 사고 위험도 버튼 스타일 */
