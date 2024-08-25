@@ -116,7 +116,7 @@
 | MY PAGE |
 | <img src="https://github.com/user-attachments/assets/a936209e-fd60-4a23-91f6-c5cdda692795" width="800"> |
 | ADMIN PAGE |
-| <img src="https://github.com/user-attachments/assets/3ce4d0e5-c41f-4be2-a3c1-135ec7ddba2f" width="800"> |
+| <img src="https://github.com/user-attachments/assets/9bde7fad-1c73-4304-88c3-d5af27eacdfb" width="800"> |
 
    
 </div>
