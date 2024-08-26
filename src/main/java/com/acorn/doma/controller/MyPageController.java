@@ -1,7 +1,10 @@
 package com.acorn.doma.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,9 +14,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.acorn.doma.cmn.PLog;
 import com.acorn.doma.cmn.Search;
@@ -68,7 +74,11 @@ public class MyPageController implements PLog {
 	DeathMapper deathMapper;
 	
 	
-	
+	 private static final String UPLOAD_DIR = "C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/";
+		//C:/Users/acorn/git/DOMA/src/main/webapp/resources/img/board_img/
+	    //C:/Users/acorn/Documents/DOMA/src/main/webapp/resources/img/board_img/
+
+	 
 	public MyPageController() { 
 		log.debug("┌──────────────────────────────────────────┐");
 		log.debug("│ MyPageController()                       │");
@@ -264,39 +274,87 @@ public class MyPageController implements PLog {
 	     return viewName;
 	 }
 	 
-	 @RequestMapping(value = "/mpBoardUp.do"
-			   , method = RequestMethod.POST            //textarea post로
+	 
+	@RequestMapping(value = "/mpBoardUp.do"        //textarea post로
 			   , produces = "text/plain;charset=UTF-8") //json encoding 
-	@ResponseBody //json으로 리턴하기 위한
-	public String mpBoardUp(Board inVO) throws SQLException {
-		
-		String jsonString = "";
-		log.debug("1.param:" + inVO);
-		
-		if (inVO.getUserId() == null) {
-	        log.error("UserId is null in the received Board object.");
-	    } else {
-	        log.debug("Received UserId: " + inVO.getUserId());
-	    } 
-		
-		int flag = boardService.mpBoardUp(inVO);
-		log.debug("2.flag:" + flag);
-		String message = "";
-		if(1 == flag) {
-			message =  "수정 되었습니다.";
-		}else {
-			message = "수정 실패 했습니다.";
-		}
-		
-		Message messageObj = new Message(flag, message);
-		jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
-		log.debug("3.jsonString:" + jsonString);
-		
-		return jsonString;
+	@ResponseBody //json으로 리턴하기 위한 
+		 public String mpBoardUp(Board inVO, @RequestParam(value = "imgFile", required = false) MultipartFile file) throws SQLException {
+				log.debug("┌──────────────────────────────────────────┐");
+				log.debug("│ safeController : doUpdate()              │");
+				log.debug("└──────────────────────────────────────────┘");
+				
+				// 1. 기존 이미지 파일 경로 가져오기
+			    Board existingBoard = boardService.doSelectOne(inVO); // 기존 데이터 가져오기
+			    String existingImageFileName = existingBoard.getImgLink(); // 기존 이미지 파일명 가져오기
+
+			    // 2. 새 파일이 업로드 되었는지 확인
+			    if (file != null) {
+			        try {
+			            // 3. 기존 파일 삭제
+			            if (existingImageFileName != null && !existingImageFileName.isEmpty()) {
+			                String existingFilePath = UPLOAD_DIR + existingImageFileName;
+			                File existingFile = new File(existingFilePath);
+			                if (existingFile.exists()) {
+			                    boolean deleted = existingFile.delete();
+			                    if (deleted) {
+			                        log.debug("기존 이미지 파일 삭제 성공: " + existingImageFileName);
+			                    } else {
+			                        log.warn("기존 이미지 파일 삭제 실패: " + existingImageFileName);
+			                    }
+			                }
+			            }
+			            
+			            // 4. 파일 처리
+		            	log.debug("file : " + file);
+		            	
+		            	
+		            	// uuid로 랜덤한 고유번호 부여
+		            	UUID uuid = UUID.randomUUID(); 
+		            	
+		                // 서버의 특정 경로에 파일 저장
+		                String originalFileName = file.getOriginalFilename();
+		                String imageFileName = uuid + "_" + file.getOriginalFilename();
+		                String filePath = UPLOAD_DIR + imageFileName;
+		                File uploadFile = new File(filePath);
+
+		                // 파일 저장
+		                file.transferTo(uploadFile);
+
+		                // 파일 경로를 웹 애플리케이션의 접근 가능한 경로로 설정
+		                String relativeFilePath = "/resources/img/board_img/" + imageFileName;
+		                inVO.setImgLink(imageFileName);
+
+		            } catch (IOException e) {
+		                log.error("File upload error: ", e);
+		                return new Gson().toJson(new Message(0, "파일 업로드에 실패했습니다."));
+		            }
+		        } else {
+		            log.warn("파일이 없습니다.");
+		        }
+
+		        log.debug("1. inVO : " + inVO);
+		        
+				String jsonString = "";
+				
+				int flag = boardService.fileUpdate(inVO);
+				log.debug("2.flag:" + flag);
+				
+				String message = "";
+				if(1 == flag) {
+					message = "게시물 수정 되었습니다.";
+				}else {
+					message = "게시물 수정에 실패했습니다.";
+				}
+				
+				Message messageObj = new Message(flag, message);
+				jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(messageObj);
+				log.debug("3.jsonString:" + jsonString);
+				
+				return jsonString;
 		
 	}
 	 
-	 
+  
 	 
 		
 }

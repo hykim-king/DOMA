@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <table class="table table-hover"> 
             <thead>
                 <tr class="table-secondary">
-                    <th>seq</th>
+                    <th>순번</th>
                     <th>제목</th>
                     <th>수정자</th>
                     <th>코멘트</th>

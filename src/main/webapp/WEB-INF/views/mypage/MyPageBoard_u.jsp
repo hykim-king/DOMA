@@ -88,6 +88,12 @@ document.addEventListener("DOMContentLoaded", function(){
     
     const modIdInput = document.querySelector("#modId");
     const userIdInput = document.querySelector("#userId");
+    
+    //파일 업로드
+    const form = document.querySelector("form");
+    const fileInput = document.querySelector("input[type='file']");
+    const fileNameInput = document.querySelector("#fileName");
+    
 
 //이벤트 처리=================================================================================================
   
@@ -109,68 +115,74 @@ document.addEventListener("DOMContentLoaded", function(){
        window.location.href = '/doma/mypage/mpSelect.do?userId='+userIdInput.value;
        // 팝업 창으로 열기
        //window.open('/doma/mypage/mpSelect.do?userId=' + userIdInput.value, 'popupWindow', 'width=600,height=400,scrollbars=yes');
-
-       
-
-
-}
+ 
+		}
 	
 	
 	
 	//doUpdate : 수정
     function doUpdate() {
         console.log("doUpdate()");
-   
-        if(isEmpty(titleInput.value) == true){
-            alert('제목을 입력 하세요.')
+
+        if (isEmpty(titleInput.value) == true) {
+            alert('제목을 입력 하세요.');
             titleInput.focus();
             return;
         }
-         
-        if (isEmpty(contentsTextArea.value)) {
-	        alert('내용을 입력 하세요.');
-	        contentsTextArea.focus();
-	        return;
-	    }
-        
-        if(confirm("수정 하시겠습니까?") === false)return;
-        
-        //비동기 통신
-        let type = "POST";
-        let url = "/doma/mypage/mpBoardUp.do";
-        let async = "true";
-        let dataType = "html";
-        
-        let params = {
-        		"seq"      : seqInput.value,
-        		"div"      : divInput.value,
-        		"gname"    : searchDivSelect.value,
-                "title"    : titleInput.value,
-                "userId"    : userIdInput.value,
-                "modId"    : modIdInput.value,
-                "content"  : contentsTextArea.value 
-            };
 
-        PClass.pAjax(url, params, dataType, type, async, function(data){
-            if(data){
-                try{
-                    // JSON 문자열을 JSON Object로 변환
-                    const message = JSON.parse(data);
-                    if(isEmpty(message) === false && 1 === message.messageId){
-                        alert(message.messageContents);
-                        location.reload();
-                        window.close(); // 수정이 완료되면 창을 닫습니다.
-                        
-                    }  
-                    
-                } catch(e) {
-                    console.error(e);
+        if (isEmpty(contentsTextArea.value)) {
+            alert('내용을 입력 하세요.');
+            contentsTextArea.focus();
+            return;
+        }
+
+        if (confirm("수정 하시겠습니까?") === false) return;
+
+        if (imgLinkInput.files.length === 0) {
+            doUpdate();
+            return;
+        }
+        // FormData 객체 생성
+        let formData = new FormData();
+        formData.append("seq", seqInput.value);
+        formData.append("div", divInput.value);
+        formData.append("gname", searchDivSelect.value);
+        formData.append("title", titleInput.value);
+        formData.append("userId", userIdInput.value);
+        formData.append("modId", modIdInput.value);
+        formData.append("content", contentsTextArea.value);
+        formData.append("imgFile", imgLinkInput.files[0]);  // file이 서버에서 받는 MultipartFile의 키와 일치
+
+        if (fileInput.files.length > 0) {
+            formData.append("imgFile", imgLinkInput.files[0]);
+        }
+
+        $.ajax({
+            url: "/doma/mypage/mpBoardUp.do",
+            type: "POST",
+            data: formData,
+            processData: false,  // FormData가 자동으로 처리되지 않도록 설정
+            contentType: false,  // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
+            success: function(data) {
+                console.log("서버 응답 데이터:", data);  // 응답 데이터를 직접 확인
+
+                if (data) {
+                    try {
+                        // JSON 문자열을 JSON 객체로 변환
+                        const message = JSON.parse(data);
+                        if (message && message.messageId === 1) {
+                            alert(message.messageContents);
+                            location.reload();
+                            window.close(); // 수정이 완료되면 창을 닫습니다.
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
                 }
             }
         });
     }
-    
-    
+
     
      
 });    
@@ -229,16 +241,12 @@ document.addEventListener("DOMContentLoaded", function(){
           <input type="text" value="<c:out value='${board.userId}'/>" class="form-control readonly-input" readonly="readonly" name="userId" id="userId"  maxlength="20" required="required">
         </div>
     </div> 
-    <div class="row mb-2">
-    <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
-    <div class="col-sm-10">
-        <!--<input type="file" multiple class="form-control" name="fileName" id="imgLink"> -->
-        <!-- 현재 업로드된 파일 링크 표시 -->
-        <c:if test="${not empty board.imgLink}">
-            <p>[ 파일 첨부 ] <a href="<c:out value='${board.imgLink}'/>" target="_blank"><c:out value='${board.imgLink}'/></a></p>
-        </c:if>
-    </div>        
-</div>
+     <div class="row mb-2">
+        <label for="imgLink" class="col-sm-2 col-form-label">이미지 링크</label>
+        <div class="col-sm-10">
+          <input type="file" multiple class="form-control" name="fileName" id="imgLink">        
+        </div>        
+    </div>
 
     <div class="row mb-2">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
@@ -246,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function(){
           <input type="text" value="<c:out value='${board.title}'/>" class="form-control" name="title" id="title"  maxlength="75" required="required">
         </div>
     </div>
-    <div class="row mb-2"">
+    <div class="row mb-2">
         <label for="content" class="col-sm-2 col-form-label">내용</label>
          <div class="col-sm-10">
          <textarea style="height: 200px" class="form-control" id="content" name="content">
