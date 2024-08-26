@@ -476,11 +476,10 @@ document.addEventListener("DOMContentLoaded", function() {
                                     if (confirm("삭제하시겠습니까?")) {
                                         $.ajax({
                                             type: "GET",
-                                            url: "/doma/comments/doDelete.do",
+                                            url: "/doma/comments/commentsDelete.do",
                                             dataType: "text",
                                             data: {
                                                 "comSeq": reply.comSeq,
-                                                "userId": userId,
                                                 "ajax": true
                                             },
                                             success: function(response) {

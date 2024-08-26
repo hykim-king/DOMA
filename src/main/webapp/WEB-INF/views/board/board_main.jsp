@@ -484,14 +484,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                                 // 삭제 버튼 클릭 이벤트
                                 deleteButton.on("click", function() {
-                                    if (confirm("삭제하시겠습니까?")) {
+                                	if (confirm("삭제하시겠습니까?")) {
                                         $.ajax({
                                             type: "GET",
-                                            url: "/doma/comments/doDelete.do",
+                                            url: "/doma/comments/commentsDelete.do",
                                             dataType: "text",
                                             data: {
                                                 "comSeq": reply.comSeq,
-                                                "userId": userId,
                                                 "ajax": true
                                             },
                                             success: function(response) {
