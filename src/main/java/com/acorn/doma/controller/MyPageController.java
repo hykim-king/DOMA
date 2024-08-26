@@ -145,43 +145,55 @@ public class MyPageController implements PLog {
 	
 	
 	@RequestMapping(value = "/doUpdate.do", 
-			method = RequestMethod.POST, 
-			produces = "text/plain;charset=UTF-8") // produces	 																									// encoding
+            method = RequestMethod.POST, 
+            produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String doUpdate(User inVO, HttpSession httpSession) throws SQLException {
 		log.debug("┌───────────────────────────┐");
 		log.debug("│ doUpdate()                │");
 		log.debug("└───────────────────────────┘");
 
-		String jsonString = "";
-
-		// 1.
-		log.debug("1.param:" + inVO);
-
-		int flag = userMapper.doUpdate(inVO);
-
-		// 2.
-		log.debug("2.flag:" + flag);
-		String message = "";
-		if (1 == flag) {
-			message = inVO.getUserId() + "님이 수정 되었습니다.";
-			httpSession.setAttribute("user", inVO);
-			
-			flag = 1;
-		} else {
-			message = inVO.getUserId() + "수정 실패 했습니다.";
+    String jsonString = ""; 
+		    User sessionUser = (User) httpSession.getAttribute("user");
+		    if (sessionUser == null) {
+		        log.error("세션에 사용자 정보가 없습니다.");
+		        return new Gson().toJson(new Message(0, "세션이 만료되었습니다. 다시 로그인해주세요."));
+		    }
+		
+		    // 2. 기존 등급 설정
+		    inVO.setGrade(sessionUser.getGrade());
+		    inVO.setUserId(sessionUser.getUserId()); // userId도 세션에서 가져오는 것이 안전합니다.
+		
+		    log.debug("1. 입력 받은 사용자 정보: " + inVO);
+		
+		    // 3. 사용자 정보 업데이트
+		    int flag = userMapper.doUpdate(inVO);
+		    log.debug("2. 업데이트 결과 flag: " + flag);
+		
+		    String message = "";
+		    if (flag == 1) {
+		        // 4. 데이터베이스에서 최신 사용자 정보 다시 가져오기
+		        User updatedUser = userMapper.mpSelectOne(inVO);
+		        if (updatedUser != null) {
+		            // 5. 세션에 최신 사용자 정보 저장
+		            httpSession.setAttribute("user", updatedUser);
+		            message = inVO.getUserId() + "님 정보가 성공적으로 수정되었습니다.";
+		        } else {
+		            message = "사용자 정보를 가져오는 데 실패했습니다.";
+		            flag = 0;
+		        }
+		    } else {
+		        message = inVO.getUserId() + "님의 정보 수정에 실패했습니다.";
+		    }
+		
+		    Message messageObj = new Message(flag, message);
+		    jsonString = new Gson().toJson(messageObj);
+		
+		    log.debug("3. 반환할 JSON 문자열: " + jsonString);
+		
+		    return jsonString;
 		}
 
-		Message messageObj = new Message(flag, message);
-
-		Gson gson = new Gson();
-		jsonString = gson.toJson(messageObj);
-
-		// 3.
-		log.debug("3.jsonString:" + jsonString);
-
-		return jsonString;
-	}
 	
 	@RequestMapping(value = "/mpGradeUp.do", 
 			method = RequestMethod.POST, 

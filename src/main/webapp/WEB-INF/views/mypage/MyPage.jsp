@@ -156,8 +156,7 @@ $(document).ready(function(){
     });
 });
 </script> 
-<title>DOMA</title>
- 
+<title>DOMA</title> 
 <script src="${CP}/resources/js/mypage/mypageinfo.js"></script>
 </head>
 <body>
@@ -168,8 +167,9 @@ $(document).ready(function(){
                 <p>${userId}</p>
                 <div class="form-content">
                     <form action="" method="">
+                    	
                         <div class="info">
-                            <label for="userInfo" class="form-label mt-4"></label>
+                     
                             <input type="text" class="form-control" value="<c:out value='${user.userId}'/>" id="userId" name="userId" disabled="disabled">
                             <input type="text" class="form-control" value="<c:out value='${user.userName}'/>" id="userName" name="userName">
                             <div class="password-wrapper">
@@ -182,6 +182,8 @@ $(document).ready(function(){
                             </div>
 
                             <input type="date" min="1907-01-01" max="2024-08-01" class="form-control" value="<c:out value='${user.birth}'/>" id="birth" name="birth" maxlength="10" required>
+                            <input type="text" name="grade" id="grade" value="<c:out value='${user.grade}'/>" style="display: none;" disabled > 
+ 
                             <input type="text" class="form-control" value="<c:out value='${user.address}'/>" id="sample4_roadAddress" name="address" disabled="disabled" >
                             <input type="text" class="form-control" id="sample4_jibunAddress" placeholder="지번주소" style="display: none;" disabled>
                             <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호" style="display: none;" disabled>

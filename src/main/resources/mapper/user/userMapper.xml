@@ -33,15 +33,13 @@
     
     <update id="doUpdate" parameterType="User">
          UPDATE D_USER             
-         SET                        
-          
+         SET         
              user_name   	= #{userName},     
              user_pw   		= #{userPw},     
              birth          = #{birth},     
              grade          = #{grade},     
              address        = #{address},  
-             detail_address      = #{detailAddress} , 
-             reg_dt  = SYSDATE
+             detail_address      = #{detailAddress}
          WHERE                     
                 user_id = #{userId}     
     </update>

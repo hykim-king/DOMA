@@ -45,5 +45,6 @@ public interface UserMapper extends WorkDiv<User> {
 	
 	int deleteAll() throws SQLException;
 	
+	User doSelectOne(User inVO) throws SQLException, NullPointerException;
 	
 }

@@ -195,6 +195,7 @@ document.addEventListener("DOMContentLoaded", function(){
             "userName"     :userNameInput.value,
             "userPw" :userPwInput.value, 
             "birth"    :birthInput.value,
+            "grade"     :gradeInput.value,
             "address"    :addrInput.value,
             "detailAddress":detailAddrInput.value
             
@@ -259,10 +260,10 @@ document.addEventListener("DOMContentLoaded", function(){
                   console.log("message.messageContents:"+message.messageContents);
                   if(isEmpty(message) === false && 1 === message.messagId){   
                      alert(message.messageContents);
-                     window.location.href = '/doma/user/loginPage.do';
+                     window.location.href = '/doma/user/logout.do';
                   }else{
                      alert(message.messageContents);
-                     window.location.href = '/doma/user/loginPage.do';
+                     window.location.href = '/doma/user/logout.do';
                      
                   }          
               }catch(e){
