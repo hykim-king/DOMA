@@ -115,33 +115,34 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    font-family: 'Arial', sans-serif !important; /* 폰트를 직선적이고 딱딱한 이미지로 변경 */
 }
 
 /* 테이블 헤더 스타일 */
 .info-table th, .cctv-table th {
     background-color: #f8f8f8;
     color: #333;
-    padding: 12px; /* 여백을 더 추가 */
+    padding: 14px; /* 여백을 더 추가 */
     text-align: left;
     border-bottom: 2px solid #ddd;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.1rem; /* 폰트 크기 약간 증가 */
 }
 
 /* 테이블 데이터 셀 스타일 */
 .info-table td, .cctv-table td {
     background-color: #ffffff;
-    padding: 12px; /* 여백을 더 추가 */
+    padding: 14px; /* 여백을 더 추가 */
     border-bottom: 1px solid #ddd;
-    font-size: 0.9rem;
+    font-size: 1rem; /* 폰트 크기 약간 증가 */
     word-wrap: break-word; /* 내용이 셀을 벗어나지 않도록 자동 줄바꿈 */
 }
 
 /* 제목 셀 스타일 */
 .info-title {
     background-color: #e0e0e0;
-    padding: 15px;
-    font-size: 1.2rem;
+    padding: 18px;
+    font-size: 1.3rem; /* 폰트 크기 약간 증가 */
     font-weight: bold;
     text-align: center;
     border-bottom: 2px solid #ddd;
@@ -151,6 +152,7 @@
 /* 세부 정보 셀 스타일 */
 .info-details {
     text-align: center;
+    font-size: 1rem; /* 폰트 크기 약간 증가 */
 }
 
 /* 테이블의 마지막 행의 경계 제거 */
@@ -171,7 +173,6 @@
     height: auto; /* 비디오 비율 유지 */
     border-radius: 4px; /* 모서리 둥글게 */
 }
-
 /* 닫기 버튼 스타일 */
 .close-button {
     position: absolute;
