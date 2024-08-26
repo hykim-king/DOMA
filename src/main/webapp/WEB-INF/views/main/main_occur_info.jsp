@@ -204,11 +204,11 @@ function removeExistingMarkers() {
                 <!-- 사고 발생 건수 백분위 마커 범례 -->
                 <div class="percentile-legend">
                     <ul>
-                        <li><span class="percentile-legend-marker risk-green"></span>낮은 위험도</li>
-                        <li><span class="percentile-legend-marker risk-blue"></span>다소 낮은 위험도</li>
+                        <li><span class="percentile-legend-marker risk-green"></span>매우 낮은 위험도</li>
+                        <li><span class="percentile-legend-marker risk-blue"></span>낮은 위험도</li>
                         <li><span class="percentile-legend-marker risk-yellow"></span>중간 위험도</li>
-                        <li><span class="percentile-legend-marker risk-red"></span>다소 높은 위험도</li>
-                        <li><span class="percentile-legend-marker risk-purple"></span>높은 위험도</li>
+                        <li><span class="percentile-legend-marker risk-red"></span>높은 위험도</li>
+                        <li><span class="percentile-legend-marker risk-purple"></span>매우 높은 위험도</li>
                     </ul>
                 </div>
             </div>
