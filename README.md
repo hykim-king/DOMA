@@ -83,7 +83,6 @@
 
 ### 🛠 개발 환경
 ![STACK](https://github.com/user-attachments/assets/d095c926-e4f6-47ea-bb21-7bd4a1e4c5e9)
--  [WBS](https://docs.google.com/spreadsheets/d/1ygw7R05fOniBzU3TDZoJKI-ECfYrxgn_rOPfDotEg7A/edit?usp=sharing)
 
 <br>
 
@@ -92,9 +91,8 @@
 ![Flowchart](https://github.com/hykim-king/DOMA/blob/main/Flowchart.png) 
 ![ERD](https://github.com/user-attachments/assets/0e17036e-19a7-4240-9393-901016058256)
 
--  [요구사항정의서](https://docs.google.com/spreadsheets/d/1aGMeFKOgAOLuhniAtfQUniX5u7MJNdnl/edit?gid=1427165370#gid=1427165370)
--  [화면정의서](https://docs.google.com/spreadsheets/d/1auP1GR0EAGFrWE36mVaE0yUEWEycyrzZpsFjArp7BOc/edit?gid=1917835692#gid=1917835692)
--  [단위테스트](https://docs.google.com/spreadsheets/d/1u-iTZOnCEJC0xbomhsjI7Ah5l0lOeoPEs9axq4YpGVo/edit?pli=1&gid=1809420560#gid=1809420560)
+
+-  [통합문서 : WBS, 단위 테스트, 요구사항 정의서, 화면 정의서](https://docs.google.com/spreadsheets/d/1u-iTZOnCEJC0xbomhsjI7Ah5l0lOeoPEs9axq4YpGVo/edit?pli=1&gid=1809420560#gid=1809420560)
 
 <br>
 
