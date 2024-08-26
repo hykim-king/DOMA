@@ -75,7 +75,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
 body {
-   font-family: 'Gowun Dodum', sans-serif;
+    font-family: 'Gowun Dodum', sans-serif;
     color: #333;
     background-color: #f4f4f4;
     margin: 0;
@@ -192,6 +192,11 @@ header, footer {
 
 .comment p {
     margin: 0;
+    font-family: 'Gowun Dodum', sans-serif !important;
+}
+
+p {
+    font-family: 'Gowun Dodum', sans-serif !important;
 }
 
 .comment strong {

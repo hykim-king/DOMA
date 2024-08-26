@@ -115,6 +115,10 @@ button {
 .token:last-child .token-link {
   
 }
+.justify-content-center {
+    margin-top: 203px;
+    margin-bottom: 1rem;
+}
 </style>
 <body>
  <div style="margin : 1% 0px 15px 80%;">
