@@ -30,8 +30,7 @@
     			title = #{title}, 
     			mod_id = #{modId},
     			content = #{content},
-    			img_link = #{imgLink}, 
-    			views = #{views} 
+    			img_link = #{imgLink}   
     			 
 			WHERE
        			 seq = #{seq}  
